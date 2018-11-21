@@ -1,0 +1,85 @@
+<div id="search-list-modal" class="modal" style="opacity: 1; display: block;">
+    <div class="modal-dialog" role="document">
+        <h1 class="sr-only">Budget Preferences</h1>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-2">
+                        <a class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="hidden-sm-down">Cancel</span>
+                            <i class="fa fa-close hidden-md-up"></i>
+                        </a>
+                    </div>
+                    <div class="col-8 text-center">
+                        <h5 class="modal-title">{{ Modal Title }}</h5>
+                    </div>
+                    <div class="col-2 text-right">
+                        <!--
+                        <a class="close" data-dismiss="modal" aria-label="Save">
+                            <span class="hidden-sm-down">Save</span>
+                            <i class="fa fa-save hidden-md-up"></i>
+                        </a>
+                        -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-search-form">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <!--
+                          the comps show this as a search that can filter mulitple terms and insert pills/tags into the search input itself.
+                          maybe there is a js plugin or node package that can do this??
+                           -->
+                        <input type="text" class="form-control" placeholder="Search for {{ something }}">
+                    </div>
+                </div>
+                <hr>
+                <ul class="modal-search-results">
+                <!-- results loop -->
+
+                    <!-- text only result -->
+                    <li><a href="#">Search Result</a></li>
+                    <li><a href="#">Search Result</a></li>
+                    <li><a href="#">Search Result</a></li>
+
+                    <!-- card result -->
+                    <li>
+                        <div class="row">
+                            <div class="col-2">
+                                <img class="img-fluid rounded-circle" src="https://unsplash.it/600/600">
+                            </div>
+                            <div class="col-6">
+                                <h3>Card Search Result</h3>
+                                <p>Title</p>
+                            </div>
+                            <div class="col-4">
+                                <!-- if active -->
+                                <button class="btn btn-info" type="button">Requested</button>
+                                <!-- else -->
+                                <button class="btn btn-primary" type="button">Request</button>
+                                <!-- end if -->
+                            </div>
+                        </div>
+                    </li>
+
+
+                </ul>
+                <!-- if no results -->
+                <div class="alert alert-danger">
+                    <p>Sorry, we aren't showing {{ search term }} in our database.</p>
+                    <!-- if can add -->
+                    <button type="button">Add to Your List</button>
+                    <!-- end if -->
+                </div>
+                <!-- end if -->
+            </div>
+            <!-- in case we need to add a footer dynamically later
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+<% @results.each do |record| %>
+  <li data-value="<%= record.brand %>" data-id="<%= record.id %>"><strong><%= record.brand %> (<%= record.generic_name %>)</strong></li>
+<% end %>

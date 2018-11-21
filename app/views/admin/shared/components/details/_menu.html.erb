@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="comp__menu">
+    <ul>
+      <% menu_items.each do |mi| %>
+        <li class="<%= tab_active?(mi[:active_tab]) %>"><a href="<%= mi[:path] %>"><%= mi[:title] %></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

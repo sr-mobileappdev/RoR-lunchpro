@@ -1,0 +1,29 @@
+<div class="modal-dialog pt-0 mt-0" role="document">
+  <div class="modal-body comp__form pt-0 mt-0 justify-content-center">
+    <div class="row justify-content-center" id="reward_points_form">
+      <div class="col-12 justify-content-center">
+        <h4 class="mt-2">Sales Rep - <%= @record.display_name %></h4>
+        <% @record.new_record? ? action = "create" : action = "update" %>
+        <%= form_for @record, url: admin_reward_path(id: @record.id), html: { class: "new-menu-form", autocomplete: "off" } do |f| %>
+        <div class="form-group row">
+          <div class="col-sm-4 col-md-3 col-lg-5 col-xl-8 lp_req">
+            <%= lp_text_field(f, :reward_points, "Total Rewards Points") %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-4 col-md-3 col-lg-5 col-xl-8 lp_req">
+            <%= lp_text_field(f, :last_reward_date, "Last Reward date", f.object.last_reward_date, {class: 'reward-date-field form-control', inline_div: true}) %>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+LPForm_Initializer();
+</script>

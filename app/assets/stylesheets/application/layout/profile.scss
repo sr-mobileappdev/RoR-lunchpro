@@ -1,0 +1,276 @@
+.lp__remove_notification{
+  float: right;
+  right: -11px; 
+  top: 7px !important; 
+  z-index: 10000 !important;
+  color: gray; 
+  cursor: pointer;
+}
+
+#profile-menu-wrapper {
+	.nav-link {
+		padding: 0.5rem;
+		color: $white;
+		&:hover {
+			color: darken($white, 9%);
+		}
+	}
+	.nav-pills .nav-item.show .nav-link {
+		background-color: transparent;
+	}
+
+	.dropdown {
+		// we have some layered menus going on
+		.dropdown-menu {
+			z-index: 0;
+		}
+		&.show .dropdown-menu {
+			z-index: 1001;
+		}
+	}
+
+	.dropdown-menu {
+		width: 25vmax;
+
+		/* fighting the popper.js styles */
+		transform: none !important;
+		left: auto !important;
+		top: 2em !important;
+
+		/* for the opacity fade */
+		display: none !important;
+		opacity: 0;
+		transition: 0.3s ease;
+	}
+	.show .dropdown-menu {
+		opacity: 1;
+		transition: 0.3s ease;
+    display: block !important;
+	}
+}
+
+@media(max-width: 1250px){
+  .dropdown-menu{
+    width: 35vmax !important;
+  }
+}
+@media(max-width: 767px){
+  #profile-menu-wrapper {
+    .dropdown-menu {
+      width: 50vmax !important;
+
+      /* fighting the popper.js styles */
+      transform: none !important;
+      left: -220px !important;
+      top: 2em !important;
+
+      /* for the opacity fade */
+      display: none !important;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+    .show .dropdown-menu {
+      opacity: 1;
+      transition: 0.3s ease;
+      display: block !important;
+    }
+  }
+  .notification-dropdown{
+    width: 50vmax !important;
+  }
+}
+
+@media(max-width: 415px){
+  #profile-menu-wrapper {
+    .dropdown-menu {
+      width: 50vmax !important;
+
+      /* fighting the popper.js styles */
+      transform: none !important;
+      left: -165px !important;
+      top: 2em !important;
+
+      /* for the opacity fade */
+      display: none !important;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+    .show .dropdown-menu {
+      opacity: 1;
+      transition: 0.3s ease;
+      display: block !important;
+    }
+  }
+  .notification-dropdown{
+    width: 50vmax !important;
+  }
+}
+
+/* Chrome 29+ */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+
+    @media(max-width: 767px){
+      #profile-menu-wrapper {
+        .dropdown-menu {
+          width: 50vmax !important;
+
+          /* fighting the popper.js styles */
+          transform: none !important;
+          left: -140px !important;
+          top: 2em !important;
+
+          /* for the opacity fade */
+          display: none !important;
+          opacity: 0;
+          transition: 0.3s ease;
+        }
+        .show .dropdown-menu {
+          opacity: 1;
+          transition: 0.3s ease;
+          display: block !important;
+        }
+      }
+      .notification-dropdown{
+        width: 50vmax !important;
+      }
+    } 
+    @media(max-width: 415px){
+      #profile-menu-wrapper {
+        .dropdown-menu {
+          width: 50vmax !important;
+
+          /* fighting the popper.js styles */
+          transform: none !important;
+          left: -80px !important;
+          top: 2em !important;
+
+          /* for the opacity fade */
+          display: none !important;
+          opacity: 0;
+          transition: 0.3s ease;
+        }
+        .show .dropdown-menu {
+          opacity: 1;
+          transition: 0.3s ease;
+          display: block !important;
+        }
+      }
+      .notification-dropdown{
+        width: 50vmax !important;
+      }
+    } 
+}
+
+@-moz-document url-prefix() {
+
+  @media(max-width: 767px){
+    #profile-menu-wrapper {
+      .dropdown-menu {
+        width: 40vmax !important;
+
+        /* fighting the popper.js styles */
+        transform: none !important;
+        left: -140px !important;
+        top: 2em !important;
+
+        /* for the opacity fade */
+        display: none !important;
+        opacity: 0;
+        transition: 0.3s ease;
+      }
+      .show .dropdown-menu {
+        opacity: 1;
+        transition: 0.3s ease;
+        display: block !important;
+      }
+      .notification-dropdown{
+        width: 50vmax !important;
+      }
+    }
+  
+  }
+  @media(max-width: 415px){
+    #profile-menu-wrapper {
+      .dropdown-menu {
+        width: 40vmax !important;
+
+        /* fighting the popper.js styles */
+        transform: none !important;
+        left: -90px !important;
+        top: 2em !important;
+
+        /* for the opacity fade */
+        display: none !important;
+        opacity: 0;
+        transition: 0.3s ease;
+      }
+      .show .dropdown-menu {
+        opacity: 1;
+        transition: 0.3s ease;
+        display: block !important;
+      }
+      .notification-dropdown{
+        width: 50vmax !important;
+      }
+    }
+  }
+}
+
+.card-faq{
+  border-radius: 0.4em;
+  margin-top: 20px;
+
+  .card-header-faq{
+    border-radius: 0.4em;
+    background: #00a69c;
+    cursor: pointer;
+    text-align: left;
+    a{
+      color: white;
+      text-decoration: none;
+    }
+  }
+}
+.office-about{
+  .card-columns{
+    column-count: 2;
+  }
+}
+.pic-faq-container{
+  max-width: 6%;
+}
+
+@media (min-width: 1921px){
+  .pic-faq-container{
+    max-width: 4%;
+  }
+}
+@media(max-width: 1440px){
+  #faq-pharma-header{
+    margin-top: 0.2rem !important;
+  }
+}
+@media(max-width: 1300px){
+  .pic-faq-container{
+    max-width: 7%;
+  }
+}
+@media(max-width: 1200px){
+     .pic-faq-container{
+      max-width: 10%;
+    }
+
+}
+@media (max-width: 992px){
+  .pic-faq-container{
+    display:none;
+  }
+}
+@media (max-width: 768px){
+  .office-about{
+    .card-columns{
+      column-count: 1;
+    }
+  }  
+}

@@ -1,0 +1,56 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid comp__rep_form">
+    <div class="row faux-modal-header bb-1">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= appt_icon(@record) %>
+      </div>
+      <div class="col-xs-12 col-sm-9 mt-1">
+        <h3 class="ft-bold"><a href="<%=appointment_office_link(@record)%>"><%= @record.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+        <span><%= short_date(@record.appointment_on) %></span>
+        <br/>
+        <span><%= "#{slot_time(@record.starts_at(true))}" %></span>
+      </div>
+    </div>
+    <div class="row appointment-modal-body lp__appointment_body">
+      <% if @record.food_ordered? %>
+        <div class="restaurant-image-container-sm hidden-sm-down mr-2">
+          <% if @record.restaurant.brand_image && @record.restaurant.brand_image.url %>
+              <img class="restaurant-image" src="<%= @record.restaurant.brand_image.url %>" alt="Restaurant Logo" />
+          <% else %>
+            <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+          <% end %>
+        </div>
+        <div class="col-12 col-sm-7">
+          <h4 class="ft-bold"><%= @record.restaurant.display_name %></h4>
+          <p class="mb-0 mt-1"><%= @record.restaurant.primary_cuisine %></p>
+          <p>Total Price: <%=precise_currency_value(@record.active_order.total_cents)%></p>
+        </div>
+        <div class="col-12 col-sm-4 col-md-3 mt-3">
+          <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@record.active_order.id, redirect_to: @redirect_to)%>" class="btn btn-block btn-outline-info">View Order</a>
+        </div>
+      <% elsif @record.will_supply_food %>
+        <div class="col-sm-12 col-md-7">
+          <h4 class="ft-bold">You are bringing:</h4>
+          <p class="mt-1 mb-2"> <%=@record.bring_food_notes%> </p>
+          <a href="#" class="btn btn-outline-info pr-4 pl-4 hidden-xs-down lp__edit_byo">Edit BYO</a>
+          <a href="#" class="btn btn-outline-info btn-block hidden-sm-up lp__edit_byo">Edit BYO</a>
+        </div>
+        <div class="col-12 col-md-5 text-right hidden-sm-down">
+          <p class="mb-2">Change your mind? You can still order through LunchPro!</p>
+          <a href="<%= select_restaurant_rep_appointment_path(@record) %>" class="btn btn-success">Order Food</a>
+        </div>
+        <div class="col-12 col-md-5 hidden-md-up mt-3">
+          <p class="mb-2">Change your mind? You can still order through LunchPro!</p>
+          <a href="<%= select_restaurant_rep_appointment_path(@record) %>" class="btn btn-success hidden-xs-down">Order Food</a>
+          <a href="<%= select_restaurant_rep_appointment_path(@record) %>" class="btn btn-success btn-block hidden-sm-up">Order Food</a>
+        </div>
+      <% end %>
+    </div>
+    <div class="lp__cancel_appointment_form" style="display: none;">
+      <%= render partial: "rep/appointments/components/appointment_cancel_form.html.erb", locals: {office_view: office_view}%>
+    </div>
+    <div class="lp__edit_byo_form" style="display: none;">
+      <%= render partial: "rep/appointments/components/appointment_byo_form.html.erb"%>
+    </div>
+  </div>
+</div>

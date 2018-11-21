@@ -1,0 +1,13 @@
+<% current_user.visible_notifications.each do |notif| %>
+  <div class="dropdown-item text-uppercase">
+    <a data-href="<%= Notification.dismiss_path(current_user, notif) %>" class="__remove-notification"><span class='oi oi-x lp__remove_notification' data-id="<%= notif.id %>"></span></a>
+    <a href="<%= notif.trigger_url%>" <%= 'data-modal' if notif.trigger_modal? %> <%= "data-modal-size=#{notif.modal_size}" if notif.modal_size%>>
+      <p class="lp__notif_title">
+        <%= notification_title(notif) %>
+      </p>
+      <p class="lp__time">
+        <%= notification_time(notif) %>
+      </p>
+    </a>
+  </div>
+<% end %>

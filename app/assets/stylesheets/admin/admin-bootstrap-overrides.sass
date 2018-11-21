@@ -1,0 +1,297 @@
+
+
+// Text Overrides
+
+.small
+  font-weight: 400
+
+.text-warning
+  color: $clr--orange !important
+
+.lp__hide
+  display: none
+
+// Button Style Overrides
+
+.btn
+  cursor: pointer
+  font-weight: 400
+
+.btn-sm
+  font-size: 0.85em
+  padding: 0.3rem 0.8rem 0.4rem 0.8rem
+  font-weight: 400
+
+.btn-xsm
+  font-size: 0.7em
+  padding: 0.3rem 0.7rem 0.3rem 0.7rem
+  font-weight: 400
+  border-radius: 5px
+
+button.btn-sm
+  font-size: 0.85em
+  padding: 0.4rem 0.8rem 0.3rem 0.8rem
+  font-weight: 400
+
+
+.lp__table
+  td, th
+    .btn-sm
+      padding: .25rem .8rem
+
+.btn-warning
+  background: $clr--orange
+  border: 1px solid $clr--orange
+  border-bottom: 2px solid darken($clr--orange, 10%)
+
+.btn-warning:hover
+  background: lighten($clr--orange, 10%)
+  border: 1px solid lighten($clr--orange, 10%)
+  border-bottom: 2px solid lighten($clr--orange, 5%)
+
+.btn-warning:focus
+  background: lighten($clr--orange, 10%)
+  border: 1px solid lighten($clr--orange, 10%)
+  box-shadow: 0px 0px 0px 3px lighten($clr--orange, 30%)
+  border-top: 2px solid lighten($clr--orange, 5%)
+
+.btn-success
+  background: $clr--green
+  border: 1px solid $clr--green
+  border-bottom: 2px solid darken($clr--green, 10%)
+
+.btn-success:hover
+  background: lighten($clr--green, 10%)
+  border: 1px solid lighten($clr--green, 10%)
+  border-bottom: 2px solid lighten($clr--green, 5%)
+
+.btn-success:focus
+  background: lighten($clr--green, 10%)
+  border: 1px solid lighten($clr--green, 10%)
+  box-shadow: 0px 0px 0px 3px lighten($clr--green, 30%)
+  border-top: 2px solid lighten($clr--green, 5%)
+
+.btn-light
+  background: $clr--light-grey
+  border: 1px solid $clr--light-grey
+  border-bottom: 2px solid darken($clr--light-grey, 6%)
+  color: darken($clr--light-grey, 50%)
+
+.btn-light:hover
+  background: lighten($clr--light-grey, 3%)
+  border: 1px solid lighten($clr--light-grey, 3%)
+  border-bottom: 2px solid lighten($clr--light-grey, 2%)
+  color: darken($clr--light-grey, 30%)
+
+.btn-light:focus
+  background: lighten($clr--light-grey, 5%)
+  border: 1px solid lighten($clr--light-grey, 5%)
+  box-shadow: 0px 0px 0px 3px lighten($clr--light-grey, 1%)
+  border-top: 2px solid lighten($clr--light-grey, 5%)
+
+.btn-primary
+  background: $clr--blue
+  border: 1px solid $clr--blue
+  border-bottom: 2px solid darken($clr--blue, 10%)
+
+.btn-primary:hover
+  background: lighten($clr--blue, 10%)
+  border: 1px solid lighten($clr--blue, 10%)
+  border-bottom: 2px solid lighten($clr--blue, 5%)
+
+.btn-primary:focus
+  background: lighten($clr--blue, 10%)
+  border: 1px solid lighten($clr--blue, 10%)
+  box-shadow: 0px 0px 0px 3px lighten($clr--blue, 30%)
+  border-top: 2px solid lighten($clr--blue, 5%)
+
+.btn-secondary
+  border: 1px solid lighten(desaturate($clr--blue, 50%), 10%)
+  background: lighten(desaturate($clr--blue, 50%), 10%)
+  border-bottom: 2px solid lighten(desaturate($clr--blue, 50%), 5%)
+  color: #fff
+
+.btn-secondary:hover
+  border: 1px solid lighten(desaturate($clr--blue, 50%), 20%)
+  background: lighten(desaturate($clr--blue, 50%), 20%)
+  border-bottom: 2px solid lighten(desaturate($clr--blue, 50%), 15%)
+  color: #fff
+
+.btn-secondary:focus
+  background: lighten(desaturate($clr--blue, 50%), 20%)
+  border: 1px solid lighten(desaturate($clr--blue, 50%), 20%)
+  box-shadow: 0px 0px 0px 3px lighten(desaturate($clr--blue, 50%), 30%)
+  border-top: 2px solid lighten(desaturate($clr--blue, 50%), 15%)
+  color: #fff
+
+.btn-disabled
+  opacity: 0.35
+
+// Badge Overrides
+
+.badge
+  border-radius: 3px
+
+.badge.p-1
+  padding: 0.2rem 0.25rem !important
+
+.badge-warning
+  background: $clr--orange
+
+.badge-info
+  background: $clr--light-grey
+
+
+// Pagination
+
+$lp-pagination-rounding: 4px
+
+.pagination-sm
+  margin-top: 0.3rem
+  margin-bottom: 0rem
+
+.pagination-sm .page-link
+  font-size: 0.7rem
+  padding: 0.2rem 0.5rem
+  line-height: 1rem
+  border: 0px
+  margin-left: 1px
+  color: $clr--blue
+
+.pagination-sm .page-link:hover
+  background: lighten($clr--blue, 30%)
+
+.pagination-sm .page-item.active .page-link
+  background: lighten($clr--blue, 5%)
+
+
+.pagination-sm .page-item:first-child .page-link
+  border-radius: $lp-pagination-rounding 0px 0px $lp-pagination-rounding
+  border-top-left-radius: $lp-pagination-rounding
+  border-bottom-left-radius: $lp-pagination-rounding
+
+.pagination-sm .page-item:last-child .page-link
+  border-radius: 0px $lp-pagination-rounding $lp-pagination-rounding 0px
+  border-top-right-radius: $lp-pagination-rounding
+  border-bottom-right-radius: $lp-pagination-rounding
+
+// Form Elements
+
+.form-group.form-group-tight
+  margin-bottom: 0.6rem
+
+  .lp__no_pad_left
+    padding-left: 0px
+
+  .lp__form_remove_item
+    color: $brand-danger
+    font-size: 0.65em
+    text-transform: uppercase
+    letter-spacing: 0.1em
+    font-weight: 500
+    display: inline-block
+    margin-top: 33px
+    float: left
+    padding-right: 15px
+
+  .lp__form_remove_item.no_label
+    margin-top: 8px
+
+
+  .lp__form_add_option
+    color: $brand-primary
+    font-size: 0.65em
+    text-transform: uppercase
+    letter-spacing: 0.1em
+    font-weight: 500
+    display: inline-block
+    margin-top: 33px
+    float: left
+
+  .lp__form_add_option.no_label
+    margin-top: 8px
+
+  p.field_note
+    margin-top: 5px
+    font-size: 0.7em
+    color: lighten($clr--grey, 10%)
+    clear: both
+
+
+
+.form-control
+  box-shadow: inset 0px 2px 2px rgba(128, 128, 128, 0.1)
+  border-color: lighten($clr--grey, 20%)
+  line-height: 1.2rem
+
+  &::placeholder
+    color: lighten($clr--grey, 25%)
+
+
+.form-control.number-sm
+  width: auto
+
+textarea.form-control
+  min-height: 180px
+
+textarea.form-control.sm-text-area
+  min-height: 60px
+
+textarea.form-control.sz-short
+  min-height: 70px
+
+input[type=checkbox].form-control, input[type=radio].form-control
+  box-shadow: none
+  border: 0px
+  line-height: 1.2rem
+
+.col-form-legend
+  font-size: 0.8em
+  font-weight: 600
+  color: $clr--grey
+
+label, .col-form-label
+  font-size: 0.9em
+  font-weight: 600
+  color: $clr--grey
+  padding-top: calc(.4rem - 1px * 2)
+  margin-bottom: 0.2rem
+
+.form-check-label
+  padding-left: 1.3rem
+  font-size: 0.9em
+
+  input[type=checkbox], input[type=radio]
+    margin-right: 6px
+
+.lp__inline_check, .lp__inline_radio
+  font-weight: 400
+  display: block
+  color: lighten($black, 15%)
+  font-size: 0.9em
+  cursor: pointer
+
+  input[type=checkbox].form-control, input[type=radio].form-control
+    display: inline
+    width: auto
+    margin-right: 7px
+    line-height: 1.4em
+
+.alert
+  position: relative
+  padding: 0.5rem 0.75rem
+  margin-bottom: 0.4rem
+  box-shadow: 0px 1px 1px rgba(100, 100, 100, 0.2), 0px 2px 8px rgba(150, 150, 150, 0.1)
+
+  p
+    font-size: 0.8em
+    margin: 0px
+    padding: 0px
+
+.alert-warning
+  border-color: darken(#faf2cc, 15%)
+
+label.lp__show
+  text-transform: uppercase
+  letter-spacing: 0.1em
+  font-weight: normal

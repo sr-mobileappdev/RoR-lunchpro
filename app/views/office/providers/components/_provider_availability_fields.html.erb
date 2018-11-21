@@ -1,0 +1,17 @@
+<div class="child-form">
+  <%= lp_hidden_field(s, :created_by_id) %>
+  <input type="hidden" value="<%=s.object.status%>" name="provider[provider_availabilities_attributes][<%=s.index%>][status]" id="_status_">
+  <%= lp_hidden_field(s, :day_of_week) %>
+
+  <input type="hidden" value="<%=s.object._destroy%>" name="provider[provider_availabilities_attributes][<%=s.index%>][_destroy]" id="_destroy_">
+  <div class="col-12 pl-1 pr-1 mt-2">
+    <% if s.object.new_record? %>
+      <%= lp_slot_timeframe_field(s, :starts_at, "none", 15, s.object.starts_at, {hide_label: true, class: "form-control d-inline provider-time-select", capitalize_time: true}) %>              
+      <%= lp_slot_timeframe_field(s, :ends_at, "none", 15, s.object.ends_at, {hide_label: true, class: "form-control d-inline provider-time-select", capitalize_time: true}) %>
+    <% else %>
+      <%= lp_slot_timeframe_field(s, :starts_at, "none", 15, s.object.starts_at(true), {hide_label: true, class: "form-control d-inline provider-time-select", capitalize_time: true}) %>              
+      <%= lp_slot_timeframe_field(s, :ends_at, "none", 15, s.object.ends_at(true), {hide_label: true, class: "form-control d-inline provider-time-select", capitalize_time: true}) %>
+    <% end %>
+  </div>
+
+</div>

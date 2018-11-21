@@ -1,0 +1,30 @@
+<% @restaurant.menu_sorted_categories(menu, nil).each do |category, items| %>
+  <% next unless items && items.count > 0 %>
+  <div class="row pt-3 pb-1">
+    <div class="col-md-12">
+      <h3 class="pl-4 pb-2 mt-2"><strong><%= category.gsub("cat_", "").humanize %><%= "s" unless category.gsub("cat_", "").humanize == "Lunchpacks"%></strong></h3>
+    </div>
+  </div>
+
+  <% items.each do |item| %>
+    <div class="lp__menu_item_row pb-3">
+      <div class="col-12 col-md-12 row">
+        <div class="col-12 row m-0 p-0">
+          <div class="col-12 col-md-6">
+            <span class="h5 ft-bold"><%= item.name %></span>
+            <span class="lp__popular_price pull-right hidden-md-up"><%= precise_currency_value(item.retail_price_cents) %></span>
+          </div>
+          <div class="col-6 justify-content-end text-right pull-right m-0 p-0 hidden-sm-down">
+            <span class="lp__popular_price text-right m-0 hidden-sm-down"><%= precise_currency_value(item.retail_price_cents) %></span> (retail)
+          </div>
+        </div>
+        <div class="col-12 pt-2"><%= item.description %></div>
+        <div class="col-12 pt-2"><span class="mr-2">Serves <%= pluralize(item.people_served, "Person") %></span>
+          <% item.diet_restrictions.each do |r| %>
+            <span class="lp__diet_restriction ft-bold"><%= r.name %></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

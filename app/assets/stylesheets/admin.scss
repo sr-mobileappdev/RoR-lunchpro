@@ -1,0 +1,56 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require vendor/nprogress.css
+ *= require_self
+ *= require smartwizard/dist/css/smart_wizard
+ *= require smartwizard/dist/css/smart_wizard_theme_arrows
+
+ */
+
+
+@import "vendor/bootstrap/bootstrap";
+@import "admin/styles";
+
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import 'application/components/modals';
+
+ul.nav.nav-tabs.step-anchor {
+  li.nav-item.active {
+    a{
+      background: $brand-primary !important;
+      border-color: $brand-primary !important;
+    }
+    a:after{
+      border-left-color: $brand-primary !important;
+    }
+  }
+  li.nav-item.done{
+    a{
+      background: #a1ccdb !important;
+      border-color: #a1ccdb !important;
+    }
+    a:after{
+      border-left-color: #a1ccdb !important;
+    }
+  }
+}
+
+div.sw-btn-group{
+  button.sw-btn-prev{
+    background-color: $clr--dark-grey;
+    border-color: $clr--dark-grey;
+  }
+  button.sw-btn-next{
+    background: $brand-primary;
+  }
+}

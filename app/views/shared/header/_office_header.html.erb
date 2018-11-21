@@ -1,0 +1,52 @@
+<header class="bg-primary box-shadow">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-3 col-sm-6">
+                <h1 class="sr-only">LunchPro</h1>
+                <a href="/" title="Home">
+                  <%= image_tag "lunchpro.svg", class: 'lp__logo_image', alt: "Go to home page" %>
+                </a>
+            </div>
+            <div class="col-md-3 hidden-sm-down">
+                <!-- this space could be used in the future --> &nbsp;
+            </div>
+            <div class="col-md-6 hidden-sm-down" style="position: relative;">
+                <%= render partial: 'shared/header/office_details', locals: local_assigns %>
+            </div>
+        </div>
+    </div>
+    <div class="lp__navbar">
+        <nav class="navbar navbar-inverse navbar-toggleable-sm ">
+            <button class="navbar-toggler collapsed m-auto" type="button" data-toggle="collapse" data-target="#header-links" aria-controls="header-links" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-angle-down"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="header-links">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item <%= tab_active?('calendar') %>">
+                        <a class="nav-link" href="<%= current_office_calendars_path %>">Calendar <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('appointments') %>">
+                        <a class="nav-link" href="<%= office_appointments_path %>">Appointments</a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('policies') %>">
+                        <a class="nav-link" href="<%= policies_office_preferences_path %>">Office Policies</a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('providers') %>">
+                        <a class="nav-link" href="<%= office_providers_path %>">Providers</a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('reps') %>">
+                        <a class="nav-link" href="<%= directory_office_preferences_path %>">Sales Reps</a>
+                    </li>
+                    <span class="hidden-md-up">
+                        <li class="nav-item <%= tab_active?('contact') %>">
+                            <a class="nav-link" href="mailto:support@lunchpro.com?subject=Contact From Web (<%=current_user.entity.class.name%>)">Contact Us</a>
+                        </li>
+                        <li class="nav-item <%= tab_active?('logout') %>">
+                          <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-link') %>
+                        </li>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

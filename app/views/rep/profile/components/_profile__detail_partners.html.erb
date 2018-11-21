@@ -1,0 +1,103 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 ml-3 mr-3 mt-3 pl-3 pr-3 pt-3">
+  <%# temporarily hide existing partner fxnality %>
+  <div class="row">
+    <div class="h4 col-10 mb-0 pb-0">Partners
+    </div>
+  </div>
+  <% if false %>
+    <div class="row">
+      <div class="h4 col-10 mb-0 pb-0">Partners
+      </div>
+      <p class="col-10 m-0">Avoid overlapping with your rep partners by seeing when they have scheduled meal appointments at various medical offices. When logged in, each of your meal appointments will appear in blue on the office's calendar.</p>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 mt-3 mb-3">
+        <button class="btn btn-success lp__toggle_partner">Add New Partner</button>
+      </div>
+    </div>
+    <div class="lp__partner_form mt-3 mb-4 comp__rep_form" style="display: none;">
+      <%= form_for @partner_request, url: rep_profile_partners_path, method: :post,  html: { class: "col-12 px-3"} do |f| %>
+        <div class="col-12 row p-0">
+            <h4 class="mb-2 col-12">Select Partners</h4>
+            <div class="col-sm-8 col-md-6 col-lg-5 col-xl-4">
+              <%= lp_text_field(f, :partner_email, nil, "", {class: 'form-control', hide_label: true, placeholder: "Enter Partner's Email"}) %>
+            </div>
+        </div>
+        <div class="col-12 p-0">
+          <button class="btn btn-info mt-4" data-submit type="submit">Send Request</button>
+        </div>
+      <% end %>    
+    </div>
+    <% @pending_partners.each do |partner| %>
+      <div class="row by-1 p-3">
+        <div class="profile-image-container-sm ml-2">
+          <% if partner.sales_rep.profile_image && partner.sales_rep.profile_image.url %>
+              <img class="profile-picture" src="<%= partner.sales_rep.profile_image.url %>" alt="Partner Profile Image" />
+          <% else %>
+            <%= image_tag "missing_image.png", class: "profile-picture", alt: "Missing Image" %>
+          <% end %>
+        </div> 
+        <div class="col-12 col-sm-5 col-lg-5 pr-0 pt-1">
+          <label class="form-control-label"><%= partner.sales_rep.full_name %></label>
+          <div><%= partner.sales_rep.company_name %></div>
+        </div>
+        <div class="col-lg-12 col-xl-6 pt-2 text-right hidden-lg-down">
+          <a class="btn btn-outline-info btn-undo" href="<%=reject_rep_profile_partner_path(partner.sales_rep_id)%>" data-confirm-method="post" data-confirm-check="Are you sure you want to reject this partner request?">Ignore</a>
+          <a href="<%=accept_rep_profile_partner_path(partner.sales_rep_id)%>" data-method="post" class="ml-2 btn btn-info">Accept</a>
+        </div>
+        <div class="col-lg-12 col-xl-6 pt-3 hidden-xl-up">
+          <a class="btn btn-outline-info btn-undo" href="<%=reject_rep_profile_partner_path(partner.sales_rep_id)%>" data-confirm-method="post" data-confirm-check="Are you sure you want to reject this partner request?">Ignore</a>
+          <a href="<%=accept_rep_profile_partner_path(partner.sales_rep_id)%>" data-method="post" class="ml-2 btn btn-info">Accept</a>
+        </div>
+      </div>  
+    <% end %>
+    <% @partners.each do |partner| %>
+      <div class="row by-1 p-3">
+        <div class="profile-image-container-sm ml-2">
+          <% if partner.partner.profile_image && partner.partner.profile_image.url %>
+              <img class="profile-picture" src="<%= partner.partner.profile_image.url %>" alt="Partner Profile Image" />
+          <% else %>
+            <%= image_tag "missing_image.png", class: "profile-picture", alt: "Missing Image" %>
+          <% end %>
+        </div> 
+        <% if !partner.pending? %>
+          <div class="col-12 col-sm-12 col-lg-3 col-xl-2 pt-1">
+            <label class="form-control-label"><%= partner.partner.full_name %></label>
+            <div><%= partner.partner.company_name %></div>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-7 col-xl-6 pt-3 row">
+            <label class="col-12 col-sm-7"><%= partner.partner.email %></label>
+            <label class="col-12 col-sm-5"><%=partner.partner.phone ? format_phone_number(partner.partner.phone) : "Phone unavailable"%></label>
+          </div>
+          <div class="col-lg-12 col-xl-3 pt-2 text-right hidden-lg-down">
+            <a class="btn btn-outline-info" href="<%=delete_rep_profile_partner_path(partner.partner_id)%>" data-confirm-method="post" data-confirm-check="Are you sure you want to remove this partner?">Remove</a>
+          </div>
+          <div class="col-lg-12 col-xl-3 pt-3 hidden-xl-up">
+            <a class="btn btn-outline-info" href="<%=delete_rep_profile_partner_path(partner.partner_id)%>" data-confirm-method="post" data-confirm-check="Are you sure you want to remove this partner?" >Remove</a>
+          </div>
+        <% else %>
+          <div class="col-12 col-sm-10 col-lg-7 pt-1">
+            <label class="form-control-label"><%= partner.partner.full_name %></label>
+            <div><%= partner.partner.company_name %></div>
+          </div>
+          <div class="col-md-12 col-lg-4 pt-2 text-right hidden-lg-down">
+            <a class="btn btn-outline-info btn-undo" href="<%=delete_rep_profile_partner_path(partner.partner_id)%>" data-confirm-method="post" data-confirm-check="Are you sure you want to remove this partner?">Undo</a>
+            <i class="pr-3 pl-4">Pending</i>
+          </div>
+          <div class="col-md-12 col-lg-5 pt-3 hidden-xl-up">
+            <a class="btn btn-outline-info btn-undo" href="<%=delete_rep_profile_partner_path(partner.partner_id)%>" data-confirm-method="post" data-confirm-check="Are you sure you want to remove this partner?">Undo</a>
+            <i class="pr-3 pl-4">Pending</i>
+          </div>
+        <% end %>
+      </div>
+    <%end%>
+  <% else %>
+    <div class="col-12 text-center mb-5 mt-4">
+      <img src="<%= image_path('flying_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+      <h3>Partners are coming soon! Here you'll be able to enter the email address of a rep you'd like to partner with.  When we find a match, we'll send a partner request to the sales rep and hook you guys up. Stay tuned!</h3>
+    </div>  
+  <% end %>
+
+</div>
+

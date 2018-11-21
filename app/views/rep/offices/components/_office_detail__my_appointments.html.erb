@@ -1,0 +1,8 @@
+<h3 class="sr-only">My Appointments</h3>
+<!-- appointment loop -->
+<div class="row m-0 tab-content-scrollable-office-tab">
+  <div class="col-12 p-0">
+    <%= render partial: "rep/calendars/components/appointments",
+               locals: {appointment_groups: Views::SalesRepAppointments.new(current_user.sales_rep, nil, current_user, @office).upcoming_by_date} %>
+  </div>
+</div>

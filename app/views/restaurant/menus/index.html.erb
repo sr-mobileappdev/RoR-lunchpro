@@ -1,0 +1,69 @@
+<% tab 'menu' %>
+<% title 'Menu' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {} %>
+<div id="global-content-wrapper" class="comp__restaurant_menu_detail">
+  <div id="menus" class="col-12 col-md-10 col-lg-8 b-1 pt-5 mx-auto mt-5">
+    <div class="row col-12 bb-1 m-0" id="menu-header">
+      <div class="row col-12 col-md-8">
+        <div class="col-md-2 hidden-md-down">
+          <%= orders_dinner_tray_icon %>
+        </div>
+        <div class="col-12 col-md-10">
+          <div class="row col-12">
+            <div class="p-0 m-0 h4 ft-bold">My Catering Menu</div>
+          </div>
+          <div class="row col-12">
+            <div class="p-0 m-0">This is the menu that sales reps will see when ordering food.</div>
+          </div>
+        </div>
+      </div>
+      <div class="row hidden-sm-down col-12 col-md-4 justify-content-end pt-0 pb-0 mt-0 mb-0">
+        <div class="col-12 text-right pr-0">
+          <span class="ft-bold h5">Need to update your menu?</span>
+        </div>
+        <div class="col-12 text-right pr-0">
+          <span class="h5">Give us a call</span>
+        </div>
+        <div class="col-12 pr-0 text-right">
+          <span class="h5"><a href="tel:855-586-2477"><%= phone_icon %> <%= format_phone_number_string("8555862477") %></a></span>
+        </div>
+      </div>
+      <div class="col-12 mt-0 pt-0">
+        <div class="row mb-2">
+          <div class="col-12 pl-4 pr-4">
+            <ul class="nav nav-pills row text-center">
+              <% if @menus.count < 3 %>
+                <li class="nav-item col-12 col-sm-3 col-lg-3 col-xl-2 p-0 mr-2 justify-content-start">
+                    <a id="all-menus" class="nav-link lp__select_menu active" href="#" data-menu-id="<%=%>">All</a>
+                </li>
+                <% @menus.each do |menu| %>
+                  <li class="nav-item col-12 col-sm-3 col-lg-3 col-xl-2 p-0 mr-2 text-center">
+                    <a class="nav-link lp__select_menu" href="#" data-menu-id="<%=menu.id%>"><%= menu.name %></a>
+                  </li>
+                <% end %>
+              <% else %>
+                <li class="nav-item col-sm p-0">
+                    <a id="all-menus" class="nav-link lp__select_menu active" href="#" data-menu-id="<%=%>">All</a>
+                </li>
+                <% @menus.each do |menu| %>
+                  <li class="nav-item col-sm p-0">
+                    <a class="nav-link lp__select_menu" href="#" data-menu-id="<%=menu.id%>"><%= menu.name %></a>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="targ__menu_detail">
+      <% if !@restaurant.menus.any?%>
+        <div class="col-12 text-center mt-5">
+          <h3>This restaurant currently does not have any active menus or menu items</h3>
+          <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="modal-body p-0 appointment-modal comp__om_providers" data-nested-attributes="provider_provider_availabilities_attributes_">
+  <div class="container-fluid">
+    <div class="row appointment-modal-body comp__om_form">      
+      <%= form_for @provider, url: office_provider_path(@provider), method: :put,  html: { class: "col-12 p-0", autocomplete: "off", onsubmit: "return false;"  } do |f|%>
+        <div class="col-12 mb-3 mt-3">
+          <p class="m-0">
+            <span class="ft-bold h4">Provider</span>
+            <span>
+              <a class="btn btn-link pt-1 pull-right hidden-xs-down" href="<%=remove_office_provider_path%>" data-method="post">Remove</a>
+            </span>
+          </p>
+          <div class="hidden-sm-up col-12 p-0">
+            <a class="btn btn-link p-0" href="#">Remove</a>
+          </div>
+          <div class="col-12 m-0 p-0 row">
+            <div class="col-12 col-md-10 p-0 row m-0">
+              <%= lp_text_field(f, :first_name, "none", f.object.first_name, {class: "form-control col-5 mr-2 mt-2", placeholder: "First name" , hide_label: true}) %>            
+              <%= lp_text_field(f, :last_name, "none", f.object.last_name, {class: "form-control  col-5 mt-2", placeholder: "Last Name", hide_label: true}) %>
+              <div class="col-6 m-0 p-0 mt-2">
+                <label for="specialties" class="form-control-label ft-bold">Specialties</label>
+                <input type="text" id="provider_specialties" name="provider[specialties]" value="<%= f.object.specialties.join(",") %>">
+              </div>
+            </div>
+            <div class="col-12 col-md-2 p-0 ml-auto">
+              <label for="drugs" class="form-control-label ft-bold">Title</label>
+              <%= f.select(:title, options_for_select(Provider.titles.pluck(:title), f.object.title), {prompt: "Title"}, {:class => 'form-control slot-type-select'}) %>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-4">
+          <p class="h5 ft-bold mb-1">Days available:</p>
+          <p><i>Please list the Provider's schedule for this medical office.</i></p>
+          <label class="lp__inline_radio"><input name="set_availability" type="hidden" value="0"><input class="form-control form-control-sm" type="checkbox" value="1" name="set_availability" id="set_availability"><label><strong>Set Availability same as Office</strong></label></label>
+        </div>
+        <div class="col-12 row p-0 m-0" id="provider_availability_form">
+          <div class="col-1 hidden-sm-down mt-5">
+            <p class="ft-bold mt-3">In</p>
+            <p class="ft-bold">Out</p>
+          </div>
+          <% Provider.day_of_weeks.each do |key, value| %>
+           <div class="text-center provider-group-day mt-2 <%= 'weekend-slot-group-day' if ['saturday', 'sunday'].include?(key)%> <%='provider-time-select-unselected' if !f.object.provider_availabilities.select{|avail| avail.status == 'active' && avail.day_of_week == key && avail.id != nil}.any?%>"">
+              <label class="form-check-label offices-label <%='checked' if f.object.provider_availabilities.select{|avail| avail.status == 'active' && avail.day_of_week == key && avail.id != nil}.any?%>">
+                <input type="checkbox" class="form-checkbox" class="mt-1">
+                <%=key.slice(0,3).capitalize%>
+              </label>
+              <%= f.fields_for :provider_availabilities, f.object.provider_availabilities.select{|avail| avail.status == 'active' && avail.day_of_week == key}.sort_by{|avail| AppointmentSlot.day_of_week_non_iso(avail.day_of_week) } do |s| %>
+                <%= lp_hidden_field(s, :created_by_id) %>  
+
+                <%= lp_hidden_field(s, :office_id, nil, {value: @office.id}) %>     
+                  <% if s.object.new_record? %>
+                    <input type="hidden" value="<%=s.object._destroy%>" name="provider[provider_availabilities_attributes][<%=s.index%>][_destroy]" id="_destroy_<%=s.object.id%>">
+                  <% else %>
+             
+                  <% end %>
+                  <%= render '/office/providers/components/provider_availability_fields', s: s %>
+                  <div></div>       
+              <% end %>
+              <div class="provider-button-group pt-2" style="<%= 'display: none;' if !f.object.provider_availabilities.select{|avail| avail.status == 'active' && avail.day_of_week == key && avail.id != nil}.any?%>">              
+                <% if f.object.provider_availabilities.select{|avail| avail.status == 'active' && avail.day_of_week == key && avail.id != nil}.any? %>
+                  <a class="lp__remove_child <%= 'disabled' if f.object.provider_availabilities.select{|avail| avail.status == 'active' && avail.day_of_week == key && avail.id != nil}.count == 1 %>" href="#" data-value="status"><%= provider_x_circle_icon%></a>
+                <% else %>
+                  <a class="lp__remove_child" href="#"><%= provider_x_circle_icon%></a>
+                <% end %>         
+                <span class="provider-plus">            
+                  <%= link_to_add_provider_availability provider_plus_circle_icon, f, :provider_availabilities , '/office/providers/components/', nil, key, current_user%>       
+                </span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-12 mt-3 hidden-xs-down">
+          <a class="btn btn-outline-info" data-dismiss="modal" data-modal-size="md" data-modal="true" href="<%= exclude_dates_office_provider_path(@provider)%>" data-modal-title="">Excluded Dates</a>
+          <button data-submit type="submit" class="btn btn-success pull-right">Submit</button>
+          <button class="btn btn-outline-info mr-2 pull-right" data-dismiss="modal">Cancel</button>
+        </div>
+        <div class="col-12 mt-3 hidden-sm-up">
+          <button data-submit type="submit" class="btn btn-success btn-block">Submit</button>
+          <a class="btn btn-outline-info btn-block" data-dismiss="modal" data-modal-size="md" data-modal="true" href="<%= exclude_dates_office_provider_path(@provider)%>" data-modal-title="">Excluded Dates</a>
+          <button class="btn btn-outline-info btn-block" data-dismiss="modal">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  LPOmOffice_Initializer();
+  LPOmForm_Initializer();
+</script>

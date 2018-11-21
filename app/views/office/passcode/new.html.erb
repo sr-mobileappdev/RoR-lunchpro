@@ -1,0 +1,42 @@
+<% tab 'account' %>
+<% title 'Passcode' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers comp__om_office">
+  <div class="lp__fixed f12 no-gutters comp__om_form">
+    <div class="justify-content-center mt-3">
+      <div class="lp__faux_modal med-large py-4 px-0 col-12">
+        <%= form_for @office, :url => initialize_new_passcode_office_passcode_path, method: :post,  html: { class: "col-12 row m-0 px-0 pt-1", autocomplete: "off" } do |f| %>
+          <div class="row px-4 m-0">
+            <div class="col-9 mt-3">
+              <h3 class="ft-bold">LunchPad Passcode</h3>
+              <p>Setup a passcode so that the office staff can easily access this account from the Lunchpad Tablet</p>
+            </div>
+            <div class="mx-auto mt-4">
+              <label class="form-check-label" href="<%=deactivate_office_passcode_path%>" data-confirm-method="post" data-confirm-check="Are you sure you want to turn off your Passcode?">
+                Off
+              </label>
+              <label class="form-check-label checked">
+                <%= f.radio_button :passcode_status, "on", {class: "form-check-input"} %>
+                On
+              </label>
+            </div>
+          </div>
+          <div class="row col-12 p-0 m-0 passcode-form">
+            <div class="col-12 p-0 m-0 row">
+              <label class="ft-bold col-12 ml-auto text-center mt-5 mb-3">Enter a New 4-digit Passcode</label>
+              <input type="number" maxlength="1" name="office[passcode][]" notab=notab class="px-3 mr-2 ml-auto display-otp-box form-control" data-key="otp1">    
+              <input type="number" maxlength="1" name="office[passcode][]" notab=notab class="px-3 mx-2 display-otp-box form-control" data-key="otp2"> 
+              <input type="number" maxlength="1" name="office[passcode][]" notab=notab class="px-3 mx-2 display-otp-box form-control" data-key="otp3">        
+              <input type="number" maxlength="1" name="office[passcode][]" notab=notab class=" px-3 ml-2 mr-auto display-otp-box form-control" data-key="otp4">      
+            </div>
+            <div class="col-4 mx-auto mt-3">
+              <button type="submit" class="btn btn-success btn-block text-uppercase passcode-submit" data-submit disabled>Enter Passcode</button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+</script>

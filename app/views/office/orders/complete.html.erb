@@ -1,0 +1,46 @@
+<% tab 'calendar' %>
+<% title 'Order Complete' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal narrow">
+        <div class="row">
+          <div class="col-md-12 pl-5 pr-5">
+            <div class="text-info pt-5 text-center">
+              <%= finish_calendar_icon %>
+            </div>
+            <% if @order.recommended_by_id.present? %>
+              <div class="col-12 col-sm-10 ml-auto mr-auto">
+                <p class="text-center"></p>
+                <p class="text-center"><strong>Your Order Recommendation has been sent!</strong></p>
+
+                <p class="text-center pb-2">The rep will review your recommendation before placing an order
+                </p>
+              </div>
+              <div class="col-12 col-sm-9 ml-auto mr-auto">
+                <a href="<%= current_office_calendars_path %>" class="btn btn-sm btn-primary btn-block mt-4">Done</a>
+              </div>
+              <div class="text-center pt-3">
+                <a href="<%= cancel_recommendation_office_appointment_path(@order.appointment, type: 'exact')%>" data-method="post" class="btn btn-link">Cancel this recommendation</a>
+              </div>
+            <% else %>
+              <p class="text-center"></p>
+              <% if @edit_order %>
+                <p class="text-center pl-4 pr-4"><strong>Your Order Has Been Updated!</strong></p>
+              <% else %>            
+                <p class="text-center pl-4 pr-4"><strong>Your Order Has Been Placed!</strong></p>
+              <% end %>
+
+              <p class="text-center pl-4 pr-4 pb-4">You are all set! You can update or cancel this order from your calendar.</p>
+
+              <a href="<%= current_office_calendars_path %>" class="btn btn-sm btn-primary btn-block mt-4">Done</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<h3 class="sr-only">Notes about this office</h3>
+<div class="comp__rep_form">
+  <%= form_for @office_sales_rep, url: {controller: 'profile', action: "update_office"}, method: :put,  html: { class: "", autocomplete: "off" } do |f| %>
+    <%= lp_hidden_field(f, :id) %>
+    <%= lp_hidden_field(nil, :notes, true) %>
+    <%= lp_text_area(f, :notes, "none", @office_sales_rep.notes, {class: 'form-control', style: 'resize: none', rows: '15', placeholder: 'Click here to add your own free form notes about this office.'}) %>
+    <div class="row mt-3 hidden-xs-down mx-0">
+      <div class="col-12 col-sm-5 col-lg-3 ml-auto">
+      	<a class="btn btn-outline-info btn-block" href="<%= rep_offices_path(id: @office.id, tab: 'notes') %>">Cancel</a>
+      </div>
+      <div class="col-12 col-sm-5 col-lg-3 mr-auto">
+      	<button data-submit class="btn btn-success btn-block">Save</button>
+      </div>   
+    </div>
+    <div class="row mt-3 hidden-sm-up mx-0">
+      <div class="col-12">
+        <button data-submit class="btn btn-success btn-block">Save</button>
+      </div>   
+      <div class="col-12 mt-2">
+        <a class="btn btn-outline-info btn-block" href="<%= rep_offices_path(id: @office.id, tab: 'notes') %>">Cancel</a>
+      </div>
+    </div>
+  <% end %>
+</div>

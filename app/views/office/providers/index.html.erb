@@ -1,0 +1,57 @@
+<% tab 'providers' %>
+<% title 'Providers' %>
+<%= render partial: "shared/header/#{@ui_space}_header" %>
+<div class="lp__scroll_containers rep-table">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center p-3 row">
+      <div class="col-md-11 ml-auto mr-auto mt-3 row">
+        <div class="col-12 col-md-7 row">
+          <h3 class="ft-bold mt-3 mr-4">Providers</h3>
+        </div>
+        <div class="col-12 mt-5 p-0">
+          <div class="provider-cards row">
+            <% @office.providers.select{|prov| prov.active? }.sort_by{|prov| prov.last_name.downcase}.each do |provider| %>
+            <div class="col-12 col-sm-6 col-xl-4">
+              <div class="card mb-5" data-modal-size="large" data-modal="true" href="<%=office_provider_path(provider)%>" data-modal-title="">
+                <div class="card-block">
+                </div>
+                <div class="card-footer row m-0 pt-0 pr-0 pl-2 pb-3">
+                  <div class="col-12 pr-0">
+                    <label class="font-lg m-0"><%=provider.display_name%></label>
+                  </div>
+                  <div class="col-12 mt-2">
+                    <p class="m-0">Provider Availability</p>
+                    <% provider.provider_availabilities.active.pluck(:day_of_week).uniq.sort_by{|avail| AppointmentSlot.day_of_week_non_iso(avail) }.each do |avail| %>
+                      <label class="mr-3"><%=short_day_of_week(avail)%></label>
+                    <% end %>
+                    <% unless provider.provider_availabilities.active.any? %>
+                      N/A
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% end %>
+            <div class="col-12 col-sm-6 col-xl-4 empty-card">
+              <div class="card mb-5" data-modal-size="large" data-modal="true" href="<%=new_office_provider_path%>" data-modal-title="">
+                <div class="card-block">
+                </div>
+                <div class="card-footer row m-0 pt-0 pr-0">
+                  <div class="pl-2">
+                    <%= plus_circle_icon_om %>
+                  </div>
+                  <div class="col-lg-8 col-xl-9 pt-3 hidden-md-down">
+                    <h2>Add Provider</h2>
+                  </div>
+                  <div class="col-12 col-md-7 hidden-lg-up">
+                    <h2>Add Provider</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

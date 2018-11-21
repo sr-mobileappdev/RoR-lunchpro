@@ -1,0 +1,15 @@
+<div class="col-12 row mt-3 child-form justify-content-center">
+  <div class="form-group col-12 col-sm-6 col-lg-5">
+    <label class="form-control-label ft-bold">Start Date</label>
+    <%= lp_text_field(f, :starts_at, "none", f.object.starts_at, {class: 'date-field date-field-' + f.index.to_s + ' form-control', inline_div: true, disabled: true}) %>
+  </div>
+  <div class="form-group col-12 col-sm-6 col-lg-5">
+    <label class="form-control-label ft-bold">End Date</label>
+    <%= lp_text_field(f, :ends_at, "none", f.object.ends_at, {class:  'date-field date-field-' + f.index.to_s + ' form-control', inline_div: true, disabled: true}) %>
+  </div>
+  <!-- <div class="form-group col-12 col-sm-4">
+    <input type="hidden" value="false" name="restaurant[restaurant_exclude_dates_attributes][<%=f.index%>][_destroy]">
+    <a class="btn btn-link lp__remove_child hidden-md-down mt-4" href="#">Remove</a>
+    <a class="btn btn-link lp__remove_child hidden-lg-up pl-0" href="#">Remove</a>
+  </div> -->
+</div>

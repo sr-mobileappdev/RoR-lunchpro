@@ -1,0 +1,15 @@
+<div class="form-group row form-group-tight mb-3 child-form" data-template-id='menu_sub_item_option'>
+  <% parent_index = f.options.values_at(:parent_builder).first.object_name %>
+  <input type="hidden" value="<%=f.object._destroy%>" name="<%=parent_index%>[menu_sub_item_options_attributes][<%=f.index%>][_destroy]" id="_destroy_">
+  <%= lp_hidden_field(f, :id, f.object.id, {id: "menu_sub_item_option_#{f.object.id}"}) %>
+  <%= lp_hidden_field(f, :status, f.object.status, {id: "menu_sub_item_option_#{f.object.id}_status"}) %>
+  <div class="col-sm-5 pl-5">
+    <%= lp_text_field(f, :option_name, "Menu Option Type", nil, { placeholder: 'New Option', hide_label: true, "data-template-default" => "" }) %>
+  </div>
+  <div class="col-sm-2">
+    <%= lp_currency_field(f, :price_cents, "", f.object.price_cents, {hide_label: true, "data-template-default" => ""}) %>
+  </div>
+  <div class="col-sm-5">
+    <a href="#" class="lp__form_remove_item no_label" data-remove-template="menu_sub_item_option" data-index='<%= f.object.id %>' >Remove</a>
+  </div>
+</div>

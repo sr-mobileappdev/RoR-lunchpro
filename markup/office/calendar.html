@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+<div class="container-fluid" id="global-content-wrapper">
+    <!-- page yield -->
+
+    <!-- Calendar start -->
+    <div id="calendar"></div>
+    <!-- Calendar end -->
+
+</div>
+
+<!-- <footer> </footer> -->
+
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="../js/moment.min.js"></script>
+<script src="../js/fullcalendar.js"></script>
+<script>
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'month,agendaWeek',
+            center: 'title',
+            right: 'today prev,next'
+        },
+        views: {
+            month: {
+                titleFormat: 'MMMM YYYY'
+            },
+            agendaWeek: {
+                titleFormat: 'MMMM YYYY'
+            }
+        },
+        allDaySlot: false,
+        
+        eventLimit: 4,
+        businessHours: {
+            // days of week. an array of zero-based day of week integers (0=Sunday)
+            dow: [ 2, 3, 4, 5 ], // Monday - Thursday
+            start: '10:00',
+            end: '18:00'
+        },
+        dayRender: function (date, cell) {
+            var blocked = moment.utc('2017-06-22');
+            // TODO accept array of blocked dates
+            if (date.isSame(blocked, 'day')) {
+                cell.addClass('fc-disabled-day');
+            }
+        },
+        eventSources: [
+            {
+                events: [
+                    {
+                        title  : 'Breakfast - Open (15)',
+                        start  : '2017-06-09T13:00:00',
+                        className : "open"
+                    },
+                    {
+                        title  : "LU - Unavailable",
+                        start  : '2017-06-20T08:00:00',
+                        className : "booked"
+                    },
+                    {
+                        title  : "BR - Pfizer",
+                        start  : '2017-06-20T10:00:00',
+                        className : "confirmed"
+                    }
+                ]
+            }
+        ],
+        eventAfterAllRender: function (view){
+            $("#calendar")
+                .find('.fc-toolbar > .fc-center')
+                .append('<p class="until">Calendar is open until:' +
+                        '<span class="text-green">10/11/12</span></p>');
+        }
+
+    });
+</script>
+</body>
+</html>

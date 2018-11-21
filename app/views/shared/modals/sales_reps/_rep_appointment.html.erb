@@ -1,0 +1,119 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid">
+    <div class="row faux-modal-header bb-1">
+      <div class="col-1 mr-4 hidden-sm-down">
+        <i class="fa fa-calendar fa-responsive"></i>
+      </div>
+      <div class="col-12 col-sm-10 mt-1">
+        <h3 class="ft-bold"><a href="<%=appointment_office_link(@record)%>"><%= @record.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+        <span><%= short_date(@record.appointment_on) %></span>
+        <br/>
+        <span><%= "#{@record.appointment_slot.name}: #{slot_time(@record.starts_at(true))}" %></span>
+      </div>
+      <div class="col-12 mt-3">
+            <a href="#" class="btn btn-outline-info lp__cancel_appointment">Cancel Appointment</a>
+      </div>
+    </div>
+    <div class="row appointment-modal-body lp__appointment_body">
+      <div class="col-12 mb-4">
+        <h4 class="ft-bold d-inline mr-3">Suggested Order Count:</h4><h4 class="d-inline"><%=@record.appointment_slot.total_staff_count%></h4>
+      </div>
+      <div class="col-12 mb-1">
+        <h4 class="ft-bold">Providers Available for this Appointment:</h4>
+      </div>
+      <div class="col-12 row">
+        <% @record.office.providers_available_at(@record.appointment_slot).each do |provider| %>
+          <div class="col-12 col-sm-6 col-md-4 mt-3">
+            <h6><%= provider.display_name %></h6>
+          </div>
+        <% end %>
+      </div>
+      <hr class="col-12 p-0">
+      <% if false %>
+      <div class="col-12">
+        <h4 class="ft-bold">Select Food:</h4>
+      </div>
+      <div class="col-12 col-md-9 pt-2">
+        <p>Place an order with LunchPro or simply let the office know what you are bringing!
+      </div>
+      <div class="col-12 col-sm-4 col-md-3">
+        <a href="" class="btn btn-success">Select Food</a>
+      </div>
+      <% end %>
+      <% if false %>
+      <div class="col-2 hidden-sm-down">
+        <img src="https://source.unsplash.com/random/220x160" style="width: 100%;">
+      </div>
+      <div class="col-12 col-sm-7">
+        <h4 class="ft-bold">Jimmy John's - Garland</h4>
+        <p class="mb-0 mt-1">Cuisine Type</p>
+        <p>Total Price: $256.99</p>
+      </div>
+      <div class="col-12 col-sm-4 col-md-3 mt-3">
+        <a href="" class="btn btn-block btn-outline-info">View Order</a>
+      </div>
+      <% end %>
+      <% if false %>
+      <div class="col-sm-12 col-md-7">
+        <h4 class="ft-bold">You are bringing:</h4>
+        <p class="mt-1 mb-2"> Jimmy John's </p>
+        <a href="" class="btn btn-outline-info pr-4 pl-4 hidden-xs-down">Edit BYO</a>        
+        <a href="" class="btn btn-outline-info btn-block hidden-sm-up">Edit BYO</a>
+      </div>
+      <div class="col-12 col-md-5 text-right hidden-sm-down">
+        <p class="mb-2">Change your mind? You can still order through LunchPro!</p>
+        <a href="" class="btn btn-outline-info">Order Food</a>
+      </div>
+      <div class="col-12 col-md-5 hidden-md-up mt-3">
+        <p class="mb-2">Change your mind? You can still order through LunchPro!</p>
+        <a href="" class="btn btn-outline-info hidden-xs-down">Order Food</a>
+        <a href="" class="btn btn-outline-info btn-block hidden-sm-up">Order Food</a>
+      </div>
+      <% end %>
+      <% if false %>
+      <div class="col-12">
+        <h4 class="ft-bold">Office Cuisine Recommendation:</h4>
+      </div>
+      <div class="col-12 col-md-8 pt-2">
+        <p><%=@record.office.name%> has recommended the following cuisines:</p>
+      </div>
+      <div class="col-12 col-sm-5 col-md-4 hidden-sm-down">
+        <a href="" class="btn btn-info btn-block">View Restaurants</a>
+      </div>
+      <div class="col-1">
+        <i class="fa fa-image col-1 hidden-sm-down" style="font-size: 2vmax"></i>
+      </div>
+      <div class="col-12 col-md-11">
+        <p class="ft-bold mt-2 hidden-sm-down">American, Mexican, or Italian</p>
+        <p class="ft-bold hidden-md-up">American, Mexican, or Italian</p>
+      </div>
+      <div class="col-12 col-sm-5 col-md-4 hidden-md-up">
+        <a href="" class="btn btn-info btn-block">View Restaurants</a>
+      </div>
+      <% end %>
+      <div class="col-12">
+        <h4 class="ft-bold">Office Order Recommendation:</h4>
+      </div>
+      <div class="col-12 col-md-7 col-lg-8 pt-2">
+        <p><%=@record.office.name%> has recommended that you place this order (you may edit it as you wish to).</p>
+      </div>
+      <div class="col-12 col-sm-6 col-md-5 col-lg-4 hidden-sm-down">
+        <a href="" class="btn btn-info btn-block">View Reccomendation</a>
+      </div>
+      <div class="col-2 hidden-xs-down">
+        <img src="https://source.unsplash.com/random/220x160" style="width: 100%;">
+      </div>
+      <div class="col-12 col-sm-7">
+        <h4 class="ft-bold">Jimmy John's - Garland</h4>
+        <p class="mb-0 mt-1">Cuisine Type</p>
+        <p>Total Price: $256.99</p>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 hidden-md-up">
+        <a href="" class="btn btn-info btn-block">View Reccomendation</a>
+      </div>
+    </div>
+    <div class="lp__cancel_appointment_form" style="display: none;">
+      <%= render partial: "rep/appointments/components/appointment_cancel_form.html.erb"%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+#profile-menu-wrapper {
+	.nav-link {
+		padding: 0.5rem;
+		color: $white;
+		&:hover {
+			color: darken($white, 9%);
+		}
+	}
+	.nav-pills .nav-item.show .nav-link {
+		background-color: transparent;
+	}
+
+	.dropdown {
+		// we have some layered menus going on
+		.dropdown-menu {
+			z-index: 0;
+		}
+		&.show .dropdown-menu {
+			z-index: 2;
+		}
+	}
+
+	.dropdown-menu {
+		width: 150%;
+	}
+}

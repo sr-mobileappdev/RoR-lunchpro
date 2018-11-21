@@ -1,0 +1,50 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :office_id) %>
+
+  <div class="row">
+    <div class="col-8">
+      <%= fields_for @record.provider do |prov| %>
+        <div class="form-group row form-group-tight">
+          <div class="col-2 lp_req">
+            <label for="drugs" class="form-control-label ft-bold">Title</label>
+            <input type="text" id="provider_title" name="provider[title]">
+          </div>
+          <div class="col-3 lp_req">
+            <%= lp_text_field(prov, :first_name, "First Name") %>
+          </div>
+          <div class="col-3">
+            <%= lp_text_field(prov, :middle_name, "Middle") %>
+          </div>
+          <div class="col-4 lp_req">
+            <%= lp_text_field(prov, :last_name, "Last Name") %>
+          </div>
+        </div>
+
+        <div class="form-group row form-group-tight">
+          <div class="col-8">
+            <label for="drugs" class="form-control-label ft-bold">Specialties</label>
+            <input type="text" id="provider_specialties" name="provider[specialties]">
+          </div>
+        </div>
+        <div class="form-group row form-group-tight my-3">
+          <div class="col-12">
+            <label>Provider Schedule</label>
+            <%= lp_check_field_inline(nil, :set_availability, "Set Availability same as Office") %>
+          </div>
+        </div>
+        <div class="form-group row form-group-tight">
+          <div class="col-12">
+            <label>Provider's Dietary Restrictions</label>
+            <% DietRestriction.active.each do |diet_restriction| %>
+              <%= lp_check_field_inline(nil, "diet_restrictions[#{diet_restriction.id}]", diet_restriction.name, @record.provider.diet_restrictions.include?(diet_restriction)) %>
+            <% end %>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+
+
+<% end %>

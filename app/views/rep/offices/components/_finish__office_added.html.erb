@@ -1,0 +1,13 @@
+<div class="col-md-12 pl-5 pr-5">
+  <p class="text-center mt-5 pt-3"> <%= finish_calendar_icon %></p>
+  <p class="text-center pt-2 pl-4 pr-4"><strong><%= @office.name %> has been added to your list!</strong></p>
+
+  <p class="text-center pt-2 pl-4 pr-4 pb-4">Now you can quickly schedule appointments, order food, and compile important information about this office.</p>
+
+  <a href="<%= rep_offices_path %>" class="btn btn-sm btn-primary btn-block mt-4">Done</a>
+  <% if @office.private__flag %>
+    <a href="<%=set_delivery_rep_orders_path(office: @office)%>" class="btn btn-sm btn-secondary btn-block mt-2">Plcae An Order</a>
+  <% else %>
+    <a href="<%= policies_rep_appointments_path(office_id: @office.id) %>" class="btn btn-sm btn-secondary btn-block mt-2">Book An Appointment</a>
+  <% end %>
+</div>

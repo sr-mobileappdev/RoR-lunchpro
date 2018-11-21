@@ -1,0 +1,85 @@
+// Turbolinks fix to avoid JS reload on pure anchor changes only
+document.addEventListener("turbolinks:click", function(event) {
+  if (is_link_anchor_only(event.target)) {
+    return event.preventDefault();
+  }
+
+});
+
+document.addEventListener("turbolinks:load", function() {
+  window.debug_mode = true;
+  
+  //debug("Debug mode is ON. This can be changed in application/component_manager.js")
+
+  LPRepOfficeList_Initializer();
+  LPRepForm_Initializer();
+  LPRepConfirm_Initializer();
+  LPRepProfile_Initializer();
+  LPModal_Initializer();
+  LPRepAppointments_Initializer();
+  LPRepOfficeDetail_Initializer();
+  LPRepOfficeNew_Initializer();
+  LPRepOrderNew_Initializer();
+  LPObjectField_Initializer();
+  LPRestaurants_Initializer();
+  LPRepStripeForm_Initializer();
+  LPRepNotifications_Initializer();
+  LPRepOrderDetail_Initializer();
+  LPOrderItem_Initializer();
+  LPNotification_Initializer();
+  LPPopup_Initializer();
+
+});
+
+// Base Component New change observation
+
+var is_link_anchor_only = function(link) {
+  href = link.getAttribute('href');
+  if (href.charAt(0) == '#') {
+    return true;
+  } else {
+    return false;
+  }
+
+};
+
+var new_node_observer = new MutationObserver(function (mutations) {
+  mutations.forEach(function(mutation) {
+    for(var i = 0; i < mutation.addedNodes.length; i++) {
+      node = mutation.addedNodes[i];
+      if ($(node).attr("class") && $(node).attr("class").indexOf("comp__") !== -1 ) {
+        $( document ).trigger( "lp-component.added", [$(node)] );
+      }
+    }
+  });
+});
+
+
+// Observe DOM changes for components
+
+document.addEventListener("turbolinks:load", function() {
+
+  // Observe a specific DOM node / subtree
+  if ($(".__base").length <= 0) {
+    return;
+  }
+
+  new_node_observer.observe($('.__base')[0], {
+    childList: true,
+    subtree: true
+  });
+});
+
+
+$.stripe = Stripe("<%=ENV['STRIPE_PKEY']%>");
+// linkTargetsAnchorOnSamePage = (link) ->
+//   href = link.getAttribute('href')
+
+//   return true if href.charAt(0) == '#'
+
+//   if href.match(new RegExp('^' + window.location.toString().replace(/#.*/, '') + '#'))
+//     return true
+//   else if href.match(new RegExp('^' + window.location.pathname + '#'))
+//     return true
+
+//   return false

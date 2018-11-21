@@ -1,0 +1,34 @@
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2 comp__new">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light lp__new"><span class="pr-3">New Phone</span> <span class="lp__subheader"><%= @rep.display_name %></span></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with buttons">
+        <button type="button" class="btn btn-success btn-sm" data-submit aria-label="Add Phone"><%= (@record.new_record?) ? 'Add Phone' : 'Save Changes' %></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content comp__form">
+
+  <%= form_for [@rep, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-4 lp_req">
+            <%= lp_text_field(f, :phone_number, "Phone Number", nil, {class: 'form-control form-control-sm phone_number_input'}) %>
+          </div>
+          <div class="col-sm-2">
+            <%= lp_select_field(f, :phone_type, "Phone Type", selectable_enum(SalesRepPhone.phone_types)) %>
+          </div>
+          <div class="col-sm-3">
+            <%= lp_select_field(f, :notification_preference, "Notify?", selectable_enum(SalesRepEmail.notification_preferences, "notify")) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+
+</div>

@@ -1,0 +1,23 @@
+<div class="vertical-nav">
+  <ul id="appointments-list">
+    <!-- loop -->
+    <% slot_manager.past_orders.each do |day, group| %>
+      <li>
+        <div class="vertical-nav-li-header appointments-header" data-date="<%= Date.parse(day).strftime("%F") %>">
+          <%= day %>
+        </div>
+        <% group.sort_by{|appt| appt.starts_at(true)}.each do |appointment| %>
+          <% appointment.orders.each do |order| %>
+            <% if !order.cancelled? %>
+            <div class="targ__slot">
+              <%= render partial: 'rep/orders/components/sales_rep_order', locals: {order: order} %>
+            </div>
+            <% else %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>  
+    <!--end loop-->
+  </ul>
+</div>

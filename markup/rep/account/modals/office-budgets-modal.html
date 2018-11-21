@@ -1,0 +1,93 @@
+<div id="office-budgets-modal" class="modal">
+    <div class="modal-dialog" role="document">
+        <h1 class="sr-only">Budget Preferences</h1>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-2">
+                        <a class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="hidden-sm-down">Cancel</span>
+                            <i class="fa fa-close hidden-md-up"></i>
+                        </a>
+                    </div>
+                    <div class="col-8 text-center">
+                        <h5 class="modal-title">{{ Modal Title }}</h5>
+                    </div>
+                    <div class="col-2 text-right">
+                        <a class="close" data-dismiss="modal" aria-label="Save">
+                            <span class="hidden-sm-down">Save</span>
+                            <i class="fa fa-save hidden-md-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- in case it needs a search later
+                <div class="modal-header-add-on">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        &lt;!&ndash;
+                          the comps show this as a search that can filter mulitple terms and insert pills/tags into the search input itself.
+                          maybe there is a js plugin or node package that can do this??
+                           &ndash;&gt;
+                        <input type="text" class="form-control" placeholder="Search for {{ something }}">
+                    </div>
+                </div>
+                -->
+            </div>
+            <div class="modal-body">
+
+                <!-- results loop -->
+                <div class="form-group">
+                    <h3>{{ Offfice Name }}</h3>
+                    <p>{{ Office Address }}</p>
+                    <label>Max Price Per Person</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3>{{ Offfice Name }}</h3>
+                    <p>{{ Office Address }}</p>
+                    <label>Max Price Per Person</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3>{{ Offfice Name }}</h3>
+                    <p>{{ Office Address }}</p>
+                    <label>Max Price Per Person</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <h3>{{ Offfice Name }}</h3>
+                    <p>{{ Office Address }}</p>
+                    <label>Max Price Per Person</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input class="form-control" type="text">
+                    </div>
+                </div>
+
+                <!-- if no results -->
+                <div class="alert alert-danger">
+                    <p>Sorry, we aren't showing any budgets in our database.</p>
+                    <button type="button">Start a Budget</button>
+                </div>
+            </div>
+            <!-- in case we need to add a footer dynamically later
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

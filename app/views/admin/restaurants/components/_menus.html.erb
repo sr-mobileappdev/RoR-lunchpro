@@ -1,0 +1,24 @@
+<% if @restaurant.present? && !@restaurant.new_record? %>
+  <div class="p-3">
+    <%= render partial: 'admin/shared/components/flash' %>
+    <div>
+      <%= render partial: 'admin/restaurants/components/menu_form' %>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="row">
+      <div class="col-12 mt-2">
+        <%= render partial: 'admin/shared/components/tables/static_table',
+                    locals: {
+                      table_actions: [{name: 'Import Menu', btn_class: 'btn-secondary', url: new_admin_restaurant_menu_path(@restaurant)}],
+                      title: 'Active Menus',
+                      columns: ['id', 'name', 'available_time'],
+                      model_class: 'Menu',
+                      actions: [{title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this menu?", path: delete_admin_restaurant_menu_path(@restaurant, "<id>", wizard: true), button_class: 'btn btn-danger btn-sm'}],
+                      objects: @restaurant.menus.where.not(status: ['deleted','inactive'])
+                    } %>
+      </div>
+    </div>
+  </div>
+<% end %>

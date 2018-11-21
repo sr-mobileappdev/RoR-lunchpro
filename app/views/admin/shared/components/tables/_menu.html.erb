@@ -1,0 +1,74 @@
+<% menu_items = restaurant.menu_items_for(local_assigns[:menu]) %>
+<% menu_scope = restaurant.menu_name_for(local_assigns[:menu]) %>
+
+<h5 class="lp__table_header">Lunch Packs</h5>
+<table class="lp__table table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Item</th>
+      <th>Dietary</th>
+      <th>Serves</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if menu_items[:packs].count == 0 %>
+      <tr><td colspan="5">No Lunch Packs Available</td></tr>
+    <% end %>
+    <% menu_items[:packs].each do |pack| %>
+      <tr>
+        <th scope="row"></th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="lp__actions">
+          <div class="btn-toolbar justify-content-end" role="toolbar">
+            <%= link_to "Select", "", class: 'btn btn-primary btn-sm' %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h5 class="lp__table_header">
+  <a class="menu_selector <%= (menu_scope == "Full Menu") ? 'active' : '' %>" href="<%= edit_admin_office_order_path(@office, @record, step: 2, menu_id: nil) %>">Full Menu</a>
+  <% restaurant.menus.where(:status => 'active').each do |menu| %>
+    <a class="menu_selector <%= (menu_scope == menu.name) ? 'active' : '' %>" href="<%= edit_admin_office_order_path(@office, @record, step: 2, menu_id: menu.id) %>"><%= menu.name %></a>
+  <% end %>
+</h5>
+<table class="lp__table table">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Item</th>
+      <th>Dietary</th>
+      <th>Serves</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if menu_items[:item_groups].count == 0 %>
+      <tr><td colspan="5">No Items Available</td></tr>
+    <% end %>
+    <% menu_items[:item_groups].each do |name, items| %>
+      <tr>
+        <td colspan="5"><span class="large"><%= category_name(name) %></span></td>
+      </tr>
+      <% items.each do |item| %>
+        <tr>
+          <th scope="row"><%= item.name%><br/><span class="small"><%= item.description %></span></th>
+          <td><%= diet_restrictions_list(item.diet_restrictions, "<span class='small'>None</span>") %></td>
+          <td><%= pluralize(item.people_served, "Person") %></td>
+          <td><%= precise_currency_value(item.retail_price_cents) %></td>
+          <td class="lp__actions">
+            <div class="btn-toolbar justify-content-end" role="toolbar">
+              <%= link_to "Select", select_item_admin_order_path(@record, item_id: item.id), class: 'btn btn-primary btn-sm __ajax_link', "data-popup" => true, "data-popup-title" => "Add Item", "data-popup-large" => true%>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

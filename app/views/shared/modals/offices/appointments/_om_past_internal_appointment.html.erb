@@ -1,0 +1,33 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid comp__om_appointments">
+    <div class="row appointment-modal-body comp__om_form">
+      <div class="col-12 text-center mb-3">
+        <p class="mb-0">Past Internal Appointment</p>
+      </div>
+      <div class="col-12 row mt-3 pr-0 mr-0">
+        <div class="pr-4 pt-1 hidden-xs-down">
+          <%= slot_food_icon(@appointment.appointment_slot.slot_type) %>
+        </div>
+        <div class="col-12 col-sm-7 p-0">
+          <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+          <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+        </div>
+      </div>
+      <div class="col-12 mt-3 row internal-appointment">
+        <div class="col-12 col-xl-11 pl-0">
+          <div class="form-group col-12 p-0">
+            <label class="form-control-label ft-bold">Appointment Title:</label>
+            <p><%=@appointment.title%></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-10 ml-auto mr-auto mt-4 p-0">
+        <% if @appointment.food_ordered? %>
+        <a data-modal="true" data-modal-title="" class="btn btn-outline-info btn-block" href="<%=office_order_path(@appointment.current_order.id)%>" data-dismiss="modal">View Order</a>
+        <% else %>
+          <p class="text-center"><i>There was no food ordered for this internal appointment.</i></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

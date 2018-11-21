@@ -1,0 +1,23 @@
+<% tab 'account' %>
+<% title 'Passcode Set Up Complete' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal narrow">
+        <div class="row">
+          <div class="col-md-12 pl-5 pr-5">
+            <div class="text-info pt-5 text-center">
+              <%= finish_calendar_icon %>
+            </div>
+              <p class="text-center"></p>
+              <p class="text-center pl-4 pr-4 mt-3"><strong>Your Passcode Has Been Setup!</strong></p>  
+              <a href="<%= office_passcode_path %>" class="btn btn-sm btn-primary btn-block mt-4">Done</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

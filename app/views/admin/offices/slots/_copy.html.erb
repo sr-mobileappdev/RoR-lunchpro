@@ -1,0 +1,23 @@
+<p class="small">Select the day of week you'd like to copy <%= @day %> slots to.<br/><strong>This will copy or replace the slots for your selected day.</strong></p>
+
+<%= form_tag create_copy_admin_office_slots_path(@office), method: :post do %>
+  <%= lp_hidden_field(nil, :source_day, @day) %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <%= lp_select_field(nil, :day, "", days_of_week(except: @day), {}) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-toolbar mt-3 mb-2" role="toolbar" aria-label="Toolbar with button groups">
+        <input type="submit" class="btn btn-primary btn-sm mr-2" value="Copy" />
+      </div>
+    </div>
+  </div>
+<% end %>

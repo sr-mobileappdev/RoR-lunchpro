@@ -1,0 +1,40 @@
+<% tab 'preferences' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_user_path(@record) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @record.display_name %></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <% if !@record.space_admin? %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_user_path(@record), active_tab: 'overview'},
+                    {title: 'Notification Preferences', path: admin_user_preferences_path(@record), active_tab: 'preferences'}
+                  ]
+                } %>
+  <% end %>
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Notification Preferences',
+                    table_actions: [{name: 'Edit Preferences', url: edit_preferences_admin_user_preferences_path(@record)}],
+                    columns: ['notification_event.internal_summary', 'sms_enabled__flag', 'email_enabled__flag'],
+                    model_class: 'Views::NotificationPreference',
+                    objects: @record.notification_preferences
+                  } %>
+    </div>
+  </div>
+
+</div>

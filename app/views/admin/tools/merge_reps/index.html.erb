@@ -1,0 +1,74 @@
+<% tab 'merge_reps' %>
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4">
+      <h2 class="lp__light"><span class="pr-2">Merge Reps</span> <span class="lp__subheader">Tools & Setup</span></h2>
+    </div>
+    <div class="col-6 px-4 text-right">
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Tools', path: admin_tools_path, active_tab: 'overview'},
+                  {title: 'Merge', path: admin_tools_merge_reps_path, active_tab: 'merge_reps'},
+                  {title: 'Cuisines', path: admin_tools_cuisines_path, active_tab: 'cuisines'},
+                  {title: 'Dietary Restrictions', path: admin_tools_diet_restrictions_path, active_tab: 'diet'},
+                  {title: 'Holidays', path: admin_tools_holiday_exclusions_path, active_tab: 'holiday'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="comp__table">
+        <h5 class="lp__table_header">Sales Reps
+          <% if @search && @search.id %>
+            <a href="<%= admin_tools_merge_reps_path %>" class="lp__search"><span class="oi oi-magnifying-glass"></span> Clear Search</a>
+          <% else %>
+            <a class="lp__search trig-show-search" href=""><span class="oi oi-magnifying-glass"></span> Search</a>
+          <% end %>
+        </h5>
+
+        <div class="lp__search_fields show">
+          <%= form_for @search, url: @search_path, method: "POST" do |f| %>
+            <%= lp_hidden_field(nil, :for, 'merge_reps') %>
+            <%= render partial: 'admin/shared/components/search/fields',
+                    locals: {
+                      search: @search,
+                      rows: [
+                        {fields: [{'first_name' => { w:2 }}, 'last_name']},
+                        {fields: [{'email_no_message' => {w:3, title: 'Email'}}, {'phone_record' => {title: 'Phone'}}]}
+                      ]
+                    } %>
+
+            <hr />
+            <div class="ml-2 mb-2 mt-3">
+              <input type="submit" class="btn btn-secondary btn-sm" value="Search" />
+            </div>
+
+          <% end %>
+        </div>
+
+        <div class="lp__pagination targ-table-pagination">
+          <div class="is-loading-stickies"></div>
+        </div>
+        <div class="comp__form pt-4">
+          <%= form_tag(controller: 'merge_reps', action: 'merge', method: 'post') do %>  
+            <table class="lp__table table autoload" data-table-url="<%= table_admin_tools_merge_reps_path(scope: (@scope) ? @scope : nil, search_id: (@search && @search.id) ? @search.id : nil, page: @page, sort: @sort, per_page: @per_page) %>">
+              <%= render partial: 'admin/shared/components/tables/loading_content', locals: {message: ''} %>
+            </table>
+
+            <button data-submit type="submit" class="btn btn-success">Merge Reps</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

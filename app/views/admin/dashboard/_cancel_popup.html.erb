@@ -1,0 +1,22 @@
+<p class="small">Please enter the reason for cancelling this appointment</p>
+
+<%= form_tag cancel_app_admin_dashboard_path(@appointment), method: :post do %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-10">
+          <%= lp_text_area(nil, :cancel_reason, "Cancellation Reason", "required") %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-toolbar mt-3 mb-2" role="toolbar" aria-label="Toolbar with button groups">
+        <input type="submit" n class="btn btn-primary btn-sm mr-2" value="Cancel Appointment" />
+      </div>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,41 @@
+label {
+	margin-bottom: 0.2rem !important;
+	&.form-control-label {
+		font-weight: 500;
+		color: $black;
+	}
+}
+legend.col-form-legend {
+	padding: 0;
+	font-weight: 500;
+	color: $black;
+}
+
+.overflow-hidden{
+  overflow: hidden;
+}
+.lp_req{
+    label{
+        content: "";
+        width: 4px;
+        height: 4px;
+        margin-left: 4px;
+        position: relative;
+        top: -1px;
+        display: inline-block;
+        border-radius: 2px;
+        background: $clr--red;
+      }
+}
+
+label.required_field{
+	content: "";
+	width: 4px;
+	height: 4px;
+	margin-left: 4px;
+	position: relative;
+	top: -1px;
+	display: inline-block;
+	border-radius: 2px;
+	background: $clr--red;
+}

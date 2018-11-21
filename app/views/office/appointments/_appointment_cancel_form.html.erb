@@ -1,0 +1,38 @@
+<div class="row appointment-modal-body comp__om_form">
+  <div class="col-12 mt-3 hidden-xs-down">
+    <h3 class="ft-bold font-lg">Are you sure you want to cancel this appointment?</h3>
+    <p class="mt-1">We will notify the sales rep for you if you do cancel it.</p>
+  </div>
+  <div class="col-12 mt-3 row hidden-sm-up">
+    <h3 class="ft-bold font-lg">Are you sure you want to cancel this appointment?</h3>
+    <p class="mt-1">We will notify the sales rep for you if you do cancel it.</p>
+  </div>
+  <div class="col-12 col-md-6 row">
+    <div class="col-2 col-md-3 hidden-xs-down">
+      <%= om_food_icon%>
+    </div>
+    <div class="col-10 col-md-9 pl-0">
+      <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+      <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+    </div>
+  </div>
+  <div class="col-12 col-md-6 row">
+    <div class="col-2 col-md-3 hidden-xs-down">
+      <%= om_user_icon %>
+    </div>
+    <div class="col-10 col-md-9 pl-0">
+      <h5 class="mt-2"><%=@appointment.sales_rep.display_name%></h5>
+      <p><%=@appointment.sales_rep.company_name %></p>
+    </div>
+  </div>
+  <%= form_for @appointment, url: { controller: "appointments", action: "cancel" }, method: "post",  html: { class: "col-12 pl-0 mt-2 pt-0", autocomplete: "off" } do |f| %>
+    <div class="col-12 p-0">
+      <label><strong>Message</strong></label>
+      <%= lp_text_area(f, :cancel_reason, "none", nil, {class: 'form-control m-0', style: 'resize: none', rows: '10', placeholder: 'Please enter a cancelation reason.'}) %>
+    </div>
+    <div class="col-12 row text-center mt-2 justify-content-center pr-0">
+      <a  href="<%=current_office_calendars_path%>" class="col-12 col-sm-8 col-md-5 btn btn-success mt-2" data-dismiss="modal">Keep Appointment</a><div class="hidden-sm-down m-2"></div>
+      <button data-submit type="submit" class="col-12 col-sm-8 col-md-5 btn btn-outline-info mt-2">Cancel Appointment</button><div class="hidden-sm-down m-2"></div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,45 @@
+<% tab '' %>
+<% title 'Change Password' %>
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4 comp__rep_form">
+      <div id="logo-badge"></div>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put}) do |f| %>
+      <% if resource.errors.full_messages.any? %>
+        <div class="lp__error_box show">
+          <a class="lp__close">
+            <span class="oi oi-x" title="close" aria-hidden="true"></span>
+          </a>
+          <p>Unable to reset password due to the following errors:</p>
+          <ul>
+            <% resource.errors.full_messages.each do |error| %>
+              <li><%= error %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.hidden_field :reset_password_token %>
+        <div class="form-group">
+          <%= f.label :password, "New password" %><br />
+          <%= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control' %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation, "Confirm new password" %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+        </div>
+        <div class="actions">
+          <%= f.submit "Change my password", class: 'btn btn-primary btn-block mb-2' %>
+        </div>        
+      <% end %>
+      <div class="mt-5">
+          <%= link_to "Log In!", new_session_path(resource_name), class: 'btn btn-info btn-block' %>
+        </div>
+
+        <div class="mt-3">
+          <%= link_to "New to LunchPro? Sign Up!", new_registration_path(resource_name), class: 'btn btn-outline-info btn-block' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

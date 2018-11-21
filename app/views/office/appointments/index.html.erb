@@ -1,0 +1,21 @@
+<% tab 'appointments' %>
+<% title 'Appointments' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center p-3 row">
+      <div class="col-md-11 ml-auto mr-auto mt-3 row">
+        <div class="col-12 col-md-7 row">
+          <h3 class="ft-bold mt-3 mr-4">Appointment Slots</h3>
+        </div>
+        <div class="col-12 mt-5 p-0">
+        <%= render partial: 'office/shared/components/tables/slot_calendar',
+                  locals: {
+                    objects: @office.appointment_slots_by_day,
+                    parent_object: @office
+                  } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

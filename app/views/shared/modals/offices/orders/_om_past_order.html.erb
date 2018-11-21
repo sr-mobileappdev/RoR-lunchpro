@@ -1,0 +1,32 @@
+<div class="modal-body p-0 appointment-modal comp__om_appointments" data-initialize-stars=true>
+  <div class="container-fluid">
+    <div class="row faux-modal-header bb-1">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= order_history_hourglass_icon %>
+      </div>
+      <div class="col-xs-12 col-sm-9 mt-1">
+        <h3 class="ft-bold"><a href="#"><%= @order.appointment.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+        <span><%= short_date(@order.appointment.appointment_on) %></span>
+        <br/>
+        <% if @order.appointment.appointment_slot %>
+        <span><%= "#{@order.appointment.appointment_slot.name}: #{slot_time(@order.appointment.starts_at(true))}" %></span>
+        <% else %>
+        <span><%= "#{slot_time(@order.appointment.starts_at(true))}" %></span>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-12 p-0">
+      <div class="tab-pane with-cards pr-1">
+        <div class="card-columns mb-3 row">
+          <div class="row appointment-modal-body lp__appointment_body col-12 pr-0">
+            <%= render partial: "office/orders/components/past_order_detail.html.erb"%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+LPOmForm_Initializer();
+LPOmAppointments_Initializer();
+</script>

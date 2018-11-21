@@ -1,0 +1,158 @@
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--edit_admin_restaurant_path(@record) } %>-->
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2 comp__new edit">
+  <div class="row">
+    <div class="col-8 px-4"><h2 class="lp__light lp__new"><span class="pr-3">Preferences</span> <span class="lp__subheader"><%= @record.name %></span></h2></div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with buttons">
+        <button data-submit type="submit" class="btn btn-success btn-sm mr-3">Save Changes</button>
+        <a href="<%= menu_items_setup_admin_restaurant_menu_items_path(restaurant_id: @record.id) %>" class="btn btn-primary btn-sm mr-2">Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content comp__form">
+  <%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "new-menu-form", autocomplete: "off" } do |f| %>
+
+    <div class="row col-12">
+      <div class="form-group row col-12 form-group-tight">
+        <h4>Local Timezone</h4>
+        <div class="row col-12 pt-2">
+          <div class="col-3">
+            <%= lp_timezone_select_field(f, :timezone, "none", {hide_label: true}) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row form-group-tight mr-0 pr-0 col-12 comp__select_availability pt-3" data-nested-attributes="restaurant_restaurant_availabilities_attributes_">
+        <h4>Restaurant Hours</h4>
+        <p class="field_note">Select the days of the week and times that this restaurant is available.</p>
+        <div class="row pl-3">
+          <%= f.fields_for :restaurant_availabilities, f.object.restaurant_availabilities.sort_by{|avail| RestaurantAvailability.day_of_week_non_iso(avail.day)} do |o| %>
+            <div class="p-0 col-1 form-check justify-content-center align-items-center align-middle availability-day <%='availability-time-unselected' if !(o.object.status == 'active')%>">
+              <div class="row justify-content-center m-3">
+                <label class="form-check-label justify-content-center restaurant-label <%= 'checked' if (o.object.status == 'active')%>">
+                  <input class="form-checkbox form-control" type="checkbox">
+                    <%= o.object.day[0..2] %>
+                </label>
+              </div>
+              <div class="child-form col justify-content-center text-center">
+                <input type="hidden" value="<%=o.object.status%>" name="restaurant[restaurant_availabilities_attributes][<%=o.index%>][status]" id="_status_">
+                <%= lp_hidden_field(o, :day_of_week) %>
+                <% if o.object.new_record? %>
+                  <%= lp_slot_timeframe_field(o, :starts_at, 'none', 15, o.object.starts_at || nil, {hide_label: true, class: "form-control d-inline availability-time-select", capitalize_time: true}) %>
+                  <%= lp_slot_timeframe_field(o, :ends_at, 'none', 15, o.object.ends_at || nil, {hide_label: true, class: "form-control d-inline availability-time-select mt-5", capitalize_time: true}) %>
+                <% else %>
+                  <%= lp_slot_timeframe_field(o, :starts_at, 'none', 15, o.object.starts_at(true) || nil, {hide_label: true, class: "form-control d-inline availability-time-select", capitalize_time: true}) %>
+                  <%= lp_slot_timeframe_field(o, :ends_at, 'none', 15, o.object.ends_at(true) || nil, {hide_label: true, class: "form-control d-inline availability-time-select mt-5", capitalize_time: true}) %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row col-12 form-group-tight pt-3">
+        <h4>Price Range</h4>
+        <div class="row col-12 ml-0 pl-0">
+          <div class="col-2">
+            <%= lp_text_field(f, :person_price_low, "Price Range (Low)", @record.person_price_low) %>
+          </div>
+          <div class="col-2">
+            <%= lp_text_field(f, :person_price_high, "Price Range (High)", @record.person_price_high) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row col-12 form-group-tight pt-3">
+        <h4>Order Limitations</h4>
+        <div class="row col-12 m-0 p-0">
+          <div class="col-2">
+            <%= lp_currency_field(f, :min_order_amount_cents, "Min. Order $", @record.min_order_amount_cents) %>
+          </div>
+          <div class="col-2">
+            <%= lp_text_field(f, :max_order_people, "Max People") %>
+          </div>
+          <div class="col-2">
+            <%= lp_select_field(f, :orders_until, "Order Cutoff Date", selectable_enum(Restaurant.orders_untils, "until_")) %>
+          </div>
+          <div class="col-2">
+            <% if @record.new_record?%>
+              <%= lp_end_timeframe_field(f, :orders_until_hour, "Orders Until Hour", 60, @record.orders_until_hour) %>
+            <% else %>
+              <%= lp_end_timeframe_field(f, :orders_until_hour, "Orders Until Hour", 60, @record.orders_until_hour(true)) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row col-12 form-group-tight pt-3">
+        <h4>Fees</h4>
+        <div class="row col-12 m-0 p-0">
+          <div class="col-2">
+            <%= lp_currency_field(f, :default_delivery_fee_cents, "Default Delivery Fee", @record.default_delivery_fee_cents) %>
+          </div>
+          <div class="col-2">
+            <%= lp_select_field(f, :processing_fee_type, "Processing Fee Type", selectable_enum(Restaurant.processing_fee_types, "type_")) %>
+          </div>
+          <div class="col-2">
+            <%= lp_percentage_field(f, :processing_fee_percent, "Processing Fee %", @record.processing_fee_percent) %>
+          </div>
+          <div class="col-2">
+            <%= lp_currency_field(f, :late_cancel_fee_cents, "Late Cancel Fee $", @record.late_cancel_fee_cents) %>
+            <p class="field_note">Late cancellation fee will be charged to sales rep if the sales rep cancels the order after the order cutoff date and time.</p>
+          </div>
+          <div class="col-4">
+            <label>Tip & Tax Withholding</label>
+            <%= lp_check_field_inline(f, :withhold_tip, "Always Withhold Tip", @record.withhold_tip) %>
+            <%= lp_check_field_inline(f, :withhold_tax, "Always Withhold Tax", @record.withhold_tax) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row col-12 form-group-tight pt-2">
+        <h4>Delivery Radius</h4>
+        <%= fields_for @record.delivery_distance do |fd| %>
+          <div class="row col-12 m-0 p-0">
+            <div class="col-4 col-xl-2">
+              <%= lp_select_field(nil, :trig__radius, "Select a distance type", [['Basic Radius', 'basic'], ['Detailed Radius', 'advanced']], {selected: (@record.advanced_radius?) ? 'advanced' : 'basic'}) %>
+            </div>
+            <div class="col-4 col-xl-2 targ__basic_radius <%= (@record.advanced_radius?) ? 'lp__hide' : '' %>">
+              <%= lp_numeric_field(fd, :radius, "Delivery Radius (miles)", {in: 1..100}) %>
+            </div>
+            <div class="col-4 targ__advanced_radius <%= (@record.advanced_radius?) ? '' : 'lp__hide' %>">
+              <div class="row">
+                <div class="col">
+                  <%= lp_numeric_field(fd, :north, "North", {in: 1..100}) %>
+                </div>
+                <div class="col">
+                  <%= lp_numeric_field(fd, :east, "East", {in: 1..100}) %>
+                </div>
+                <div class="col">
+                  <%= lp_numeric_field(fd, :south, "South", {in: 1..100}) %>
+                </div>
+                <div class="col">
+                  <%= lp_numeric_field(fd, :west, "West", {in: 1..100}) %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <%= lp_numeric_field(fd, :north_east, "Northeast", {in: 1..100}) %>
+                </div>
+                <div class="col">
+                  <%= lp_numeric_field(fd, :south_east, "Southeast", {in: 1..100}) %>
+                </div>
+                <div class="col">
+                  <%= lp_numeric_field(fd, :south_west, "Southwest", {in: 1..100}) %>
+                </div>
+                <div class="col">
+                  <%= lp_numeric_field(fd, :north_west, "Northwest", {in: 1..100}) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

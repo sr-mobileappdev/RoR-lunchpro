@@ -1,0 +1,80 @@
+<% tab 'calendar' %>
+<% title 'My Calendar' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+<div class="lp__scroll_containers comp__rep_appointments row" data-office-id="<%= @office.id%>">
+  
+  <!-- left -->
+  <div class="lp__fixed col-md-2">
+    <div class="col-12 mt-3 ml-2">
+      <a href="<%= policies_rep_appointments_path(office_id: @office.id) %>" class="pt-1 font-weight-bold appt-back-btn" ><i class="fa fa-arrow-left pr-1"></i>BACK</a>
+    </div>
+    <div class="col-md-12 comp__filters mt-5">
+      <h3 class="ml-3 mr-3 mt-4 pb-1 filter-h3">Filters
+      </h3>
+      <p class="ml-3 mr-3 mt-0">Expected Providers:</p>
+      <ul>
+        <% @office.providers.active.each do |provider| %>
+        <li>
+          <button class="lp__filters_provider" href="#" data-office-id="<%= @office.id%>" data-toggleable=true data-off-value="<%= provider.id%>"><%= provider.display_name %></button>
+        </li>
+        <% end %>
+      </ul>
+      <p class="ml-3 mr-3 mt-4 small">Selecting multiple providers will filter for slots when all are available. </p>
+    </div>
+  </div>
+  
+  <!-- right -->
+  <div class="lp__fixed col-md-4 push-md-6">
+    <!-- Calendar Component -->
+    <div class="col-md-12">
+      <!-- calendar widget -->
+      <section id="rep-calendar" class="container">
+        <div class="calendar-header row mb-2 pt-3 pb-3">
+          <div class="col-3">
+            <a class="fc-today-button" href="#today">Today</a>
+          </div>
+          <div class="col-12 col-xl-6">
+            <ul class="list-inline text-center mb-0">
+              <li class="list-inline-item pr-3"><a class="fc-prev-button" href="#prev-month"><i class="fa fa-arrow-left"></i></a></li>
+              <li class="list-inline-item"><h5 class="fc-calendar-title"></h5></li>
+              <li class="list-inline-item pl-3"><a class="fc-next-button" href="#next-month"><i class="fa fa-arrow-right"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="office_calendar" data-calendar-until="<%= simple_date(@office.appointments_until) %>" data-office-id="<%=@office.id%>"
+          data-start-date="<%=@start_date%>"></div>
+        <div class="calendar-key mt-3 mb-5">
+          <h3>Key</h3>
+          <ul>
+            <li class="open"><i class="key-color"></i>Open</li>
+            <li class="current-booked"><i class="key-color"></i>You/Partner</li>
+            <li class="current-pending"><i class="key-color"></i>Selected</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- horizontal divider for small screens -->
+    <div class="hidden-md-up col-12 sm-screen-horizontal-divider"></div>
+  <!-- center -->
+  <div class="lp__fixed col-md-6 pull-md-4 no-gutters p-0" id="scrollable-appointment-container">
+    <h5 class="text-center pb-3 pt-4 ft-bolder"><strong><%= @office.name %></strong></h5>
+    <!-- Appointment List Component -->
+    <div class="col-md-12 targ-rep-appointments no-gutters" style="display: none;">
+      <%= render partial: "rep/calendars/components/slots",
+      locals: {slot_manager: Views::OfficeAppointments.new(@office, calendar_range(Time.zone.now.to_date), current_user)} %>
+    </div>
+
+    <div id="skip" style="display: none;"> <!-- skip open until date message hidden by default (this.changeweek shows) -->
+      <div class="col-12 text-center mt-5 pt-5">
+        <h3>This office's calendar is only open until: <%= @office.appointments_until.strftime("%m/%d/%Y") %></p> </h3>
+          <br>
+          <h3>Please check back soon!</h3>
+        <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+      </div>
+    </div>
+    <!-- End -->
+  </div>
+  
+  
+</div>

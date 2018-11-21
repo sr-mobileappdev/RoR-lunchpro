@@ -1,0 +1,49 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid comp__om_office">
+    <div class="row appointment-modal-body comp__om_form">
+      <div class="col-12">
+        <%= form_for @office, :url => office_preference_path(@office.id), method: :patch,  html: { class: "form-inline", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+          <%= lp_hidden_field(nil, :redirect_to, "policies") %>
+          <div class="col-12 text-center mt-3 mb-3">
+            <h4 class="ft-bold">Select Dietary Restrictions</h4>
+          </div>
+          <ul class="list-unstyled list-group col-12 mt-3 mb-4">
+            <%= f.fields_for :diet_restrictions_offices do |o| %>
+              <li class="row mb-3 policies-list">
+                <input type="hidden" value="<%=o.object.diet_restriction_id %>" name="office[diet_restrictions_offices_attributes][<%=o.index%>][diet_restriction_id]">
+                <%= lp_hidden_field(o, :id) %>
+                <div class="form-check col-12 col-sm-6 justify-content-left">
+                  <% if o.object.new_record? %>
+                    <input type="hidden" value="<%=o.object._destroy%>" name="office[diet_restrictions_offices_attributes][<%=o.index%>][_destroy]" id="_destroy_<%=o.object.id%>">
+                    <input type="checkbox" value="false" name="office[diet_restrictions_offices_attributes][<%=o.index%>][_destroy]" class="mt-1">
+                  <% else %>
+                    <input type="hidden" value="true" name="office[diet_restrictions_offices_attributes][<%=o.index%>][_destroy]" id="_destroy_<%=o.object.id%>">
+                    <input type="checkbox" value="false" name="office[diet_restrictions_offices_attributes][<%=o.index%>][_destroy]" id="_destroy_<%=o.object.id%>" class="mt-1" checked>
+                  <% end %>
+                  <label for="inlineFormCheck" class="ml-2">
+                    <%= o.object.diet_restriction.name %>
+                  </label>
+                </div>
+                <div class="form-group col-8 col-sm-6">
+                  <%= lp_text_field(o, :staff_count, "none", o.object.staff_count, {class: "form-control col-12 col-sm-6 col-md-10 col-lg-7", placeholder: "Staff Count", hide_label: true}) %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+          <div class="col-12 text-center hidden-xs-down mb-4">
+            <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success" data-submit>Save</button>
+          </div>
+          <div class="col-10 ml-auto mr-auto text-center hidden-sm-up mb-4">          
+            <button type="submit" class="btn btn-success btn-block" data-submit>Save</button>
+            <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+LPOmOffice_Initializer();
+LPOmForm_Initializer();
+</script>

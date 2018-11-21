@@ -1,0 +1,39 @@
+<div class="col-12 p-0 tab-content-scrollable-appointments">
+  <div class="vertical-nav">
+    <ul class="appointments-list">
+      <% slots.each do |slot| %>
+        <li class="order-appointments">
+          <div class="vertical-nav-li-header appointments-header">
+            <%= short_date(slot.date) %>
+          </div>
+          <% slot.appointments.sort_by{|appt| appt.starts_at(true)}.each do |appt| %>
+            <a href="<%=policies_rep_orders_path(office_id: appt.office_id, appointment_id: appt.id)%>">
+              <div class="vertical-nav-li-content row no-gutters align-items-center appointments pl-0 pr-1">
+                <div class="hidden-xs-down ml-4 mr-3 pt-2">
+                  <%= calendar_clock_icon %>
+                </div>
+                <div class="col-10 col-sm-8 col-md-9 ml-3">
+                  <div class="h5 mt-3">
+                    <%= appt.office.name %>
+                  </div>
+                  <div class="mt-1">
+                    <%= appt.appointment_slot.name %> - <%= slot_time(appt.starts_at(true)) %>
+                  </div>
+                  <div class="mb-2">
+                    Sugg. Order Count: <%= appt.appointment_slot.total_staff_count %>
+                  </div>
+                </div>
+              </div>
+            </a>
+          <% end %>
+        </li>
+      <% end %>
+      <% if slots.count == 0 %>
+        <div class="col-12 p-3 text-center mt-5 pt-5">
+          <h4>You currently have no appointments scheduled, click <a href="<%=new_rep_appointment_path%>" class="text-underline">here</a> to schedule an appointment!</h4>
+          <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+        </div>
+      <% end %>
+    </ul>
+  </div>
+</div>

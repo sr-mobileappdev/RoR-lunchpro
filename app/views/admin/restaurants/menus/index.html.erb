@@ -1,0 +1,75 @@
+<% tab 'menu' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_restaurant_path(@restaurant) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4"><h2 class="lp__light"><span class="pr-3"><%= @restaurant.name %> <%= '(HQ)' if @restaurant.is_headquarters?%></span> <span class="lp__subheader">Menus</span></h2></div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_restaurant_path(@restaurant), active_tab: 'overview'},
+                  {title: 'Orders', path: admin_restaurant_orders_path(@restaurant), active_tab: 'orders'},
+                  {title: 'Menu', path: admin_restaurant_menus_path(@restaurant), active_tab: 'menu'},
+                  {title: 'Payments', path: admin_restaurant_payments_path(@restaurant), active_tab: 'payments'},
+                  {title: 'Bank Accounts', path: admin_restaurant_pay_methods_path(@restaurant), active_tab: 'pay_methods'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'New Menu', url: new_admin_restaurant_menu_path(@restaurant)}, {name: 'Import Menu', btn_class: 'btn-secondary', url: new_admin_restaurant_menu_path(@restaurant)}],
+                    title: 'Active Menus',
+                    columns: ['id', 'name', 'available_time'],
+                    model_class: 'Menu',
+                    actions: [
+                      {title: 'View', path: admin_restaurant_menu_path(@restaurant, "<id>"), button_class: 'btn btn-primary btn-sm'},
+                      {title: 'Export Menu', ajax_method: 'post', ajax_non_responsive:true, ajax_path: export_admin_restaurant_menu_path(@restaurant, "<id>"), button_class: 'btn btn-primary btn-sm'}
+                    ],
+                    objects: @restaurant.menus.where.not(status: ['deleted','inactive'])
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'New Lunch Pack', url: new_admin_restaurant_lunch_pack_path(@restaurant)}],
+                    title: 'Lunch Packs',
+                    columns: ['id', 'name', {title: 'Retail $', column: 'retail_price_cents', helper: 'precise_currency_value' }],
+                    model_class: 'LunchPack',
+                    actions: [{title: 'View Pack', path: admin_restaurant_lunch_pack_path(@restaurant, "<id>"), button_class: 'btn btn-primary btn-sm'}],
+                    objects: @restaurant.menu_items.where(:lunchpack => true).where.not(status: ['deleted']).order(name: :asc)
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'New Menu Item', url: new_admin_restaurant_menu_item_path(@restaurant)}, {title: 'Import Menu Items', name: 'Import Menu Items', btn_class: 'btn-secondary', url: new_admin_import_path(import_model: 'MenuItem', restaurant_id: @restaurant.id), context: :popup}],
+                    title: 'All Menu Items',
+                    columns: ['id', {title: 'Summary', column: 'menu_item', helper: 'menu_summary'}, {title: 'Category', column: 'category', helper: 'category_name'}, {title: 'Retail $', column: 'retail_price_cents', helper: 'precise_currency_value' }],
+                    model_class: 'MenuItem',
+                    actions: [{title: 'Activate', path: activate_admin_restaurant_menu_item_path(@restaurant, "<id>"), button_class: 'btn btn-success btn-sm', only_if: "is_inactive"}, {title: 'View', path: admin_restaurant_menu_item_path(@restaurant, "<id>"), button_class: 'btn btn-primary btn-sm'}],
+                    objects: @restaurant.menu_items.where.not(status: ['deleted'], lunchpack: true).order(category: :asc, name: :asc)
+                  } %>
+    </div>
+  </div>
+
+
+</div>

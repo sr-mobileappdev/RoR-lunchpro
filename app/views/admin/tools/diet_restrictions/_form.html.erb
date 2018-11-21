@@ -1,0 +1,23 @@
+<%= form_for [:tools, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-4 lp_req">
+          <%= lp_text_field(f, :name) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-8">
+          <%= lp_text_field(f, :description) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

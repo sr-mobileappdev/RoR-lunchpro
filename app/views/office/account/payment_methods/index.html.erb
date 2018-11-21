@@ -1,0 +1,78 @@
+<% tab 'account' %>
+<% title 'Payment Information' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers comp__om_office">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center pt-3 ">
+      <div class="lp__faux_modal med-large p-4 col-12">
+        <div class="h4 mb-2 ft-bold">Payment Information</div>
+        <p class="m-0">Your payment information is only used if you would ever like to order food through LunchPro for any internal events.</p>
+        <% if current_user.payment_methods.active.count > 0 %>
+          <div class="row pt-3">
+            <div class="col-lg-11 mb-5">
+              <label class="form-control-label">Default Card:</label> (automatically used unless otherwise noted)
+              <hr class="m-0">
+              <div class="card card-block mt-3">
+                <div class="card-text row">
+                  <% if @default_payment_method %>
+                  <div class="pl-3">
+                    <i class="fa <%=card_fa(@default_payment_method)%> fa-2x"></i>
+                  </div>
+                  <div class="col-10 col-xl-5 p1-1">
+                    <label class="form-control-label pb-0 mb-0"><%= @default_payment_method.display_summary %></label>
+                    <p class="p-0 m-0 small"><%= single_line_payment_address(@default_payment_method) %></p>
+                  </div>
+                  <div class="hidden-lg-down">
+                    <a href="<%=edit_office_account_payment_method_path(@default_payment_method)%>" class="btn btn-link">Edit</a>
+                    <a href="<%=delete_office_account_payment_method_path(@default_payment_method)%>" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                  </div>
+                  <div class="hidden-xl-up col-12 pt-2">
+                    <a href="<%=edit_office_account_payment_method_path(@default_payment_method)%>" class="btn btn-link">Edit</a>
+                    <a href="<%=delete_office_account_payment_method_path(@default_payment_method)%>" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                  </div>
+                  <%else%>
+                  <div class="col-12">
+                    <label>You currently don't have a default payment method set! Click <a href="<%= new_office_account_payment_method_path %>">Here</a> to add a new payment method.</label>
+                  </div>
+                  <% end%>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3">
+            <div class="col-lg-11 mb-2">
+              <label class="form-control-label">Additional Cards:</label>
+              <hr class="m-0">
+              <% @payment_methods.each do |payment_method| %>
+              <div class="card card-block mt-3">
+                <div class="card-text row">
+                  <div class="pl-3 pt-1">
+                    <i class="fa <%=card_fa(payment_method)%> fa-2x"></i>
+                  </div>
+                  <div class="col-10 col-xl-5 pt-1">
+                    <label class="form-control-label pb-0 mb-0"><%= payment_method.display_summary %></label>
+                    <p class="p-0 m-0 small"><%= single_line_payment_address(payment_method)%></p>
+                  </div>
+                  <div class="hidden-lg-down">
+                    <a href="<%=edit_office_account_payment_method_path(payment_method)%>" class="btn btn-link">Edit</a>
+                    <a href="<%=delete_office_account_payment_method_path(payment_method)%>" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                    <a href="<%=set_default_office_account_payment_method_path(payment_method)%>" data-confirm-method="post" data-confirm-check="Are you sure you want make this the default payment method?" class="btn btn-link">Mark As Default</a>
+                  </div>
+                  <div class="hidden-xl-up col-12 pt-2">
+                    <a href="<%=edit_office_account_payment_method_path(payment_method)%>" class="btn btn-link">Edit</a>
+                    <a href="<%=delete_office_account_payment_method_path(payment_method)%>" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                    <a href="<%=set_default_office_account_payment_method_path(payment_method)%>" data-confirm-method="post" data-confirm-check="Are you sure you want make this the default payment method?" class="btn btn-link">Mark As Default</a>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+            </div>
+            <a href="<%= new_office_account_payment_method_path %>" class="btn btn-link" data-comp-detail-tab="profile__new_payment_method">+ Add a new card</a>
+          </div>
+        <% else %>
+          <p><a href="<%= new_office_account_payment_method_path %>" class="btn btn-link pl-0">+ Add a new card</a></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

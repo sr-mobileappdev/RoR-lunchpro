@@ -1,0 +1,20 @@
+<% tab 'account' %>
+<% title 'Account' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {} %>
+
+<div id="global-content-wrapper" class="comp__restaurant_account" data-comp-tab-load="<%=@show_tab%>">
+    <!-- account -->
+    <div id="account-layout" class="row no-gutters">
+        <!-- left column --->
+        <div class="col-md-4 br-1 fixed-height profile-nav-container">
+            <!-- user profile -->
+            <%= render  partial: "restaurant/account/components/account_nav",
+                        locals: {area: ''} %>
+        </div>
+        <!-- right column -->
+        <div class="col-md-8 targ__restaurant_account">
+
+        </div>
+    </div>
+</div>

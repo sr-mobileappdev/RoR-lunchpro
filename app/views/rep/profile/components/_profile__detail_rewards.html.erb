@@ -1,0 +1,43 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 m-3 p-3 comp__rep_form">
+  <div class="h4 mb-3">Rewards</div>
+  <div class="col-12">
+    <% if @sales_rep.reward_points == 0 %>
+      <p class="text-bold">You have not received any rewards!</p>
+    <% else %>
+      <div class="col-12 p-0">
+        <p>
+          <span class="text-bold">Reward Points</span> <br />
+          <%= @sales_rep.reward_points %>
+        </p>
+        <p>
+          <span class="text-bold">Last Reward Date</span> <br />
+          <%= short_date(@sales_rep.last_reward_date) %>
+        </p>
+      </div>
+    <% end %>
+    <%= form_for @sales_rep, url: { controller: 'profile', action: "update"}, method: :post,  html: { class: "col-12 px-0 pt-2", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+      <%= lp_hidden_field(nil, :for, 'rewards') %>
+      <div class="row">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+          <%= f.fields_for :sales_rep_emails, f.object.sales_rep_emails.select{|email| email.email_type == 'personal'} do |o| %>
+            <%= lp_hidden_field(o, :email_type) %>
+            <%= lp_hidden_field(o, :created_by_id) %>
+            <%= lp_hidden_field(o, :status) %>
+            <div class="form-group">
+              <label class="mb-2">Please enter an email that you would like to receive rewards information!</label>
+              <%= lp_text_field(o, :email_address, nil, o.object.email_address, {class: 'form-control', hide_label: true, placeholder: 'Rewards Email'}) %>
+            </div>
+            <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 p-0"><button class="btn btn-success btn-block" data-submit>Save</button></div>
+          <% end %>          
+        </div>
+      </div>
+    <% end %>
+    <div class="col-12 text-center">
+      <img src="<%= image_path('flying_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+    </div>  
+    <p class="my-4">
+      Our Rep Rewards Program makes it easy to earn points and redeem them for Amazon & Nordstrom gift cards. Every dollar spent is a point earned. Sales Rep and Restaurant referrals are worth 2,500 points each. Refer a Medical Office and get 5,000 points when they join! For every 2,500 Rep Reward Points earned, you are eligible to redeem for a $25.00 gift card.
+    </p>
+  </div>
+</div>

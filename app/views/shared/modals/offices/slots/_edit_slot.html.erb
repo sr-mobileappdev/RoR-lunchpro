@@ -1,0 +1,52 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid">
+    <div class="row appointment-modal-body comp__om_form">
+      <div class="col-12 my-4">
+        <h3 class="ft-bold d-inline">Edit Appointment Slot</h3>
+        <span class="pull-right"><a class="btn btn-link p-0" data-confirm-method="post" data-confirm-check="Are you sure you want to delete this appointment slot? This will cancel all future appointments tied to this appointment"
+          href="<%= delete_office_slot_path(@slot)%>">Delete</a></span>
+      </div>
+      <%= form_for @slot, url: office_slot_path(@slot), html: { method: "put", class: "col-12 row m-0 p-0", autocomplete: "off" } do |f| %>
+        <%= lp_hidden_field(f, :activated_at) %>
+        <%= lp_hidden_field(f, :activated_by_id) %>
+        <%= lp_hidden_field(f, :status) %>
+        <div class="col-12 mt-2 ml-0 mr-0 row">
+          <%= f.select :slot_type, AppointmentSlot.slot_types.keys.map {|key| key.humanize}, {selected: f.object.slot_type.humanize}, {class: 'form-control col-12 col-sm-7 col-md-3 mb-3 slot-type-select mr-3 d-block'} %>
+
+          <div class="col-12 col-sm-6 col-md-4 pr-0">
+            <label class="col-5 col-sm-4 p-0">Starts At</label>
+            <%= lp_slot_timeframe_field(f, :starts_at, "none", 15, f.object.starts_at(true), {hide_label: true, class: "form-control d-inline col-6 p-0 mb-2"}) %>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 p-0">
+            <label class="col-5 col-sm-4 p-0">Ends At</label>
+            <%= lp_slot_timeframe_field(f, :ends_at, "none", 15, f.object.ends_at(true), {hide_label: true, class: "form-control d-inline col-6 p-0 mb-2"}) %>
+          </div>
+        </div>
+
+        <div class="col-12 p-0 mt-4 mb-5">
+          <p class="ft-bold h5 mb-2 ml-3">Day of the Week:</p>
+          <div class="col-6 p-0">
+            <div class="form-group pl-3">
+              <%= lp_select_field(f, :day_of_week, nil, selectable_day_enum(AppointmentSlot.day_of_weeks)) %>
+            </div>    
+          </div> 
+          <p class="ml-3 pt-3"><i>The staff count below is derived from the overall staff count entered in your Office Policies. If this number varies, please make adjustments.</i></p>
+          <div class="col-4">
+            <%= lp_numeric_field(f, :staff_count, nil, {class: "form-control"}, whole_number: true) %>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4 ml-auto">
+          <button type="button" data-dismiss="modal" class="btn btn-outline-info btn-block">Cancel</button>
+        </div>
+        <div class="col-sm-6 col-lg-4 mr-auto">
+          <button class="btn btn-success btn-block" type="submit" data-submit>Save</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  LPOmForm_Initializer();
+</script>

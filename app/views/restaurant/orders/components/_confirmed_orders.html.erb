@@ -1,0 +1,56 @@
+<div class="orders-list">
+  <ul id="icon-list">
+    <!-- loop -->
+    <% if (slot_manager.confirmed_orders_by_date.count >= 1) %>
+      <% order_groups = slot_manager.confirmed_orders_by_date %>
+      <% order_groups.each do |day, group| %>
+        <li>
+          <div class="vertical-nav-li-header appointments-header" data-date="<%= Date.tomorrow.strftime("%F") %>">
+            <%= day %>
+          </div>
+          <% group.each do |order| %>
+              <div class="targ__slot">
+                <div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3" data-comp-detail-id="<%= order.id %>">
+                    <div class="pr-4 pt-1 hidden-md-down">
+                      <%= check_circle_open_icon %>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <div class="h5">
+                          <%= order.office.display_location_single %>
+                        </div>
+                        <div>
+                          <%= order.order_time %><%= " - " + order.sales_rep.full_name if order.sales_rep.present?%>
+                        </div>
+                        <div>
+                          <% if session[:hq_consolidated_view] %>
+                            <%= order.restaurant_name_with_address %>
+                          <% end %>
+                        </div>                        
+                    </div>
+                </div>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      <% else %>
+        <li>
+          <div class="targ__slot">
+            <div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3">
+              <div class="pr-4 pt-1 hidden-md-down">
+                <%= check_circle_open_icon %>
+              </div>
+              <div class="col-12 col-lg-8">
+                <div class="h5">
+
+                </div>
+                <div>
+                  There currently are no confirmed orders waiting to be completed
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <!--end loop-->
+  </ul>
+</div>

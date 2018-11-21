@@ -1,0 +1,67 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 m-3 p-3">
+  <div class="col-12">
+    <div class="h4 mb-3">Edit Credit Card</div>
+    <div class="comp__rep_stripe_form pt-4">
+      <%= form_for(@record, :url => { :action => "update" }, method: :post ) do |f| %>
+        <%= lp_hidden_field(f, :stripe_identifier) %>
+        <div class="row pt-4">
+          <div class="col-sm-8 col-md-6 col-xl-4 offset-sm-2 offset-md-3 offset-xl-4">
+            <div class="form-group">
+              <label for="nickname">Card Nickname</label>
+              <%= lp_text_field(nil, :nickname, nil, @record.nickname, {hide_label: true, class: "form-control form-control-sm"}) %>
+            </div>
+            <div class="form-group">
+              <%= label_tag "Name on Card", nil, required: true %>
+              <%= text_field_tag :name, @record.name, class: "form-control form-control-sm", "data-stripe" => "name" %>
+            </div>
+            <div class="form-group row mx-0 mb-3">
+              <div class="col-12 p-0">
+                <label for="card-expiry">Expiry Date</label>
+              </div>
+              <div class="col-4 pl-0">
+                <%= lp_select_field(nil, :exp_month, nil, Date::MONTHNAMES.compact.each_with_index.map { |name,i| ["#{i+1}", i+1]}, {hide_label: true, selected: @record.exp_month})%>
+              </div>
+              <div class="col-4 p-0">
+                <%= lp_select_field(nil, :exp_year, nil, (Date.today.year..(Date.today.year+10)).to_a, {hide_label: true, selected: @record.exp_year})%>                
+              </div>
+            </div>
+            <div class="form-group">
+              <%= label_tag "Billing Address", nil, required: true %>
+              <%= text_field_tag :address_line1, @record.address_line1, class: "form-control form-control-sm", "data-stripe" => "address_line1" %>
+            </div>
+            <div class="form-group">
+              <%= label_tag "Suite/Building", nil, required: true %>
+              <%= text_field_tag :address_line2, @record.address_line2, class: "form-control form-control-sm", "data-stripe" => "address_line2" %>
+            </div>
+            <div class="form-group row">
+              <div class="col-6">
+                <%= label_tag "City", nil, required: true %>
+                <%= text_field_tag :address_city, @record.address_city, class: "form-control form-control-sm", "data-stripe" => "address_city" %>
+              </div>
+              <div class="col-3">
+                <%= label_tag "State", nil, required: true %>
+                <%= text_field_tag :address_state, @record.address_state, class: "form-control form-control-sm", "data-stripe" => "address_state" %>
+              </div>
+              <div class="col-3">
+                <%= label_tag "Zip", nil, required: true %>
+                <%= text_field_tag :address_zip, @record.address_zip,  class: "form-control form-control-sm", "data-stripe" => "address_zip" %>
+              </div>
+            </div>
+            <div class="form-group">        
+              <%= lp_check_field_inline(f, :default, "Set as Default", @record.new_record? ? '0' : @record.default, {disabled: @record.default}) %>        
+            </div>
+            <div class="col-12 pt-3 text-center">
+              <a class="btn btn-secondary mr-2" href="<%= rep_profile_index_path(tab: "financial_info") %>">Cancel</a>
+              <button data-submit-stripe type="button" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  LPRepStripeForm_Initializer();
+</script>

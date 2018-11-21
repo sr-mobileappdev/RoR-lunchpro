@@ -1,0 +1,28 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="form-group row form-group-tight">
+    <%= lp_hidden_field(f, :space) %>
+    <div class="col-sm-2 lp_req">
+      <%= lp_text_field(f, :first_name) %>
+    </div>
+    <div class="col-sm-3 lp_req">
+      <%= lp_text_field(f, :last_name) %>
+    </div>
+    <div class="col-sm-3">
+      <%= lp_text_field(f, :job_title, "Job Title (optional)") %>
+    </div>
+  </div>
+
+  <div class="form-group row form-group-tight">
+    <div class="col-sm-6">
+      <%= lp_text_field(f, :email, "Login Email") %>
+    </div>
+  </div>
+
+  <div class="form-group row form-group-tight">
+    <div class="col-sm-4">
+      <%= lp_text_field(f, :primary_phone, "Primary Phone", nil, {class: 'form-control form-control-sm phone_number_input'}) %>
+    </div>
+  </div>
+
+<% end %>

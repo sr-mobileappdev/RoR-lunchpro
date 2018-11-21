@@ -1,0 +1,41 @@
+<% orders.select{|order| order.appointment }.each do |order| %>
+<div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6 h4">
+    <strong><%=ah.short_date(order.appointment.appointment_on) %> - <%= ah.slot_time(order.appointment.starts_at(true))%></strong>
+    </span>
+    <span class="col-5 text-right">
+      Order # <%=order.order_number%>
+    </span>
+  </div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6">
+      <%= order.office.display_location %>
+    </span>
+    <span class="col-5 text-right">
+      <%= order.customer_name %>
+    </span>
+  </div>
+  <div style="margin-bottom: 6px;">
+    <span class="col-10">
+      <%= ah.format_phone_number_string(order.office.phone) %>
+    </span>
+  </div>
+  <% if order.restaurant.restaurant_pocs.any? %>
+    <div style="margin-bottom: 3px;">
+      <span class="col-6">
+        <%= order.restaurant.restaurant_pocs.first.display_name %>
+      </span>
+      <span class="col-5 text-right">
+        <%= ah.format_phone_number_string(order.restaurant.restaurant_pocs.first.phone) %>
+      </span>
+    </div>
+  <% end %>
+  <div style="margin-top: 10px; margin-bottom: 10px;">
+    <a href="<%= UrlHelpers.admin_order_url(order.id) %>">View Order</a>
+  </div>
+  <div>
+    <hr style="width: 100%; padding: 0; margin-left: 0 !important; margin-right: 0 !important;">
+  </div>
+</div>
+<% end %>

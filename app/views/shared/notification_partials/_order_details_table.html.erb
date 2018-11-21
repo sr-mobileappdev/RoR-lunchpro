@@ -1,0 +1,34 @@
+<div>
+  <div class="tableWrapper">
+    <!-- receipt item loop -->
+    <% order.line_items.each do |li| %>
+      <% next if li.parent_line_item %>
+      <div class="row">
+        <div class="col-12 mb-3">
+          <p class="mb-0" style="margin-bottom: 0px;"><strong><%= li.orderable_name %></strong><span class="pull-right">: <%= ah.precise_currency_value(li.cost_with_sub_items) %></span><br>
+          Quantity: <%= li.quantity %><br>
+            <% li.sub_line_items.each do |sli| %>
+              <span style="padding-left: 5px;">
+                <%= sli.orderable_name %>
+                <% if sli.cost_cents.to_i > 0 %>
+                  <%= "(#{ah.precise_currency_value(sli.cost_cents)})" %>
+                <% end %>
+              </span><br>
+            <% end %>
+          </p>
+        </div>
+      </div>
+      <hr>
+    <% end %>
+    <!-- total -->
+    <!--<div class="text-right col-12 text-uppercase ft-bold hidden-lg-down">
+      <p>
+        Subtotal: <%= ah.precise_currency_value(order.subtotal_cents)%><br>
+        Delivery Fee: <%= ah.precise_currency_value(order.delivery_cost_cents)%><br>
+        Tax: <%= ah.precise_currency_value(order.sales_tax_cents)%><br>
+        Driver Tip: <%= ah.precise_currency_value(order.estimated_tip_cents)%><br>
+        Total: <%= ah.precise_currency_value(order.total_cents)%>
+      </p>
+    </div>-->
+  </div>
+</div>

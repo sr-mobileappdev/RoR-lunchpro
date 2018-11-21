@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payment_method: one
+  order: one
+  authorized_amount_cents: 1
+  captured_amount_cents: 1
+  transaction_identifier: MyString
+  status: 1
+  error_message: MyString
+
+two:
+  payment_method: two
+  order: two
+  authorized_amount_cents: 1
+  captured_amount_cents: 1
+  transaction_identifier: MyString
+  status: 1
+  error_message: MyString

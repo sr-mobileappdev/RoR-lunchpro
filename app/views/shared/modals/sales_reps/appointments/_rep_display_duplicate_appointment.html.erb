@@ -1,0 +1,26 @@
+<div class="modal-body p-0 appointment-modal comp__rep_appointments">
+
+  <div class="col-12 text-center mt-5">
+    <div class="text-info">
+      <%= review_calendar_icon %>
+    </div>
+    <h5 class="mt-3 mb-1 ft-bold"><%= office.name%> - <%=office.city %></h5>
+    <h5>Appointment</h5>
+    <hr>
+  </div>
+  <div class="row m-0 px-3">    
+    <p class="ft-bold text-center">You already have an appointment booked on the same date and time as the appointment you are attempting to book below.</p> 
+    <div class="col-8">
+      <p class="mb-0"><%= short_date(date) %></p>
+      <p class="mb-0"><%= appointment_slot.name %> - <%= slot_time(appointment_slot.starts_at(true)) %></p>
+      <p>Sugg. Order Count: <%=appointment_slot.total_staff_count || '---' %></p>
+    </div>
+    <div class="col-12 text-center my-5">
+    	<a class="d-none" id="display-booked" data-modal="true" data-modal-size="sm" data-modal-title=""></a>
+			<a href="javascript:void(0);" class="btn btn-success btn-block mb-2 trig__reserve_appointment" data-office-id="<%= office.id %>" 
+      data-type="book_duplicate" data-reserve-date="<%= date %>" data-reserve-slot-id="<%= appointment_slot.id%>">Continue</a>
+      <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-outline-info btn-block">Cancel</a>
+    </div>
+  </div>
+</div>
+

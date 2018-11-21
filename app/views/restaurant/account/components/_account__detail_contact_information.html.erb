@@ -1,0 +1,45 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="comp__restaurant_manager b-1 bl-0 m-3 p-3">
+  <div class="comp__restaurant_form mb-3 mt-4 ml-4" data-nested-attributes="restaurant_restaurant_pocs_attributes_">
+    <div class="h4 pb-3">Contact Information
+    </div>
+    <% unless @restaurant.restaurant_pocs.any? %>
+      <div class="row pt-3 justify-content-center no-poc-label">
+        <div class="col-lg-11 mb-5 justify-content-center text-center">
+          <p class="form-control-label ft-bold">Currently, there are no Points of Contact set to receive order notifications. Click <label class="btn btn-link p-0 add-poc-link">here</label> to add a Point of Contact!</p>
+          <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+        </div>
+      </div>
+    <% end %>
+    <div class="poc-form" style="<%= 'display: none;' if !@restaurant.restaurant_pocs.any? %>">
+      <div class="row pt-3">
+        <div class="col-lg-11 mb-3">
+          <label class="form-control-label">Please provide information for the people you would like to be notified when a catering order comes through.</label>
+        </div>
+      </div>
+      <div class="col-12">
+        <%= form_for @restaurant, url: update_pocs_restaurant_account_path(@restaurant), method: :patch, html: { class: "col-12 p-0", autocomplete: "off", onsubmit: "return false;"} do |f| %>
+        <div class="row col-12 text-right justify-content-end mr-0 pr-0">
+          <%= link_to_add_fields "+ Add Additional Point of Contact", f, :restaurant_pocs, '/restaurant/components/'%>
+        </div>
+        <div class="mb-5">
+            <%= lp_hidden_field(nil, :for, 'contact information') %>
+            <%= f.fields_for :restaurant_pocs, f.object.restaurant_pocs.order(primary: :desc).order(first_name: :asc) do |o| %>
+              <%= render '/restaurant/components/restaurant_poc_fields', f: o %>
+              <%= lp_hidden_field(o, :created_by_id, current_user.id) %>
+            <% end %> <!-- end of fields -->
+
+            <div class="col-12 mt-3 text-center hidden-sm-down">
+              <button class="btn btn-secondary mr-2" data-comp-detail-tab="account__contact_information">Cancel</button>
+              <button data-submit type="submit" class="btn btn-success">Submit</button>
+            </div>
+            <div class="col-12 mt-3 text-center hidden-md-up">
+              <button class="btn btn-secondary btn-block" data-comp-detail-tab="account__contact_information">Cancel</button>
+              <button data-submit type="submit" class="btn btn-success btn-block">Submit</button>
+            </div>
+        </div>
+        <% end %> <!-- form for -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<% tab 'calendar' %>
+<% title 'Restaurant Reviews' %>
+<%= render partial: "shared/header/#{@ui_space}_header",locals: {show_action_menu: true}%>
+<div class="modal comp__rep_office_new z-0" id="add-office" data-selected-office="<%=@selected_office%>">
+  <div class="modal-dialog select-office" role="document">
+    <h1 class="sr-only">Add Office</h1>
+    <div class="modal-content restaurant-reviews-modal-content">
+      <div class="col-12">
+        <a class="btn btn-link ft-bold pl-0" href="<%= select_restaurant_rep_appointment_path(params[:appointment_id]) %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+      </div>
+      <div class="col-12 row m-0 pb-4 bb-1">
+        <div class="restaurant-image-container-md hidden-sm-down ml-4 mt-2 mr-3">
+          <% if @restaurant.brand_image && @restaurant.brand_image.url %>
+          <img class="restaurant-image" src="<%= @restaurant.brand_image.url %>" alt="Restaurant Logo" />
+          <% else %>
+          <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+          <% end %>
+        </div>
+        <div class="col-9 mt-4 pl-2">
+          <h3 class="ft-bold font-lg mt-1"><%=@restaurant.name %></h3>
+          <p><%= restaurant_info(@restaurant) %></p>
+        </div>
+        <div class="col-12 row ml-0 mr-0 mt-4 hidden-sm-down">
+          <p class="col-12 pl-2">
+            <span class="h5 ft-bold mr-2">Order Reviews:</span> (<%=@order_review_count %> Reviews)
+            <span class="pull-right hidden-xs-down"><%=restaurant_average_on_time(@restaurant)%></span>
+            <span class="hidden-sm-up"><br/><%=restaurant_average_on_time(@restaurant)%></span>
+          </p>
+        </div>
+        <div class="col-12 row mt-4 hidden-md-up">
+          <p class="col-12 pl-2">
+            <span class="h5 ft-bold mr-2">Order Reviews:</span> (<%=@order_review_count %> Reviews)
+            <span class="pull-right hidden-xs-down"><%=restaurant_average_on_time(@restaurant)%></span>
+            <span class="hidden-sm-up"><br/><%=restaurant_average_on_time(@restaurant)%></span>
+          </p>
+        </div>
+        <div class="col-12 row ml-0 mr-0">
+          <div class="col-12 col-sm-6 pr-0">
+            <div class="col-12 row m-0 p-0">
+              <label class="ft-bold col-12 col-md-6 p-0">Overall:</label><%= restaurant_average_reviews(@restaurant, :overall, true) %>
+            </div>
+            <div class="col-12 row m-0 p-0">
+              <label class="ft-bold col-12 col-md-6 p-0">Food Quality:</label><%= restaurant_average_reviews(@restaurant, :food_quality, true) %>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="col-12 row m-0 p-0">
+              <label class="ft-bold col-12 col-md-6 p-0">Presentation:</label><%= restaurant_average_reviews(@restaurant, :presentation, true) %>
+            </div>
+            <div class="col-12 row m-0 p-0">
+              <label class="ft-bold col-12 col-md-6 p-0">Completeness:</label><%= restaurant_average_reviews(@restaurant, :completion, true) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-content pt-2">
+        <div class="col-12 row m-0 pb-4">
+          <div class="col-12 ml-0 mr-0">
+            <p class="col-12 pl-0">
+              <span class="h5 ft-bold mr-2">Comments:</span>
+            </p>
+            <% @order_reviews_with_comments.each do |review| %>
+              <div class="card card-block mt-3 pb-2 pt-3 pl-3 pr-2">
+                <div class="card-text row m-0">
+                  <%= reviewer_icon(review) %>
+                  <div class="col-10 mt-2 row m-0">
+                    <%= review.comment %>        
+                    <span class="ml-auto hidden-xs-down row"><%= order_review_overall(review, true) %></span>
+                    <span class="hidden-sm-up col-12 row m-0"><%= order_review_overall(review, true) %></span>
+                  </div>
+                  <div class="col-12 mt-3 pl-2">
+                    <p><%= short_date(review.created_at) %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="modal-body p-0 appointment-modal comp__om_providers" data-nested-attributes="provider_provider_availabilities_attributes_">
+  <div class="container-fluid">
+    <div class="row appointment-modal-body comp__om_form">      
+      <%= form_for @provider, url: office_providers_path(@provider), method: :post,  html: { class: "col-12 p-0", autocomplete: "off", onsubmit: "return false;"  } do |f|%>
+        <div class="col-12 mb-3 mt-3">
+          <p class="m-0">
+            <span class="ft-bold h4">Provider</span>
+          </p>
+          <div class="col-12 m-0 p-0 row">
+            <%= lp_text_field(f, :first_name, "none", f.object.first_name, {class: "form-control col-12 col-sm-5 col-md-3 mr-2 mt-2", placeholder: "First name" , hide_label: true}) %>            
+            <%= lp_text_field(f, :last_name, "none", f.object.last_name, {class: "form-control col-12 col-sm-5 col-md-3 mt-2 mr-3", placeholder: "Last Name", hide_label: true}) %>
+            <%= f.select(:title, options_for_select(Provider.titles.pluck(:title), f.object.title), {prompt: "Title"}, {:class => 'form-control mt-2 col-12 col-sm-7 col-md-2 p-0 ml-auto slot-type-select'}) %>            
+          </div>
+          <div class="col-6 m-0 p-0 mt-2">
+            <label for="specialties" class="form-control-label ft-bold">Specialties</label>
+            <input type="text" id="provider_specialties" name="provider[specialties]">
+          </div>
+        </div>
+        <div class="col-12 mt-4">
+          <p class="h5 ft-bold mb-1">Days available:</p>
+          <p class="mb-2"><i>Please list the Provider's schedule for this medical office.</i></p>
+          <label class="lp__inline_radio"><input name="set_availability" type="hidden" value="0"><input class="form-control form-control-sm" type="checkbox" value="1" name="set_availability" id="set_availability"><label><strong>Set Availability same as Office</strong></label></label>
+        </div>
+        <div class="col-12 row p-0 m-0" id="provider_availability_form">
+          <div class="col-1 hidden-sm-down mt-5">
+            <p class="ft-bold mt-3">In</p>
+            <p class="ft-bold">Out</p>
+          </div>
+          <%= f.fields_for :provider_availabilities, f.object.provider_availabilities.select{|avail| avail.status == 'active'}.sort_by{|avail| AppointmentSlot.day_of_week_non_iso(avail.day_of_week) } do |s| %>
+            <%= lp_hidden_field(s, :office_id, nil, {value: @office.id}) %>
+            <div class="text-center provider-group-day mt-2 <%= 'weekend-slot-group-day' if ['saturday', 'sunday'].include?(s.object.day_of_week)%> <%= '
+                provider-time-select-unselected' if s.object.new_record? %>">
+                <label class="form-check-label offices-label">                  
+                  <input type="checkbox" class="form-checkbox" class="mt-1">
+                  <%=s.object.day_of_week.slice(0,3).capitalize%>
+                </label>
+                <%= render '/office/providers/components/provider_availability_fields', s: s %>  
+                <div></div>   
+              <div class="provider-button-group pt-2" style="display: none;">              
+                <a class="lp__remove_child disabled" href="#"><%= provider_x_circle_icon%></a>        
+                <span class="provider-plus">            
+                  <%= link_to_add_provider_availability provider_plus_circle_icon, f, :provider_availabilities , '/office/providers/components/', s, nil, current_user%>       
+                </span>
+              </div>
+            </div>     
+          <% end %>
+          
+
+        </div>
+        <div class="col-12 mt-3 hidden-xs-down">
+          <button data-submit type="submit" class="btn btn-success pull-right">Submit</button>
+          <button class="btn btn-outline-info mr-2 pull-right" data-dismiss="modal">Cancel</button>
+        </div>
+        <div class="col-12 mt-3 hidden-sm-up">
+          <button data-submit type="submit" class="btn btn-success btn-block">Submit</button>
+          <button class="btn btn-outline-info btn-block" data-dismiss="modal">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  LPOmOffice_Initializer();
+  LPOmForm_Initializer();
+</script>

@@ -1,0 +1,57 @@
+<%= form_for [@event, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+
+  <div class="row">
+    <div class="col-12">
+
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-4">
+          <%= lp_select_field(f, :recipient_type, "Recipient Type", selectable_list(NotificationEventRecipient.recipient_types)) %>
+          <p class="field_note">Select the target recipient for this notification template and details. You may only have one template set per recipient type for this notification.</p>
+        </div>
+        <div class="col-3">
+          <label>Notification Defaults</label>
+          <%= lp_check_field_inline(f, :is_email_default, "Email Default", @record.is_email_default) %>
+          <%= lp_check_field_inline(f, :is_sms_default, "SMS / Push Default", @record.is_sms_default) %>
+          <%= lp_check_field_inline(f, :is_web_default, "Web Default", @record.is_web_default) %>
+        </div>
+        <div class="col-sm-2">
+          <%= lp_select_field(f, :priority, "Priority", selectable_enum(Notification.priorities)) %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12 lp_req">
+          <%= lp_text_field(f, :title) %>
+        </div>
+      </div>
+
+      <h4 class="pt-3">Template Content</h4>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <%= lp_text_area(f, :content, "Web / Online Content", nil, {style: 'max-height: 100px; min-height: 100px;'}) %>
+          <p class="field_note">This content should be very short and direct as it will appear in a small notification area within the online Lunchpro system.</p>
+        </div>
+      </div>
+
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <%= lp_text_area(f, :sms_content, "SMS / Push Content", nil, {style: 'max-height: 100px; min-height: 100px;'}) %>
+          <p class="field_note">Note: SMS content, if too long, will be forced into multiple SMS messages.</p>
+        </div>
+      </div>
+
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <label>Email Content</label>
+          <div class="lp__editor">
+            <%= lp_text_area(f, :email_content, nil, nil, {style: 'display: none;', "data-ace" => true}) %>
+            <div id="ace-editor" class="lp__ace"><%= @record.email_content %></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+<% end %>

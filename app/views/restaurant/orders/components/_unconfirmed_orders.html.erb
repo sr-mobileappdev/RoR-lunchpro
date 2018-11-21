@@ -1,0 +1,56 @@
+<div class="unconfirmed-orders orders-list pt-0">
+  <ul id="unconfirmed-orders-list icon-list" class="unconfirmed-orders pt-0">
+    <!-- loop -->
+    <% if (slot_manager.unconfirmed_orders_by_date.count >= 1) %>
+      <% order_groups = slot_manager.unconfirmed_orders_by_date %>
+      <% order_groups.each do |day, group| %>
+        <li class="order-info pt-0">
+          <div class="vertical-nav-li-header appointments-header" data-date="<%= Date.tomorrow.strftime("%F") %>">
+            <%= day %>
+          </div>
+          <% group.each do |order| %>
+              <div class="targ__slot" data-comp-detail-id="<%= order.id %>">
+                <div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3">
+                    <div class="pr-4 pt-1 hidden-md-down">
+                      <%= calendar_exclamation_icon %>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <div class="h5">
+                          <%= order.office.display_location_single %>
+                        </div>
+                        <div>
+                          <%= order.order_time %><%= " - " + order.sales_rep.full_name if order.sales_rep.present? %>
+                        </div>
+                        <div>
+                          <% if session[:hq_consolidated_view] %>
+                            <%= order.restaurant_name_with_address %>
+                          <% end %>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="order-info">
+          <div class="targ__slot">
+            <div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3" data-comp-detail-id="">
+              <div class="pr-4 pt-1 hidden-md-down">
+                <%= calendar_exclamation_icon %>
+              </div>
+              <div class="col-12 col-lg-8">
+                <div class="h5">
+
+                </div>
+                <div>
+                  There currently are no orders pending confirmation from you
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <!--end loop-->
+  </ul>
+</div>

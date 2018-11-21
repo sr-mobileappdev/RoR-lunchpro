@@ -1,0 +1,12 @@
+label {
+	margin-bottom: 0.2rem !important;
+	&.form-control-label {
+		font-weight: 500;
+		color: $black;
+	}
+}
+legend.col-form-legend {
+	padding: 0;
+	font-weight: 500;
+	color: $black;
+}

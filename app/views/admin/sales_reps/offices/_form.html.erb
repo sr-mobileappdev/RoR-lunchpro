@@ -1,0 +1,34 @@
+<%= form_for [@rep, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <% if @record.office %>
+        <%= lp_hidden_field(f, :office_id) %>
+      <% else %>
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-7 lp_req">
+            <%= lp_multi_object_field(f, :office_id, "Find Office", {url: quick_admin_searches_path(search_type: 'office')}) %>
+          </div>
+        </div>
+      <% end %>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-7 lp_req">
+          <%= lp_text_area(f, :notes, "Personal Notes") %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <h4 class="pt-3">Budgeting</h4>
+      <div class="form-group row form-group-tight">
+        <div class="col-12">
+          <%= lp_currency_field(f, :per_person_budget_cents, "", @record.per_person_budget_cents) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

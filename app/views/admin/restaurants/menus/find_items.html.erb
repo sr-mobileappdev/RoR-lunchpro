@@ -1,0 +1,40 @@
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_restaurant_menus_path(@restaurant) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4">
+      <h2 class="lp__light"><span class="pr-3"><%= (@record.active?) ? @record.name : "#{@record.name} (Inactive)" %></span> <span class="lp__subheader"><%= @restaurant.name %></span></h2>
+    </div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <a href="<%= admin_restaurant_menu_path(@restaurant, @record) %>" class="btn btn-primary btn-sm mr-2">Done</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2 px-4">
+      <p class="small">The below list includes items that are not already in the <strong><%= @record.name %></strong> menu and may be added to it.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [],
+                    title: "All Available Items",
+                    columns: ['name', 'description', {title: 'Category', column: 'category', helper: 'category_name'}],
+                    model_class: 'MenuItem',
+                    actions: [{title: 'Add', ajax_done_text: 'Item Added', ajax_method: 'post', ajax_path: add_item_admin_restaurant_menu_path(@restaurant, @record, {item_id: "<id>"}), button_class: 'btn btn-success btn-sm'}],
+                    objects: @restaurant.other_menu_items_for(@record)
+                  } %>
+    </div>
+  </div>
+</div>

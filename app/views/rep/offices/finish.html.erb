@@ -1,0 +1,24 @@
+<% tab 'calendar' %>
+<% title 'Finish Appointments' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal narrow">
+        <div class="row">
+          <% if ['book_duplicates', 'appt'].include?(@type) %>
+            <%= render partial: 'rep/appointments/components/finish__appointment_reserved', locals: {appointment: @appointment, show_in_modal: true} %>
+          <% elsif @type == 'add' %>
+            <%= render partial: 'rep/offices/components/finish__office_added', locals: {office: @office, show_in_modal: true} %>
+          <% elsif @type == 'create' %>
+            <%= render partial: 'rep/offices/components/finish__office_created', locals: {office: @office, show_in_modal: true} %>
+          <% elsif @type == 'cancel' %>
+            <%= render partial: 'rep/appointments/components/finish__appointment_canceled', locals: {office: @office, show_in_modal: true} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="child-form col-12 row">
+  <div class="col-12 pt-3 pb-3">    
+    <h4>Office Point of Contact 
+      <input type="hidden" value="<%=f.object.status%>" name="office[office_pocs_attributes][<%=f.index%>][status]" id="_status_<%=f.object.id%>">
+      <input type="hidden" value="<%=current_user.id%>" name="office[office_pocs_attributes][<%=f.index%>][created_by_id]">
+      <a href="#" class="btn btn-link pull-right pt-0 pb-0 lp__remove_child" data-value="status" data-id="<%= f.object.id %>">Remove</a>
+    </h4>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= lp_text_field(f, :first_name, 'First Name', f.object.first_name, {class: 'form-control'}) %>
+    </div>
+    <div class="form-group">
+      <%= lp_text_field(f, :last_name, 'Last Name', f.object.last_name, {class: 'form-control'}) %>
+    </div>
+    <div class="form-group">
+      <%= lp_check_field_inline(f, :primary, "Set Primary", f.object.primary) %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= lp_text_field(f, :email, 'Email', f.object.email, {class: 'form-control'}) %>
+    </div>
+    <div class="form-group">
+      <%= lp_text_field(f, :phone, 'Cell Phone', f.object.phone, {class: 'form-control phone_number_input'}) %>
+    </div>
+  </div>
+</div>

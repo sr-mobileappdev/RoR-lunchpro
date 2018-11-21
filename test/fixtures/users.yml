@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+active:
+  status: 1
+  email: test1@gmail.com
+
+deleted:
+  status: 10
+  email: test2@gmail.com
+
+sales_rep_user:
+  status: 1
+  email: salesrep@gmail.com
+
+admin:
+  status: 1
+  space: 1

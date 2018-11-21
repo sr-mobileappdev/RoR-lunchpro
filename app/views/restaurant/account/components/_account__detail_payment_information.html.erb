@@ -1,0 +1,44 @@
+<div id="account-profile" class="b-1 m-3 p-3">
+  <div class="mb-3 mt-4 ml-4">
+    <div class="h4 mb-3">Payment Information</div>
+    <% if @restaurant.bank_accounts.active.count > 0 %>
+    <div class="row pt-3">
+      <div class="col-lg-11 mb-5">
+        <label class="form-control-label">The account information below will ensure prompt payment for your orders. Per your agreement with LunchPro, a 3% processing fee will be assessed.</label>
+        <div class="text-right btn btn-link justify-content-end row col-12" data-comp-detail-tab="account__new_bank_account"><a class="">Add new</a></div>
+        <div class="row pt-3">
+          <div class="col-lg-12 mb-2">
+            <hr class="m-0">
+            <% @restaurant.bank_accounts.each do |bank_account| %>
+              <div class="card card-block mt-3">
+                <div class="card-text row">
+                  <div class="pl-3 pt-1">
+                    <%= bank_icon %>
+                  </div>
+                  <div class="col pt-1">
+                    <label class="form-control-label pb-0 mb-0"><%= bank_account.display_name %> - <%= bank_account.display_account_type %></label>
+                    <p class="p-0 m-0 small"><%= bank_account.display_account_number%></p>
+                  </div>
+                  <div class="hidden-lg-down">
+                    <a href="/restaurant/account/bank_accounts/<%=bank_account.id%>/delete" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                  </div>
+                  <div class="hidden-xl-up col-4 pt-2">
+                    <a href="/restaurant/account/bank_accounts/<%=bank_account.id%>/delete" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <%else%>
+          <div class="row pt-3 justify-content-center">
+            <div class="col-lg-12 mb-5 justify-content-center text-center">
+              <p class="form-control-label ft-bold">You currently don't have any bank accounts set up for accepting payments. Click <a href="#" class="btn btn-link p-0" data-comp-detail-tab="account__new_bank_account">here</a> to add a bank account!</p>
+              <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

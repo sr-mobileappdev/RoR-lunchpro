@@ -1,0 +1,58 @@
+<div id="office-profile" class="p-4">
+  <div class="row align-items-center mb-2 mt-2">
+    <div class="pl-3 pr-2 hidden-xs-down">
+      <svg viewbox="0 0 25 25" width="70" height="70"><use xlink:href="#office-o"/></svg>
+    </div>
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 pr-0">
+      <div>
+          <div class="h4">
+            <%= @office.name %>
+              <a class="btn btn-link pr-1 hidden-md-down" data-modal="true" href="<%= edit_rep_office_path(is_modal: true) %>" data-modal-title="" class="" data-modal-size="md" data-modal-form="true">Edit</a>
+              <a class="btn btn-link hidden-md-down" data-confirm-method="post" href="<%= remove_rep_office_path(@office)%>" data-confirm-check="<font size='+2'>Are you sure you want to remove this office? All of your future appointments
+                tied to this office will be cancelled.</font size>">Remove</a>
+          </div>
+      </div>
+      <div>
+          <%= single_line_address(@office) %>
+      </div>
+      <div>
+        <%= format_phone_number_string(@office.phone) %>
+      </div>
+    </div>
+    <div class="col-12 hidden-lg-up">
+      <a class="btn btn-link pl-0" data-modal="true" href="<%= edit_rep_office_path(is_modal: true) %>" data-modal-title="" class="" data-modal-size="md" data-modal-form="true">Edit</a>
+      <a class="btn btn-link" data-confirm-method="post" href="<%= remove_rep_office_path(@office)%>" data-confirm-check="<font size='+2'>Are you sure you want to remove this office? All of your future appointments
+      tied to this office will be cancelled.</font size>">Remove</a>
+    </div>
+  </div> 
+</div>
+<div class="text-center mb-3">
+    <a href="<%=schedule_rep_appointments_path(office: @office)%>" class="btn btn-success mr-1">Add Existing Appointment</a>
+    <p class="pt-2"><i>Lunchpro does not currently manage this office's calendar.</i></p>
+</div>
+<hr class="m-0">
+<div class="col-12">
+  <ul class="nav nav-pills justify-content-center text-center row pr-1 pl-1">
+      <li class="nav-item col-sm p-0">
+        <a class="nav-link __select_tab" href="#my-appointments" data-tab="orders">My Appointments</a>
+      </li>
+      <li class="nav-item col-sm p-0">
+          <a class="nav-link __select_tab" href="#about" data-tab="about">About</a>
+      </li>
+      <li class="nav-item col-sm p-0">
+          <a class="nav-link __select_tab" href="#notes" data-tab="notes">My Notes</a>
+      </li>
+  </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane" id="my-appointments" role="tabpanel">
+      <%= render partial: 'rep/offices/components/office_detail__my_appointments' %>
+    </div>
+    <div class="tab-pane with-cards" id="about" role="tabpanel">
+        <%= render partial: 'rep/offices/components/office_detail__about' %>
+    </div>
+    <div class="tab-pane with-cards" id="notes" role="tabpanel">
+        <%= render partial: 'rep/offices/components/office_detail__my_notes' %>
+    </div>
+</div>
+

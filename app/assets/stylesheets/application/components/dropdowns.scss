@@ -1,0 +1,21 @@
+.dropdown {
+	.dropdown-menu {
+		box-shadow: $popover-box-shadow;
+		border-radius: $border-radius;
+	}
+	.dropdown-item {
+		font-size: $font-size-sm;
+	}
+
+	// override bootstrap for animation
+	.dropdown-menu {
+		display: block !important;
+		opacity: 0;
+		transition: 0.3s ease;
+	}
+	&.show .dropdown-menu {
+		opacity: 1;
+		transition: 0.3s ease;
+	}
+}    
+    

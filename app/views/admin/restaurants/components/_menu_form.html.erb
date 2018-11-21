@@ -1,0 +1,66 @@
+<div class="row">
+    <%= form_for @menu, url: admin_restaurant_menus_path(restaurant_id: @restaurant.id), html: { class: "new-menu-form col-12", autocomplete: "off" } do |f| %>
+      <%= lp_hidden_field(f, :created_by_user_id) %>
+      <%= lp_hidden_field(f, :restaurant_id) %>
+      <%= lp_hidden_field(nil, "wizard", true) %>
+      <div class="row pb-4">
+        <div class="col-12">
+          <h2>Menu</h2>
+          <div class="row align-items-center">
+            <div class="col-8 text-info">
+              Please add all available menu items for this restaurant below. You will be able to create and edit menus in the next section.
+            </div>
+            <div class="col-4 justify-content-end align-items-center">
+              <div class="col-12 text-right hidden-sm-down">
+                <button data-submit type="submit" class="btn btn-primary">Add</button>
+              </div>
+              <div class="col-12 text-right hidden-md-up">
+                <button data-submit type="submit" class="btn btn-primary btn-block">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-6 col-xl-4 lp_req">
+          <%= lp_text_field(f, :name, "Menu Name") %>
+          <p class="field_note">Ex: Breakfast, Lunch or Dinner</p>
+        </div>
+        <div class="col-sm-5">
+          <% if @menu.new_record? %>
+            <%= lp_timeframe_field(f, [:start_time, :end_time], "Menu Timeframe", [@menu.start_time, @menu.end_time]) %>
+          <% else %>
+            <%= lp_timeframe_field(f, [:start_time, :end_time], "Menu Timeframe", [@menu.start_time(true), @menu.end_time(true)]) %>
+          <% end %>
+          <p class="field_note">The hours during which this menu is available for order delivery.</p>
+        </div>
+      </div>
+    <% end %>
+</div>
+
+<% if !@menu.new_record? %>
+<div class="row col-12">
+  <div class="comp__content">
+
+    <div class="row">
+      <div class="col-12 mt-2 px-4">
+        <p class="small">The below list includes items that are not already in the <strong><%= @menu.name %></strong> menu and may be added to it.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-2">
+        <%= render partial: 'admin/shared/components/tables/static_table',
+                    locals: {
+                      table_actions: [],
+                      title: "All Available Items",
+                      columns: ['name', 'description', {title: 'Category', column: 'category', helper: 'category_name'}],
+                      model_class: 'MenuItem',
+                      actions: [{title: 'Add', ajax_done_text: 'Item Added', ajax_method: 'post', ajax_path: add_item_admin_restaurant_menu_path(@restaurant, @menu, {item_id: "<id>"}), button_class: 'btn btn-success btn-sm'}],
+                      objects: @restaurant.other_menu_items_for(@menu)
+                    } %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

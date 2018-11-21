@@ -1,0 +1,49 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_self
+
+ */
+
+@import "vendor/bootstrap/bootstrap";
+@import "vendor/pace-theme-loading-bar";
+@import "application/bootstrap-custom";
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+@import 'application/calendar/fullcalendar';
+@import 'application/calendar/om_calendar';
+
+/* our mixins and helpers */
+@import 'application/reset';
+@import 'application/mixins';
+@import 'application/helpers';
+
+/* form components */
+@import 'application/forms/buttons';
+@import 'application/forms/fields';
+@import 'application/forms/labels';
+@import 'application/forms/radio';
+
+@import 'application/components/cards';
+@import 'application/components/filters';
+@import 'application/components/modals';
+@import 'application/components/object_selector_field';
+
+@import 'application/layout/layout';
+@import 'application/lunchpad/lunchpad';
+
+
+/* Add open iconic icons to application, not just admin */
+@import "admin/admin-icons";

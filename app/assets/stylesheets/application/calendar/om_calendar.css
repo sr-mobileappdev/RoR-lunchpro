@@ -1,0 +1,429 @@
+
+.comp__om_calendar{
+  .btn{
+    white-space: normal;
+  }
+}
+.calendar-key {
+  h3 {
+      color: $gray;
+      font-size: 1em;
+      font-weight: normal;
+      border-bottom: 1px solid $gray-lighter;
+      padding: 5px 0;
+      margin: 0 0 5px;
+  }
+  ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+  }
+  li {
+      font-size: .75rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+  }
+  .key-color {
+      float: left;
+      width: 12px;
+      height: 12px;
+      margin: 2px 10px 0 0;
+  } 
+  .booked {
+      color: $black;
+      .key-color {
+          background: $black;
+      }
+  }
+  .confirmed {
+      color: $blue;
+      .key-color {
+          background: $blue;
+      }
+  }
+  .open {
+      color: $green;
+      .key-color {
+          background: $green;
+      }
+  }
+  .current-pending{
+    color: #607D8B;
+    .key-color{
+      background: #607D8B;
+    }
+  }
+}
+.comp__om_calendar{
+  .lp__fixed.f10{
+    height: 100%;
+  }
+}
+#om-calendar{
+  height: 100%; 
+  max-height: 100%;
+
+  .fc-body{
+    overflow-y: auto;
+  }
+  .fc-unavailable{
+    background: #dedede !important;
+    opacity: .3;
+  }
+  .fc-unthemed td.fc-today{
+    background: $white;
+    &.fc-day-top {
+      background: transparent;
+    }
+    &.fc-disabled-day {
+      background: #d7d7d7;
+      opacity: .3;
+    }
+  }
+  .fc-day.fc-today {
+    box-shadow: inset 0 0 0 2px $blue;
+  }
+  .fc {
+    td.fc-head-container {
+      border: 0
+    }
+    th.fc-day-header {
+      border: 0;
+    }
+    .fc-event-container{
+      a{
+        text-decoration: none;
+      }
+      .fc-time{
+        display: none;
+      }
+      .fc-day-grid-event .fc-title{
+        text-transform: uppercase;
+        margin-left: 5px;
+      }
+      .fc-time-grid-event .fc-title{
+        font-weight: normal;
+      }
+    }
+    .fc-day-number{
+      float: left !important; 
+    }
+
+    .fc-agendaWeek-button, .fc-month-button{
+      &.fc-state-active{
+        background: $blue !important;
+        color: white;
+      }
+      float: left;
+      margin-left: 20px;
+      border-radius: 20px;
+      border: none;
+      background: white;
+      border-color: none;
+      box-shadow: none;
+      font-family: inherit;
+      text-transform: uppercase;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .fc-today-button{
+      border: none;
+      background: white;
+      box-shadow: none;
+      font-family: inherit;
+      text-transform: uppercase;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 15px;
+      padding-right: 15px;
+      text-decoration: underline;
+    }
+    .fc-today-button:disabled{
+      color: #636c72;
+      text-decoration: none;
+    }
+    .fc-prev-button, .fc-next-button{
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+    .fc-icon-right-single-arrow{
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left: 20px solid $gray-dark;
+      width: 0;
+      height: 0;
+    }
+    .fc-icon-left-single-arrow{
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-right: 20px solid $gray-dark ;
+      width: 0;
+      height: 0;
+    }
+    .fc-widget-header{
+      border-right: none;
+      .fc-axis{
+        border: none;
+      }
+    }
+    .fc-left .fc-button-group{
+      margin-left: 10px;
+    }
+    .fc-center{
+      h2{
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+    }
+    .fc-minor{
+      .fc-axis, .fc-widget-content{
+        border-top: none;
+        border-top-style: none !important;
+      }
+    }
+    .fc-time-grid{
+     .fc-axis{
+      background-color: $gray-lighter;
+     }
+    }
+    .fc-time-grid-event{
+      .fc-content{
+        height: 100%;
+        text-align: center;
+        .fc-title{
+        }
+      }
+    }
+    .until a{
+      margin-left: 10px;
+      text-decoration: underline;
+    }
+    .open {
+      .fc-title{
+        color: $green;
+        font-weight: bold;
+      }
+      background: inherit;
+      border: none;
+    }
+    .booked {
+      .fc-title {
+        color: $black;
+        font-weight: bold;
+      }
+      background: inherit;
+      border: none;
+    }
+    .confirmed {
+      .fc-title {
+        color: $blue;
+        font-weight: bold;
+      }
+      background: inherit;
+      border: none;
+    }
+    .current-pending {
+      .fc-title{
+        color: #607D8B;
+        font-weight: bold;
+      }
+      background: inherit;
+      border: none;
+    }
+    .fc-agendaWeek-view {
+      .open {
+        background: $green;
+        .fc-title {
+          color: $white;
+        }
+        .fc-bg{
+          border: 2px solid black;
+          opacity: unset;
+          background: unset;
+          z-index: unset;
+        }
+      }
+      .booked {
+        background: $black;
+        .fc-title {
+          color: $white;
+        }
+        .fc-bg{
+          border: 2px solid $gray-light;
+          opacity: unset;
+          background: unset;
+          z-index: unset;
+        }
+      }
+      .confirmed {
+        background: $blue;
+        .fc-title {
+          color: $white;
+        }
+        .fc-bg{
+          border: 2px solid black;
+          opacity: unset;
+          background: unset;
+          z-index: unset;
+        }
+      }
+      .current-pending {
+        background: #607D8B;
+        .fc-title {
+          color: $white;
+        }
+        .fc-bg{
+          border: 2px solid black;
+          opacity: unset;
+          background: unset;
+          z-index: unset;
+        }
+      }
+    }
+
+    // Header
+    .fc-header-toolbar {
+      h2 {
+        float: none;
+        text-align: center;
+      }
+      .until {
+        float: none;
+        text-align: center;
+        font-weight: 400;
+        > span.text-green {
+          color: $green;
+        }
+      }
+    }
+  }
+}
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) {
+
+    #om-calendar { 
+      height: 85vh;
+    }
+}}
+
+.fc-prev-button, .fc-next-button{
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+.fc-icon-right-single-arrow{
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 20px solid $gray-dark;
+  width: 0;
+  height: 0;
+}
+.fc-icon-left-single-arrow{
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 20px solid $gray-dark ;
+  width: 0;
+  height: 0;
+}
+#appointment-until-calendar{
+  .fc-center h2{
+    font-size: 1.5rem;
+    font-weight: bold;
+
+  }
+  .fc-center{
+    width: 100%; 
+  }
+  .fc-header-toolbar {
+    h2 {
+      float: none;
+      text-align: center;
+    }
+    .until {
+      float: none;
+      text-align: center;
+      font-weight: 400;
+      > span.text-green {
+        color: $green;
+      }
+    }
+  }
+  .fc-unthemed td.fc-today{
+    background: white;
+    &.fc-day-top {
+        background: transparent;
+    }
+    &.fc-disabled-day {
+        background: #d7d7d7;
+        opacity: .3;
+    }
+}
+.fc-today {
+    .fc-day-number {
+        font-weight: bold;
+    }
+}
+.fc-highlight {
+    background: #ddd;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+// header
+.calendar-header {
+    border-bottom: 1px solid $gray-lighter;
+}
+
+// week day names
+.fc-row.fc-widget-header {
+    border-bottom: 1px dashed #a1e0bc;
+    padding: 0 0 5px 0;
+    margin: 0 0 5px 0;
+}
+.fc-day-header {
+    color: $gray;
+    font-size: $font-size-h5;
+    font-weight: normal;
+}
+
+// days
+.fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+    float: none;
+}
+.fc-basic-view .fc-body .fc-row {
+    min-height: 3em;
+}
+
+.fc {
+  td {
+      text-align: center;
+      border: none;
+      &.fc-today, &.fc-head-container,{
+          border: none;
+      }
+  }
+  th {
+      border: 0;
+  }
+  .fc-event .fc-time {
+      display: none;
+  }
+}
+}
+
+@media(max-width: 915px){
+  .comp__om_calendar .fc-center{
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+
+@media(min-width: 992px) and (max-width: 1440px){
+  .lp__scroll_containers .lp__fixed.f2 {
+    width: calc(8.3332% * 3) !important;
+  }
+}

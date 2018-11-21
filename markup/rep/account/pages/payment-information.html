@@ -1,0 +1,50 @@
+<div id="payment-information" class="p-5">
+    <h1>Payment Information</h1>
+    <p><strong>Default Card</strong> (automatically used unless otherwise noted)</p>
+    <hr>
+    <div class="b-1 p-3 mb-3">
+        <div class="row align-items-center">
+            <div class="col-1">
+                <img class="img-fluid" src="https://unsplash.it/600/600">
+            </div>
+            <div class="col-5">
+                <span class="d-block"><strong>{{ card number }}</strong></span>
+                <span>{{ billing street address }}</span>
+            </div>
+            <div class="col-6 text-right">
+                <a href="#" class="btn btn btn-info mr-1">Edit</a>
+                <a href="#" class="btn btn-info mr-1">Remove</a>
+            </div>
+        </div>
+    </div>
+
+    <p><strong>Additional Cards</strong></p>
+    <hr>
+    <!-- saved cards loop -->
+    <div class="b-1 p-3 mb-3">
+        <div class="row align-items-center">
+            <div class="col-1">
+                <img class="img-fluid" src="https://unsplash.it/600/600">
+            </div>
+            <div class="col-5">
+                <span class="d-block"><strong>{{ card number }}</strong></span>
+                <span>{{ billing street address }}</span>
+            </div>
+            <div class="col-6 text-right">
+                <a href="#" class="btn btn-info mr-1">Edit</a>
+                <a href="#" class="btn btn-info mr-1">Remove</a>
+                <a href="#" class="btn btn-info">Make Default</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- new card button -->
+    <button class="btn btn-info"><i class="fa fa-plus"></i>&nbsp; Add A New Card</button>
+
+    <!-- if no results -->
+    <div class="alert alert-danger">
+        <p>Save a credit card t oyour account to make ordering food even easier!</p>
+        <a class="btn btn-primary" href="#">Add a New Card</a>
+    </div>
+    <!-- end if -->
+</div>

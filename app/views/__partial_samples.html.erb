@@ -1,0 +1,44 @@
+<!-- Examples of various options on static table -->
+<%= render partial: 'admin/shared/components/tables/static_table',
+            locals: {
+              title: 'Notification Recipients',
+              columns: ['id', 'status__light', 'display_recipient_type', 'title', 'display_priority', 'is_default__flag', {title: 'Phone Number', column: 'phone_number', helper: 'format_phone_number_string'}],
+              model_class: 'NotificationEventRecipient',
+              actions: [{title: 'Send Test', path: test_admin_notification_event_notification_event_recipient_path(@record, "<id>"), context: :popup, button_class: 'btn btn-light btn-sm'},
+                        {title: 'View', path: admin_notification_event_notification_event_recipient_path(@record, "<id>"), button_class: 'btn btn-primary btn-sm'}],
+              objects: @record.notification_event_recipients.where.not(status: 'deleted')
+            } %>
+
+
+<!-- Examples of various options on show row -->
+<%= render partial: 'admin/shared/components/details/show_row',
+            locals: {
+              object: @record,
+              fields: [
+                {'office.name' => {title: 'Office Name', w: 3, link: admin_office_path(@record.office)}},
+                {'notes' => {title: 'Company', w: 6}},
+                {'per_person_budget_cents' => {title: 'Per Person Budget', w: 3, helper: 'precise_currency_value', default: 'Not Set'}},
+              ]
+            } %>
+
+
+<!-- Search Fields -->
+<%= render partial: 'admin/shared/components/search/fields',
+            locals: {
+              search: @search,
+              rows: [
+                {fields: ['first_name', 'last_name', {'company__name' => {title: 'Company Name'}}]},
+                {title: 'Other Details', fields: ['first_name', 'last_name', {'company__name' => {title: 'Company Name'}}]},
+              ]
+            } %>
+
+
+<!-- Example with a customized button class on table actions, and two table actions -->
+<%= render partial: 'admin/shared/components/tables/static_table',
+            locals: {
+              table_actions: [{name: 'New Menu', url: new_admin_restaurant_menu_path(@restaurant)}, {name: 'Import Menu', btn_class: 'btn-secondary', url: new_admin_restaurant_menu_path(@restaurant)}],
+              title: 'Active Menus',
+              columns: ['id', 'name', 'display_location'],
+              model_class: 'Appointment',
+              objects: @restaurant.orders.where.not(status: ['deleted','inactive'])
+            } %>

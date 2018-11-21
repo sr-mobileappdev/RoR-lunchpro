@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  order: one
+  title: MyString
+  food_quality: 1
+  presentation: 1
+  completion: 1
+  on_time: false
+  comment: MyText
+
+two:
+  order: two
+  title: MyString
+  food_quality: 1
+  presentation: 1
+  completion: 1
+  on_time: false
+  comment: MyText

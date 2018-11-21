@@ -1,0 +1,66 @@
+<div class="vertical-nav-li-content appointments row no-gutters align-items-center trig__toggle_on_open <%= (office_slot.pending_reservation? && office_slot.appointment.status == 'pending') ? 'open' : '' %>" data-toggle-slot=true>
+    <div class="pr-4 pt-1 hidden-xs-down <%= office_slot_booked_classes(office_slot) %>">
+      <%= slot_icon(office_slot) %>
+    </div>
+    <div class="col-6 <%= office_slot_booked_classes(office_slot) %>">
+      <% if !office_slot.is_booked? || (office_slot.is_booked_pending? && !office_slot.is_reserved_other_rep?(user))%>
+        <div class="h5">
+          <%= office_slot.appointment_slot.name %> - <%= office_slot.booked_by %>
+        </div>
+        <div class="h5 mt-2 mb-2">
+            <%= slot_time(office_slot.appointment_slot.starts_at(true)) %>
+        </div>
+        <div>
+        Sugg. Order Count: <%= office_slot.appointment_slot.total_staff_count %>
+        </div>
+      <% elsif office_slot.is_booked? && office_slot.is_reserved_other_rep?(user) %>
+        <div class="h5">
+          <%= office_slot.appointment_slot.name %> - <%= office_slot.booked_by %>
+        </div>
+        <div>
+          <%= "#{office_slot.booked_status(user)}" %>
+        </div>
+      <% else %>
+                <div class="h5">
+          <%= office_slot.appointment_slot.name %> - <%= office_slot.booked_by %>
+        </div>
+        <div>
+          <%= "#{office_slot.booked_status(user)}" %>
+        </div>
+      <% end %> 
+    </div>    
+    <a class="d-none" id="display-booked" data-modal="true" data-modal-size="sm" href="<%= display_booked_rep_appointment_path(is_modal: true) %>" data-modal-title=""></a>
+    <a class="d-none" id="display-duplicate" data-modal="true" data-modal-size="sm" href="<%= display_duplicate_rep_appointments_path(is_modal: true) %>" data-modal-title=""></a>
+    <% if !office_slot.is_booked? || (office_slot.is_booked_pending? && !office_slot.is_reserved_other_rep?(user))%>
+      <div class="col-4">
+        <div class="row mr-0 targ_toggle_on_open">
+          <div class="col text-right"><a href="#" class="btn btn-success trig__reserve_appointment" data-office-id="<%= office_slot.office_id %>" 
+            data-type="appt" data-reserve-date="<%= office_slot.date %>" data-reserve-slot-id="<%= office_slot.appointment_slot.id %>">Book</a>            
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if office_slot.available_providers.count > 0 %>
+      <div class="col-12 targ_toggle_on_open">
+        <ul class="lp__inline_list">
+          <% office_slot.available_providers.each do |provider| %>
+            <li><%= provider.display_name %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% else %>
+      <div class="col-12 targ_toggle_on_open">
+        <ul class="lp__inline_list">
+          <li><em>No Providers Available</em></li>
+        </ul>
+      </div>
+    <% end %>
+</div>
+
+
+<!--             <div class="col"><a href="#" class="btn btn-block btn-link disabled">Confirmed</a></div>
+            <div class="col"><a href="#" class="btn btn-block btn-outline-info" data-toggle="modal" data-target="#model__order_detail">View Order</a></div> -->
+            <!--<div class="col"><a href="#" class="btn btn-block btn-success">Confirm</a></div>-->
+            <!--<div class="col"><a href="#" class="btn btn-block btn-info">Order Food</a></div>-->
+            <!--<div class="col"><a href="#" class="btn btn-block btn-link" disabled>Bringing Your Own</a></div>-->

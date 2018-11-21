@@ -1,0 +1,39 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body pt-0 mt-0">
+    <div class="row existing-appointment">
+      <h4 class="col-12 mt-3">We found an existing appointment at this office! Would you like to order food for this appointment?</h4>
+      <div class="col-12 mt-2 mb-2 ">
+        <div class="row">
+          <div class="col-12 mb-2 mt-2">
+            <%= short_date(appointment.appointment_date) %>
+          </div>
+          <div class="pl-4 pr-1 hidden-xs-down">
+            <%= calendar_plus_icon %>
+          </div>
+          <div class="col-8">
+            <p class="mb-0 h5"><%= appointment.office.name %></p>
+            <p class="mb-0"><%= appointment.appointment_slot.name %> - <%= slot_time(appointment.starts_at(true)) %></p>
+            <p>Sugg. Order Count: <%=appointment.appointment_slot.total_staff_count || '---' %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-3 text-center hidden-xs-down">
+        <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-secondary prompt_schedule">No</button>
+        <a href="<%=policies_rep_orders_path(office_id: appointment.office_id, appointment_id: appointment.id)%>" class="btn btn-primary">Yes</a>
+      </div>
+      <div class="col-12 mt-3 text-center hidden-sm-up">
+        <a href="<%=policies_rep_orders_path(office_id: appointment.office_id, appointment_id: appointment.id)%>" class="btn btn-primary btn-block">Yes</a>
+        <button class="btn btn-secondary btn-block prompt_schedule">No</button>
+        <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <div class="schedule-appointment mt-4" style="display: none;">
+      <h4 class="col-12">You will need to schedule an appointment before ordering food at this office!</h4>
+      <div class="col-12 mt-4 text-center">
+        <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a href="<%=policies_rep_orders_path(office_id: appointment.office_id)%>" class="btn btn-primary">Schedule</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div id="account-partners" class="p-3">
+    <h1>Partners</h1>
+    <div class="row">
+        <div class="col-9">
+            <p>Avoid overlapping with your rep partners by seeing when they have scheduled meal appointments at various medical offices. When logged in, each of your meal appointmenst will appear in blue on the office's calendar.</p>
+        </div>
+        <div class="col-3 text-right">
+            <a href="#" class="btn btn-primary">Add New Partner</a>
+        </div>
+    </div>
+    <hr>
+
+<!-- partner loop -->
+    <div class="row">
+        <div class="col-1">
+            <img class="img-fluid rounded-circle" src="https://unsplash.it/600/600">
+        </div>
+        <div class="col-3">
+            <h5>{{ User Name }}</h5>
+            <span>{{ title }}</span>
+        </div>
+        <div class="col-4">
+            <span class="truncate">{{ email address }}</span>
+        </div>
+        <div class="col-3">
+            <span>{{ phone number }}</span>
+        </div>
+        <div class="col-1 text-center">
+            <a href="#"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+    <!-- if not on the last result -->
+    <hr>
+    <!-- end if -->
+<!-- end loop -->
+
+    <!-- if no results -->
+    <div class="alert alert-danger">
+        <p>You currently don't have any partners.</p>
+        <a class="btn btn-primary" href="#">Add Some!</a>
+    </div>
+    <!-- end if -->
+</div>

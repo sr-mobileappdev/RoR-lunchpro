@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="comp__slot_table">
+    <thead>
+      <tr>
+        <th>Mon <% if objects['monday'] && objects['monday'].count > 0 %><a data-popup=true data-popup-title="Copy Monday to..." href="<%= copy_office_slots_path({day: 'monday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+        <th>Tue <% if objects['tuesday'] && objects['tuesday'].count > 0 %><a data-popup=true data-popup-title="Copy Tuesday to..." href="<%= copy_office_slots_path({day: 'tuesday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+        <th>Wed <% if objects['wednesday'] && objects['wednesday'].count > 0 %><a data-popup=true data-popup-title="Copy Wednesday to..." href="<%= copy_office_slots_path({day: 'wednesday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+        <th>Thu <% if objects['thursday'] && objects['thursday'].count > 0 %><a data-popup=true data-popup-title="Copy Thursday to..." href="<%= copy_office_slots_path({day: 'thursday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+        <th>Fri <% if objects['friday'] && objects['friday'].count > 0 %><a data-popup=true data-popup-title="Copy Friday to..." href="<%= copy_office_slots_path({day: 'friday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+        <th>Sat <% if objects['saturday'] && objects['saturday'].count > 0 %><a data-popup=true data-popup-title="Copy Saturday to..." href="<%= copy_office_slots_path({day: 'saturday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+        <th>Sun <% if objects['sunday'] && objects['sunday'].count > 0 %><a data-popup=true data-popup-title="Copy Sunday to..." href="<%= copy_office_slots_path({day: 'sunday'}) %>" title="Copy appointment slots to another day"><span class="oi oi-layers"></span></a><% end %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% objects.each do |slot_day, slots| %>
+          <td>
+            <% slots.each do |s| %>
+              <p class="lp__slot">
+                <span class="title"><%= s.name %></span>
+                <span class="time"><%= style_slot_time(s.starts_at, s.ends_at) %></span>
+                <span class="actions">
+                  <a data-modal="true" data-modal-title="" href="<%= edit_office_slot_path(s) %>">Edit</a>
+                </span>
+              </p>
+            <% end %>
+
+            <a class="btn btn-success btn-sm lp__add_slot" data-modal="true" href="<%= new_office_slot_path(day: slot_day) %>" data-modal-title="">New Slot</a>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

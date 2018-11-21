@@ -1,0 +1,25 @@
+<!-- this might need a conditional class if used in multiple places -->
+<div class="vertical-nav" data-component-target="search-results">
+  <ul class="modal-search-results">
+    <% offices.each do |office| %>
+      <li>
+        <div class="vertical-nav-li-content row no-gutters align-items-center pr-1" data-comp-detail-type="Office" data-comp-detail-id="<%=office.id %>">
+          <div class="col-11">
+            <div class='h5'><%= office.name %></div>
+            <span><%= single_line_address(office) %></span>
+          </div>
+          <% if !office.private__flag %>
+            <div class="col-1 p-2 ">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<% if offices.count == 0 %>
+  <p class="m-4"><i>No offices found.</i></p>
+<% end %>
+

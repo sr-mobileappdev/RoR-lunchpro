@@ -1,0 +1,27 @@
+<div class="comp__rep_office_new">
+  <ul class="nav nav-pills justify-content-center row text-center mx-0 px-0">
+    <li class="nav-item col-sm">
+      <a class="nav-link active __select_tab" href="#lunchpro-offices">LunchPro Offices</a>
+    </li>
+    <li class="nav-item col-sm">
+      <a class="nav-link __select_tab" href="#non-lunchpro-offices">Non-LunchPro Office</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="lunchpro-offices" role="tabpanel">
+      <p class="my-3 text-center">You will need an appointment before placing an order with a LunchPro Office.</p>
+      <div class="modal-body p-0" id="new-order-new-offices-search-list">
+        <!-- search form -->
+        <%= render  partial: "rep/offices/components/office_search_list",
+          locals: {offices: @new_offices} %>
+      </div>
+    </div>
+    <div class="tab-pane comp__rep_form" id="non-lunchpro-offices" role="tabpanel">
+      <%= render  partial: "rep/offices/components/new_office_form",
+        locals: {office: @office} %>
+    </div>
+  </div>
+</div>
+<script>
+  LPRepForm_Initializer();
+</script>

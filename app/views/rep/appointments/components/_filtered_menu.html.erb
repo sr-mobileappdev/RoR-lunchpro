@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-sm-8 col-md-9 col-xl-10 pl-4">
+    <div class="col-12 row pr-0 mr-0">                
+      <h3 class="ft-bold d-inline pr-2"><%= restaurant_display_name(restaurant) %></h3> 
+      <% if restaurant.order_reviews.count > 0%>                  
+        <div class="col-6 pr-0 pl-0">
+          <%= restaurant_average_reviews(restaurant, :overall) %>
+        </div>                       
+      <% end %>
+    </div> 
+    <p class="m-0"><%= restaurant_info(restaurant) %></p>
+  </div>
+  <div class="restaurant-image-container-sm hidden-xs-down ml-auto mr-3">
+    <% if restaurant.brand_image && restaurant.brand_image.url %>
+        <img class="restaurant-image" src="<%= restaurant.brand_image.url %>" alt="Restaurant Logo" />
+    <% else %>
+      <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="row mb-2">
+  <div class="col-12 pl-4 pr-4">
+    <ul class="nav nav-pills row text-center">
+      <% if @menus.count > 0 %>
+        <div class="col-12 mb-2">
+          <p><i>This LunchPRO Restaurant has multiple menus. Select a menu to view items.</i></p>
+        </div>
+      <% end %>
+      <% if @menus.count < 3 %>
+        <li class="nav-item col-12 col-sm-4 col-lg-4 col-xl-3 p-0">
+            <a class="nav-link lp__select_menu active" href="#" data-menu-id="<%=%>" data-order-id="<%=@order.id%>" data-restaurant-id="<%=restaurant.id%>">Full Menu</a>
+        </li>
+        <% @menus.each do |menu| %>
+          <li class="nav-item col-12 col-sm-4 col-lg-4 col-xl-3 p-0">
+            <a class="nav-link lp__select_menu" href="#" data-restaurant-id="<%=restaurant.id%>" data-menu-id="<%=menu.id%>" data-order-id="<%=@order.id%>"><%= menu.name %></a>
+          </li>
+        <% end %>
+      <% else %>
+        <li class="nav-item col-sm p-0">
+            <a class="nav-link lp__select_menu active" href="#" data-menu-id="<%=%>" data-order-id="<%=@order.id%>" data-restaurant-id="<%=restaurant.id%>">Full Menu</a>
+        </li>
+        <% @menus.each do |menu| %>
+          <li class="nav-item col-sm p-0">
+            <a class="nav-link lp__select_menu" href="#" data-restaurant-id="<%=restaurant.id%>" data-menu-id="<%=menu.id%>" data-order-id="<%=@order.id%>"><%= menu.name %></a>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<!-- <div class="row">
+  <div class="col-md-12">
+    <h4 class="pl-4 pb-2 mt-2"><strong>Lunch Packs</strong></h4>
+  </div>
+</div> -->
+
+<div class="targ__filtered_menu_items">
+    <%= render partial: 'rep/appointments/components/filtered_menu_items', locals: {restaurant: @restaurant, menu: nil} %>
+</div>

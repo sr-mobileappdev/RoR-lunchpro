@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  wholesale_price: 1
+  retail_price: 1
+  status: 1
+  ordered_counter: 
+
+two:
+  name: MyString
+  description: MyText
+  wholesale_price: 1
+  retail_price: 1
+  status: 1
+  ordered_counter: 

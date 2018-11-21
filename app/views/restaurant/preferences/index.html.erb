@@ -1,0 +1,142 @@
+<% tab 'preferences' %>
+<% title 'Preferences' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {} %>
+<div id="global-content-wrapper"  class="row preferences-detail">
+  <div id="catering-preferences" class="col-md-10 col-xl-8 b-1 p-5 m-3 mx-auto">
+    <div class="row col-12 m-0 p-0">
+      <div class="h4 col-12 col-md-6 ml-0 p-0 ft-bold">Catering Preferences</div>
+      <div class="row col-12 col-md-6 justify-content-end pt-0 pb-0 mt-0 mb-0">
+        <div class="col-12 text-right pr-0 hidden-sm-down">
+          <span class="ft-bold h5">Need to update your preferences?</span>
+        </div>
+        <div class="col-12 mt-4 p-0 hidden-md-up">
+          <span class="ft-bold h5">Need to update your preferences?</span>
+          <div class="mt-2">
+            <span class="h5">Give us a call</span>
+          </div>
+          <div class="mt-2">
+            <span class="h5"><a href="tel:855-586-2477"><%= format_phone_number_string("8555862477") %></a></span>
+          </div>
+        </div>
+        <div class="col-12 text-right pr-0 hidden-sm-down">
+          <span class="h5">Give us a call</span>
+        </div>
+        <div class="col-12 pr-0 text-right hidden-sm-down">
+          <span class="h5"><a href="tel:855-586-2477"><%= phone_icon %> <%= format_phone_number_string("8555862477") %></a></span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="comp__restaurant_form col-12" data-nested-attributes="restaurant_delivery_distance_attributes_">
+        <%= form_for @restaurant, url: update_preferences_restaurant_preference_path(@restaurant), method: :patch, html: { class: "", autocomplete: "off", onsubmit: "return false;" }  do |f| %>
+        <%= lp_hidden_field(nil, :for, 'preferences') %>
+          <div class="row mb-3">
+            <div class="form-group col-12">
+              <label class="form-control-label row col-10 ft-bold">Driving Miles</label>
+              <%= f.fields_for :delivery_distance do |o| %>
+                <% if !o.object.use_complex %>
+                  <%= lp_text_field(o, :radius, "none", o.object.radius, {disabled: true, hide_label: true, class: "form-control col-6 col-sm-3 col-md-2 col-xl-1 d-inline-block"}) %>
+                <% else %>
+                  <div class="row col-12">
+                    <div class="row col-12">
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 pl-1 ml-1 mr-1">North</label>
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 ml-1 mr-1 pl-1">East</label>
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 ml-1 mr-1 pl-1">South</label>
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 ml-1 mr-1 pl-1">West</label>
+                    </div>
+                    <div class="row col-12">
+                      <%= lp_text_field(o, :north, "none", o.object.north, {disabled: true, hide_label: true, class: "form-control col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                      <%= lp_text_field(o, :east, "none", o.object.east, {disabled: true, hide_label: true, class: "form-control col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                      <%= lp_text_field(o, :south, "none", o.object.south, {disabled: true, hide_label: true, class: "form-control direction col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                      <%= lp_text_field(o, :west, "none", o.object.west, {disabled: true, hide_label: true, class: "form-control direction col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                    </div>
+                  </div>
+                  <div class="row col-12">
+                    <div class="row col-12">
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1 pl-1">North East</label>
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1 pl-1">South East</label>
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1 pl-1">South West</label>
+                      <label class="form-control-label pt-2 col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1 pl-1">North West</label>
+                    </div>
+                    <div class="row col-12">
+                      <%= lp_text_field(o, :north_east, "none", o.object.north_east, {disabled: true, hide_label: true, class: "form-control col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                      <%= lp_text_field(o, :south_east, "none", o.object.south_east, {disabled: true, hide_label: true, class: "form-control col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                      <%= lp_text_field(o, :south_west, "none", o.object.south_west, {disabled: true, hide_label: true, class: "form-control direction col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                      <%= lp_text_field(o, :north_west, "none", o.object.north_west, {disabled: true, hide_label: true, class: "form-control direction col-4 col-sm-3 col-xl-2 d-inline-block ml-1 mr-1", inline_div: true}) %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="row ml-1 pb-5">
+            <div class="col-md-4 pl-0">
+              <div class="form-group row">
+                <label class="form-control-label col-12 ft-bold">Minimum Order Requirement</label>
+                <h5 class="pl-3 pr-2 pt-2 d-inline-block">$</h5>
+                <%= lp_currency_field(f, :min_order_amount_cents, "none", f.object.min_order_amount_cents, {disabled: true, class: "form-control col-md-8", inline_div: true}) %>
+              </div>
+            </div>
+            <div class="col-md-4 pl-0">
+              <div class="form-group row">
+                <label class="form-control-label col-12 ft-bold pl-0">Maximum Order Cutoff</label>
+                <%= lp_text_field(f, :max_order_people, "none", nil, {disabled: true, hide_label: true, class: "form-control col-md-4"}) %>
+                <div class="col-md-3 pt-1">
+                  <div class=""><strong>people</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group row">
+                <label class="form-control-label col-12 ft-bold">Delivery Fees</label>
+                <h5 class="pl-3 pr-2 pt-2 d-inline-block">$</h5>
+                <%= lp_currency_field(f, :default_delivery_fee_cents, "none", f.object.default_delivery_fee_cents, {disabled: true, class: "form-control col-md-6", inline_div: true}) %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <label class="form-control-label col-md-5 col-lg-7">These are the days and times set for this restaurant to deliver food</label>
+            <a class="btn btn-link p-0 text-right col-sm-4 col-md-5 float-right" data-modal-size="md" data-modal="true" href="<%=restaurant_restaurant_exclude_dates_path%>" data-modal-title="Holiday Exclusions">See holiday exclusions</a>
+          </div>
+          <div class="col-md-12 row pb-4 bb-1 m-0 comp__restaurant_availability" data-nested-attributes="restaurant_restaurant_availabilities_attributes_">
+            <div class="col hidden-lg-down mt-5 pl-0 pr-0 pt-4 mr-1">
+              <p class="ft-bold mt-3">Delivery Start Time</p>
+              <p class="ft-bold mt-4 pt-3">Delivery End Time</p>
+            </div>
+            <div class="row col-12 col-xl-11 p-0 pt-3">
+              <% RestaurantAvailability.dows.each do |key, value| %>
+                <%= f.fields_for :restaurant_availabilities, f.object.restaurant_availabilities.select{|avail| avail.day_of_week == value}.first do |o| %>
+                  <%= render "/restaurant/preferences/components/restaurant_availabilities_fields", s: o %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="row pt-4 pb-3">
+            <label class="form-control-label col-md-12">This is the cut-off time set for placing and updating orders</label>
+          </div>
+          <div class="form-group row form-group-tight">
+            <div class="col-12 col-xl-8">
+              <div class="row align-items-center">
+                <div class="col-12 col-md-2 col-xl-4 align-items-center">
+                  <label class="form-control-label ft-bold">Accepting Orders Until</label>
+                </div>
+                <div class="col-12 col-md-3 col-xl-4 bg-primary restaurant-orders-until-select text-center ft-bold mr-5">
+                  <%= selectable_enum(Restaurant.orders_untils, "until_").to_h.key(value = f.object.orders_until) %>
+                </div>
+                <div class="col-12 col-md-3 col-xl-3 row p-0 ml-0">
+                  <%= lp_end_timeframe_field(f, :orders_until_hour, 'none', 60, @restaurant.orders_until_hour(true), {disabled: true, hide_label: true, class: "col-12 col-md-10 form-control d-inline restaurant-time-select mt-1 pl-3", capitalize_time: true}) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %> <!-- end of form -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  LPRestaurantForm_Initializer();
+</script>

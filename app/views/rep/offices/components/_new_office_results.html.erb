@@ -1,0 +1,68 @@
+<!-- this might need a conditional class if used in multiple places -->
+<div class="vertical-nav" data-component-target="search-results">
+  <ul class="modal-search-results">
+    <% offices.each do |office| %>
+      <li>
+        <% if @for_orders %>
+          <% if office.private__flag %>
+            <div class="row no-gutters align-items-center office-disabled pl-0 pr-1">
+              <div class="hidden-xs-down ml-4 mr-3">
+                <%= office_list_icon %>
+              </div>
+              <div class="col-10 pt-3 ml-3">
+                <h2><%= office.name %></h2>
+                <p><%= single_line_address(office) %><br />
+                  (Lunchpro does not currently manage their calendar)
+                </p>
+              </div>
+            </div>
+            <%else%>
+            <div class="vertical-nav-li-content row no-gutters align-items-center pl-0 pr-1" <%=check_for_appointment(office, current_user.sales_rep)%>>
+              <div class="hidden-xs-down ml-4 mr-3">
+                <%= office_list_icon %>
+              </div>
+              <div class="col-10 col-sm-8 col-md-9 pt-3 ml-3">
+                <h2><%= office.name %></h2>
+                <p><%= single_line_address(office) %></p>
+              </div>
+              <% if !office.private__flag %>
+              <div class="col-1 p-3 hidden-md-down">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+              <div class="col-1 pr-0 hidden-lg-up">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+              <% end %>
+            </div>
+          <%end%>
+        <% else %>
+          <div class="vertical-nav-li-content row no-gutters align-items-center pl-0 pr-1" data-comp-detail-type="Office" data-comp-detail-id="<%=office.id %>">
+            <div class="hidden-xs-down ml-4 mr-3">
+              <%= office_list_icon %>
+            </div>
+            <% if !office.private__flag %>
+              <div class="col-10 col-sm-8 col-md-9 pt-3 ml-3">
+                <h2><%= office.name %></h2>
+                <p><%= single_line_address(office) %></p>
+              </div>
+              <div class="col-1 p-3 hidden-md-down">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+              <div class="col-1 pr-0 hidden-lg-up">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+            <% else %>
+              <div class="col-12 col-sm-8 col-md-9 pt-3 ml-3">
+                <h2><%= office.name %></h2>
+                <p><%= single_line_address(office) %></p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<% if offices.count == 0 %>
+<p class="m-4"><i>No offices found.</i></p>
+<% end %>

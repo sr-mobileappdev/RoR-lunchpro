@@ -1,0 +1,43 @@
+<% tab 'orders' %>
+<% title 'My Orders' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_action_menu: true} %>
+<div id="global-content-wrapper">
+  <!-- history -->
+  <div id="history-layout" class="row no-gutters">
+    <div class="col-12 col-sm-5 col-lg-4">
+      <div class="vertical-nav br-1">
+        <div class="vertical-nav-header bb-1 pb-3">
+          <section id="rep-calendar" class="container">
+            <div class="calendar-header row mb-2 pt-3 pb-3">
+              <div class="col-1">
+                <a class="fc-today-button" href="#today">Today</a>
+              </div>
+              <div class="col-12 col-lg-10">
+                <ul class="list-inline text-center mb-0">
+                  <li class="list-inline-item pr-3"><a class="fc-prev-button" href="#prev-month"><i class="fa fa-arrow-left"></i></a></li>
+                  <li class="list-inline-item"><h5 class="fc-calendar-title"></h5></li>
+                  <li class="list-inline-item pl-3"><a class="fc-next-button" href="#next-month"><i class="fa fa-arrow-right"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div id="order_calendar"></div>
+          </section>
+        </div>
+        <div class="lp__scroll_containers_order_history bb-1">
+          <div class="comp__rep_order_detail lp__fixed col-12 targ-rep-appointments p-0" data-comp-order-load-id="<%=@order_id%>" id="scrollable-appointment-container">
+            <%= render partial: "rep/orders/components/orders",
+                       locals: {slot_manager: @slot_manager} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-7 col-lg-8 fixed-height comp__rep_order_detail p-0">
+      <div class="targ__order_detail">
+        <div class="col-12 text-center mt-5" id="default_skip" style="<%= 'display: none;' if @slot_manager.past_orders.any? %>">
+          <h3>You do not have any completed orders for this month!</h3>        
+          <img src="<%= image_path('headshot_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

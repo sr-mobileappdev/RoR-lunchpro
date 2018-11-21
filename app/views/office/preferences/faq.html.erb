@@ -1,0 +1,943 @@
+<% tab 'directory' %>
+<% title 'Rep Directory' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center pt-3">
+      <div class="lp__faux_modal med-large p-4 col-12">
+        <div class="row">
+          <div class="col-12 mt-3">
+            <div class="h4 col-12">Frequently Asked Questions</div>
+            <div class="col-12 pt-2">
+              <p>We want you to be 100% confident using LunchPro. Didn't find the answer to your question? Contact us at <a href="mailto:support@lunchpro.com">support@lunchpro.com!</a></p>
+              <div class="col-12">
+                <div class="row p-3">
+                  <div class="col-12 row">
+                    <div class="mr-2 pb-1 hidden-xs-down">
+                      <%= medical_bag_icon %>
+                    </div>
+                    <div class="h5 pl-1 col-10 pt-2">About LunchPro</div>
+                  </div>
+                  <div class="col-12 pl-0">
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseOne" aria-controls="collapseone" aria-expanded="true" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a >What is LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="card-block">
+                            LunchPro is a unique appointment scheduling tool designed for Sales Reps and Medical Offices,
+                            linking them with top local restaurants and caterers.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseTwo" aria-controls="collapsetwo" aria-expanded="true" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Who does LunchPro serve?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                          <div class="card-block">
+                            LunchPro provides a unique technology solution for three separate groups:
+                            <ul>
+                              <li>
+                                <strong>Sales Reps</strong> use LunchPro to schedule appointments and order food.
+                              </li>
+                              <li>
+                                <strong>Medical Offices</strong> use LunchPro to manage their internal calendar,
+                                specifically their Sales Rep meal appointments, scheduling Rx sample drop-offs and other
+                                events.
+                              </li>
+                              <li>
+                                <strong>Restaurant Partners</strong> use LunchPro as a lead generation tool to source
+                                large catered meals.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseThree" aria-controls="collapsethree" aria-expanded="true" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is LunchPro a traditional restaurant delivery service (RDS)?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                          <div class="card-block">
+                            No! LunchPro is much more than an RDS. There’s no such thing as a stop and drop at LunchPro.
+                            Our unique meal calendaring and food delivery platform makes it easy for Medical Offices and
+                            Sales Reps to manage their relationship with one another.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="mt-4 by-1">
+                  </div>
+                  <div class="col-12 row">
+                    <div class="mr-2 pt-2 hidden-xs-down hidden-xl-up">
+                      <%= user_icon %>
+                    </div>
+                    <div class="mr-2 pb-1 hidden-lg-down">
+                      <%= user_icon %>
+                    </div>
+                    <div class="h5 pl-1 col-10 pt-2">LunchPro for Sales Reps</div>
+                  </div>
+                  <div class="col-12 pl-0">
+                    <div id="accordion2" role="tablist" aria-multiselectable="true">
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseFour" aria-controls="collapsefour" aria-expanded="true" role="tab" id="headingFour" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How do I create a LunchPro Account?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                          <div class="card-block">
+                            Easy! Log on to <a href="https://LunchPro.com/" target="_blank" class="btn-link">www.LunchPro.com</a> and click <strong>Create Free Account</strong> or download the LunchPro
+                            App for your iOS or Android mobile device.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseFive" aria-controls="collapsefive" aria-expanded="true" role="tab" id="headingFive" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Does LunchPro have an App?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
+                          <div class="card-block">
+                            Yes! Visit the app store for your mobile device and search LunchPro. Then, follow the easy
+                            prompts and you’re all set.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseSix" aria-controls="collapsesix" aria-expanded="true" role="tab" id="headingSix" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is there a fee to create a Sales Rep Account or use the LunchPro App?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseSix" class="collapse" role="tabpanel" aria-labelledby="headingSix">
+                          <div class="card-block">
+                            Nope. LunchPro is totally free to use.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseSeven" aria-controls="collapseseven" aria-expanded="true" role="tab" id="headingSeven" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Can I have more than one LunchPro Account?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseSeven" class="collapse" role="tabpanel" aria-labelledby="headingSeven">
+                          <div class="card-block">
+                            Because your email address is used as your username, we limit Sales Reps to one Account.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseEight" aria-controls="collapseeight" aria-expanded="true" role="tab" id="headingEight" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>I think I may have more than one LunchPro Account – what do I do?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseEight" class="collapse" role="tabpanel" aria-labelledby="headingEight">
+                          <div class="card-block">
+                            Call us anytime at <strong>(855) 586-2477</strong> - we’ll look up the details and merge your Accounts, so that
+                            none of your appointments or ordering history is lost. You’ll have to select a primary email that
+                            will be used as your username going forward.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseNine" aria-controls="collapsenine" aria-expanded="true" role="tab" id="headingNine" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How do I edit my Account or payment information?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseNine" class="collapse" role="tabpanel" aria-labelledby="headingNine">
+                          <div class="card-block">
+                            Simply go to your LunchPro <strong>Account Profile</strong>, edit the information and save your changes. It’s
+                            that easy!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseTen" aria-controls="collapseten" aria-expanded="true" role="tab" id="headingTen" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>I called on a Medical Office that uses LunchPro, but I don’t have a LunchPro Account. Do
+                          I have to create an Account to book appointments using LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseTen" class="collapse" role="tabpanel" aria-labelledby="headingTen">
+                          <div class="card-block">
+                            No. Sales Reps do not have to create an Account to book an appointment on the LunchPad, but
+                            we will need your name, email and phone number to keep track of your scheduled appointment.
+                            However, with the ability to manage your calendar, budget, receipts, office information and
+                            meals all in one place – why wouldn’t you want an Account?
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapseEleven" aria-controls="collapseEleven" aria-expanded="true" role="tab" id="headingeleven" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How does LunchPro help manage my budget?</a>
+                          </h5>
+                        </div>
+                        <div id="collapseEleven" class="collapse" role="tabpanel" aria-labelledby="headingEleven">
+                          <div class="card-block">LunchPro allows you to set specific budget guidelines for each Medical Office. In addition, we
+                            work closely with hundreds of Restaurant Partners, to ensure that you have a variety of quality
+                            meal options for every budget, starting at less than $10.00 per person.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse12" aria-controls="collapse12" aria-expanded="true" role="tab" id="heading12" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is ordering from LunchPro more expensive than ordering directly from Restaurants?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse12" class="collapse" role="tabpanel" aria-labelledby="heading12">
+                          <div class="card-block">Nope! We work diligently with our Restaurant Partners to ensure that the LunchPro prices are
+                            consistent with the catering prices they charge their other customers.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse13" aria-controls="collapse13" aria-expanded="true" role="tab" id="heading13" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Do I have to pick up or deliver the food?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse13" class="collapse" role="tabpanel" aria-labelledby="heading13">
+                          <div class="card-block">Of course not! We have you covered. Our Restaurant Partners are responsible for meal delivery
+                            and set up at the Medical Office. In the event you prefer to pick up the food, please call/text us at
+                            <strong>(855) 586-2477</strong> and we will ensure that your food is ready at the Restaurant when you arrive.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse14" aria-controls="collapse14" aria-expanded="true" role="tab" id="heading14" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Do the Restaurant Partners charge a delivery fee?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse14" class="collapse" role="tabpanel" aria-labelledby="heading14">
+                          <div class="card-block">Most of our Restaurant Partners do not, but some do. If there is a delivery fee, the fees will often
+                            vary. Any delivery fees are also clearly displayed when placing your order. However, LunchPro
+                            offers a filtering tool that identifies which Restaurants charge delivery fees.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse15" aria-controls="collapse15" aria-expanded="true" role="tab" id="heading15" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Does LunchPro charge additional fees?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse15" class="collapse" role="tabpanel" aria-labelledby="heading15">
+                          <div class="card-block">No. LunchPro does <span class="text-underline">not</span> charge any additional fees.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card card-faq">
+                      <div class="card-header card-header-faq p-3" href="#collapse16" aria-controls="collapse16" aria-expanded="true" role="tab" id="heading16" data-toggle="collapse" data-parent="#accordion2">
+                        <h5 class="mb-0">
+                        <i class="fa fa-play-circle pr-1"></i>
+                        <a>If I need to cancel my food order, do the Restaurant Partners charge a cancellation fee?</a>
+                        </h5>
+                      </div>
+                      <div id="collapse16" class="collapse" role="tabpanel" aria-labelledby="heading16">
+                        <div class="card-block">
+                          If your order is cancelled well in advance there is typically no cancellation fee. On the other
+                          hand, if your order is cancelled at the last minute, some of our Restaurant Partners charge a
+                          cancellation fee to cover their cost. Cancellation fees vary, however, you can filter to find which
+                          ones charge cancellation fees.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card card-faq">
+                      <div class="card-header card-header-faq p-3" href="#collapse17" aria-controls="collapse17" aria-expanded="true" role="tab" id="heading17" data-toggle="collapse" data-parent="#accordion2">
+                        <h5 class="mb-0">
+                        <i class="fa fa-play-circle pr-1"></i>
+                        <a>Do I have to visit a Medical Office to schedule my appointment?</a>
+                        </h5>
+                      </div>
+                      <div id="collapse17" class="collapse" role="tabpanel" aria-labelledby="heading17">
+                        <div class="card-block">Yes and no! If the Medical Office is a LunchPro Office: you may schedule or cancel
+                          appointments on the LunchPad or remotely via our website or App – at any time and from
+                          anywhere (24/7).<Br />
+                          If the Medical Office is not a LunchPro Office: you are not able to schedule or cancel an
+                          appointment via LunchPro; however, you can place a food order for that Medical Office using
+                          LunchPro.<Br />
+                          By all means, if a Medical Office is not currently using LunchPro, please refer them!
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card card-faq">
+                      <div class="card-header card-header-faq p-3" href="#collapse18" aria-controls="collapse18" aria-expanded="true" role="tab" id="heading18" data-toggle="collapse" data-parent="#accordion2">
+                        <h5 class="mb-0">
+                        <i class="fa fa-play-circle pr-1"></i>
+                        <a>If I am a LunchPro user, am I required to use a LunchPro Restaurant Partner?</a>
+                        </h5>
+                      </div>
+                      <div id="collapse18" class="collapse" role="tabpanel" aria-labelledby="heading18">
+                        <div class="card-block">
+                          No, but you will lose many of the benefits of using a LunchPro Restaurant Partner including
+                          delivery and set up services. There are two ways to set up a meal:<br />
+                          <ul>
+                            <li>Use LunchPro’s Restaurant Partners to order food, deliver and set up at the
+                            Medical Office;</li>
+                          </ul>
+                          <p>
+                            <i>or</i>
+                          </p>
+                          <ul>
+                            <li>
+                              Use the “Bring Your Own Food” feature. This feature allows you to
+                              bypass our Restaurant Partner meal delivery system but will communicate your meal
+                              choice with the Medical Office. If you choose not to use a LunchPro Restaurant Partner,
+                              <span class="text-ul">you are responsible</span> for ordering, delivering and setting up your meal at the Medical
+                              Office.
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card card-faq">
+                      <div class="card-header card-header-faq p-3" href="#collapse19" aria-controls="collapse19" aria-expanded="true" role="tab" id="heading19" data-toggle="collapse" data-parent="#accordion2">
+                        <h5 class="mb-0">
+                        <i class="fa fa-play-circle pr-1"></i>
+                        <a>Can I use LunchPro to keep track of ALL of my Medical Office appointments?</a>
+                        </h5>
+                      </div>
+                      <div id="collapse19" class="collapse" role="tabpanel" aria-labelledby="heading19">
+                        <div class="card-block">
+                          You bet! In fact, we encourage you to use LunchPro to manage all of your appointments, whether
+                          a Medical Office utilizes LunchPro’s system or not.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card card-faq">
+                      <div class="card-header card-header-faq p-3" href="#collapse20" aria-controls="collapse20" aria-expanded="true" role="tab" id="heading20" data-toggle="collapse" data-parent="#accordion2">
+                        <h5 class="mb-0">
+                        <i class="fa fa-play-circle pr-1"></i>
+                        <a>Can I order food and have it delivered to a non-LunchPro Medical Office?</a>
+                        </h5>
+                      </div>
+                      <div id="collapse20" class="collapse" role="tabpanel" aria-labelledby="heading20">
+                        <div class="card-block">Yes. Thousands of Sales Rep use LunchPro to provide quality meals at affordable prices for all of
+                          their Medical Offices.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card card-faq">
+                      <div class="card-header card-header-faq p-3" href="#collapse21" aria-controls="collapse21" aria-expanded="true" role="tab" id="heading21" data-toggle="collapse" data-parent="#accordion2">
+                        <h5 class="mb-0">
+                        <i class="fa fa-play-circle pr-1"></i>
+                        <a>What is the LunchPro Concierge Service and how can I use them?</a>
+                        </h5>
+                      </div>
+                      <div id="collapse21" class="collapse" role="tabpanel" aria-labelledby="heading21">
+                        <div class="card-block">
+                          We’re glad you asked! The LunchPro Concierge Service was designed by Sales Reps for Sales
+                          Reps. Want to be set up for success? Here’s what the team can do:
+                          <ul>
+                            <li>Assist you with making meal selections for your appointments by
+                            communicating directly with the Medical Office.</li>
+                            <li>Remind you about important things concerning your Medical Offices’, like
+                            specific dietary restrictions, provider schedules and delivery instructions.</li>
+                            <li>Communicate with you concerning your orders in timely manner,
+                            including delivery issues.</li>
+                            <li>Provide Live Support Monday through Friday from 8:00 a.m. to 8:00 p.m.</li>
+                            <li>Stand by to assist you! Call or text anytime <strong>(855) 586-2477</strong> or email
+                              <a href="mailto:support@LunchPro.com" class="btn-link">support@LunchPro.com</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse22" aria-controls="collapse22" aria-expanded="true" role="tab" id="heading22" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>What if there is an issue with my delivery?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse22" class="collapse" role="tabpanel" aria-labelledby="heading22">
+                          <div class="card-block">
+                            Please call or text LunchPro’s Concierge Service at <strong>(855) 586-2477</strong> – We are here to HELP!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse23" aria-controls="collapse23" aria-expanded="true" role="tab" id="heading23" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>I forgot my LunchPro Username or Password, what do I do? </a>
+                          </h5>
+                        </div>
+                        <div id="collapse23" class="collapse" role="tabpanel" aria-labelledby="heading23">
+                          <div class="card-block">
+                            Your LunchPro Username is the email address used to create your LunchPro Account. <br />
+                            Click <strong>Forgot Password</strong> on the Login page and a temporary password will be sent to you.<br />
+                            If you cannot remember which email address you used, call or text us at <strong>855-586-2477.</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse24" aria-controls="collapse24" aria-expanded="true" role="tab" id="heading24" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>I share my territory with another Sales Rep that visits the same Medical Offices I do. Can
+                          LunchPro tell me when they have an appointment booked?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse24" class="collapse" role="tabpanel" aria-labelledby="heading24">
+                          <div class="card-block">
+                            LunchPro does not share appointment information with anyone (other than the Medical Office
+                            and/or participating Restaurant), without the Sales Rep’s permission; however, if you have a
+                            Partner, we encourage you to select the <strong>Request a Partner</strong> feature when creating your LunchPro
+                            Account. Sharing your appointment calendar with a Partner helps you identify each other’s
+                            appointments at specific Medical Offices.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse25" aria-controls="collapse25" aria-expanded="true" role="tab" id="heading25" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Does LunchPro have a rewards program?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse25" class="collapse" role="tabpanel" aria-labelledby="heading25">
+                          <div class="card-block">
+                            Absolutely! Our Rep Rewards Program makes it easy to earn points and redeem them for
+                            Amazon & Nordstrom gift cards. Every dollar spent is a point earned. Sales Rep and Restaurant
+                            referrals are worth 2,500 points each. Refer a Medical Office and get 5,000 points when they
+                            join! For every 2,500 Rep Reward Points earned, you are eligible to redeem for a $25.00 gift
+                            card.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse26" aria-controls="collapse26" aria-expanded="true" role="tab" id="heading26" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>My company does not allow me to benefit from a rewards program - can I donate my Rep
+                          Rewards to charity?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse26" class="collapse" role="tabpanel" aria-labelledby="heading26">
+                          <div class="card-block">
+                            Yes, you may choose to donate your Rep Rewards to one of our featured organizations:
+                            American Red Cross, Amnesty International, American Cancer Society, Environmental Defense
+                            Fund and Meals on Wheels. <br />
+                            To donate your Rep Rewards to a charity, please email your name and your charity preference to
+                            <a class="btn-link" href="mailto:rewards@LunchPro.com">rewards@LunchPro.com.</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse27" aria-controls="collapse27" aria-expanded="true" role="tab" id="heading27" data-toggle="collapse" data-parent="#accordion2">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Can I delete my LunchPro Account?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse27" class="collapse" role="tabpanel" aria-labelledby="heading27">
+                          <div class="card-block">
+                            Yes, but it’s awesome, so why would you want to? To delete your Account, log on to the website
+                            or LunchPro App and click <strong>Deactivate</strong> in your <strong>Account Profile</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="mt-4 by-1">
+                  </div>
+                  <div class="col-12 row">
+                    <div class="mr-2 pt-2 hidden-xs-down hidden-xl-up">
+                      <%= office_review_icon %>
+                    </div>
+                    <div class="mr-2 pb-1 hidden-lg-down">
+                      <%= office_review_icon %>
+                    </div>
+                    <div class="h5 pl-1 col-10 pt-2">LunchPro for Medical Offices</div>
+                  </div>
+                  <div class="col-12 pl-0">
+                    <div id="accordion3" role="tablist" aria-multiselectable="true">
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse28" aria-controls="collapse28" aria-expanded="true" role="tab" id="heading28" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Why use LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse28" class="collapse" role="tabpanel" aria-labelledby="heading28">
+                          <div class="card-block">
+                            Our unique online scheduling tool eliminates the outdated and inefficient paper calendar system.
+                            Once set up, you no longer have to dedicate valuable time in juggling the logistics of Sales Rep
+                            visits. Sales Reps can either book, cancel and/or confirm their appointments using our free
+                            LunchPad in your Medical Office or instead of standing around waiting at your check-in
+                            window, they can access your meal calendar remotely at <a href="https://www.lunchpro.com/" target="_blank" class="btn-link">www.LunchPro.com</a> or by using
+                            LunchPro’s App.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse29" aria-controls="collapse29" aria-expanded="true" role="tab" id="heading29" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is there a fee to create an account for the Medical Office or Sales Rep?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse29" class="collapse" role="tabpanel" aria-labelledby="heading29">
+                          <div class="card-block">
+                            Nope! LunchPro is free to use and free to join.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse30" aria-controls="collapse30" aria-expanded="true" role="tab" id="heading30" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is my Medical Office eligible to use LunchPro? </a>
+                          </h5>
+                        </div>
+                        <div id="collapse30" class="collapse" role="tabpanel" aria-labelledby="heading30">
+                          <div class="card-block">
+                            Yes, any Medical Office that schedules meal appointments is eligible to use LunchPro; however,
+                            to be eligible for a free LunchPad, we currently require a minimum of eight (8) staff members
+                            and one (1) meal per week on average.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse31" aria-controls="collapse31" aria-expanded="true" role="tab" id="heading31" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>I have a large practice with multiple locations - can LunchPro manage all of our calendars?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse31" class="collapse" role="tabpanel" aria-labelledby="heading31">
+                          <div class="card-block">
+                            Yes, in fact we’d love to! LunchPro can manage large medical practices, with multiple calendars
+                            and locations.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse32" aria-controls="collapse32" aria-expanded="true" role="tab" id="heading32" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is it difficult to set up my Medical Office with LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse32" class="collapse" role="tabpanel" aria-labelledby="heading32">
+                          <div class="card-block">
+                            Not at all! Our Client Development Team will work with you to set up your Medical Office
+                            Account. We will quickly gather simple information about your practice, transfer the information
+                            from your paper calendar to a complimentary LunchPad, and viola, your electronic system is up
+                            and running – forever replacing your paper calendar!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse33" aria-controls="collapse33" aria-expanded="true" role="tab" id="heading33" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How will LunchPro handle the appointments already scheduled on our paper calendar?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse33" class="collapse" role="tabpanel" aria-labelledby="heading33">
+                          <div class="card-block">
+                            The LunchPro Client Development Team will collect all information regarding existing
+                            appointments prior to activating your Medical Office’s LunchPad. We will need a copy (or
+                            photo) of your existing paper calendar. We will import all of the information into your Medical
+                            Office Account to ensure that no previously booked appointments or information is lost. The
+                            LunchPad will be returned to you within two (2) business days fully loaded with your current
+                            schedule and ready for new appointments.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse34" aria-controls="collapse34" aria-expanded="true" role="tab" id="heading34" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>What is the LunchPad?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse34" class="collapse" role="tabpanel" aria-labelledby="heading34">
+                          <div class="card-block">
+                            The LunchPad is an office-customized tablet used to manage your Sales Rep appointments. It
+                            replaces your inefficient paper calendar. It is complimentary for qualifying Medical Offices, but
+                            the LunchPad is not necessary to experience all of LunchPro’s benefits – some Medical Offices
+                            prefer to use the LunchPro website (<a href="https://www.LunchPro.com/" target="_blank" class="btn-link">www.LunchPro.com</a>). With or without the LunchPad, if a
+                            Medical Office utilizes LunchPro’s calendaring system, Sales Reps can manage and schedule
+                            appointments without going into the Medical Office
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse35" aria-controls="collapse35" aria-expanded="true" role="tab" id="heading35" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How much will the LunchPad cost the Medical Office?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse35" class="collapse" role="tabpanel" aria-labelledby="heading35">
+                          <div class="card-block">
+                            Not a dime! The LunchPad is absolutely free to use.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse36" aria-controls="collapse36" aria-expanded="true" role="tab" id="heading36" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Can the LunchPad be used for anything other than managing the Medical Office
+                          appointment calendar?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse36" class="collapse" role="tabpanel" aria-labelledby="heading36">
+                          <div class="card-block">
+                            No. The LunchPad is specifically programmed to manage your Medical Office meal calendar.
+                            The LunchPad can not be used to surf the internet. When not in use, the LunchPad defaults back
+                            to your Medical Office home screen.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse37" aria-controls="collapse37" aria-expanded="true" role="tab" id="heading37" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is my Medical Office liable if the LunchPad is broken, stolen or malfunctions?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse37" class="collapse" role="tabpanel" aria-labelledby="heading37">
+                          <div class="card-block">
+                            No. The LunchPad is property of LunchPro and will be updated and/or replaced at LunchPro’s
+                            discretion.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse38" aria-controls="collapse38" aria-expanded="true" role="tab" id="heading38" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>If the LunchPad malfunctions is our calendar data lost?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse38" class="collapse" role="tabpanel" aria-labelledby="heading38">
+                          <div class="card-block">
+                            Absolutely not! The LunchPad syncs with your online LunchPro Account in real-time and all of
+                            your data is securely backed up on the Cloud. Your data is safe and secure and can be accessed
+                            online anytime using your login credentials at <a href="https://www.lunchpro.com/" target="_blank" class="btn-link">www.LunchPro.com</a>.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse39" aria-controls="collapse39" aria-expanded="true" role="tab" id="heading39" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Will LunchPro train us to use the LunchPad?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse39" class="collapse" role="tabpanel" aria-labelledby="heading39">
+                          <div class="card-block">
+                            For sure! The LunchPro Client Development Team is standing by to assist you with training and
+                            support. We will teach you how to navigate the device, schedule, cancel and confirm
+                            appointments and direct Sales Reps to the LunchPro Concierge Service for additional assistance..
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse40" aria-controls="collapse40" aria-expanded="true" role="tab" id="heading40" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Who will train Sales Reps to use LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse40" class="collapse" role="tabpanel" aria-labelledby="heading40">
+                          <div class="card-block">
+                            <span class="text-ul">We’re</span> on top of it! Sales Reps receive tons of information from us on how to use the LunchPad,
+                            schedule and confirm appointments, select and order food, making us their support team, and
+                            letting you get back to patient care!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse41" aria-controls="collapse41" aria-expanded="true" role="tab" id="heading41" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How will we communicate important information about our Medical Office to Sales Reps
+                          using LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse41" class="collapse" role="tabpanel" aria-labelledby="heading41">
+                          <div class="card-block">
+                            The LunchPro system has an area specifically designated for your Office Policies.<br />
+                            There, you can set your staff headcount, record dietary restrictions, include delivery instructions
+                            and capture any other important details that you like to share with Sales Reps that visit your
+                            Medical Office. Sales Reps must review and <strong>Accept</strong> your Office Policies before booking an
+                            appointment and/or placing a food order for your Medical Office
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse42" aria-controls="collapse42" aria-expanded="true" role="tab" id="heading42" data-toggle="collapse" data-parent="#accordion3">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>What is the LunchPro Client Development Team and how can I use them?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse42" class="collapse" role="tabpanel" aria-labelledby="heading42">
+                          <div class="card-block">
+                            That’s a loaded question, with a great answer! There are so many things LunchPro can do to
+                            simplify your job. Here’s how:
+                            <ul>
+                              <li>We will store important information about your Medical Office like your
+                                dietary restrictions, delivery instructions and general Office Policies. We take this a step
+                                further, by asking Sales Reps to Accept your Office Policies prior to booking an
+                              appointment.</li>
+                              <li>We will touch base with you to confirm and find out what type of food
+                              your Medical Office would prefer for upcoming appointments.</li>
+                              <li>We will communicate important information about your Medical Office to
+                              the Sales Rep and our Restaurant Partners.</li>
+                              <li>When requesting a meal from the Sales Rep, we will ensure that your
+                              request fits within the Sales Rep specified budget.</li>
+                              <li>We will adjust your provider schedule, headcount and/or other details
+                              about your Medical Office on an as needed basis.</li>
+                              <li>We can open or close your calendar with the click of a button.</li>
+                              <li>Basically, we’re here to serve you with a customer focused attitude!</li>
+                            </ul>
+                            If you need us, call/text us at <strong>(855) 586-2477</strong> or send an email to <a href="mailto:support@LunchPro.com" class="btn-link">support@LunchPro.com</a>.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="mt-4 by-1">
+                  </div>
+                  <div class="col-12 row">
+                    <div class="mr-2 pt-2 hidden-xs-down hidden-xl-up">
+                      <%= om_food_icon %>
+                    </div>
+                    <div class="mr-2 pb-3 hidden-lg-down">
+                      <%= om_food_icon %>
+                    </div>
+                    <div class="h5 pl-1 col-10 pt-3">LunchPro for Restaurant Partners</div>
+                  </div>
+                  <div class="col-12 pl-0">
+                    <div id="accordion4" role="tablist" aria-multiselectable="true">
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse43" aria-controls="collapse43" aria-expanded="true" role="tab" id="heading43" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Who purchases food from LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse43" class="collapse" role="tabpanel" aria-labelledby="heading43">
+                          <div class="card-block">
+                            Our customers are Sales Reps responsible for providing meals to large groups of medical
+                            professionals every day of the week. Each Sales Rep averages 3-4 meals/per week, with an
+                            average order size of <strong>$295</strong> -- that’s a potential of <strong>$1,000+</strong> increase in sales from just one Sales
+                            Rep per week!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse44" aria-controls="collapse44" aria-expanded="true" role="tab" id="heading44" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How many Sales Reps work with LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse44" class="collapse" role="tabpanel" aria-labelledby="heading44">
+                          <div class="card-block">
+                            LunchPro has thousands of active LunchPro users and the numbers continue to grow daily!
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse45" aria-controls="collapse45" aria-expanded="true" role="tab" id="heading45" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How many orders have LunchPro users placed? </a>
+                          </h5>
+                        </div>
+                        <div id="collapse45" class="collapse" role="tabpanel" aria-labelledby="heading45">
+                          <div class="card-block">
+                            So far, LunchPro is responsible for <strong>25,000+</strong> orders in the DFW area, with an average order size
+                            of <strong>$295.</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse46" aria-controls="collapse46" aria-expanded="true" role="tab" id="heading46" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>What markets does LunchPro serve? </a>
+                          </h5>
+                        </div>
+                        <div id="collapse46" class="collapse" role="tabpanel" aria-labelledby="heading46">
+                          <div class="card-block">
+                            Currently, LunchPro serves the DFW area and will expand to Austin this summer. LunchPro
+                            plans to be statewide by the end of 2018 and intends to operate in many other states real soon.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse47" aria-controls="collapse47" aria-expanded="true" role="tab" id="heading47" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Why are LunchPro’s meal sales so much higher than other online food portals?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse47" class="collapse" role="tabpanel" aria-labelledby="heading47">
+                          <div class="card-block">
+                            It is simple math. LunchPro users are Sales Reps who sell products to doctors. These Sales Reps
+                            are required to schedule an average of 3 - 4 lunches/week with the various Medical Offices they
+                            serve. For Medical Offices with 10 - 30 staff members or more, meal sales can easily rise from
+                            $295 or more per order. The more staff members in the Medical Office, the more food the Sales
+                            Rep will order. LunchPro orders sizes vary greatly, but average 15 - 20 people and routinely
+                            increase to 30 - 40 people.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse48" aria-controls="collapse48" aria-expanded="true" role="tab" id="heading48" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Is there a fee for a Restaurant or Caterer to join LunchPro?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse48" class="collapse" role="tabpanel" aria-labelledby="heading48">
+                          <div class="card-block">
+                            No. LunchPro is free for all Restaurants and Caterers; however, just like all other online food
+                            portals, LunchPro takes a small revenue share from all orders and charges a processing fee to
+                            cover credit card charges and weekly ACH payments to your Restaurant
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse49" aria-controls="collapse49" aria-expanded="true" role="tab" id="heading49" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How/When does LunchPro pay their Restaurants?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse49" class="collapse" role="tabpanel" aria-labelledby="heading49">
+                          <div class="card-block">
+                            LunchPro processes all payments to Restaurants via ACH payment, for all LunchPro orders
+                            fulfilled in the preceding week, no later than midnight CST on the following Wednesday.
+                            LunchPro, LLC is a tax-exempt entity that handles all of the sales tax on our end and ensures that
+                            the government gets their share
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse50" aria-controls="collapse50" aria-expanded="true" role="tab" id="heading50" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>I’m part of a national chain. Does LunchPro have plans for growth outside of DFW?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse50" class="collapse" role="tabpanel" aria-labelledby="heading50">
+                          <div class="card-block">
+                            Of course! LunchPro is expanding into Austin this summer. We also have plans for expansion
+                            into Houston and San Antonio in late 2018 and intend to be nationwide real soon
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse51" aria-controls="collapse51" aria-expanded="true" role="tab" id="heading51" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>Will my Restaurant be required to include additional items with each meal?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse51" class="collapse" role="tabpanel" aria-labelledby="heading51">
+                          <div class="card-block">
+                            Yes. LunchPro requests that each Restaurant provide standard to-go meal kits, including cups,
+                            plates, napkins, serving utensils, regular utensils, ice, sweetener, applicable condiments and any
+                            other items required to properly set-up and present the meal. For your convenience, LunchPro
+                            will provide you with a copy of our Catering Standards Checklist.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse52" aria-controls="collapse52" aria-expanded="true" role="tab" id="heading52" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How will I receive LunchPro orders? Is everything done electronically?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse52" class="collapse" role="tabpanel" aria-labelledby="heading52">
+                          <div class="card-block">
+                            All LunchPro orders are communicated via email and all notifications are also available via text
+                            or online in your Account
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse53" aria-controls="collapse53" aria-expanded="true" role="tab" id="heading53" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How much notice will I receive to fulfill a LunchPro order?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse53" class="collapse" role="tabpanel" aria-labelledby="heading53">
+                          <div class="card-block">
+                            You determine how much notice you require to fulfill a LunchPro order. During your initial
+                            Restaurant set up, our LunchPro Restaurant Relations Team will walk you through the process of
+                            setting up your Restaurant’s preferences, including your catering order deadline and delivery
+                            radius.<br />
+                            Keep in mind that Sales Reps are often busy and may forget to book a meal from time to time. If
+                            this occurs, the LunchPro Concierge Service may call you to make an exception to your stated
+                            order deadline. This way, you may agree to take the order and benefit from the additional sale but
+                            only if you agree to do so. You are in control of each order.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card card-faq">
+                        <div class="card-header card-header-faq p-3" href="#collapse54" aria-controls="collapse54" aria-expanded="true" role="tab" id="heading54" data-toggle="collapse" data-parent="#accordion4">
+                          <h5 class="mb-0">
+                          <i class="fa fa-play-circle pr-1"></i>
+                          <a>How/When does LunchPro pay their Restaurants?</a>
+                          </h5>
+                        </div>
+                        <div id="collapse54" class="collapse" role="tabpanel" aria-labelledby="heading54">
+                          <div class="card-block">
+                            Great idea and it’s coming soon! We want to give our Restaurant Partners more opportunities to
+                            get in front of our Sales Reps. In the future we will add ratings, reviews and other opportunities
+                            to give your Restaurant more exposure.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

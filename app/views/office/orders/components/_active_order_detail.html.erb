@@ -1,0 +1,114 @@
+<div class="col-12 col-md-6 p-0">
+  <div class="card">
+    <div class="card-header">Order Summary</div>
+    <div class="card-block">
+      <!-- receipt header -->
+      <div class="row">
+        <span class="col-12 text-uppercase mb-2">
+          <strong><%= @order.restaurant.name %></strong>
+        </span>
+      </div>
+      <p class="mb-1">Order Serves: <%=@order.people_served%> people</p>
+      <!-- receipt item loop -->
+      <% @order.line_items.active.each do |li| %>
+        <% next if li.parent_line_item %>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p class="mb-0"><strong><%= li.orderable_name %></strong><span class="pull-right"><%= precise_currency_value(li.cost_with_sub_items)%></span></p>
+            <p class="mb-0">Quantity: <%= li.quantity %></p>
+            <% li.sub_line_items.active.each do |sli| %>
+              <p class="pl-3 mb-0">
+                <%= sli.orderable_name %>
+                <% if sli.cost_cents.to_i > 0 %>
+                  <%= "(#{precise_currency_value(sli.cost_cents)})" %>
+                <% end %>
+              </p>
+            <% end %>
+            <% if li.notes.present? %>
+              <p class="pl-3 mb-0"><span class="lp__order_item_notes"><%= li.notes %></span></p>
+            <% end %>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+      <!-- total -->
+      <table class="text-right col-12 text-uppercase ft-bold">
+        <tr class="row">
+          <td class="col-12 col-sm-8">Subtotal:</td>
+          <td class="col-12 col-md-4"><%= precise_currency_value(@order.subtotal_cents)%></td>
+        </tr>
+        <tr class="row">
+          <td class="col-12 col-sm-8">Delivery Fee:</td>
+          <td class="col-12 col-sm-4"><%= precise_currency_value(@order.delivery_cost_cents)%></td>
+        </tr>                  
+        <tr class="bb-1 row">
+          <td class="pb-3 col-12 col-sm-8">Driver Tip:</td>
+          <td class="pb-3 col-12 col-sm-4"><%= precise_currency_value(@order.tip_cents)%></td>
+        </tr>
+        <tr class="row">
+          <td class="col-12 col-sm-8">Tax:</td>
+          <td class="col-12 col-sm-4"><%= precise_currency_value(@order.sales_tax_cents)%></td>
+        </tr>
+        <tr class="row">
+          <td class="col-12 col-sm-8">Total Charge:</td>
+          <td class="col-12 col-sm-4"><%= precise_currency_value(@order.total_cents)%></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="card mb-2 mt-2">
+    <div class="card-header">
+      Office Delivery Notes
+    </div>
+    <div class="card-block">
+      <span>
+        <%= order_office_notes(@order) %>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-md-6 p-0">
+  <div class="col-12 p-0">
+    <div class="card">
+      <div class="card-header">Payment Info</div>
+      <div class="card-block">
+        <% if @order.payment_method %>
+          <p class="text-bold mb-0"><%=@order.payment_method.display_summary %></p>
+          <p><%= single_line_payment_address(@order.payment_method)%></p>
+        <% else %>
+          <p class="text-bold text-center">You must select a payment method.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if @order.authorized? && @order.editable? && (!@order.restaurant_editable? || @order.is_past_order) && !session[:impersonator_id].present? %>
+    <div class="comp__om_form col-12 mt-3 mb-4">
+      <%= form_for @order, url: { controller: "orders", action: "update" }, method: "put",  html: { class: "col-12 p-0 mt-4", autocomplete: "off" } do |f| %>
+        <label class="ft-bold">
+          Edit Your Tip Amount
+        </label>
+        <div class="card-block order-detail p-0">
+          <%= lp_number_currency_field(f, :tip_cents, "none", @order.tip_cents, {hide_label: true, class: "form-control"}) %>
+        </div>
+        <button data-submit class="btn btn-block btn-success mt-3">Update Order</button>
+      <% end %>
+    </div>  
+  <% end %>
+  <div class="col-12 col-sm-8 ml-auto mr-auto p-0 text-center mt-3">
+    <p>This order will be delivered 15 minutes prior to start time.</p>
+    <% if @order.restaurant_editable? || session[:impersonator_id].present? %>
+      <a class="btn btn-block btn-success mb-3" href="<%=select_food_office_appointment_path(@order.appointment, :restaurant_id => @order.appointment.restaurant_id)%>">Edit This Order</a>
+    <% end %>
+    <% if @order.cancellable? %>
+      <a href="<%=cancel_office_order_path(@order)%>" class="btn btn-outline-info btn-block" data-confirm-method="post"
+          data-confirm-method="post" data-confirm-check="Are you sure you want to cancel this order?">Cancel This Order</a>
+    <% else %>  
+      <% if @order.payment_method %>        
+        <a href="<%=cancel_office_order_path(@order)%>" class="btn btn-outline-info btn-block" data-confirm-method="post" data-confirm-check="WARNING! A cancelation charge of <%=precise_currency_value(@order.restaurant.late_cancel_fee_cents)%> will be applied to the card: <%=@order.payment_method.display_summary%>. Are you sure you want to cancel?">Cancel This Order</a>
+      <% else %>
+        <a href="<%=cancel_office_order_path(@order)%>" class="btn btn-outline-info btn-block" data-confirm-method="post"
+          data-confirm-method="post" data-confirm-check="Are you sure you want to cancel this order?">Cancel This Order</a>
+      <% end %>
+    <% end %>
+  </div>
+</div>

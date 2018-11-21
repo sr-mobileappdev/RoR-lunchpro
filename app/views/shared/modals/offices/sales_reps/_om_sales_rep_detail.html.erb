@@ -1,0 +1,133 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body pt-0 mt-0 comp__om_office">
+    <div class="row comp__om_form pl-2 pr-2 pt-4">
+      <%= form_for @office, :url => office_preference_path(@office.id), method: :patch,  html: { class: "col-12 row m-0 p-0", autocomplete: "off" } do |f| %>
+        <input type="hidden" name="redirect_to" value="directory">        
+        <%= f.fields_for :offices_sales_reps, @office_sales_rep do |o| %>
+          <div class="col-12 col-md-7 row m-0 rep-detail-modal-row">
+            <div class="profile-image-container mr-3 hidden-xs-down">
+              <% if @sales_rep.profile_image && @sales_rep.profile_image.url %>
+                  <img class="profile-picture" src="<%= @sales_rep.profile_image.url %>" alt="Rep Profile Image" />
+              <% else %>
+                <%= image_tag "missing_image.png", class: "profile-picture", alt: "Missing Image" %>
+              <% end %>
+            </div>
+            <div class="col-12 col-sm-8 p-0 mt-1">
+              <p class="ft-bold font-lg p-0 m-0"><%=@sales_rep.display_name %></p>
+              <p class="m-0"><%=@sales_rep.company_name%></p>
+            </div>
+            <div class="col-12 mt-3 p-0">
+              <div class="card">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item pb-0 pt-0">
+                    <span class="pt-2 pb-2 pr-2"><%= om_envelope_icon %></span>
+                    <span><%= @sales_rep.email || "No Email Set"%></span>
+                  </li>
+                  <li class="list-group-item pb-0 pt-0">
+                    <span class="pt-3 pb-1 pr-2"><%= phone_icon %></span>
+                    <span><%=@sales_rep.phone ? format_phone_number(@sales_rep.phone) : "No Phone Set"%></span>
+                  </li>
+                  <li class="list-group-item bx-1 pb-0 pt-0">
+                    <span class="pt-3 pb-2 pr-2"><%= drug_icon %></span>
+                    <span><%= format_drugs(@sales_rep.drugs) %></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 pl-0 mt-2">
+                <a data-modal-size="med-lg" data-modal="true" data-modal-title="" href="<%=show_rep_sample_office_preferences_path(sales_rep_id: @sales_rep.id)%>" class="btn btn-info">Request Sample</a>
+              </div>
+              <div class="col-12 mt-4 row ml-0 mr-0 p-0">
+                <label class="rep-form-check-label col <%='checked' if o.object.listed_type == 'none' %>">
+                  <%= o.radio_button :listed_type, "none", {class: "form-check-input"} %>
+                  None
+                </label>
+                <label class="rep-form-check-label col <%='checked' if o.object.listed_type == 'blacklist' %>">
+                  <%= o.radio_button :listed_type, "blacklist", {class: "form-check-input", id: "blacklist"} %>
+                  Blacklist
+                </label>
+                <label class="rep-form-check-label col <%='checked' if o.object.listed_type == 'standby' %>">
+                  <%= o.radio_button :listed_type, "standby", {class: "form-check-input"} %>
+                  Standby List
+                </label>
+                <p class="font-sm mt-2">
+                  * Blacklisting a rep will make sure they cannot make an appointment at your office</br>
+                  ** Putting a rep on the standby list will make it easy to contact them when a cancellation occurs
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-5 row m-0 rep-detail-modal-row">            
+            <div class="col-12 p-0">
+              <%= lp_text_area(o, :office_notes, "Internal Notes:", nil, {rows: 6, style: "resize: none;", class: "form-control", placeholder: "Enter some notes about this Rep."}) %>
+            </div>
+            <div class="col-12 p-0 mt-3">
+              <label>Upcoming Appointments:</label>
+              <div class="card rep-appointments-card">
+                <ul class="list-group list-group-flush">
+                  <% if @future_appointments.exists? %>
+                    <% @future_appointments.sort_by{|appt| appt.starts_at(true)}.each do |appt|%>
+                      <li class="list-group-item">
+                        <div class="col-sm-8 col-md-10 p-0">
+                          <p class="m-0"><%= short_date(appt.appointment_on) %></p>
+                          <% if appt.appointment_slot %>
+                            <p class="m-0"><%= appt.appointment_slot.name %></p>
+                          <% else %>
+                            <p class="m-0">Non LP Appointment</p>
+                          <% end %>
+                        </div>
+                        <div class="hidden-sm-down">
+                          <% if appt.appointment_slot %>
+                            <%= slot_food_icon(appt.appointment_slot.slot_type, 30, 30) %>
+                          <% else %>
+                            <%= slot_food_icon("lunch", 30, 30) %>
+                          <% end %>
+                        </div>
+                      </li>
+                    <% end %>
+                  <% else %>
+                    <li class="list-group-item p-2">
+                      <label class='text-center'><i>There are no future appointments for this Rep.</i></label>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+              <% if @past_appointments %>
+                <div class="col-12 p-0">
+                  <a data-modal-size="sm" data-modal="true" href="<%=rep_past_appointments_office_preferences_path(sales_rep_id: @sales_rep.id)%>" data-modal-title="" class="btn btn-link pl-0 pr-0" data-dismiss="modal">See Past Appointments</a>
+                </div>
+              <% end %>
+              <div class="col-12 p-5 hidden-sm-down"></div>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-12 row">
+          <% if @outstanding_orders %>
+            <div class="col-12 order-message" style="display: none;">
+              <p class="text-center text-danger mb-4 ft-bold">
+                This rep has outstanding order(s) that cannot be canceled. Please contact LunchPro for further assistance.
+              </p>
+            </div>
+          <% end %>
+          <div class="col-sm-6 col-lg-4 ml-auto">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-info btn-block">Cancel</button>
+          </div>
+          <div class="col-sm-6 col-lg-4 mr-auto">
+            <button class="btn btn-success btn-block">Save</button>
+          </div>
+        </div>
+        <div class="col-12 row hidden-md-up m-0 p-0">
+          <div class="col-12 mt-3">
+            <button class="btn btn-success btn-block">Save</button>
+          </div>
+          <div class="col-12 mt-3">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-info btn-block">Cancel</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  LPOmForm_Initializer();
+  LPOmOffice_Initializer();
+</script>

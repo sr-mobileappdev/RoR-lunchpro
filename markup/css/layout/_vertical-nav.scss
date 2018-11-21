@@ -1,0 +1,40 @@
+.vertical-nav {
+	margin: 0;
+	// if you need controls above the nav/results
+	.vertical-nav-header {
+		// search form
+		.input-group {
+
+		}
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		li {
+			.vertical-nav-li-header {
+				background: $gray-lightest;
+				padding: 5px 30px;
+			}
+			.vertical-nav-li-content {
+				padding: 15px 30px;
+				span {
+					display: block;
+				}
+				.h5 {
+					font-weight: lighter;
+				}
+			}
+			&.active {
+				.vertical-nav-li-content {
+					background: $brand-primary;
+					color: $white;
+					.h5 {
+						font-weight: 500;
+					}
+				}
+			}
+		}
+
+	}
+}

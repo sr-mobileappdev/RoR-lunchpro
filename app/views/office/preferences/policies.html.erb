@@ -1,0 +1,94 @@
+<% tab 'policies' %>
+<% title 'Office Policies' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters comp__om_office">
+    <div class="justify-content-center pt-3 comp__om_form">
+      <div class="lp__faux_modal large p-4 col-12">
+        <%= form_for @office, :url => office_preference_path(@office.id), method: :patch,  html: { class: "col-12 pl-0 mt-2 pt-0", autocomplete: "off" } do |f| %>
+        <%= lp_hidden_field(nil, :redirect_to, "policies") %>
+        <div class="row">
+          <div class="col-12 col-lg-6 mt-3">
+            <h3 class="ft-bold d-inline">Dietary Restrictions:</h3>
+            <div class="d-inline">
+               <a class="btn btn-link hidden-sm-down ml-4" data-modal-size="sm" data-modal="true" href="<%=policies_modal_office_preferences_path(:type => 'diet_restrictions')%>" data-modal-title="">Edit</a>
+            </div>
+            <div class="col-12 p-0 hidden-md-up mb-3">
+              <a class="btn btn-link p-0 text-left" data-modal-size="sm" data-modal="true" href="<%=policies_modal_office_preferences_path(:type => 'diet_restrictions')%>" data-modal-title="">Edit</a>
+            </div>
+            <% if !@office.diet_restrictions_offices.any? %>
+            <p class="m-0"><i>You currently have no diet restrictions selected.</i></p>
+            <% end %>
+            <ul class="list-unstyled list-group policies-icon-list pull-left col-12 mt-3">
+              <%= f.fields_for :diet_restrictions_offices do |o| %>
+              <li class="row mb-3 policies-list child-form">                
+                <div class="col-2 col-sm-1 mr-3 pl-0">
+                  <div class="rounded-circle bg-gray">
+                    <span><%= o.object.staff_count || "N/A" %></span>
+                  </div>
+                </div>
+                <p class="col-8 col-sm-8 col-md-4 col-lg-6 col-xl-4 text-left ml-3"><%= o.object.diet_restriction.name %>
+                  <input type="hidden" name="office[diet_restrictions_offices_attributes][<%=o.index%>][_destroy]" id="_destroy_<%=o.object.id%>">
+                  <a href="#" class="ml-3 pull-right lp__remove_child" data-attr-name="diet_restrictions_offices_attributes" data-id="<%= o.object.id %>"><i class="fa fa-times-circle restaurant-x"></i></a>
+                </p>
+              </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-12 col-lg-6 mt-3 pr-0">
+            <h3 class="ft-bold d-inline">Least Favorite Restaurants:</h3>
+            <div class="d-inline">
+              <a class="btn btn-link hidden-sm-down ml-4" data-modal-size="sm" data-modal="true" href="<%=policies_modal_office_preferences_path(:type => 'least_favorite_restaurants')%>" data-modal-title="">Edit</a>
+            </div>
+            <div class="col-12 p-0 hidden-md-up mb-3">
+              <a class="btn btn-link hidden-md-up p-0 text-left" data-modal-size="sm" data-modal="true" href="<%=policies_modal_office_preferences_path(:type => 'least_favorite_restaurants')%>" data-modal-title="">Edit</a>
+            </div>
+            <% if !@office.office_restaurant_exclusions.any? %>
+            <p class="m-0"><i>You currently have no least favorite restaurants selected.</i></p>
+            <% end %>
+            <ul class="list-unstyled list-group col-12 mt-3 pr-0">
+              <%= f.fields_for :office_restaurant_exclusions do |o| %>
+                <li class="row policies-list mb-2 child-form">
+                  <div class="col-10 col-sm-9 col-md-5 col-lg-7">
+                    <p><%= restaurant_display_name(o.object.restaurant)%></p>
+                  </div>
+                  <div class="col-1 col-lg-2">
+                    <input type="hidden" name="office[office_restaurant_exclusions_attributes][<%=o.index%>][_destroy]" id="_destroy_<%=o.object.id%>">
+                     <a href="#" class="pull-right lp__remove_child pl-4 hidden-sm-down" data-attr-name="office_restaurant_exclusions_attributes" data-id="<%= o.object.id %>"><i class="fa fa-times-circle restaurant-x"></i></a>
+                     <a href="#" class="ml-3 pull-right lp__remove_child pl-0 hidden-md-up" data-attr-name="office_restaurant_exclusions_attributes" data-id="<%= o.object.id %>"><i class="fa fa-times-circle restaurant-x"></i></a>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-12 hidden-sm-down">
+            <h3 class="ft-bold">Office Policies:</h3>
+          </div>
+          <div class="col-12 pl-2 hidden-md-up">
+            <h3 class="ft-bold">Office Policies:</h3>
+          </div>
+          <div class="col-11 ml-auto mr-auto mt-3 pl-0">
+            <h4 class="ft-bold">Overall Staff Count:</h4>
+            <%= lp_text_field(f, :total_staff_count, "none", f.object.total_staff_count, {class: "form-control col-4 col-sm-2 mt-2 mb-2", hide_label: true}) %>
+          </div>
+          <div class="col-11 ml-auto mr-auto mt-3 pl-0">
+            <h4 class="ft-bold">General Office Policies:</h4>
+            <p class="mb-2">Indicate any preferences or important information that you would like to communicate to sales reps as they book appointments with your office.</p>
+            <%= lp_text_area(f, :office_policy, "none", nil, {class: 'form-control d-inline', style: 'resize: none', rows: '7', placeholder: 'Click here to add general office policies for this office.'}) %>
+          </div>          
+          <div class="col-11 ml-auto mr-auto mt-4 pl-0">
+            <h4 class="ft-bold">Delivery Instructions:</h4>
+            <p class="mb-2">Provide sales reps and restaurants with any specific order delivery instructions.</p>
+            <%= lp_text_area(f, :delivery_instructions, "none", nil, {class: 'form-control d-inline', style: 'resize: none', rows: '7', placeholder: 'Click here to add delivery instructions for this office.'}) %>
+          </div>
+          <div class="col-12 col-sm-10 col-md-8 p-2 col-lg-4 ml-auto mr-auto">
+            <button type="submit" class="btn btn-success btn-block" data-submit>Save</button>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

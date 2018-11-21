@@ -1,0 +1,22 @@
+<% tab 'account' %>
+<% title 'Your Profile' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_action_menu: true} %>
+
+<div id="global-content-wrapper" class="comp__rep_profile" data-comp-tab-load="<%=@show_tab%>" data-record-id="<%=@record_id%>">
+    <!-- account -->
+
+    <div id="account-layout" class="row no-gutters">
+      <!-- left column --->
+      <div class="col-sm-12 col-md-4 br-1 fixed-height">
+          <!-- user profile -->
+          <%= render  partial: "rep/profile/components/profile_nav",
+                      locals: {area: ''} %>
+      </div>
+      <!-- right column -->
+      <div class="col-12 col-md-8 targ__rep_profile tab-content fixed-height">
+
+      </div>
+    </div>
+
+</div>

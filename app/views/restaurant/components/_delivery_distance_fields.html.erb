@@ -1,0 +1,28 @@
+<div class="col-12 row mt-3 no-gutters justify-content-center delivery-distance">
+  <div class="form-group col-12 row justify-content-center">
+    <label class="form-control-label pr-3">Use Cardinal Directions?</label>
+    <%= lp_check_field_inline(f, :use_complex, "none", f.object.use_complex, {disabled: true, hide_label: true, class: 'use-complex-choice'}) %>
+  </div>
+  <div class="child-form row col-12 justify-content-center align-middle <%'complex-distance-unselected' if !f.object.use_complex %>">
+    <div class="form-group col-12 col-sm-6 col-lg-4">
+      <label class="form-control-label ft-bold">North</label>
+      <%= lp_text_field(f, :north, "none", f.object.north, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+      <label class="form-control-label ft-bold pt-2">East</label>
+      <%= lp_text_field(f, :east, "none", f.object.east, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+      <label class="form-control-label ft-bold pt-2">South</label>
+      <%= lp_text_field(f, :south, "none", f.object.south, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+      <label class="form-control-label ft-bold pt-2">West</label>
+      <%= lp_text_field(f, :west, "none", f.object.west, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+    </div>
+    <div class="form-group col-12 col-sm-6 col-lg-4">
+      <label class="form-control-label ft-bold">Northeast</label>
+      <%= lp_text_field(f, :north_east, "none", f.object.north_east, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+      <label class="form-control-label ft-bold pt-2">Southeast</label>
+      <%= lp_text_field(f, :south_east, "none", f.object.south_east, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+      <label class="form-control-label ft-bold pt-2">Southwest</label>
+      <%= lp_text_field(f, :south_west, "none", f.object.south_west, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+      <label class="form-control-label ft-bold pt-2">Northwest</label>
+      <%= lp_text_field(f, :north_west, "none", f.object.north_west, {disabled: true, hide_label: true, class: "form-control direction", inline_div: true}) %>
+    </div>
+  </div>
+</div>

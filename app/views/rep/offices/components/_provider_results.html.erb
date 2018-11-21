@@ -1,0 +1,24 @@
+<div class="vertical-nav" data-component-target="search-results">
+  <ul class="modal-search-results">
+    <% @providers.each do |provider| %>
+      <% if provider.office && provider.office.active? %>
+        <li>
+          <div class="vertical-nav-li-content row no-gutters align-items-center" data-comp-detail-type="Office" data-comp-detail-id="<%= provider.office.id %>" data-comp-provider-id="<%=provider.id%>">
+            <div class="col-10">
+              <div class='h5'><%= provider.display_name %></div>
+              <span><%= provider.office.name %></span>
+            </div>
+            <div class="col-2 text-right">
+              <!-- <a href="#"><i class="fa fa-plus"></i></a> -->
+            </div>
+          </div>
+        </li>
+      <%end%>
+    <% end %>
+  </ul>
+</div>
+
+<!-- fallback -->
+<% if providers.count == 0 %>
+  <p class="m-4"><i>No providers found.</i></p>
+<% end %>

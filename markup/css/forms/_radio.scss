@@ -1,0 +1,52 @@
+.fake-nav-pills {
+	.form-check {
+		margin: 0;
+		.form-check-label {
+			padding-left: 0;
+			.form-check-input {
+				display: none;
+				&:only-child {
+					position: absolute;
+				}
+				&:checked + span {
+					background-color: $brand-primary;
+					color: $white;
+				}
+			}
+			span {
+				font-size: 0.9rem;
+				text-transform: uppercase;
+				padding: 7px 15px;
+				border-radius: 25px;
+			}
+		}
+	}
+}
+
+.ratings-group {
+	.custom-check {
+		font-family: 'FontAwesome';
+		font-size: 1.75rem;
+		padding: 1.25rem;
+		float: right;
+		margin: 0;
+		.custom-control-indicator {
+			// hide bs4 custom radio
+			background-color: transparent;
+			border: none;
+			color: $gray-lighter;
+			&:before {
+				content: "\f005";
+			}
+		}
+		.custom-control-input:checked ~ .custom-control-indicator{
+			background-image: none;
+			box-shadow: none;
+			content: "\f005"; //fa-star
+			color: $brand-warning;
+			&:before {
+				content: "\f005";
+			}
+		}
+	}
+}

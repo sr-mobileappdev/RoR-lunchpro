@@ -1,0 +1,34 @@
+<%= form_for [@office, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <% if @record.sales_rep_id %>
+        <%= lp_hidden_field(f, :sales_rep_id) %>
+      <% else %>
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-7 lp_req">
+            <%= lp_multi_object_field(f, :sales_rep_id, "Find Sales Rep", {url: quick_admin_searches_path(search_type: 'sales_rep')}) %>
+          </div>
+        </div>
+      <% end %>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-7 lp_req">
+          <%= lp_text_area(f, :notes) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <h4 class="pt-3">Budgeting</h4>
+      <div class="form-group row form-group-tight">
+        <div class="col-12">
+          <%= lp_currency_field(f, :per_person_budget_cents, "Per Person Budget", @record.per_person_budget_cents) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

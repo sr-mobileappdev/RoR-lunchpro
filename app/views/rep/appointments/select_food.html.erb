@@ -1,0 +1,65 @@
+<% tab 'calendar' %>
+<% title 'Select Restaurant' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+<div class="lp__scroll_containers comp__rep_order_new" data-appointment-id="<%= @appointment.id %>">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center pt-2">
+      <div class="lp__faux_modal x-large pt-2">
+        <div class="col-12 bb-1">
+          <div class="row">
+            <div class="col-md-12 mt-2 mb-2">
+              <% if !@order.active? %>
+                <a class="ml-1" href="<%= select_restaurant_rep_appointment_path(@appointment) %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+              <% end %>
+            </div>
+            <% if @edit_in_progress %>
+              <a class="btn btn-link ml-auto py-0" data-method="post" href="<%= undo_changes_rep_order_path(@order)%>">Undo All Changes</a>
+            <% end %>
+          </div>
+          <% if @record.appointment_slot %>
+            <div class="row order-row pt-2">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1">
+                    <p class="lp__counter_tag"><em class="blue"><%= @record.appointment_slot.total_staff_count %></em><span>Sugg. Staff Count</span></p>
+                  </div>
+                  <% @record.diet_restrictions.each do |diet| %>
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1">
+                    <p class="lp__counter_tag"><em><%= diet.staff_count || "N/A" %></em><span><%= diet.diet_restriction.name %></span></p>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <p></p>
+              </div>
+            <% else %>
+              <div class="row order-row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-12 mb-4">
+                      <h5 class="text-center"><i>Lunchpro does not currently manage this office's diet restrictions or office policies.</i></h5>
+                    </div>                 
+                  </div>
+                </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-8 br-1">
+              <div class="comp__menu mt-3 mb-5">
+                <%= render partial: 'rep/appointments/components/filtered_menu', locals: {restaurant: @restaurant} %>
+              </div>
+            </div>
+            <div class="col-md-4 pt-3 pb-3">
+              <div class="comp__food_cart">
+                <%= render partial: 'rep/appointments/components/order_cart', locals: {restaurant: @restaurant, order: @order} %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

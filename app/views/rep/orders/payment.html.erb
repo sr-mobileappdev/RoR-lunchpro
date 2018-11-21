@@ -1,0 +1,131 @@
+<% tab 'calendar' %>
+<% title 'Order Food' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+<div class="lp__scroll_containers comp__rep_order_new" data-payment-id="<%=@order.payment_method_id%>">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center pt-2">
+      <div class="lp__faux_modal medium">
+        <div class="col-12 row bb-1 m-0 pl-0 pr-0 pt-2 pb-2">
+          <div class="col-1">
+            <a class="btn btn-link ft-bold p-0" href="<%= select_food_rep_appointment_path(@order.appointment, restaurant_id: @order.appointment.restaurant) %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+          </div>
+          <div class="col-12 col-md-4 ml-auto mr-auto p-0 hidden-sm-down">
+            <h5 class="title"><strong>Payment Information</strong></h5>
+          </div>
+          <div class="col-12 text-center hidden-md-up pt-2 pb-2">
+            <h5 class="title"><strong>Payment Information</strong></h5>
+          </div>
+        </div>
+        <div class="col-12 pt-3 pb-3 comp__rep_stripe_form">
+          <p class="text-center mb-4 mt-2">Your card will not be charged until food is delivered.</p>
+          <%= form_for @order, url: save_payment_rep_order_path(@order), html: { class: "col-12 mt-4", autocomplete: "off" } do |f| %>
+            <div class="row">
+              <div class="col-12">
+                <% if @payment_methods.any? %>
+                  <div class="row justify-content-center">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="name" class="form-control-label">New or Existing Payment Method</label>
+                        <%= collection_select(f, :payment_method_id, @payment_methods, :id, :display_name, {:selected => f.object.payment_method_id}, {:class => "lp__select_payment_method form-control form-control-sm", :id => "existing_payment_method_id", name: "order[payment_method_id]"}) %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <div id="targ-new-payment-method" style="<%= f.object.payment_method_id ? 'display: none;' : '' %>">
+                  <%= f.fields_for :payment_method do |o| %>
+                    <%= lp_hidden_field(o, :stripe_identifier) %>
+                    <div class="row justify-content-center">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="nickname">Card Nickname</label>
+                          <%= o.text_field :nickname, class: "form-control form-control-sm" %>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">Name on Card</label>
+                          <%= text_field_tag :name, nil, class: "form-control form-control-sm", "data-stripe" => "name" %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="card-element">Card Number</label>
+                          <div id="card-element"></div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="card-expiry">Expiry Date</label>
+                          <div id="card-expiry"></div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="card-cvv">Security Code</label>
+                          <div id="card-cvv"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">Billing Address</label>
+                          <%= text_field_tag :address_line1, nil, class: "form-control form-control-sm", "data-stripe" => "address_line1" %>                          
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">Suite / Building</label>
+                            <%= text_field_tag :address_line2, nil, class: "form-control form-control-sm", "data-stripe" => "address_line2" %>
+                           
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">City</label>
+                            <%= text_field_tag :address_city, nil, class: "form-control form-control-sm", "data-stripe" => "address_city" %>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">State</label>
+                            <%= text_field_tag :address_state, nil, class: "form-control form-control-sm", "data-stripe" => "address_state" %>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="name" class="form-control-label">Zip</label>
+                            <%= text_field_tag :address_zip, nil,  class: "form-control form-control-sm", "data-stripe" => "address_zip" %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <div class="col-md-12 pt-3">
+                        <div class="form-group">
+                          <label class="form-control-label">
+                            <input type="checkbox" name="save_method" class="mr-1" checked />
+                            Save This Card to My Account
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="row mt-4 mb-3">
+                  <% if @order.authorized? && session[:impersonator_id].present? %>
+                    <p class="mb-5 mt-3 text-danger col-12 text-center">Changing the payment method will refund the current authorization charge and create a new authorization charge.</p>
+                  <% end %>
+                  <div class="col-12 col-sm-4 ml-auto mr-auto"><button data-submit-stripe class="btn btn-primary btn-block">Continue</button></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

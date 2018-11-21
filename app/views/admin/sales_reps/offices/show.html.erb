@@ -1,0 +1,72 @@
+<% tab 'overview' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_sales_rep_path(@rep) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @record.office.name %> <span class="lp__subheader"><%= @rep.display_name %></span></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <a href="<%= edit_admin_sales_rep_office_path(@rep, @record) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+
+<!--   <div class="row mb-4 mt-2"> -->
+    <!-- Key Action Buttons -->
+<!--     <div class="col-12 px-4">
+      <div class="row">
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Add Payment Method</a>
+      </div>
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Add Appointment</a>
+      </div>
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Re-process Order(s)</a>
+      </div>
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Contact</a>
+      </div>
+      </div>
+    </div> -->
+    <!-- End Key Action Buttons -->
+<!--   </div> -->
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <div class="row">
+        <%= render partial: 'admin/shared/components/details/show_row',
+                    locals: {
+                      object: @record,
+                      fields: [
+                        {'office.name' => {title: 'Office Name', w: 3, link: admin_office_path(@record.office)}},
+                        {'notes' => {title: 'Company', w: 6}},
+                        {'per_person_budget_cents' => {title: 'Per Person Budget', w: 3, helper: 'precise_currency_value', default: 'Not Set'}},
+                      ]
+                    } %>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-4">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Pending Office Appointments',
+                    columns: ['id', 'office.name', 'office.display_location', {title: 'Appointment', column: 'appointment_time', helper: 'long_date'}],
+                    model_class: 'Appointment',
+                    objects: @rep.appointments.future.where.not(status: ['deleted','inactive']).where(office_id: @record.office_id)
+                  } %>
+    </div>
+  </div>
+
+</div>

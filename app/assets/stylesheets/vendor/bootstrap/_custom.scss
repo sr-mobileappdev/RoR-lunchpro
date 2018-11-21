@@ -1,0 +1,57 @@
+// Bootstrap overrides
+//
+// Copy variables from `_variables.scss` to this file to override default values
+// without modifying source files.
+
+// Fonts
+$font-family-sans-serif: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+$font-family-base:       $font-family-sans-serif;
+
+$font-weight-base: 300;
+$font-weight-normal: 300;
+$font-weight-bold: 400;
+
+$font-size-lg:	3rem;
+
+// Colors
+$green: #00AA50;
+$steel: #607D8B;
+$blue:  #1BA6D7;
+
+// Reassign color vars to semantic color scheme
+$brand-primary:             $blue;
+$brand-info:                $steel;
+
+// Remove global border radius
+$border-radius:          0;
+$border-radius-lg:       0;
+$border-radius-sm:       0;
+
+// Options
+$enable-shadows: false;
+
+// Forms
+$input-btn-border-width:    1px;
+$input-box-shadow:          inset 0 0 3px 0 rgba(155,155,155,0.20), inset 0 1px 1px 0 rgba(0,0,0,0.20);
+
+// Links
+$link-color:            	$brand-info;
+
+// Buttons
+$btn-primary-bg: $green;
+$btn-primary-border: $green;
+$btn-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+$btn-font-weight: 100;
+$btn-padding-y: 0.625rem;
+$btn-focus-box-shadow:	none;
+
+// Popover
+$popover-box-shadow:                  1px 1px 1px rgba($black,.2);
+
+// Dropdown
+$dropdown-padding-y:             1rem;
+
+// Nav
+$navbar-border-radius:              0;
+$navbar-toggler-border-radius:      0;
+$navbar-inverse-toggler-border:		0;

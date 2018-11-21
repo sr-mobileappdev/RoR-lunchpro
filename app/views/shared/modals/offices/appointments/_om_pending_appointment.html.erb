@@ -1,0 +1,64 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid">
+    <div class="row appointment-modal-body lp__appointment_body">
+      <div class="col-12 text-center mb-3">
+        <p class="mb-0"><i>Appointment Pending</i></p>
+      </div>
+      <div class="col-12 col-md-6 row">
+        <div class="col-2 col-md-3 hidden-xs-down">
+          <%= om_food_icon%>
+        </div>
+        <div class="col-10 col-md-9 pl-0">
+          <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+          <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+        </div>
+        <div class="pl-3 pr-2 hidden-xs-down">
+          <%= dinner_tray_icon %>
+        </div>
+        <div class="col-8 col-md-10 pl-0">
+          <p>Restaurant -  Unknown </p>
+        </div>
+        <div class="col-12 m-4 hidden-sm-down"></div>  
+        <div class="col-12 m-4 hidden-sm-down"></div>   
+      </div>
+      <div class="col-12 col-md-6 row">
+        <div class="col-2 col-md-3 hidden-xs-down">
+          <%= om_user_icon %>
+        </div>
+        <div class="col-10 col-md-9 pl-0">
+          <h5 class="mt-2"><%=@appointment.sales_rep.display_name%></h5>
+          <p><%=@appointment.sales_rep.company_name %></p>
+        </div>
+        <div class="col-12 row">
+          <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+            <%= envelope_icon %>
+          </div>
+          <div class="col-12 col-sm-9 pl-0 pr-0 mb-1 overflow-ellipsis">
+            <%= @appointment.sales_rep.email || "No Email Set"%>
+          </div>
+        </div>
+        <div class="col-12 row">
+          <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+            <%= phone_icon %>
+          </div>
+          <div class="col-12 col-sm-9 pl-0 pr-0 mb-1">
+            <%=@appointment.sales_rep.phone ? format_phone_number(@appointment.sales_rep.phone) : "No Phone Set"%>
+          </div>
+        </div>
+        <div class="col-12 row">
+          <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+            <%= notes_icon %>
+          </div>
+          <div class="col-12 col-sm-9 pl-0 pr-0 mb-1">
+            <%= @offices_sales_rep ? @offices_sales_rep.office_notes : "There are no notes regarding this rep." %>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 row text-center mt-4 justify-content-center pr-0">
+        <button class="col-12 col-sm-8 col-md-5 btn btn-outline-info lp__om_cancel_appointment">Cancel Appointment</button>
+      </div>
+    </div>
+    <div class="lp__cancel_appointment_form" style="display: none;">
+      <%= render partial: "office/appointments/appointment_cancel_form.html.erb"%>
+    </div>
+  </div>

@@ -1,0 +1,72 @@
+<div class="row appointment-modal-body pr-0 pl-0">
+  <%= form_for @record, url: { controller: "appointments", action: "cancel" }, method: "post",  html: { class: "col-12", autocomplete: "off" } do |f| %>
+    <%= lp_hidden_field(nil, :office_view, office_view) %>
+    <% if !@record.food_ordered? && !@record.will_supply_food %>
+      <div class="col-12">
+        <h3 class="ft-bold hidden-xs-down">Are you sure you want to cancel this appointment?</h3>
+        <h3 class="ft-bold hidden-sm-up">Cancel Appointment</h3>
+        <% if @record.appointment_slot_id %>
+          <p class="hidden-xs-down">We will make sure to notify the office for you if you do cancel it.</p>
+        <% else %>
+          <p class="my-3"></p>
+        <% end %>
+      </div>
+      <div class="col-12">
+        <%= lp_text_area(f, :cancel_reason, "#{@record.appointment_slot_id ? 'Message for the Office' : 'Cancellation Reason'}", nil, {class: 'form-control', style: 'resize: none', rows: '10', placeholder: 'Please enter a cancelation reason.'}) %>
+      </div>
+      <div class="col-12 text-center mt-3">
+        <a href="" class="btn btn-primary pr-4 pl-4 mt-2" data-dismiss="modal">Keep Appointment</a>
+        <a href="#" data-submit class="btn btn-outline-info mt-2">Cancel Appointment</a>
+      </div>
+      <div class="col-12 mt-3 text-center">
+        <p class="hidden-xs-down">A canceled appointment will be automatically removed from your calendar.</p>
+      </div>
+    <% end %>
+    <% if @record.food_ordered? %>
+      <div class="col-12">
+        <h3 class="ft-bold hidden-xs-down">Are you sure you want to cancel this appointment and food order?</h3>
+        <h3 class="ft-bold hidden-sm-up mb-3">Cancel Appointment</h3>
+        <% if @record.appointment_slot_id %>
+          <p class="hidden-xs-down">We will make sure to notify the office and restaurant for you if you do cancel it.</p>
+        <% else %>
+          <p class="my-3"></p>
+        <% end %>
+      </div>
+      <div class="col-12">
+        <%= lp_text_area(f, :cancel_reason, "#{@record.appointment_slot_id ? 'Message for the Office' : 'Cancellation Reason'}", nil, {class: 'form-control', style: 'resize: none', rows: '10', placeholder: 'Please enter a cancelation reason.'}) %>
+      </div>
+      <div class="col-12 text-center mt-3">
+        <% if @record.active_order && !@record.active_order.cancellable? && @record.active_order.payment_method %>
+          <p class="m-0 text-danger">WARNING! A cancelation charge of <%=precise_currency_value(@record.active_order.restaurant.late_cancel_fee_cents)%> will be applied to the card: <%=@record.active_order.payment_method.display_summary%>.</p>
+        <% end %>
+        <a href="" class="btn btn-primary pr-4 pl-4 mt-2" data-dismiss="modal">Keep Appointment</a>
+        <a href="#" data-submit class="btn btn-outline-info mt-2">Cancel Appointment</a>
+      </div>
+      <div class="col-12 mt-3 text-center">
+        <p class="hidden-xs-down">A canceled appointment will be automatically removed from your calendar. You can reorder the same meal from your Order History.</p>
+      </div>
+    <% end %>
+    <% if @record.will_supply_food %>
+      <div class="col-12">
+        <h3 class="ft-bold hidden-xs-down">Are you sure you want to cancel this appointment?</h3>
+        <h3 class="ft-bold hidden-sm-up">Cancel Appointment</h3>
+        <% if @record.appointment_slot_id %>
+          <p class="hidden-xs-down">We will make sure to notify the office for you if you do cancel it.</p>
+        <% else %>
+          <p class="my-3"></p>
+        <% end %>
+      </div>
+      <div class="col-12">
+        <%= lp_text_area(f, :cancel_reason, "#{@record.appointment_slot_id ? 'Message for the Office' : 'Cancellation Reason'}", nil, {class: 'form-control', style: 'resize: none', rows: '10', placeholder: 'Please enter a cancelation reason.'}) %>
+      </div>
+      <div class="col-12 text-center mt-3">
+        <a href="" class="btn btn-primary pr-4 pl-4 mt-2" data-dismiss="modal">Keep Appointment</a>
+        <a href="#" data-submit class="btn btn-outline-info mt-2">Cancel Appointment</a>
+      </div>
+      <div class="col-12 mt-3 text-center">
+        <p class="hidden-xs-down">A canceled appointment will be automatically removed from your calendar. Please make sure to cancel the order that you are bringing on your own as well.</p>
+        <p class="hidden-sm-up">Please make sure to cancel the order you are bringing on your own.</p>
+      </div>
+    <% end %>
+  <% end %>
+</div>

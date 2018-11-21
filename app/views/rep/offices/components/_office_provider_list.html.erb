@@ -1,0 +1,50 @@
+<!-- Office / Providers dynamic search form -->
+
+<div class="comp__rep_office_list" data-comp-office-load-id="<%=@office%>" data-comp-office-load-tab="<%=@load_tab%>">
+<%= form_tag '', class: 'lp__find_offices' do %>
+  <div class="row justify-content-center pt-3 pb-2 hidden-lg-down">
+      <label class="form-check-label checked offices-label">
+          <input class="form-check-input" type="radio" name="searchType" value="offices" id="offices" <%= (local_assigns[:offices]) ? 'checked' : '' %>>
+          My Offices
+      </label>
+      <label class="form-check-label ml-4 providers-label">
+          <input class="form-check-input" type="radio" name="searchType" value="providers" id="providers" <%= (local_assigns[:providers]) ? 'checked' : '' %>>
+          Providers
+      </label>
+      <div class="lp__add_office pt-1">
+          <a href="<%= new_rep_office_path %>" class="text-success">
+            <%= plus_circle_icon %>
+          </a>
+      </div>
+  </div>
+  <div class="row pl-3 pb-2 hidden-xl-up">
+    <div class="col-12 hidden-xl-up text-right mt-1 mr-3">
+      <a href="<%= new_rep_office_path %>" class="text-success">
+        <%= plus_circle_icon %>
+      </a>      
+    </div>
+    <div class="m-auto hidden-xl-up">
+      <label class="form-check-label offices-label checked">
+          <input class="form-check-input" type="radio" id="offices" name="searchType" value="offices" id="offices" <%= (local_assigns[:offices]) ? 'checked' : '' %>>
+          My Offices
+      </label>
+      <label class="form-check-label providers-label">
+          <input class="form-check-input" type="radio" id="providers" name="searchType" value="providers" id="providers" <%= (local_assigns[:providers]) ? 'checked' : '' %>>
+          Providers
+      </label>
+    </div>
+  </div>
+  <div class="input-group lp__input_group">
+    <span class="input-group-addon"><button class="fa fa-search search-icon" type="submit"></button></span>
+    <input type="text" id="searchTerm" name="searchTerm" placeholder="Enter office name, address or provider">
+  </div>
+<% end %>
+  <!-- Results -->
+  <div class="targ__tab_results tab-content-scrollable-offices">
+    <% if local_assigns[:offices] %>
+      <%= render partial: 'rep/offices/components/office_results', locals: {offices: offices, add_office: false} %>
+    <% elsif local_assigns[:providers] %>
+      <%= render partial: 'rep/offices/components/provider_results', locals: {providers: providers}  %>
+    <% end %>
+  </div>
+</div>

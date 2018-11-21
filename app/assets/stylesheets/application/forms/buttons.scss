@@ -1,0 +1,42 @@
+.btn {
+	text-transform: uppercase;
+	font-family: $font-family-sans-serif;
+	letter-spacing: 0.025rem;
+	font-size: 0.925rem;
+	&.disabled, &:disabled {
+		opacity: 1;
+		color: $btn-link-disabled-color;
+	}
+}
+.passcode-submit{
+  &:disabled, &.disabled{
+    cursor: not-allowed;
+    opacity: .65;
+    color: white;
+  }
+}
+.finish{
+  a, a:hover{
+    text-decoration: none;
+  }
+  button.disabled, button:disabled{
+    cursor: not-allowed;
+    opacity: .65;
+    color: white;
+  }
+}
+
+.btn-undo{
+	padding-left: 23px;
+	padding-right: 23px;
+}
+
+.provider-plus{
+  a{fill: #18b1df;}
+}
+
+.search-icon{
+  cursor: pointer;
+  border: none;
+  background-color: white;
+}

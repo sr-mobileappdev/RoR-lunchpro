@@ -1,0 +1,21 @@
+<p class="small">Please provide the name of the Restaurant for this appointment</p>
+
+<%= form_for @appointment, url: update_byo_admin_dashboard_path(@appointment), method: :post, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-10">
+          <%= lp_text_field(f, :bring_food_notes, "Restaurant") %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="btn-toolbar mt-3 mb-2" role="toolbar" aria-label="Toolbar with button groups">
+        <input type="submit" class="btn btn-primary btn-sm mr-2" value="Send" />
+      </div>
+    </div>
+  </div>
+<% end %>

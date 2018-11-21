@@ -1,0 +1,52 @@
+<div class="vertical-nav appt-search-results" data-component-target="search-results">
+  <% if offices.count == 0 %>
+    <p class="m-3"><i>No Offices Found</i></p>
+  <% end %>
+
+  <ul>
+    <% offices.sort_by{|office| office.private__flag ? 1 : 0 }.each do |office| %>
+      <% if office.private__flag %>
+        <li>
+          <div class="row no-gutters align-items-center office-disabled pl-0 pr-1">
+            <div class="hidden-xs-down ml-4 mr-3">
+              <%= office_list_icon %>
+            </div>
+            <div class="col-10 pt-3 ml-3">
+              <h2><%= office.name %></h2>
+              <p><%= single_line_address(office) %><br />
+                (Lunchpro does not currently manage their calendar)
+              </p>
+            </div>
+          </div>
+        </li>
+      <%else%>
+        <li class='appt-results'>
+          <div class="vertical-nav-li-content row no-gutters align-items-center pl-0 pr-1" data-comp-detail-type="Office" data-comp-detail-id="<%= office.id %>" data-comp-show-in="new" data-url="<%= policies_rep_appointments_path(office_id: office.id) %>">
+            <div class="hidden-xs-down ml-4 mr-3">
+              <%= office_list_icon %>
+            </div>
+            <div class="col-9 pt-2 ml-3">
+              <h2><%= office.name %></h2>
+              <p><%= single_line_address(office) %></p>
+            </div>
+            <% if !office.private__flag %>
+              <div class="col-1 p-3 hidden-md-down">
+                  <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+              <div class="col-1 pr-0 hidden-lg-up">
+                  <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+            <% end %>
+          </div>
+        </li>
+      <%end%>
+    <% end %>
+    <% if new_offices %>
+    <div class="col-12 col-md-10 m-auto text-center pb-2 pt-4">
+      <p>Not seeing the office you want? Provide us their contact info and we will see if we can get them signed up for a free LunchPro account!</p>
+      <a class="btn btn-outline-info" data-modal="true" data-modal-size="sm" href="<%= show_refer_rep_offices_path%>" data-modal-title="">Refer An Office</a>
+    </div>
+    <% end %>
+  </ul>
+</div>
+

@@ -1,0 +1,77 @@
+$base-line-height: 16px;
+$white: rgb(255,255,255);
+$off-white: rgba($white, 0.2);
+$spin-duration: 1s;
+$pulse-duration: 750ms;
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    background: $white;
+  }
+}
+
+.sp-loading {
+    border-radius: 50%;
+    width: $base-line-height;
+    height: $base-line-height;
+    border: .25rem solid rgba(100, 100, 100, 0.3);
+    border-top-color: $clr--steel;
+    animation: spin $spin-duration infinite linear;
+    opacity: 0.5;
+  &--double {
+    border-style: double;
+    border-width: .5rem;
+  }
+}
+
+.sp-loading.left {
+  float: left;
+  margin-right: 5px;
+}
+
+.sp-loading.right {
+  float: right;
+  margin-left: 5px;
+}
+
+.sp-loading.light {
+  border: .25rem solid rgba(200, 200, 200, 0.4);
+  border-top-color: $clr--orange;
+  opacity: 0.7;
+}
+
+.lp__loading {
+  color: rgba(100, 100, 100, 0.5);
+  position: relative;
+  top: -1px;
+}
+
+tr.is-loading-stickies {
+
+  th {
+    position: relative;
+  }
+
+  th:before {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 10px;
+    height: 10px;
+    width: 120px;
+    border-radius: 5px;
+    background: rgba(100, 100, 100, 0.1)
+  }
+  td:after {
+
+  }
+}

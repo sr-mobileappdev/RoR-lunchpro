@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-12 pb-4">
+    <h3 class="text-center ft-bold">Shopping Cart</h3>
+  </div>
+</div>
+
+<% if !@line_items.any? %>
+  <div class="row">
+    <div class="col-12 col-md-6 ml-auto mr-auto mt-5 mb-5">
+      <p class="text-center">Add items to your shopping cart by selecting a menu item</p>
+    </div>
+  </div>
+<% end %>
+<% @line_items.each do |li| %>
+  <% next if li.parent_line_item %>
+  <div class="row">
+    <div class="col-12 mb-3">
+      <p class="mb-0"><strong><%= li.orderable_name %></strong><span class="pull-right"><%= precise_currency_value(li.cost_with_sub_items) %></span></p>
+      <p class="mb-0">Quantity: <%= li.quantity %></p>
+      <% li.sub_line_items.each do |sli| %>
+        <p class="pl-3 mb-0">
+          <%= sli.orderable_name %>
+          <% if sli.cost_cents.to_i > 0 %>
+            <%= display_sub_item_cost(sli) %>
+          <% end %>
+        </p>
+      <% end %>
+      <% if li.notes.present? %>
+        <p class="pl-3 mb-0"><span class="lp__order_item_notes"><%= li.notes %></span></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">      
+      <a data-modal=true data-modal-title="" href="<%= edit_item_office_order_path(@order, line_item_id: li.id) %>" class="btn btn-link pl-0 pr-0">EDIT</a>
+      <a class="btn btn-link pl-0 pr-0 pull-right remove_line_item" href="<%= remove_item_office_order_path(@order, line_item_id: li.id) %>">REMOVE</a>
+    </div>
+  </div>
+  <hr>
+<% end %>
+<% if @appointment.internal? %>
+  <div class="row">
+    <div class="col-8">
+      <p class="mb-0 text-right text-uppercase"><strong>Subtotal:</strong></p>
+      <p class="mb-0 text-right text-uppercase"><strong>Price Per Person:</strong></p>
+    </div>
+    <div class="col-4">
+    <p class="mb-0 text-right pr-3"><strong><%= precise_currency_value(order.calced_subtotal_cents(@line_items)) %></strong></p>
+    <p class="mb-0 text-right pr-3"><strong><%= precise_currency_value(order.calced_per_person_cost_cents(@line_items)) %></strong></p>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-12 col-sm-11 ml-auto mr-auto mt-4 finish">
+      <% if @order.authorized? && !session[:impersonator_id].present?%>
+        <% if @line_items.any? %>
+          <a href="<%= confirm_office_order_path(order)%>" class="btn btn-success btn-block">Checkout</a>
+        <% else %>
+          <button href="#" class="btn btn-success btn-block" disabled>Checkout</button>
+        <% end %>
+      <% else %>
+        <% if @line_items.any? %>
+          <a href="<%= payment_office_order_path(order)%>" class="btn btn-success btn-block">Checkout</a>
+        <% else %>
+          <button href="#" class="btn btn-success btn-block" disabled>Checkout</button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-8">
+      <p class="mb-0 text-right text-uppercase"><strong class="<%=(@total_budget && order.calced_subtotal_cents(@line_items) > @total_budget) ? 'text-danger' : ''%>">Subtotal:</strong></p>
+    </div>
+    <div class="col-4">
+      <p class="mb-0 text-right pr-3"><strong class="<%=(@total_budget && order.calced_subtotal_cents(@line_items) > @total_budget) ? 'text-danger' : ''%>"><%= precise_currency_value(order.calced_subtotal_cents(@line_items)) %></strong></p>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-12 col-sm-11 ml-auto mr-auto mt-4 finish">
+      <% if @line_items.any? && ((!@total_budget || order.calced_subtotal_cents(@line_items)<= @total_budget) || session[:impersonator_id].present?) %>
+        <a href="<%= complete_order_office_order_path(order)%>" data-method="post" class="btn btn-success btn-block">Make Recommendation</a>
+      <% else %>
+        <button href="#" class="btn btn-success btn-block" disabled>Make Recommendation</button>
+      <% end %>
+    </div>
+    <% if @total_budget && order.calced_subtotal_cents(@line_items) > @total_budget %>
+      <div class="col-12 col-sm-10 ml-auto mr-auto mt-2">
+        <p class="text-danger text-center">Please ensure that the food total is below <%= precise_currency_value(@total_budget)%>
+        to meet this Sales Rep's Budget</p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

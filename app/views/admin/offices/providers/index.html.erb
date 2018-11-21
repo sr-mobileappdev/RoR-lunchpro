@@ -1,0 +1,99 @@
+<% tab 'providers' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_office_path(@office) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-12 px-4">
+      <h2 class="lp__light"><%= @office.name %></h2>
+      <% if @office.private__flag %>
+        <div class="lp__notice-badges"><span class="badge badge-pill badge-warning">Private</span></div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content <%= (@office.private__flag) ? 'extended' : '' %>">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_office_path(@office), active_tab: 'overview'},
+                  {title: 'Appointments', path: admin_office_appointments_path(@office), active_tab: 'appointments'},
+                  {title: 'Slots', path: admin_office_slots_path(@office), active_tab: 'slots'},
+                  {title: 'Providers & Staff', path: admin_office_providers_path(@office), active_tab: 'providers'},
+                  {title: 'Policies', path: admin_office_policies_path(@office), active_tab: 'policies'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'Add Provider', url: new_admin_office_provider_path(@office)}],
+                    actions: [{title: 'Availability', path: admin_office_provider_path(@office, "<id>"), button_class: 'btn btn-secondary btn-sm'},
+                              {title: 'Edit', path: edit_admin_office_provider_path(@office, "<id>"), button_class: 'btn btn-primary btn-sm'},
+                              {title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this Office Provider?", path: delete_admin_office_provider_path(@office, "<id>"), button_class: 'btn btn-danger btn-sm'}],
+                    title: 'Providers',
+                    columns: ['display_name', {title: "Provider's Dietary Restrictions", column: 'diet_summary', default: 'No Restrictions'}],
+                    link_columns: {display_name: ['id', {office_id: @office.id}]},
+                    model_class: 'Provider',
+                    objects: @office.providers.where(:status => 'active')
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'Add Contact', url: new_admin_office_contact_path(@office)}],
+                    actions: [{title: 'Edit', path: edit_admin_office_contact_path(@office, "<id>"), button_class: 'btn btn-primary btn-sm'},{title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this Office Contact?", path: delete_admin_office_contact_path(@office, "<id>"), button_class: 'btn btn-danger btn-sm'}],
+                    title: 'Office Contacts',
+                    columns: ['display_name', {title: 'Phone', column: 'phone', helper: 'format_phone_number_string'}, 'email', 'primary'],
+                    link_columns: {display_name: 'id'},
+                    model_class: 'OfficePoc',
+                    objects: @office.office_pocs.where(:status => 'active')
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6 mt-2">
+      <div class="row">
+        <div class="col-12 mt-2">
+          <%= render partial: 'admin/shared/components/tables/static_table',
+                      locals: {
+                        table_actions: [{name: 'Add User', url: new_admin_office_user_path(@office)}],
+                        actions: [{title: 'Edit', path: edit_admin_user_path("<id>"), button_class: 'btn btn-primary btn-sm'},
+                                  {title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this Office User?", path: delete_admin_office_user_path(@office, "<id>"), button_class: 'btn btn-danger btn-sm'}],
+                        title: 'Office Users',
+                        columns: ['id', 'display_name'],
+                        link_columns: {display_name: 'id'},
+                        model_class: 'User',
+                        objects: @office.users.where(:status => 'active')
+                      } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 mt-2">
+      <div class="row">
+        <div class="col-12 mt-2">
+          <%= render partial: 'admin/shared/components/tables/static_table',
+                      locals: {
+                        table_actions: [{name: 'Add Rep', url: new_admin_office_sales_rep_path(@office)}],
+                        actions: [{title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to remove this Sales Rep from this office?", path: delete_admin_office_sales_rep_path(@office, "<id>"), button_class: 'btn btn-danger btn-sm'}],
+                        title: 'Related Sales Reps',
+                        columns: ['id', 'display_name'],
+                        link_columns: {display_name: 'id'},
+                        model_class: 'SalesRep',
+                        objects: @office.active_reps
+                      } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="pl-3 pr-3">
+  <%= render partial: 'admin/shared/components/flash' %>
+  <h2 class="pb-4">User</h2>
+  <%= render partial: 'admin/restaurants/components/user_poc_form' %>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-12">
+    <%= render partial: 'admin/shared/components/tables/static_table',
+                locals: {
+                  actions: [{title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this Restaurant User?", path: admin_restaurant_user_path("<id>"), button_class: 'btn btn-danger btn-sm'}],
+                  title: 'Restaurant Users',
+                  columns: ['id', 'display_name', {title: 'Title', column: 'job_title'}, {title: 'Status', column: 'status'}],
+                  link_columns: {display_name: 'id'},
+                  model_class: 'User',
+                  objects: @restaurant.users
+                } %>
+  </div>
+</div>

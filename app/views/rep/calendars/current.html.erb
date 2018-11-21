@@ -1,0 +1,41 @@
+<% tab 'appointments' %>
+<% title 'My Appointments' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_action_menu: true} %>
+<div id="global-content-wrapper" >
+  <!-- calendar -->
+  <div class="lp__scroll_containers row m-0">
+    <!-- right column -->
+    <div class="col-md-5 col-lg-4 push-md-7 push-lg-8 p-0">
+      <!-- calendar widget -->
+      <section id="rep-calendar" class="container">
+        <div class="calendar-header row mb-2 pt-3 pb-3">
+          <div class="col-1">
+            <a class="fc-today-button" href="#today">Today</a>
+          </div>
+          <div class="col-12 col-lg-10">
+            <ul class="list-inline text-center mb-0">
+              <li class="list-inline-item pr-3"><a class="fc-prev-button" href="#prev-month"><i class="fa fa-arrow-left"></i></a></li>
+              <li class="list-inline-item"><h5 class="fc-calendar-title"></h5></li>
+              <li class="list-inline-item pl-3"><a class="fc-next-button" href="#next-month"><i class="fa fa-arrow-right"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="current_calendar"></div>
+        <div class="calendar-key">
+          <h3>Key</h3>
+          <ul>
+            <li class="confirmed"><i class="key-color"></i>Upcoming</li>
+            <li class="booked"><i class="key-color"></i>Action Required</li>
+            <li class="past"><i class="key-color"></i>Past</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <!-- horizontal divider for small screens -->
+    <div class="hidden-md-up col-12 sm-screen-horizontal-divider"></div>
+    <!-- left column -->
+    <div class="lp__fixed col-md-7 col-lg-8 pull-md-5 pull-lg-4 br-1 targ-rep-appointments p-0" id="scrollable-appointment-container">
+      
+    </div>
+  </div>
+</div>

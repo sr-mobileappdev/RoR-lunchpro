@@ -1,0 +1,38 @@
+<div class="modal-dialog" role="document">
+   <div class="modal-body comp__restaurant_form pt-0 mt-0 justify-content-center">
+     <div class="row pl-4 pr-4 pt-4 justify-content-center" id="delivery_driver_form">
+       <div class="col-12 justify-content-center align-middle">
+         <h3 class="ft-bold">Delivery Driver Info</h3>
+         <p class="mt-2">Please provide the name and phone number of your delivery driver for this order</p>
+       </div>
+       <div class="col-12 driver-form">
+         <%= form_for @order, url: update_driver_restaurant_order_path(@order), method: :post, html: { class: "", autocomplete: "off", onsubmit: "return false;" } do |f| %>
+
+             <div class="row">
+               <div class="col-6">
+                 <label class="form-control-label ft-bold">Driver Name</label>
+                 <%= lp_text_field(f, :driver_name, "none", f.object.driver_name, {hide_label: true, class: "form-control"}) %>
+               </div>
+               <div class="col-6">
+                 <label class="form-control-label ft-bold">Driver Phone</label>
+                 <%= lp_text_field(f, :driver_phone, "none", f.object.driver_phone, {hide_label: true, class: "form-control"}) %>
+               </div>
+             </div>
+             <div class="col-12 mt-3 text-center hidden-xs-down submit-buttons">
+               <button class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+               <button data-submit type="submit" class="btn btn-success">Submit</button>
+             </div>
+             <div class="col-12 mt-3 text-center hidden-sm-up submit-buttons">
+               <button data-submit type="submit" class="btn btn-success btn-block">Submit</button>
+               <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+             </div>
+         <% end %>
+       </div>
+      </div>
+    </div>
+</div>
+
+<script>
+  LPRestaurantForm_Initializer();
+  LPRestaurantOrderDetail_Initializer();
+</script>

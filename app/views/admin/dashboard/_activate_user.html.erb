@@ -1,0 +1,11 @@
+<p class="small">To continue with ordering food for this appointment,<br/> the Sales Rep's account will need to be activated</p>
+<p class="small">After validation, you will be taken to their profile to order food.</p>
+<h5 class="text-center"><%= @appointment.sales_rep.display_name %></h5>
+<div class="row">
+  <div class="col-12">
+    <div class="btn-toolbar mt-3 mb-2 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+      <a data-method="post" href="<%= '#' %>" class="btn btn-danger btn-sm mr-2 targ-close">Cancel</a>
+      <a data-method="post" href="<%= activate_user_admin_dashboard_path(@appointment) %>" class="btn btn-success btn-sm mr-2">Validate</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="profile-nav">
+    <ul class="list-unstyled">
+      <li class="profile-summary pr-3" data-comp-detail-tab="profile__summary">
+          <!-- user profile -->
+          <div class="user-info">
+            <div class="row">
+                <div class="profile-image-container ml-2 hidden-md-down">
+                  <% if @sales_rep.profile_image && @sales_rep.profile_image.url %>
+                      <img class="profile-picture" alt="Profile Picture" src="<%= @sales_rep.profile_image.url %>" />
+                  <% else %>
+                    <%= image_tag "missing_image.png", class: "profile-picture" , alt: "Missing Profile Picture"%>
+                  <% end %>
+                </div>
+                <div class="col-md-12 col-lg-8 profile-info mt-3 pr-0">
+                    <h3><%= @sales_rep.first_name %> <%= @sales_rep.last_name %></h3>
+                    <p><%= @sales_rep.company_name %>
+                    </p>               
+                </div>
+                <div class="ml-auto pt-3 hidden-md-down">
+                  <div class="pull-right"><%= angle_right_icon %></div>
+                </div>
+            </div>
+            <div class="row nav-mobile-summary mb-2">
+              <div class="col-12 pr-0">
+                <a>Profile Summary</a>
+               <div class="pull-right"><%= angle_right_icon %></div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12 row">
+                <div class="pl-3 pr-2 pt-1">
+                  <%= envelope_icon %>
+                </div>
+                <div class="col-9 pl-0 pr-0 overflow-ellipsis">
+                  <%= @sales_rep.email || "No Email Set"%>
+                </div>
+              </div>
+              <div class="col-12 row">
+                <div class="pl-3 pr-2">
+                  <%= phone_icon %>
+                </div>
+                <div class="col-8 pl-0 pr-0">
+                  <%=@sales_rep.phone_record ? format_phone_number_string(@sales_rep.phone_record) : "No Phone Set"%>
+                </div>
+              </div>
+              <div class="col-12 row">
+                <div class="pl-3 pr-2">
+                  <%= drug_icon %>
+                </div>
+                <div class="col-8 pl-0 pr-0">
+                  <%= format_drugs(@sales_rep.drugs) %>
+                </div>
+              </div>
+            </div>
+ 
+          </div>
+        </li>
+        <li class="d-flex pr-0" data-comp-detail-tab="profile__financial_info"><a class="mr-auto">Budget and Payment Info</a> <div class="pull-right pt-1"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="profile__rewards"><a class="mr-auto">Rewards</a> <div class="pull-right pt-1"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="profile__partner"><a class="mr-auto">Partners</a> <div class="pull-right pt-1"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="profile__notifications"><a class="mr-auto">Notification Preferences</a> <div class="pull-right pt-1"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="profile__faq"><a class="mr-auto">FAQ</a> <div class="pull-right pt-1"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="profile__general_information"><a class="mr-auto">General Information</a> <div class="pull-right pt-1"><%= angle_right_icon %></div></li>
+    </ul>
+</div>

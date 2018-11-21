@@ -1,0 +1,213 @@
+<!-- right column -->
+
+  <div id="order-detail" class="fixed-height">
+    <hr class="m-0">
+    <div class="col-12 p-0">
+      <!-- if order has been completed / delivered then do not show these two buttons -->
+      <% if session[:hq_consolidated_view] %>
+        <div class="col-12 mt-4 text-center">
+          <h3 class="ft-bold"><%= @order.restaurant_name_with_address %></h3>
+        </div>
+      <% end %>
+      <% if @order %>
+        <% if @order.status == 'active'%>
+          <div class="btn-group m-auto d-inline row col-12 text-center" data-nested-attributes="order_appointment_attributes_">
+            <%= form_for @order, url: update_confirmation_restaurant_order_path(@order), method: :post, html: { class: "", autocomplete: "off", onsubmit: "return false;" } do |f| %>
+              <% if !@order.confirmed? %>
+                <%= f.fields_for :appointment, f.object.appointment do |app| %>
+                  <%= lp_hidden_field(nil, :confirm, "confirm_for_restaurant!") %>
+                  <input type="button" class="btn btn-success m-3 confirm-button" value="confirm this order" name="confirm" data-submit>
+                <% end %>
+                <button data-confirm-method="post" href="<%= update_confirmation_restaurant_order_path(@order) %>" data-confirm-check="Are you sure you want to decline this order? This cannot be reversed." class="btn btn-outline-info m-3" value="decline" type="submit" name="status">
+                  Decline this order
+                </button>
+              <% end %>
+              <% if @order.confirmed? && @order.restaurant_cancellable? %>
+                <button data-confirm-method="post" href="<%= update_confirmation_restaurant_order_path(@order) %>" data-confirm-check="Are you sure you want to decline this order? This cannot be reversed." class="btn btn-outline-info m-3" value="decline" type="submit" name="status">
+                  Decline this order
+                </button>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <!--  -->
+      <div class="tab-pane with-cards" id="about" role="tabpanel">
+        <div class="card-columns mb-3 row">
+          <div class="col-12 col-lg-5">
+            <div class="card">
+              <div class="card-header">Order Summary #<%=@order.order_number %></div>
+              <div class="card-block">
+                <!-- receipt header -->
+                <p class="mb-1">Order Serves: <%=@order.people_served%> people</p>
+                <!-- receipt item loop -->
+                <% @order.line_items.each do |li| %>
+                  <% next if li.parent_line_item %>
+                  <div class="row">
+                    <div class="col-12 mb-3">
+                      <p class="mb-0"><strong><%= li.orderable_name %></strong><span class="pull-right"><%= precise_currency_value(li.cost_with_sub_items) %></span></p>
+                      <p class="mb-0">Quantity: <%= li.quantity %></p>
+                      <% li.sub_line_items.each do |sli| %>
+                        <p class="pl-3 mb-0">
+                          <%= sli.orderable_name %>
+                          <% if sli.cost_cents.to_i > 0 %>
+                            <%= "(#{precise_currency_value(sli.cost_cents)})" %>
+                          <% end %>
+                        </p>
+                      <% end %>
+                    </div>
+                  </div>
+                  <hr>
+                <% end %>
+                <!-- total -->
+                <table class="text-right col-12 text-uppercase ft-bold hidden-lg-down">
+                  <tr class="row">
+                    <td class="col-12 col-xl-8">Subtotal:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.subtotal_cents_for_restaurant_manager)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-12 col-xl-8">Delivery Fee:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.delivery_cost_cents)%></td>
+                  </tr>
+                  <tr class="bt-1 row">
+                    <td class="col-12 col-xl-8">Estimated Driver Tip:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.estimated_tip_cents)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-12 col-xl-8">Total:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.total_cents_for_restaurant_manager)%></td>
+                  </tr>
+                </table>
+                <table class="text-right col-12 text-uppercase ft-bold hidden-xl-up">
+                  <tr class="row">
+                    <td class="col-8 col-lg-12">Subtotal:</td>
+                    <td class="col-4 col-lg-12"><%= precise_currency_value(@order.subtotal_cents_for_restaurant_manager)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-8 col-lg-12">Delivery Fee:</td>
+                    <td class="col-4 col-lg-12"><%= precise_currency_value(@order.delivery_cost_cents)%></td>
+                  </tr>
+                  <tr class="bt-1 row">
+                    <td class="col-8 col-lg-12">Estimated Driver Tip:</td>
+                    <td class="pb-3 col-4 col-lg-12"><%= precise_currency_value(@order.estimated_tip_cents)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-8 col-lg-12">Total:</td>
+                    <td class="col-4 col-lg-12"><%= precise_currency_value(@order.total_cents_for_restaurant_manager)%></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <% if @order.sales_rep.present? %>
+              <div class="card">
+                <div class="card-block">
+                  <span>
+                    <%= @order.rep_notes || "The Representative did not leave any notes." %>
+                  </span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-12 col-lg-7">
+            <div class="col-12 p-0">
+              <div class="card">
+                <div class="card-header">Order Information</div>
+                <div class="card-block">
+                  <div class="vertical-nav-li-header appointments-header ft-bold" data-date="<%= Date.tomorrow.strftime("%F") %>">
+                    <%= @order.delivery_date %>
+                  </div>
+                    <div class="targ__slot mt-3">
+                      <div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3">
+                          <div class="pr-4 pt-1 hidden-md-down">
+                            <%= office_detail_icon %>
+                          </div>
+                          <div class="col-12 col-lg-8">
+                              <div class="h5">
+                                <%= @order.office.name %>
+                              </div>
+                              <div>
+                                <%= @order.office.display_location_single %>
+                              </div>
+                              <div>
+                                <%= format_phone_number_string(@order.office.phone) %>
+                              </div>
+                          </div>
+                          <div class="order-nav-li-content row no-gutters align-items-center pt-1 pl-2 pr-3 col-12">
+                            <div class="pr-4 pt-1 hidden-md-down lp__profile_image">
+                              <%= om_user_icon %>
+                            </div>
+                            <div class="col-12 col-lg-8">
+                              <div class="h5">
+                                <% if @order.office && @order.office.manager %>
+                                  <%= @order.office.manager.display_name %>
+                                <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+              <!-- Link to modal or addition of inline form for Driver info -->
+              <div class="card" data-nested-attributes="restaurant_orders_attributes_" >
+                <div class="card-header">Delivery Driver Information</div>
+                <div class="card-block justify-content-center row mt-3">
+                  <% if @order.driver_phone && @order.driver_name %>
+                    <div class="col-12 row">
+                      <div class="col-3 col-md-3 col-xl-2">
+                        <%= truck_icon %>
+                      </div>
+                      <div class="col-6 col-xl-6 ml-3">
+                        <div class="row">
+                          <%= @order.driver_name %>
+                        </div>
+                        <div class="row">
+                          <%= format_phone_number_string(@order.driver_phone) %>
+                        </div>
+                      </div>
+                      <div class="ml-auto">
+                        <a class="btn btn-link p-0" data-modal-size="sm" data-modal="true" href="<%=driver_info_restaurant_orders_path(id: @order.id)%>" data-modal-title="Driver Info" data-comp-order-id="<%=@order.id%>">Edit</a>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="mx-auto">
+                      <button class="btn btn-success mx-auto" data-modal-size="sm" data-modal="true" href="<%=driver_info_restaurant_orders_path(id: @order.id)%>" data-modal-title="Driver Info" data-comp-order-id="<%=@order.id%>">Add Driver Info</button>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <!--  -->
+              <div class="card transparent">
+                <div class="btn-group m-auto d-inline">
+                  <a href="<%= download_restaurant_order_path(@order, :format => 'pdf') %>" data-method="post" class="btn btn-link" target="_blank"><i class="fa fa-lg fa-print"></i>&nbsp; PDF</a>
+                  <a href="<%= download_restaurant_order_path(@order, :format => 'csv') %>" data-method="post" class="btn btn-link"><i class="fa fa-lg fa-download"></i>&nbsp; CSV</a>
+                </div>
+              </div>
+              <% if @order.confirmed? %>
+                <div class="card transparent justify-content-center">
+                  <p class="ft-bold text-center">Need to cancel this order?</p>
+                  <p class="text-center">Please call LunchPro</p>
+                  <p class="text-center"><%= format_phone_number_string("8555862477") %><p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        </div>
+      <% else %>
+        <div class="tab-pane with-cards fixed-height" id="about" role="tabpanel">
+          <div class="card-columns mb-3 row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">Order Summary </div>
+                <div class="card-block">
+                  Please select an order from the left side of the page to review. If there are none to select from, this restaurant currently does not have any pending orders through LunchPro
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>

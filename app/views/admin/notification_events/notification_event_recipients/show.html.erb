@@ -1,0 +1,97 @@
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_notification_event_path(@event) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4"><h2 class="lp__light">Notification <span class="lp__subheader"><%= @event.internal_summary.truncate(38) %></span></h2></div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <% if @record.active? %>
+          <a class="btn btn-warning btn-sm mr-2" data-confirm-method="post" href="<%= deactivate_admin_notification_event_notification_event_recipient_path(@event, @record) %>" data-confirm-check="Are you sure you want to disable this notification? Past notifications of this type will remain in notification history, but future triggers of this notification will be paused.">Disable</a>
+        <% elsif @record.inactive? %>
+          <a class="btn btn-success btn-sm mr-2" data-confirm-method="post" href="<%= activate_admin_notification_event_notification_event_recipient_path(@event, @record) %>" data-confirm-check="Are you sure you want to enable this notification? This will take effect immediately.">Enable</a>
+        <% end %>
+        <% if @event.can_send_tests? %>
+          <a data-popup=true data-popup-title="Send Test" href="<%= test_admin_notification_event_notification_event_recipient_path(@event, @record) %>" class="btn btn-primary btn-sm mr-2">Send Test</a>
+        <% end %>
+        <a href="<%= edit_admin_notification_event_notification_event_recipient_path(@event, @record) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <!-- Record Notices (if any) -->
+  <% if @record.notices.count > 0 %>
+    <div class="row">
+      <div class="col-12 px-3 mb-2">
+        <% @record.notices.each do |notice| %>
+          <div class="alert alert-warning">
+            <p class="text-warning small"><span class="oi oi-target"></span> <%= notice[:message] %> <%= (notice[:relatable]) ? "<a class='text-primary pl-3 small' href='#{relatable_notice_path(notice[:relatable])}'>View Details</a>".html_safe : '' %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <!-- End Record notices -->
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'display_recipient_type' => {title: 'Recipient', w: 2, helper: 'cap_all'}},
+                      {'title' => {title: 'Notification Title', w: 5}},
+                      {'default_summary' => {title: 'Default Enabled', w: 3}},
+                      {'priority' => {title: 'Priority', w: 2}}
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'content' => {title: 'Web Content', w: 12}}
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'sms_content' => {title: 'SMS/Push Content', w: 12}}
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_raw_html',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'email_content' => {title: 'Email HTML Content', w: 12}}
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+        <li><a class="text-primary" data-confirm-method="post" data-confirm-check="This will reset notification defaults for all users of the system based on the specific settings for this notification. This action cannot be undone." href="<%= reset_defaults_admin_notification_event_notification_event_recipient_path(@event, @record) %>">Reset Notification Defaults</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>

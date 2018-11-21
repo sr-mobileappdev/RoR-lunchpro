@@ -1,0 +1,17 @@
+<%= form_for [@rep, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <% if @record.partner %>
+        <%= lp_hidden_field(f, :partner_id) %>
+      <% else %>
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-7 lp_req">
+            <%= lp_multi_object_field(f, :partner_id, "Find Sales Rep", {url: quick_admin_searches_path(search_type: 'sales_rep')}) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,69 @@
+<% tab 'menu' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_restaurant_menus_path(@restaurant) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4">
+      <h2 class="lp__light">'<%= @record.name %>' Lunch Pack <span class="lp__subheader"><%= @restaurant.name %></h2>
+    </div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <a href="<%= edit_admin_restaurant_menu_item_path(@restaurant, @record) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_restaurant_path(@restaurant), active_tab: 'overview'},
+                  {title: 'Orders', path: admin_restaurant_orders_path(@restaurant), active_tab: 'orders'},
+                  {title: 'Menu', path: admin_restaurant_menus_path(@restaurant), active_tab: 'menu'},
+                  {title: 'Payments', path: admin_restaurant_payments_path(@restaurant), active_tab: 'payments'},
+                  {title: 'Bank Accounts', path: admin_restaurant_pay_methods_path(@restaurant), active_tab: 'pay_methods'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'name' => {title: 'Lunch Pack Name', w: 4}},
+                      {'description' => {title: 'Description', w: 8}},
+                    ]
+                  } %>
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'retail_price_cents' => {title: 'Retail Price', w: 2, helper: 'precise_currency_value', default: 'Not Set'}}
+                    ]
+                  } %>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+
+        <% if @record.unpublished_at %>
+          <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_restaurant_lunch_pack_path(@restaurant, @record) %>" data-confirm-check="Are you sure you want to re-activate this menu item?">Re-activate Lunch Pack/a></li>
+        <% elsif @record.published_at %>
+          <li><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_restaurant_lunch_pack_path(@restaurant, @record) %>" data-confirm-check="Are you sure you want to deactivate this menu item?">Deactivate Lunch Pack</a></li>
+        <% end %>
+        <li></q><a class="text-danger" data-confirm-method="post" href="<%= delete_admin_restaurant_lunch_pack_path(@restaurant, @record) %>" data-confirm-check="Are you sure you want to delete this menu item? It will be removed from the system and only available in historical reporting where applicable.">Delete Lunch Pack</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,40 @@
+<div class="vertical-nav">
+  <ul id="appointments-list">
+    <!-- loop -->
+    <% appointment_groups.each do |day, group| %>
+      <li>
+         <div class="vertical-nav-li-header appointments-header" data-date="<%= day.to_date.to_s %>">
+            <%= day %>
+         </div>
+         <% group.sort_by{|appt| appt.starts_at(true)}.each do |appointment| %>
+            <div class="targ__slot">
+              <%= render partial: 'rep/calendars/components/sales_rep_appointment', locals: {appointment: appointment} %>
+            </div>
+         <% end %>
+      </li>
+    <% end %>
+    <!--end loop-->
+  </ul>
+  <% if !appointment_groups.any? && !@office %>
+    <div class="col-12 text-center mt-5 pt-5">
+        <% if time_range_end < Time.now.to_date %>
+          <h3>You did not have any scheduled appointments for this month!</h3>
+        <% else %>
+          <h3>You currently have no appointments for this month! Click <a href="<%= new_rep_appointment_path%>" class="text-underline">here</a> to create one!</h3>
+        <% end %>
+        <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+    </div>
+  <% elsif !appointment_groups.any? && @office %>
+    <% if @office.private__flag %>
+      <div class="col-12 text-center mt-5 pt-5">
+        <h3>You currently have no recent upcoming appointments with this Office! Click <a href="<%=set_delivery_rep_orders_path(office: @office)%>" class="text-underline">here</a> to create one!</h3>
+        <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+      </div> 
+    <% else %>
+      <div class="col-12 text-center mt-5 pt-5">
+        <h3>You currently have no recent upcoming appointments with this Office! Click <a href="<%= policies_rep_appointments_path(office_id: @office.id) %>" class="text-underline">here</a> to create one!</h3>
+        <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+      </div>  
+    <% end %>
+  <% end %>
+</div>

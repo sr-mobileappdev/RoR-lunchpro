@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-12">
+    <div class="comp__table">
+      <h5 class="lp__table_header">Nearby Restaurants</h5>
+      <div class="lp__pagination targ-table-pagination">
+        <div class="is-loading-stickies"></div>
+      </div>
+      <table class="lp__table table autoload" data-same-url=true data-table-url="<%= table_admin_restaurants_path(appointment_id: @record.appointment_id, page: @page, sort: @sort, per_page: @per_page, scope: 'for_office', for_office_id: @office.id) %>">
+        <%= render partial: 'admin/shared/components/tables/loading_content', locals: {message: 'Finding Restaurants in Office Area'} %>
+      </table>
+    </div>
+  </div>
+</div>

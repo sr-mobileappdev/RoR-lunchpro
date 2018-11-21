@@ -1,0 +1,13 @@
+<%= form_for [@rep, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-7 lp_req">
+          <%= lp_multi_object_field(f, :drug_id, "Find Drug", {url: quick_admin_searches_path(search_type: 'drug')}) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

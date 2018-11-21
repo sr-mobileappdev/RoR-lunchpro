@@ -1,0 +1,37 @@
+<%= form_for [@provider, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :provider_id) %>
+
+  <div class="form-group row form-group-tight">
+
+    <% if @record.new_record? %>
+      <div class="col-sm-2">
+        <%= lp_select_field(f, :day_of_week, "Day", selectable_day_enum(ProviderAvailability.day_of_weeks)) %>
+      </div>
+    <% else %>
+      <%= lp_hidden_field(f, :day_of_week) %>
+    <% end %>
+
+    <div class="col-sm-3">
+      <% if @record.new_record? %>
+        <%= lp_timeframe_field(f, [:starts_at, :ends_at], "Available Time", [@record.starts_at, @record.ends_at]) %>
+      <% else %>
+        <%= lp_timeframe_field(f, [:starts_at, :ends_at], "Available Time", [@record.starts_at(true), @record.ends_at(true)]) %>
+      <% end %>
+    </div>
+
+
+  </div>
+
+  <% unless @record.new_record? %>
+    <div class="row">
+      <div class="col-12 px-4">
+        <h5 class="lp__section_header">Other Actions</h5>
+        <ul class="lp__actions">
+          <li><a class="text-danger" data-confirm-method="post" data-confirm-check="This will remove this availability timeframe for this provider. There may be appointments set for this time in which case the sales rep may need to be notified." href="<%= delete_admin_provider_slot_path(@provider, @record) %>">Delete Timeframe</a></li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>

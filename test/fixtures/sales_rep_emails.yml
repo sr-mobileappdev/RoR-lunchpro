@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sales_rep: one
+  email_address: MyString
+  email_type: 1
+  status: 1
+  notification_preference: 1
+
+two:
+  sales_rep: two
+  email_address: MyString
+  email_type: 1
+  status: 1
+  notification_preference: 1

@@ -1,0 +1,75 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+  <%= lp_hidden_field(f, :stripe_identifier) %>
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group row form-group-tight my-0 py-0">
+        <div class="col-sm-5">
+          <div class="form-group">
+            <label for="nickname">Card Nickname</label>
+            <%= text_field_tag :nickname, @record.nickname, class: "form-control form-control-sm" %>
+          </div>    
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">                    
+        <div class="col-sm-5 lp_req">
+          <%= label_tag "Name on Card", nil, required: true %>
+          <%= text_field_tag :name, @record.name, class: "form-control form-control-sm", "data-stripe" => "name" %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <% if @record.new_record? %>
+          <div class="col-sm-4 lp_req">
+            <label for="card-element">Card Number</label>
+              <div id="card-element"></div>
+          </div>
+          <div class="col-sm-2 lp_req">
+            <label for="card-cvv">Security Code</label>
+            <div id="card-cvv"></div>
+          </div>
+          <div class="col-sm-2 lp_req">
+            <label for="card-expiry">Expiry Date</label>
+            <div id="card-expiry"></div>
+          </div>
+        <% else%>
+          <div class="col-sm-4 lp_req">          
+            <label for="card-expiry">Expiry Date</label>
+            <div>
+              <%= select_tag :exp_month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |name,i| ["#{i+1}", i+1] }, @record.exp_month), include_blank: false %>
+              <%= select_tag :exp_year, options_for_select((Date.today.year..(Date.today.year+10)).to_a, @record.exp_year), include_blank: false %>
+            </div>
+          </div>
+        <%end%>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-4">
+          <%= label_tag "Billing Address", nil, required: true %>
+          <%= text_field_tag :address_line1, @record.address_line1, class: "form-control form-control-sm", "data-stripe" => "address_line1" %>
+        </div>
+        <div class="col-sm-4">
+          <%= label_tag "Suite/Building", nil, required: true %>
+          <%= text_field_tag :address_line2, @record.address_line2, class: "form-control form-control-sm", "data-stripe" => "address_line2" %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-3">
+          <%= label_tag "City", nil, required: true %>
+          <%= text_field_tag :address_city, @record.address_city, class: "form-control form-control-sm", "data-stripe" => "address_city" %>
+        </div>
+        <div class="col-sm-2">
+          <%= label_tag "State", nil, required: true %>
+          <%= text_field_tag :address_state, @record.address_state, class: "form-control form-control-sm", "data-stripe" => "address_state" %>
+        </div>
+        <div class="col-sm-3">
+          <%= label_tag "Zipcode", nil, required: true %>
+          <%= text_field_tag :address_zip, @record.address_zip,  class: "form-control form-control-sm", "data-stripe" => "address_zip" %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-4">
+          <%= lp_check_field_inline(nil, :default, "Set as Default", @record.new_record? ? '0' : @record.default) %>        
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

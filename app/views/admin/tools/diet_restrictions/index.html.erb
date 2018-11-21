@@ -1,0 +1,40 @@
+<% tab 'diet' %>
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4">
+      <h2 class="lp__light"><span class="pr-2">Dietary Restrictions</span> <span class="lp__subheader">Tools & Setup</span></h2>
+    </div>
+    <div class="col-6 px-4 text-right">
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Tools', path: admin_tools_path, active_tab: 'overview'},
+                  {title: 'Merge', path: admin_tools_merge_reps_path, active_tab: 'merge_reps'},                  
+                  {title: 'Cuisines', path: admin_tools_cuisines_path, active_tab: 'cuisines'},
+                  {title: 'Dietary Restrictions', path: admin_tools_diet_restrictions_path, active_tab: 'diet'},
+                  {title: 'Holidays', path: admin_tools_holiday_exclusions_path, active_tab: 'holiday'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'Add Restriction', url: new_admin_tools_diet_restriction_path}],
+                    title: 'Dietary Restrictions',
+                    columns: ['id', 'name', 'description'],
+                    model_class: 'DietRestriction',
+                    actions: [{title: 'Remove', path: delete_admin_tools_diet_restriction_path("<id>"), context: :confirm, confirm_message: 'Are you sure you want to remove this diet restriction option? This change will be immediately reflected throughout the system.'}],
+                    objects: @records.order(name: :asc)
+                  } %>
+    </div>
+  </div>
+</div>

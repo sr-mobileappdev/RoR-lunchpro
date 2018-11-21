@@ -1,0 +1,76 @@
+<!-- floating container with shadow -->
+<% tab 'account' %>
+<% title 'Payment Information' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers comp__om_office">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center pt-3 ">
+      <div class="lp__faux_modal med-large p-4 col-12">
+        <div class="col-12">
+          <div class="h4 mb-3">Add Credit Card</div>
+          <p class="m-0">This card will be used for orders placed internally.</p>
+          <div class="comp__om_stripe_form pt-4">
+            <%= form_for(@record, :url => { :action => "create" }, method: :post ) do |f| %>
+            <%= lp_hidden_field(f, :stripe_identifier) %>
+            <div class="row pt-4">
+              <div class="col-sm-12 col-md-8 col-xl-6 m-auto">
+                <div class="form-group">
+                  <label for="nickname">Card Nickname</label>
+                  <%= text_field_tag :nickname, @record.nickname, class: "form-control form-control-sm" %>
+                </div>
+                <div class="form-group">
+                  <%= label_tag "Name on Card", nil, required: true %>
+                  <%= text_field_tag :name, @record.name, class: "form-control form-control-sm", "data-stripe" => "name" %>
+                </div>
+                <div class="form-group">
+                  <label for="card-element">Card Number</label>
+                  <div id="card-element"></div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-6">
+                    <label for="card-expiry">Expiry Date</label>
+                    <div id="card-expiry"></div>
+                  </div>
+                  <div class="col-6">
+                    <label for="card-cvv">Security Code</label>
+                    <div id="card-cvv"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= label_tag "Billing Address", nil, required: true %>
+                  <%= text_field_tag :address_line1, @record.address_line1, class: "form-control form-control-sm", "data-stripe" => "address_line1" %>
+                </div>
+                <div class="form-group mb-0">
+                  <%= label_tag "Suite/Building", nil, required: true %>
+                  <%= text_field_tag :address_line2, @record.address_line2, class: "form-control form-control-sm", "data-stripe" => "address_line2" %>
+                </div>
+                <div class="form-group row">
+                  <div class="col-6 mt-3">
+                    <%= label_tag "City", nil, required: true %>
+                    <%= text_field_tag :address_city, @record.address_city, class: "form-control form-control-sm", "data-stripe" => "address_city" %>
+                  </div>
+                  <div class="col-6 col-sm-3 mt-3">
+                    <%= label_tag "State", nil, required: true %>
+                    <%= text_field_tag :address_state, @record.address_state, class: "form-control form-control-sm", "data-stripe" => "address_state" %>
+                  </div>
+                  <div class="col-6 col-sm-3 mt-3">
+                    <%= label_tag "Zip", nil, required: true %>
+                    <%= text_field_tag :address_zip, @record.address_zip,  class: "form-control form-control-sm", "data-stripe" => "address_zip" %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <%= lp_check_field_inline(nil, :default, "Set as Default", @record.new_record? ? '0' : @record.default) %>
+                </div>
+                <div class="col-12 pt-3 text-center">
+                  <a class="btn btn-secondary mr-2" href="<%= office_account_payment_methods_path %>">Cancel</a>
+                  <button data-submit-stripe class="btn btn-primary">Save</button>
+                </div>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

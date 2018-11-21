@@ -1,0 +1,31 @@
+<!-- Office / Providers dynamic search form -->
+
+<%= form_tag '', class: 'lp__find_offices_appts' do %>
+
+  <div class="targ__office_search">
+    <div class="col-12 p-0">
+      <!-- search form -->
+      <div class="input-group lp__input_group">
+          <span class="input-group-addon"><button class="fa fa-search search-icon" type="submit"></button></span>
+          <input name="searchTerm" id="searchTerm" type="text" placeholder="Enter office name, address or provider">
+      </div>
+      <div class="targ__tab_results">
+          <%= render partial: 'rep/appointments/components/new_appointment_office_results', locals: {offices: my_offices, new_offices: false} %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="targ__all_office_search" style="display: none;">
+  <%= form_tag '', class: 'lp__find_new_offices_appts col-12 p-0' do %>
+      <!-- search form -->
+      <div class="input-group lp__input_group">
+          <span class="input-group-addon"><button class="fa fa-search search-icon" type="submit"></button></span>
+          <input name="searchTerm" id="repOfficeSearchTerm" type="text" placeholder="Enter office name, address or provider">
+      </div>
+      <div class="targ__tab_new_office_results">
+          <%= render partial: 'rep/appointments/components/new_appointment_office_results', locals: {offices: new_offices, new_offices: true} %>
+      </div>
+  <% end %>
+</div>
+  <!-- End -->
+

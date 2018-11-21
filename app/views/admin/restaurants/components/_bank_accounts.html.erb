@@ -1,0 +1,21 @@
+<div class="pl-3 pr-3 last-step" data-restaurant-id="<%=@restaurant.id%>">
+  <%= render partial: 'admin/shared/components/flash' %>
+  <h2 class="pb-4">Bank Account</h2>
+
+    <div class="bank-account-form">
+      <%= render partial: "admin/restaurants/components/bank_account_form" %>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-12 mt-2">
+    <%= render partial: 'admin/shared/components/tables/static_table',
+                locals: {
+                  title: 'Active Bank Accounts',
+                  columns: ['id', 'bank_name', 'account_type', 'display_account_number'],
+                  model_class: 'BankAccount',
+                  actions: [{title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this bank account?", path: delete_admin_restaurant_pay_method_path(@restaurant, "<id>", wizard: true), button_class: 'btn btn-danger btn-sm'}],
+                  objects: @restaurant.bank_accounts.where.not(status: ['deleted','inactive'])
+                } %>
+  </div>
+</div>

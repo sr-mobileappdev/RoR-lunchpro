@@ -1,0 +1,134 @@
+<% tab 'appointments' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_office_appointments_path(@office) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4">
+      <h2 class="lp__light"><span class="pr-3">Appointment</span> <span class="lp__subheader"><%= @office.name %></span></h2>
+    </div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <!-- <a href="<%= edit_admin_appointment_path(@record) %>" class="btn btn-primary btn-sm mr-2">Edit</a> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row mb-4 mt-2">
+    <!-- Key Action Buttons -->
+    <div class="col-12 px-4">
+      <div class="row">
+        <div class="col-3 px-2">          
+          <% if @record.belongs_to && @record.belongs_to.entity && @record.belongs_to.active? && (@record.belongs_to.confirmed_at || @record.belongs_to.invitation_accepted_at)%>
+            <a href="<%= order_admin_impersonation_index_path(user_id: @record.belongs_to, appointment_id: @record.id) %>" data-method="post" class="btn btn-primary btn-block">Order Food</a>
+          <% end %>
+        </div>
+        <div class="col-3 px-2">
+          <a href="<%= confirm_popup_admin_appointment_path(@record) %>" data-popup="true" data-popup-title="Confirm Appointment" class="btn btn-primary btn-block">Confirm Appointment</a>
+        </div>
+        <div class="col-3 px-2">
+          <a href="" class="btn btn-primary btn-block">Send Reminders</a>
+        </div>
+        <div class="col-3 px-2">
+          <a href="<%= edit_notes_admin_appointment_path(@record) %>" class="btn btn-primary btn-block"><%= (@record.has_notes?) ? 'Edit' : 'Add' %> Notes</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Key Action Buttons -->
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'description' => {title: 'Appointment', w: 3}},
+                      {'appointment_date' => {title: 'Date & Time', w: 3}},
+                      {'sales_rep' => {title: 'Sales Rep', w: 3, helper: 'sales_rep_link'}},
+                      {'company_name' => {title: 'Company', w: 3}},
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'office_confirmed' => {title: 'Office Confirmed?', w: 3}},
+                      {'rep_confirmed' => {title: 'Rep Confirmed?', w: 3}},
+                      {'restaurant_confirmed' => {title: 'Restaurant Confirmed?', w: 4}},
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'office_notes' => {title: 'Office Notes', w: 12}}
+                    ]
+                  } %>
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'rep_notes' => {title: 'Sales Rep Notes', w: 6}}
+                    ]
+      } %>
+  </div>
+  <div class="row">
+      <div class="col-6 px-4">
+        <label class="lp__show">Dietary Restrictions</label>
+        <% if @record.diet_restrictions.count > 0 %>
+          <table>
+            <tbody style="font-size: 0.9em;">
+              <th>Name</th>
+              <th>Staff count</th>
+              <% @record.diet_restrictions.each do |restrict| %>
+                <tr>
+                  <td><%= restrict.diet_restriction.name %></td>
+                  <td style="text-align: center;"><%= restrict.staff_count %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      <%end%>
+     </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Order',
+                    columns: [{title: 'Summary', column: 'appointment', helper: 'appointment_summary'}, {title: 'Sales Rep', column: 'sales_rep', helper: 'appointment_rep_summary'}, {title: 'Office', column: 'office', helper: 'appointment_office'}, {title: 'Restaurant', column: 'restaurant', helper: 'appointment_restaurant'}],
+                    model_class: 'Order',
+                    objects: (@record.orders.count > 0) ? @record.orders : [],
+                    actions: [{title: 'View Order', path: admin_order_path("<id>", appointment_id: @record.id)}]
+                  } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+        <% if !@record.cancelled_at %>
+          <li><a class="text-danger" data-popup="true" data-popup-title="Cancel Appointment" href="<%= cancel_popup_admin_appointment_path(@record) %>">Cancel Appointment</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,28 @@
+<% if local_assigns[:rows] %>
+  <% search_view = Views::Search.new(search) %>
+
+  <% rows.each do |row| %>
+    <% next unless row[:fields] %>
+    <div class="row">
+      <% if row[:title].present? %>
+        <div class="col-12 px-4">
+          <h6><%= row[:title] %></h6>
+        </div>
+      <% end %>
+
+      <% row[:fields].each do |field| %>
+        <% w = (field.kind_of?(Hash)) ? field.values[0][:w] || 3 : 3 %>
+        <% key = (field.kind_of?(Hash)) ? field.keys[0] : field %>
+
+        <% title = (field.kind_of?(Hash)) ? ((field.values[0][:title]) ? field.values[0][:title] : cap_all_humanize(field.keys[0])) : cap_all_humanize(field) %>
+
+        <div class="col-<%= w %> pl-4 pr-0 pb-2">
+          <label class="lp__show"><%= title %></label>
+          <input name="conditions[<%= key %>]" type="text" class="form-control form-control-sm" value="<%= search_view.field_value_for(key) %>" />
+        </div>
+      <% end %>
+
+    </div>
+  <% end %>
+
+<% end %>

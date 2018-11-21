@@ -1,0 +1,31 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body pt-0 mt-0 comp__om_office">
+    <div class="row comp__om_form pl-4 pr-4 pt-4" id="exclude_date_form">
+      <div class="col-12">
+        <h3 class="ft-bold">Exclude Dates</h3>
+        <p class="mt-2">Please select any date or range of dates - for things like vacations, random days out of office, etc. - that this provider will not be available, even if he or she normally is during that time slot.</p>
+      </div>
+      <%= form_for @provider, url: office_provider_path(@provider), method: :put,  html: { class: "col-12 p-0", autocomplete: "off", onsubmit: "return false;"  } do |f|%>
+        
+        <%= f.fields_for :provider_exclude_dates do |o| %>
+          <%= render '/office/providers/components/provider_exclude_date_fields', f: o %>
+        <% end %>
+        <%= link_to_add_fields "Add Exclusion Date(s)", f, :provider_exclude_dates , '/office/providers/components/'%>
+        <div class="col-12 mt-3 text-center hidden-xs-down">
+          <button class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+          <button data-submit type="submit" class="btn btn-success">Submit</button>
+        </div>
+        <div class="col-12 mt-3 text-center hidden-sm-up">
+          <button data-submit type="submit" class="btn btn-success btn-block">Submit</button>
+          <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  LPOmOffice_Initializer();
+  LPOmForm_Initializer();
+</script>

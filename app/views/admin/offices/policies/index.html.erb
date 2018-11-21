@@ -1,0 +1,104 @@
+<% tab 'policies' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_office_path(@office) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4">
+      <h2 class="lp__light"><%= @office.name %> <span class="lp__subheader">Policies</span></h2>
+      <% if @office.private__flag %>
+        <div class="lp__notice-badges"><span class="badge badge-pill badge-warning">Private</span></div>
+      <% end %>
+    </div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <a href="<%= edit_admin_office_path(@office) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content <%= (@office.private__flag) ? 'extended' : '' %>">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_office_path(@office), active_tab: 'overview'},
+                  {title: 'Appointments', path: admin_office_appointments_path(@office), active_tab: 'appointments'},
+                  {title: 'Slots', path: admin_office_slots_path(@office), active_tab: 'slots'},
+                  {title: 'Providers & Staff', path: admin_office_providers_path(@office), active_tab: 'providers'},
+                  {title: 'Policies', path: admin_office_policies_path(@office), active_tab: 'policies'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @office,
+                    fields: [
+                      {'office_policy' => {title: 'General Policies', w: 8}},
+                      {'policies_last_updated_at' => {title: 'Policies Last Updated', helper: 'simple_date', w: 4}},
+                    ]
+                  } %>
+
+  </div>
+  <div class="row">
+    <div class="col-6 p-0">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @office,
+                    fields: [
+                      {'delivery_instructions' => {title: 'Delivery Instructions', w: 12}},
+                    ]
+                  } %>
+    </div>
+    <div class="col-6">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @office,
+                    fields: [
+                      {'food_preferences' => {title: 'Food Preferences', w: 12}},
+                    ]
+                  } %>
+    </div>
+  </div>
+  <div class="row ml-1">
+    <div class="col-6 p-0">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+              locals: {
+                table_actions: [{name: 'Edit Exclude Dates', modal: true, url: edit_office_exclude_dates_admin_office_path(@office)}],
+                title: 'Office Exclude Dates',
+                columns: [
+                  {title: 'Start Date', column: 'starts_at', helper: 'short_date'},
+                  {title: 'End Date', column: 'ends_at', helper: 'short_date'}
+                ],
+                model_class: 'OfficeExcludeDate',
+                objects: @office.office_exclude_dates.sort_by{|excl| [excl.starts_at, excl.ends_at]}
+              } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 px-4">
+      <label class="lp__show">Dietary Restrictions</label>
+      <% if @office.diet_restrictions.count > 0 %>
+        <table>
+          <tbody style="font-size: 0.9em;">
+            <th>Name</th>
+            <th>Staff count</th>
+            <% @office.diet_restrictions_offices.each do |restrict| %>
+              <tr>
+                <td><%= restrict.diet_restriction.name %></td>
+                <td style="text-align: center;"><%= restrict.staff_count %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <%else%>
+        <p>--</p>
+      <%end%>
+    </div>
+  </div>
+
+
+</div>

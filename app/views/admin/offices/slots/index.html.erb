@@ -1,0 +1,41 @@
+<% tab 'slots' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_office_path(@office) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-12 px-4">
+      <h2 class="lp__light"><%= @office.name %></h2>
+      <% if @office.private__flag %>
+        <div class="lp__notice-badges"><span class="badge badge-pill badge-warning">Private</span></div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content <%= (@office.private__flag) ? 'extended' : '' %>">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_office_path(@office), active_tab: 'overview'},
+                  {title: 'Appointments', path: admin_office_appointments_path(@office), active_tab: 'appointments'},
+                  {title: 'Slots', path: admin_office_slots_path(@office), active_tab: 'slots'},
+                  {title: 'Providers & Staff', path: admin_office_providers_path(@office), active_tab: 'providers'},
+                  {title: 'Policies', path: admin_office_policies_path(@office), active_tab: 'policies'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/slot_calendar',
+                  locals: {
+                    title: 'Office Appointment Slots',
+                    objects: @office.appointment_slots_by_day,
+                    parent_object: @office
+                  } %>
+    </div>
+  </div>
+
+</div>

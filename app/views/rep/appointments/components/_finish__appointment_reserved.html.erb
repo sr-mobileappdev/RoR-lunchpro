@@ -1,0 +1,27 @@
+<div class="col-12 col-sm-10 mx-auto">
+  <div class="text-info pt-5 text-center">
+    <%= finish_calendar_icon %>
+  </div>
+  <p class="text-center pt-3 pl-4 pr-4"><strong>Your Appointment Has Been Reserved!</strong></p>
+
+  <% if appointment %>
+    <% if appointment.appointment_slot_id && appointment.appointment_slot.name == 'Sample'%>
+      <p class="text-center pt-4 pl-4 pr-4 pb-4">We've added it to your calendar.</p>
+    <% else %>
+      <p class="text-center pt-4 pl-4 pr-4 pb-4">We've added it to your calendar. Make sure to order food from one of our trusted partners, or indicate that you're bringing your own.</p>
+    <% end %>
+  <% else %>
+    <p class="text-center pt-4 pl-4 pr-4 pb-4">We've added it to your calendar. Make sure to order food from one of our trusted partners, or indicate that you're bringing your own.</p>
+  <% end%>
+  <% if @modal %>
+    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-sm btn-primary btn-block mt-4">Done</a>
+  <% else %>
+    <a href="<%= current_rep_calendars_path%>" class="btn btn-sm btn-primary btn-block mt-4">Done</a>
+  <% end %>
+  <% if appointment %>
+    <% if appointment.appointment_slot_id && appointment.appointment_slot.name == 'Sample' %>
+    <% else %>
+      <a href="<%= select_restaurant_rep_appointment_path(@appointment) %>" class="btn btn-sm btn-secondary btn-block">Order Food</a>
+    <% end %>
+  <% end %>
+</div>

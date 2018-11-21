@@ -1,0 +1,18 @@
+.nav-pills {
+	padding: $card-spacer-y;
+	border-bottom: solid 1px $hr-border-color;
+	.nav-link {
+		font-size: 0.9rem;
+		text-transform: uppercase;
+		padding: 7px 30px;
+	}
+}
+
+// if that tab pane has cards add this class
+.tab-pane {
+	@include min-height(400px);
+	&.with-cards {
+		padding: $card-spacer-y;
+		background-color: $gray-lightest;
+	}
+}

@@ -1,0 +1,75 @@
+#quick-links.dropdown {
+	.dropdown-toggle {
+		color: $brand-success;
+    z-index: 1000;
+		&:after { display: none; } // hide the native BS caret symbol
+	}
+	.dropdown-cancel {
+		background: #607D8B;
+		&:after { display: none; } // hide the native BS caret symbol
+	}
+	i.oi {
+		transition: all 0.3s ease-in-out;
+	}
+
+	// cute animation
+	&.show i.oi { @include rotate(45); }
+
+	.dropdown-menu {
+		box-shadow: $popover-box-shadow;
+
+		/* fighting the popper.js styles */
+		transform: none !important;
+		left: auto !important;
+		top: 1.6em !important;
+		z-index: -1 !important;
+
+		/* for the opacity fade */
+		display: block !important;
+		opacity: 0;
+		transition: 0.3s ease;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    visibility: hidden;
+
+	}
+	&.show .dropdown-menu {
+		opacity: 1;
+		transition: 0.3s ease;
+    visibility: visible;
+	}
+
+	.dropdown-item {
+		font-size: $font-size-sm;
+		padding: 0.75em 3em;
+    font-weight: 600;
+    color: $brand-info;
+    letter-spacing: 0.05em;
+	}
+}
+.dropdown-item.active, .dropdown-item:active{
+  color: $brand-info;
+  text-decoration:none;
+  background-color: inherit !important;
+}
+@media(max-width:768px){
+#quick-links.dropdown {
+	z-index: 1001;
+	float: right;
+	top: 37px;
+	right: 5px;
+	position: absolute;
+  div.dropdown-menu-right.show{
+    width: 40vmax !important;
+  }
+	}
+}
+@media(min-width:769px){
+#quick-links.dropdown {
+	z-index: 100;
+	float: right;
+	top: 87px;
+	right: 10px;
+	position: absolute;
+	}
+}

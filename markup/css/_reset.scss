@@ -1,0 +1,26 @@
+// smooth all hovers
+a, button, .btn, input[type=submit]
+.nav-link, .nav-item {
+	transition: 0.2s ease;
+	&:hover { transition: 0.2s ease; }
+}
+
+button {
+	&:hover { cursor: pointer; }
+	&:focus { outline: none; }
+}
+
+.input-group {
+	input {
+		border: none;
+	}
+}
+
+h1,h2,h3,h4,h5,
+.h1,.h2,.h3,.h4,.h5 {
+	margin: 0;
+}
+
+strong, th {
+	color: $black;
+}

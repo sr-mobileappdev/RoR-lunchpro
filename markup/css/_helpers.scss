@@ -1,0 +1,77 @@
+/**************************
+		RE-USABLE HELPERS
+	***************************/
+// LOGOS
+#logo-badge {
+	background: url('../images/lp-badge.png') no-repeat;
+	background-size: contain;
+}
+#logo {
+	background: image('../images/lunchpro.svg') no-repeat;
+	background-size: contain;
+}
+
+// TYPOGRAPHY
+.secondary-font { font-family: $font-family-secondary; }
+.fa-responsive { font-size: 2.8vmax; }
+
+.text-black	{ color: $black !important;}
+
+*[class*="bg-"] { color: $white; }
+.bg-gray-dark { background-color: $gray-dark; }
+.bg-gray { background-color: $gray; }
+.bg-gray-light { background-color: $gray-light; }
+.bg-gray-lighter { background-color: $gray-lighter; }
+.bg-gray-lightest { background-color: $gray-lightest; }
+
+// BORDERS
+.b-1,
+.bt-1, .br-1, .bb-1, .bl-1,
+.bx-1, .by-1{
+	border-style: solid;
+	border-color: $hr-border-color;
+}
+.b-1 { border-width: 1px; }
+.bt-1 { border-width: 1px 0 0 0; }
+.br-1 { border-width: 0 1px 0 0; }
+.bb-1 { border-width: 0 0 1px 0; }
+.bl-1 { border-width: 0 0 0 1px; }
+
+.bx-1 { border-width: 0 1px; }
+.by-1 { border-width: 1px 0; }
+
+// GENERIC BOX SHADOW
+.box-shadow {
+	@include box-shadow();
+}
+
+// FIXED HEIGHT CONTAINER WITH Y SCROLL
+.fixed-height {
+	@include fixed-height(153px);
+}
+
+// BULLET LIST WITH ICONS IN CIRCLES
+ul.icon-list {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.rounded-circle {
+		width: 48px;
+		height: 48px;
+		margin: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	li {
+		width: 100px;
+		p {
+			padding: 0.7rem 0 0 0;
+			font-size: 0.9rem;
+			text-align: center;
+			margin: 0;
+		}
+	}
+}

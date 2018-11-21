@@ -1,0 +1,109 @@
+<% tab 'orders' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--@back_url } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4">
+      <h2 class="lp__light"><span class="pr-3">Order</span> <span class="lp__subheader"><%= @record.order_number %></span></h2>
+    </div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <% if @record.status == 'active' %>
+          <a data-confirm-method="post" href=<%="/admin/orders/#{@record.id}/manual_complete?"%> data-confirm-check="Are you sure you want to manually complete this order?" class="btn btn-success btn-sm mr-2">Complete Order</a>
+        <% else %>
+        <% end %>
+        <a href="<%= edit_admin_office_order_path(@record.office, @record, step: (@record.restaurant) ? 2 : 1) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <div class="row">
+    <div class="col-9">
+      <div class="row">
+          <%= render partial: 'admin/shared/components/details/show_row',
+                      locals: {
+                        object: @record,
+                        fields: [
+                          {'sales_rep' => {title: 'Sales Rep', w: 4, helper: 'sales_rep_link'}},
+                          {'restaurant' => {title: 'Restaurant', w: 4, helper: 'restaurant_link'}},                          
+                          {'appointment.appointment_date' => {title: 'Date & Time', w: 4}},
+                        ]
+                      } %>
+
+      </div>
+
+      <div class="row">
+          <%= render partial: 'admin/shared/components/details/show_row',
+                      locals: {
+                        object: @record,
+                        fields: [
+                          {'office' => {title: 'Office', w: 4, helper: 'office_link'}},
+                          {'appointment.description' => {title: 'Appointment', w: 4}},
+                          {'restaurant_notes' => {title: 'Restaurant Notes', w: 4}},
+                        ]
+                      } %>
+
+      </div>
+
+      <div class="row">
+          <%= render partial: 'admin/shared/components/details/show_row',
+                      locals: {
+                        object: @record,
+                        fields: [
+                          {'rep_notes' => {title: 'Sales Rep Notes', w: 8}},
+                        ]
+                      } %>
+
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="row">
+          <%= render partial: 'admin/shared/components/details/show_row',
+                      locals: {
+                        object: @record,
+                        fields: [
+                          {'subtotal_cents' => {title: 'Subtotal', w: 12, helper: 'precise_currency_value'}},
+                          {'tip_cents' => {title: 'Actual Tip', w: 12, helper: 'precise_currency_value'}},
+                          {'estimated_tip_cents' => {title: 'Estimated Tip', w: 12, helper: 'precise_currency_value'}},
+                          {'sales_tax_cents' => {title: 'Sales Tax', w: 12, helper: 'precise_currency_value'}},
+                          {'per_person_cost_cents' => {title: 'Per Person Cost', w: 12, helper: 'precise_currency_value'}},
+                          {'estimated_total_cents' => {title: 'Estimated Total', w: 12, helper: 'precise_currency_value'}},
+                        ]
+                      } %>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Order Items',
+                    columns: [{title: 'Qty.', column: 'quantity'},
+                              {title: 'Item Name', column: 'orderable.name'},
+                              {title: 'Unit Price', column: 'unit_cost_cents', helper: 'precise_currency_value'},
+                              {title: 'Subtotal', column: 'cost_with_sub_items', helper: 'precise_currency_value'},
+                              {title: 'Notes', column: 'notes'}],
+                    model_class: 'LineItem',
+                    objects: (@record.line_items.count > 0) ? @record.line_items.select{ |x| x.parent_line_item == nil }.map{ |x|
+                    	if x.sub_line_items.present?
+                    		original_notes = x.notes || ''
+                    		if original_notes.present?
+                    			original_notes = original_notes + '<br/>'
+                    		end
+                    		chosen_options_notes = 'Chosen Options:<br/><ul><li>' + x.sub_line_items.map{ |y| (y.orderable.present? ? y.orderable.option_name : '') + ' (add ' + ApplicationController.helpers.precise_currency_value(y.cost_cents) + ')' }.join('</li><li>') + '</li></ul>'
+                    		x.notes = original_notes + chosen_options_notes
+                    	end
+                    	x
+                    } : [],
+                    actions: []
+                  } %>
+    </div>
+  </div>
+
+</div>

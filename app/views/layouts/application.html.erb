@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%= javascript_include_tag "application/offices/component_om_calendar.js" %>
+  <% if Rails.env == 'development' %>
+    <title>Lunchpro (Dev) ~ <%= title %></title>
+  <% else %>
+    <title>Lunchpro ~ <%= title %></title>
+  <% end %>
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cleartype" content="on">
+
+  <!-- Disable turbolinks cache -->
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= csrf_meta_tags %>
+  <script>
+    paceOptions = {
+     ajax: false,
+     target: 'html',
+     startOnPageLoad: false,
+     restartOnRequestAfter: false,
+     restartOnPushState: false
+    }
+  </script>
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+  <script src="https://unpkg.com/flatpickr"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.min.css"></script>
+  <% if @layout == "office" %>
+    <%= stylesheet_link_tag 'office', media: 'all', 'data-turbolinks-track': 'true' %>
+  <%else%>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'true' %>
+  <% end %>
+  <%= javascript_include_tag @layout, 'data-turbolinks-track': 'trie' %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+
+</head>
+
+
+<body id="<%= params[:controller].parameterize%>_<%=params[:action]%>" class="__base <%=params[:action]%>" data-turbolinks="false" style=<%= 'overflow: hidden;' if current_user.present?%>>
+
+  <script>
+    $('input.phone_number_input').mask('(000) 000-0000');
+  </script>
+  <% if current_user %>
+    <%= render partial: "shared/modal" %>
+  <% end %>
+  <% if @impersonator %>
+    <div class="impersonation-panel pr-5">
+      <span class="pull-right"><a data-method="post" href="<%= User.end_impersonation_path(current_user) %>" class="text-danger h5">Back To Admin</a></span>
+    </div>
+  <% end %>
+  <%= yield %>
+
+  <span hidden>
+  <%= raw Rails.application.assets_manifest.find_sources('icons.svg').first %>
+  </span>
+  <% flash.each do |key, value| %>
+    <script>
+      $.notify(
+          "<%= value %>", {
+          position: "bottom",
+          className: '<%=key%>'
+        });
+    </script>
+  <% end %>
+
+  <% if requires_ace? %>
+
+    <script>
+
+      document.addEventListener("turbolinks:load", function() {
+
+        if ($(document).find("#ace-editor").length > 0) {
+          var editor = ace.edit("ace-editor");
+          editor.getSession().setTabSize(2);
+          editor.getSession().setMode("ace/mode/html");
+          editor.getSession().setUseSoftTabs(true);
+          editor.setShowPrintMargin(false);
+          editor.getSession().setFoldStyle('manual');
+
+          editor.getSession().on("change", function () {
+            var textarea = $('textarea[data-ace]').first();
+            if (textarea != undefined) {
+              textarea.val(editor.getSession().getValue());
+            }
+          });
+        }
+
+        if ($(document).find("#ace-editor-read-only").length > 0) {
+          var ro_editor = ace.edit("ace-editor-read-only");
+          ro_editor.getSession().setTabSize(2);
+          ro_editor.getSession().setUseSoftTabs(true);
+          ro_editor.setShowPrintMargin(false);
+          ro_editor.setReadOnly(true);
+          ro_editor.setHighlightActiveLine(false);
+          ro_editor.setHighlightGutterLine(false);
+          ro_editor.setDisplayIndentGuides(false);
+        }
+
+      });
+
+    </script>
+
+  <% end %>
+
+  <script>
+    $( document ).ready(function() {
+      $(".toggle-password").click(function() {
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else {
+          input.attr("type", "password");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

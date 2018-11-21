@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  radius: 1
+  use_complex: false
+  north: 1
+  north_east: 1
+  east: 1
+  south_east: 1
+  south: 1
+  south_west: 1
+  west: 1
+  north_west: 1
+
+two:
+  radius: 1
+  use_complex: false
+  north: 1
+  north_east: 1
+  east: 1
+  south_east: 1
+  south: 1
+  south_west: 1
+  west: 1
+  north_west: 1

@@ -1,0 +1,86 @@
+<div id="smartwizard" class="restaurant-creation comp__form">
+    <ul>
+        <li><a href="#step-1">Basic Info<br /></a></li>
+        <li><a href="#step-2">Details<br /></a></li>
+        <li><a href="#step-3">Menus<br /></a></li>
+        <li><a href="#step-4">Menu Items<br /></a></li>
+        <li><a href="#step-5">Users<br /></a></li>
+        <li><a href="#step-6">Bank Accounts<br /></a></li>
+    </ul>
+
+    <div>
+        <div id="step-1" class="targ__restaurant_step1">
+          <div class="new-restaurant-form">
+            <div class="step_1 m-0 p-0">
+              <%= form_for @restaurant, url: { action: (@restaurant.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+                <%= lp_hidden_field(f, :created_by_id) %>
+                <div class="row">
+                  <p class="col-12">Please fill out all fields of the form below.</p>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group row form-group-tight">
+                        <div class="col-sm-12">
+                          <label class="control-label">Headquarters Location?</label>
+                            <input type="checkbox" name="mark__headquarters" class="lp__mark_headquarters" value="true" <%='checked' if @restaurant.new_record? || @restaurant.is_headquarters? %>>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-8">
+                    <div class="form-group row form-group-tight restaurant__name">
+                        <div class="col-sm-12 col-lg-8 col-xl-6 lp_req">
+                          <%= lp_text_field(f, :name) %>
+                        </div>
+                    </div>
+                    <div class="form-group row form-group-tight headquarters__select" style="display: none;">
+                      <div class="col-sm-6 lp_req">
+                        <label class="control-label">Headquarters</label>
+                        <%= f.select(:headquarters_id, Restaurant.headquarters_list_for_admin(@restaurant), {include_blank: true}, {class: 'form-control form-control-sm'}) %>
+                      </div>
+                    </div>
+                    <div class="form-group row form-group-tight">
+                        <div class="col-sm-7 lp_req">
+                          <%= lp_text_field(f, :address_line1, "Street Address") %>
+                        </div>
+
+                        <div class="col-sm-2">
+                          <%= lp_text_field(f, :address_line2, "Suite / Unit #") %>
+                        </div>
+                    </div>
+                    <div class="form-group row form-group-tight">
+                      <div class="col-sm-3 lp_req">
+                        <%= lp_text_field(f, :city) %>
+                      </div>
+
+                      <div class="col-sm-2 lp_req">
+                        <%= lp_text_field(f, :state, "State", f.object.state, {maxlength: 2}) %>
+                      </div>
+
+                      <div class="col-sm-2 lp_req">
+                        <%= lp_text_field(f, :postal_code, "Zip Code") %>
+                      </div>
+                    </div>
+                    <div class="form-group row form-group-tight">
+                      <div class="col-sm-4 lp_req">
+                        <%= lp_text_field(f, :phone, "Phone", nil, {class: 'form-control form-control-sm phone_number_input'}) %>
+                      </div>
+                    </div>
+                    <div class="form-group row form-group-tight">
+                      <div class="col-sm-12">
+                        <%= lp_text_area(f, :description) %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+
+            </div>
+          </div>
+        </div>
+
+    </div>
+</div>

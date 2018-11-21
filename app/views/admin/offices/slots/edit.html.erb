@@ -1,0 +1,40 @@
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2 comp__new">
+  <div class="row">
+    <div class="col-8 px-4"><h2 class="lp__light lp__new"><span class="pr-3">Edit '<%= @record.name %>'</span> <span class="lp__subheader"><%= cap_all(@day) %></span></h2></div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with buttons">
+        <button type="button" class="btn btn-primary btn-sm" data-submit aria-label="Create Appointment Slot">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="comp__content comp__form">
+
+  <% if @record.appointments.count > 0 %>
+    <div class="row">
+      <div class="col-12 px-3 mb-0">
+        <div class="alert alert-danger">
+          <p class="small">Warning! Editing the Slot Time will affect all appointments in this appointment slot.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= render partial: 'admin/shared/components/flash' %>
+  <%= render partial: 'form' %>
+</div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+
+        <% if @record.deactivated_at %>
+          <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_office_slot_path(@office, @record) %>" data-confirm-check="Are you sure you want to enable this slot?">Re-activate Appointment Slot</a></li>
+        <% elsif !@record.deactivated_at %>
+          <li><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_office_slot_path(@office, @record)%>" data-confirm-check="Are you sure you want to disable this slot?">Deactivate Appointment Slot</a></li>
+        <% end %>
+        <!--<li></q><a class="text-danger" data-confirm-method="post" data-confirm-check="Are you sure you want to delete this slot?">Delete Appointment Slot</a></li>-->
+      </ul>
+    </div>
+  </div>
+

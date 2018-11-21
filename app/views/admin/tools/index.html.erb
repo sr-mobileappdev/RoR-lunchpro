@@ -1,0 +1,127 @@
+<% tab 'overview' %>
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4">
+      <h2 class="lp__light">Tools & Setup</h2>
+    </div>
+    <div class="col-6 px-4 text-right">
+    </div>
+  </div>
+</div>
+
+<div class="comp__content comp__reports " >
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Tools', path: admin_tools_path, active_tab: 'overview'},
+                  {title: 'Merge', path: admin_tools_merge_reps_path, active_tab: 'merge_reps'},
+                  {title: 'Cuisines', path: admin_tools_cuisines_path, active_tab: 'cuisines'},
+                  {title: 'Dietary Restrictions', path: admin_tools_diet_restrictions_path, active_tab: 'diet'},
+                  {title: 'Holidays', path: admin_tools_holiday_exclusions_path, active_tab: 'holiday'},
+                ]
+              } %>
+
+
+  <div class="row">
+    <div class="col-6">
+      <p class="small">Here you'll find access to various backoffice management tools and settings that are likely rarely changed and should be handled with care. We can restrict access to this area as needed.</p>
+      <%= select(:name, :some_id, [['Select A Report', 0], ['Payout Report', 1], ['New LP Sales Reps Report', 2],['New Non LP Sales Reps Report', 3],['Booked Appointments Food', 4]], {}) %>
+    </div>
+  </div>
+
+  <div class="comp__form" id="Payout" style="display: none;">
+    <p class="small">Enter a date range for the payout report. Otherwise the date range will default to the most recent saturday to today.
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">Payout Report Start Date</label>
+        <input type="text" class="date-field date-field-starts-at form-control" id="start_date">
+      </div>
+    </div>
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">Payout Report End Date</label>
+        <input type="text" class="date-field date-field-ends-at form-control" id="end_date">
+      </div>
+    </div>
+    <div class="col-12">
+      <a data-method="post" href="<%= report_admin_restaurants_path(scope: 'payout') %>" class="btn btn-primary btn-sm" id="export_weekly_payout_btn">Export Payout Report</a>
+    </div>
+  </div>
+
+  <div class="comp__form" id="LPreps" style="display: none;">
+    <p class="small">Enter a date range for the New LP Sales Reps report. Otherwise the date range will default to the most recent saturday to today.
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">New LP Sales Reps Report Start Date</label>
+        <input type="text" class="date-field date-field-starts-at form-control" id="start_dateLP">
+      </div>
+    </div>
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">New LP Sales Reps Report End Date</label>
+        <input type="text" class="date-field date-field-ends-at form-control" id="end_dateLP">
+      </div>
+    </div>
+    <div class="col-12">
+      <a data-method="post" href="<%= report_admin_sales_reps_path(scope: 'lpReps') %>" class="btn btn-primary btn-sm" id="export_lprep_active_btn">Export New LP Sales Reps Report</a>
+    </div>
+  </div>
+
+  <div class="comp__form" id="NonLPreps" style="display: none;">
+    <p class="small">Enter a date range for the New Non LP Sales Reps report. Otherwise the date range will default to the most recent saturday to today.
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">New Non LP Sales Reps Report Start Date</label>
+        <input type="text" class="date-field date-field-starts-at form-control" id="start_dateNonLP">
+      </div>
+    </div>
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">New Non LP Sales Reps Report End Date</label>
+        <input type="text" class="date-field date-field-ends-at form-control" id="end_dateNonLP">
+      </div>
+    </div>
+    <div class="col-12">
+      <a data-method="post" href="<%= report_admin_sales_reps_path(scope: 'non_lpReps') %>" class="btn btn-primary btn-sm" id="export_non_lprep_active_btn">Export New Non LP Sales Reps Report</a>
+    </div>
+  </div>
+
+  <div class="comp__form" id="BookedAppointmentsFood" style="display: none;">
+    <p class="small">Enter a date range for the booked appointments food report. Otherwise the date range will default to the most recent saturday to today.
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">Booked Appointments Food Report Start Date</label>
+        <input type="text" class="date-field date-field-starts-at form-control" id="start_dateBookedFood">
+      </div>
+    </div>
+    <div class="form-group col-12 row">
+      <div class="col-4 col-lg-3">
+        <label class="form-control-label ft-bold">Booked Appointments Food Report End Date</label>
+        <input type="text" class="date-field date-field-ends-at form-control" id="end_dateBookedFood">
+      </div>
+    </div>
+    <div class="col-12">
+      <a data-method="post" href="<%= report_admin_appointments_path(scope: 'appmntsFood') %>" class="btn btn-primary btn-sm" id="export_booked_appmnt_food_btn">Export Booked Appointments Food Report</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="comp__content">
+  <% if Rails.env.development? || current_user.is_internal %>
+    <div class="row">
+      <div class="col-8">
+        <h5 class="lp__table_header">Development Tools</h5>
+      </div>
+
+      <div class="col-12 mt-2">
+        <ul>
+          <li><a href="<%= ping_admin_users_path() %>" data-ping=true class="btn btn-sm">Ping Test</a></li>
+          <li><a href="<%= rake_admin_users_path(task: 'process_notifications') %>" class="btn btn-sm">Process Notifications (5 Min buffer)</a></li>
+          <li><a href="<%= rake_admin_users_path(task: 'process_notifications_now') %>" class="btn btn-sm">Process Notifications (Immediate)</a></li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

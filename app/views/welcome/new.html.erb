@@ -1,0 +1,44 @@
+<% tab '' %>
+<% title 'Sign Up' %>
+
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4">
+      <div id="logo-badge"></div>
+      <%= form_for(@user, url: welcome_index_path, method: :post) do |f| %>
+
+        <%= f.hidden_field :space %>
+
+        <div class="form-group">
+          <%= f.label :first_name %>
+          <%= f.text_field :first_name, autofocus: true, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :last_name %>
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= lp_multi_object_field(nil, :company_id, "", {url: quick_admin_searches_path(search_type: 'company'), style_class: 'form-control', placeholder: ''}) %>
+        </div>
+        <%= f.submit "Sign Up", class: 'btn btn-primary btn-block' %>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</div>
+

@@ -1,0 +1,119 @@
+<div class="row m-0 lp__appointment_body">
+  <div class="col-12 text-center mb-3">
+    <p class="mb-0"><i>Confirmation Pending</i></p>
+    <a href="<%=confirm_office_appointment_path(@appointment)%>" data-method="patch" class="text-uc text-ul">Confirm Manually</a>
+  </div>
+  <div class="col-12 col-md-6 row">
+    <div class="col-2 col-md-3 hidden-xs-down">
+      <%= slot_food_icon(@appointment.appointment_slot.slot_type) %>
+    </div>
+    <div class="col-12 col-sm-10 col-md-9 pl-0">
+      <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+      <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+    </div>
+    <% if @appointment.food_ordered? %>
+      <div class="pl-3 pr-2 hidden-xs-down">
+        <%= dinner_tray_icon %>
+      </div>
+      <div class="col-12 col-sm-8 col-md-10 pl-0">
+        <p><%= @appointment.restaurant.display_name %></p>
+      </div>
+      <div class="col-12 m-4 hidden-sm-down"></div>
+      <div class="col-12 m-4 hidden-sm-down"></div>
+    <% elsif !@appointment.food_ordered? && (!@appointment.recommended_cuisines || @appointment.recommended_cuisines.count == 0) && !@appointment.show_order_recommendation? && !@appointment.will_supply_food? %>
+      <div class="pl-3 pr-2 hidden-xs-down">
+        <%= dinner_tray_icon %>
+      </div>
+      <div class="col-12 col-sm-8 col-md-10 pl-0">
+        <p>Restaurant -  Unknown </p>
+      </div>
+      <div class="col-12 m-4 hidden-sm-down"></div>  
+      <div class="col-12 m-4 hidden-sm-down"></div>
+    <% elsif @appointment.cuisine_recommended? && !@appointment.will_supply_food? %>
+      <div class="pl-3 pr-2 hidden-xs-down pt-1">
+        <%= dinner_tray_icon %>
+      </div>
+      <div class="col-12 col-sm-8 col-md-10 pl-0 pb-0 pr-0">
+        You Recommended: <Br />
+        <p><%= appointment_cuisines(@appointment.cuisines) %> - 
+          <a href="<%= cancel_recommendation_office_appointment_path(@appointment, type: 'modal_cuisine')%>" data-method="post" class="btn btn-link pl-0">Remove</a>
+        </p>
+      </div>
+      <div class="col-12 m-3 hidden-sm-down"></div>
+      <div class="col-12 m-3 hidden-sm-down"></div>
+    <% end %>
+    <% if @appointment.show_order_recommendation? && !@appointment.food_ordered? && !@appointment.will_supply_food? #booked exact order %>
+      <div class="pl-3 pr-2 hidden-xs-down">
+        <%= dinner_tray_icon %>
+      </div>
+      <div class="col-12 col-sm-8 col-md-10 pl-0 pb-0 ">
+        <p class="mb-1">You Recommended:</p>
+        <p class="mb-0"><%=@appointment.recommended_order.restaurant.name%></p>
+        <p>Total Price: <%= precise_currency_value(@appointment.recommended_order.subtotal_cents)%> -<a href="<%= cancel_recommendation_office_appointment_path(@appointment, type: 'exact')%>" data-method="post" class=" pl-1 btn btn-link">Remove</a></p>
+      </div>
+      <div class="col-12 m-3 hidden-sm-down"></div>
+      <div class="col-12 m-3 hidden-sm-down"></div>
+    <% end %>
+    <% if @appointment.will_supply_food? %>
+      <div class="pl-3 pr-2 hidden-xs-down">
+        <%= dinner_tray_icon %>
+      </div>
+      <div class="col-12 col-sm-8 col-md-10 pl-0">
+        <p>BYO: <%= @appointment.bring_food_notes %></p>
+      </div>
+      <div class="col-12 m-4 hidden-sm-down"></div>
+      <div class="col-12 m-4 hidden-sm-down"></div>
+    <% end %>
+  </div>
+  <div class="col-12 col-md-6 row">
+    <div class="col-2 col-md-3 hidden-xs-down">
+      <%= om_user_icon %>
+    </div>
+    <div class="col-12 col-sm-10 col-md-9 pl-0">
+      <h5 class="mt-2"><%=@appointment.sales_rep.display_name%></h5>
+      <p><%=@appointment.sales_rep.company_name %></p>
+    </div>
+    <div class="col-12 row">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= envelope_icon %>
+      </div>
+      <div class="col-12 col-sm-9 pl-0 pr-0 mb-1 overflow-ellipsis">
+        <%= @appointment.sales_rep.email || "No Email Set"%>
+      </div>
+    </div>
+    <div class="col-12 row">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= phone_icon %>
+      </div>
+      <div class="col-12 col-sm-9 pl-0 pr-0 mb-1">
+        <%=@appointment.sales_rep.phone ? format_phone_number(@appointment.sales_rep.phone) : "No Phone Set"%>
+      </div>
+    </div>
+    <div class="col-12 row">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= notes_icon %>
+      </div>
+      <div class="col-12 col-sm-9 pl-0 pr-0 mb-1">
+        <%= @offices_sales_rep ? @offices_sales_rep.office_notes : "There are no notes regarding this rep." %>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 row text-center mt-3 justify-content-center pr-0">
+    <% if !@appointment.food_ordered? && !@appointment.food_ordered? && (!@appointment.recommended_cuisines || @appointment.recommended_cuisines.count == 0) && !@appointment.show_order_recommendation? %>
+    <a class="col-12 col-sm-8 col-md-5 btn btn-success mt-2" href="<%=recommendation_office_appointment_path(@appointment.id)%>">Recommend Order</a><div class="hidden-sm-down m-2"></div>
+    <% elsif (@appointment.cuisine_recommended? || @appointment.show_order_recommendation?) && !@appointment.food_ordered? %>
+    <a class="col-12 col-sm-8 col-md-5 mt-2 btn btn-outline-info" href="<%=edit_recommendation_office_appointment_path(@appointment.id)%>">Edit Recommendation</a><div class="hidden-sm-down m-2"></div>
+    <% end %>
+    <%if @appointment.active_order && !@appointment.active_order.cancellable? && !session[:impersonator_id].present? %>
+      <p class="mt-3 ft-bold">Please contact LunchPro if you'd like to cancel this appointment!</p>
+    <% else %>
+      <button class="col-12 col-sm-8 col-md-5 btn btn-outline-info lp__om_cancel_appointment mt-2">Cancel Appointment</button>
+      <% if session[:impersonator_id].present? && @appointment.active_order && !@appointment.active_order.cancellable? %>
+        <p class="text-danger ft-bold mt-4">A cancelation fee will be charged to the Sales Rep's payment method if this appointment is canceled.</p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="lp__cancel_appointment_form" style="display: none;">
+  <%= render partial: "office/appointments/appointment_cancel_form.html.erb"%>
+</div>

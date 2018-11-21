@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sales_rep: one
+  office: one
+  appointment_slot: one
+  rep_notes: MyText
+  office_notes: MyText
+  created_by_user: one
+  food_ordered: false
+  food_sent: false
+  funds_funded: false
+  delivery_notes: MyText
+  status: 1
+  bring_food_notes: MyText
+
+two:
+  sales_rep: two
+  office: two
+  appointment_slot: two
+  rep_notes: MyText
+  office_notes: MyText
+  created_by_user: two
+  food_ordered: false
+  food_sent: false
+  funds_funded: false
+  delivery_notes: MyText
+  status: 1
+  bring_food_notes: MyText

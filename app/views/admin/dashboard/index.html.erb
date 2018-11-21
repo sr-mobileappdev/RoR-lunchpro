@@ -1,0 +1,257 @@
+<%= javascript_include_tag 'dashboard' %>
+
+<% cache 'key', expires_in: 1.hour, race_condition_ttl: 5.seconds do %>
+  <% @manager = Managers::StatManager.new %>
+  <div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2" id='dashboard-index'>
+    <div class="row">
+      <div class="col-12 px-4"><h2 class="lp__light">Dashboard</h2></div>
+    </div>
+  </div>
+
+  <%
+    weekdays = {"Monday" => 0, "Tuesday" => 1, "Wednesday" => 2, "Thursday" => 3, "Friday" => 4}
+    weeks_ago = [1,2,3,4,5]
+  %>
+
+  <div class="comp__content">
+    <div class="row mr-1 ml-1 col-12 pt-0 mt-0">
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <div class="text-center justify-content-center align-items-center">
+          <h5><u>Daily Digits</u></h5>
+          <div class="row justify-content-center">
+            <div class="col-6 text-right p-1 pr-3">Dallas: <%= currency_value(@manager.orders_today_by_location('Dallas').first) %></div>
+            <div class="col-6 text-left p-1 pl-3">Austin: <%= currency_value(@manager.orders_today_by_location('Austin').first) %></div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-6 text-right p-1 pr-3">Orders: <%= @manager.orders_today_by_location('Dallas').last %></div>
+            <div class="col-6 text-left p-1 pl-3">Orders: <%= @manager.orders_today_by_location('Austin').last %></div>
+          </div>
+        </div>
+      </div>
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>WTD</u></h5>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Dallas: <%= currency_value(@manager.orders_wtd_by_location('Dallas').first) %></div>
+          <div class="col-6 text-left p-1 pl-3">Austin: <%= currency_value(@manager.orders_wtd_by_location('Austin').first) %></div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Orders: <%= @manager.orders_wtd_by_location('Dallas').last %></div>
+          <div class="col-6 text-left p-1 pl-3">Orders: <%= @manager.orders_wtd_by_location('Austin').last %></div>
+        </div>
+      </div>
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>MTD</u></h5>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Dallas: <%= currency_value(@manager.orders_mtd_by_location('Dallas').first) %></div>
+          <div class="col-6 text-left p-1 pl-3">Austin: <%= currency_value(@manager.orders_mtd_by_location('Austin').first) %></div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Orders: <%= @manager.orders_mtd_by_location('Dallas').last %></div>
+          <div class="col-6 text-left p-1 pl-3">Orders: <%= @manager.orders_mtd_by_location('Austin').last %></div>
+        </div>
+        <div class="row col-12 text-center mt-3 ft-bold p-0 justify-content-center ml-1">Revenue: <%= currency_value(@manager.revenue_mtd) %></div>
+      </div>
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>YTD</u></h5>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Dallas: <%= currency_value(@manager.orders_ytd_by_location('Dallas').first) %></div>
+          <div class="col-6 text-left p-1 pl-3">Austin: <%= currency_value(@manager.orders_ytd_by_location('Austin').first) %></div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Orders: <%= @manager.orders_ytd_by_location('Dallas').last %></div>
+          <div class="col-6 text-left p-1 pl-3">Orders: <%= @manager.orders_ytd_by_location('Austin').last %></div>
+        </div>
+        <div class="row col-12 text-center mt-3 ft-bold p-0 justify-content-center ml-1">Revenue: <%= currency_value(@manager.revenue_ytd) %></div>
+      </div>
+    </div>
+    <div class="row m-1 ml-4 mr-4">
+      <div class="col">
+        <div class="table-responsive pt-3">
+          <table class="table table-sm table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">This Week</th>
+                <% weekdays.each do |day, num| %>
+                  <td><%= day %></td>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Appointment #</th>
+                <% weekdays.each do |day, num| %>
+                  <td><%= @manager.appt_count_day(day) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <th scope="row"># Converted</th>
+                <% weekdays.each do |day, num| %>
+                  <td><%= @manager.num_converted_day(day) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <th scope="row">Order Count</th>
+                <% weekdays.each do |day, num| %>
+                  <td><%= @manager.order_count_day(day) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <th scope="row">Sales $</th>
+                <% weekdays.each do |day, num| %>
+                  <td><%= currency_value(@manager.sales_per_day(day)) %></td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col">
+        <div class="table-responsive pt-3">
+          <table class="table table-sm table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Week Ended</th>
+                <% weeks_ago.each do |num| %>
+                <!-- Should probably add a method for this -->
+                  <td><%= num.weeks.ago.end_of_week.strftime('%m/%d') %></td>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Appointment #</th>
+                <% weeks_ago.each do |num| %>
+                  <td><%= @manager.appt_count_week(num) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <th scope="row"># Converted</th>
+                <% weeks_ago.each do |num| %>
+                  <td><%= @manager.num_converted_week(num) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <th scope="row">Order Count</th>
+                <% weeks_ago.each do |num| %>
+                  <td><%= @manager.order_count_week(num) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <th scope="row">Sales $</th>
+                <% weeks_ago.each do |num| %>
+                  <td><%= currency_value(@manager.sales_per_week(num)) %></td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row mr-1 ml-1 col-12 pt-0 mt-0">
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>Office MAU</u></h5>
+        <div class="row justify-content-centerr">
+          <div class="col-6 text-right p-1 pr-3">Dallas: <%= @manager.office_mau_by_location('Dallas') %></div>
+          <div class="col-6 text-left p-1 pl-3">Austin: <%= @manager.office_mau_by_location('Austin') %></div>
+        </div>
+        <div class="row col-12 text-center mt-3 ft-bold p-0 justify-content-center ml-1">Total Office Count: <%= Office.active.count%></div>
+      </div>
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>Total Appointments</u></h5>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Dallas: <%= @manager.total_appt_count_by_location('Dallas') %></div>
+          <div class="col-6 text-left p-1 pl-3">Austin: <%= @manager.total_appt_count_by_location('Austin') %></div>
+        </div>
+        <div class="row col-12 text-center mt-3 ft-bold p-0 justify-content-center ml-1">Next 3 Months: <%= @manager.appointments_next_90 %></div>
+      </div>
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>Rep MAU</u></h5>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Dallas: <%= @manager.rep_mau_by_location('Dallas') %></div>
+          <div class="col-6 text-left p-1 pl-3">Austin: <%= @manager.rep_mau_by_location('Austin') %></div>
+        </div>
+        <div class="row col-12 text-center mt-3 ft-bold p-0 justify-content-center ml-1">MTD New Rep Account: <%= @manager.mtd_new_users('space_sales_rep') %></div>
+        <div class="row col-12 text-center mt-1 ft-bold p-0 justify-content-center ml-1">Total Rep Count: <%= @manager.all_reps.select{|r| r.active?}.length %></div>
+      </div>
+      <div class="col text-center justify-content-center dashboard-section align-items-center ml-1 mr-1">
+        <h5><u>App MAU</u></h5>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">Android: <%= '--' %></div>
+          <div class="col-6 text-left p-1 pl-3">iOS: <%= '--' %></div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-6 text-right p-1 pr-3">LunchPad: <%= '--' %></div>
+          <div class="col-6 text-left p-1 pl-3">Web: <%= '--' %></div>
+        </div>
+      </div>
+    </div>
+    <div class="row col-sm-12 col-md-10 col-lg-8 col-xl-6 ml-4 mr-4 p-0">
+      <div class="col">
+        <div class="row col-12">
+          <div class="table-responsive pt-3">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">MTD</th>
+                  <th scope="col"> + </th>
+                  <th scope="col"> - </th>
+                  <th scope="col">Net</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Office MAU</th>
+                  <th scope="row"><%= @manager.mtd_new_users('space_office') %></th>
+                  <th scope="row"><%= @manager.mtd_deactivated_users('space_office') %></th>
+                  <th scope="row"><%= @manager.net_mtd('user', 'space_office') %></th>
+                </tr>
+                <tr>
+                  <th scope="row">Appointments</th>
+                  <th scope="row"><%= @manager.mtd_total_appointments %></th>
+                  <th scope="row"><%= @manager.mtd_cancelled_appointments %></th>
+                  <th scope="row"><%= @manager.net_mtd('appointment') %></th>
+                </tr>
+                <tr>
+                  <th scope="row">Rep MAU</th>
+                  <th scope="row"><%= @manager.mtd_new_users('space_sales_rep') %></th>
+                  <th scope="row"><%= @manager.mtd_deactivated_users('space_sales_rep') %></th>
+                  <th scope="row"><%= @manager.net_mtd('user', 'space_sales_rep') %></th>
+                </tr>
+                <tr>
+                  <th scope="row">App MAU</th>
+                  <th scope="row"><%= @manager.mtd_new_users %></th>
+                  <th scope="row"><%= @manager.mtd_deactivated_users %></th>
+                  <th scope="row"><%= @manager.net_mtd('user') %></th>
+                </tr>
+                <tr>
+                  <th scope="row">Restaurants</th>
+                  <th scope="row"><%= @manager.mtd_total_restaurants %></th>
+                  <th scope="row"><%= @manager.mtd_deactivated_restaurants %></th>
+                  <th scope="row text-center"><%= @manager.net_mtd('restaurant') %></th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row col-12" style="height:250px;">
+      <div class="col" style="height:250px;">
+        <div id="chart1" class="row col-12" style="height:250px;" data-chart="<%= @manager.orders_placed_by_type %>" data-labels="<%= @manager.order_roles_labels %>">
+          <canvas id="pie-chart-1" width="400" height="225"></canvas>
+        </div>
+      </div>
+      <div class="col" style="height:250px;">
+        <div id="chart2" class="row col-12" style="height:250px;" data-chart="<%= 
+          @manager.orders_placed_by_user_level[0] %>" data-labels="<%= @manager.orders_placed_by_user_level[1] %>">
+          <canvas id="pie-chart-2" width="400" height="225"></canvas>
+        </div>
+      </div>
+      <div class="col" style="height:250px;">
+        <div id="chart3" class="row col-12" style="height:250px;" data-chart="<%= @manager.appt_dist %>" data-labels="<%= AppointmentSlot.slot_types.keys.map{|k| k.capitalize} %>">
+          <canvas id="appt-dist" width="400" height="225"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

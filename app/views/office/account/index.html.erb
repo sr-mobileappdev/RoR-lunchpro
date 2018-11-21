@@ -1,0 +1,75 @@
+<% tab 'account' %>
+<% title 'Account Information' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers comp__om_office">
+  <div class="lp__fixed f12 no-gutters comp__om_form">
+    <div class="justify-content-center pt-3 ">
+      <div class="lp__faux_modal med-large p-4 col-12">
+        <div class="row">
+          <div class="col-12 mt-3 row">
+            <div class="col-5 p-0">
+              <h3 class="ft-bold pl-3 pb-2">Account Information</h3>
+            </div>
+            <div class="col-3 ml-auto mr-2">
+             <a href="<%= change_password_office_account_path %>" class="btn btn-link p-0">Change Password</a>
+              <a class="btn btn-link p-0 mt-2" data-confirm-method="post" href="<%= delete_account_office_account_path(@office)%>" data-confirm-check="Are you sure you want to delete your account? You will no longer receive notifications associated with this office.">Delete My Account</a>          
+            </div>
+            <%= form_for @office, :url => office_preference_path(@office.id), method: :put,  html: { class: "mt-3", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+              <div class="col-12 row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <%= lp_text_field(f, :name, 'Medical Office Name', nil, {class: 'form-control'}) %>
+                  </div>                  
+                  <div class="form-group">
+                    <%= lp_text_field(f, :phone, 'Phone', nil, {class: 'form-control phone_number_input'}) %>
+                  </div>
+                  <div class="form-group">
+                    <%= lp_timezone_select_field(f, :timezone, "Local Timezone", {class: "form-control"}) %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <%= lp_text_field(f, :address_line1, 'Address', nil, {class: 'form-control'}) %>
+                  </div>
+                  <div class="form-group">
+                    <%= lp_text_field(f, :address_line2, 'Building / Suite', nil, {class: 'form-control'}) %>
+                  </div>
+                  <div class="form-group col-12 p-0">
+                    <div class="form-row row">
+                      <div class="col-12 col-sm-6 col-md-8 col-lg-5 pb-3">
+                         <%= lp_text_field(f, :city, 'City', nil, {class: 'form-control'}) %>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-4 col-lg-4 pb-3">
+                         <%= lp_text_field(f, :state, 'State', nil, {class: 'form-control', maxlength: 2}) %>
+                      </div>
+                      <div class="col-12 col-sm-6 col-lg-3">
+                         <%= lp_text_field(f, :postal_code, 'Zip', nil, {class: 'form-control'}) %>
+                      </div>
+                    </div>
+                  </div>              
+                </div>
+                <div class="col-12">
+                  <h4 class="ft-bold">Point of Contact</h4>
+                  <p class="mt-1 mb-0">Please provide the information for the people you would like to be notified (by text and/or email) when an appointment or order is made.</p>
+                </div>
+                <%= f.fields_for :office_pocs do |o| %>  
+                  <%= render '/office/components/office_poc_fields', f: o %>
+                <% end %>
+                <%= link_to_add_fields "Add Point of Contact", f, :office_pocs , '/office/components/'%>
+        
+                <div class="col-12 pt-3 text-center hidden-sm-down">
+                  <button class="btn btn-secondary mr-2">Cancel</button>
+                  <button data-submit type="submit" class="btn btn-primary">Save</button>
+                </div>
+                <div class="col-12 pt-3 text-center hidden-md-up">
+                  <button data-submit type="submit" class="btn btn-primary btn-block">Save</button>                
+                  <button class="btn btn-secondary btn-block">Cancel</button>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

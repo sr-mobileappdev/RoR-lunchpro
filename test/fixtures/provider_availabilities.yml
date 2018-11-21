@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: one
+  dow: 1
+  starts_at: 2017-07-10 10:41:41
+  ends_at: 2017-07-10 10:41:41
+
+two:
+  provider: two
+  dow: 1
+  starts_at: 2017-07-10 10:41:41
+  ends_at: 2017-07-10 10:41:41

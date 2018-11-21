@@ -1,0 +1,44 @@
+<div class="vertical-nav appt-search-results" data-component-target="search-results">
+  <% if offices.count == 0 %>
+    <p class="m-3"><i>No Offices Found</i></p>
+  <% end %>
+
+  <ul>
+    <% offices.each do |office| %>
+      <li class='order-appointments'>
+        <% if office.private__flag %>
+          <a href="<%=set_delivery_rep_orders_path(office: office.id)%>">
+            <div class="vertical-nav-li-content row no-gutters align-items-center pl-0 pr-1">
+              <div class="hidden-xs-down ml-4 mr-3">
+                <%= office_list_icon %>
+              </div>
+              <div class="col-10 pt-3 ml-3">
+                <h2><%= office.name %></h2>
+                <p><%= single_line_address(office) %></p>
+              </div>
+            </div>
+          </a>
+        <%else%>
+          <div class="vertical-nav-li-content row no-gutters align-items-center pl-0 pr-1" <%=check_for_appointment(office, current_user.sales_rep)%>> 
+            <div class="hidden-xs-down ml-4 mr-3">
+              <%= office_list_icon %>
+            </div>
+            <div class="col-9 pt-2 ml-3">
+              <h2><%= office.name %></h2>
+              <p><%= single_line_address(office) %></p>
+            </div>
+            <% if !office.private__flag %>
+              <div class="col-1 p-3 hidden-md-down">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+              <div class="col-1 pr-0 hidden-lg-up">
+                <img class="img-fluid" src="<%=asset_path('lp-badge.png')%>" alt="LP Logo">
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </li>
+    <%end%>
+  </ul>
+</div>
+

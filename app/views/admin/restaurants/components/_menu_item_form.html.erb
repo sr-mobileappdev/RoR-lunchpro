@@ -1,0 +1,118 @@
+<% @menu_item.new_record? ? action = "create" : action = "update" %>
+
+<%= form_for @menu_item, url: admin_restaurant_menu_items_path(restaurant_id: @restaurant.id), action: action, method: :post, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(nil, "menu_id", @menu.id) if @menu %>
+  <%= lp_hidden_field(nil, "wizard", true) %>
+  <%= lp_hidden_field(f, :modified_by_user_id) %>
+  <%= lp_hidden_field(f, :restaurant_id) %>
+
+  <div class="row pb-4">
+    <div class="col-12">
+      <h2>Menu Item</h2>
+      <div class="row align-items-center">
+        <div class="col-8 text-info ml-3">
+          Please add all available menu items for this restaurant below. You will be able to create and edit menus in the next section.
+        </div>
+        <div class="col-3 justify-content-end align-items-center">
+          <div class="col-12 text-right hidden-sm-down">
+            <button class="btn btn-primary btn-sm">Cancel</button>
+            <button data-submit type="submit" class="btn btn-success btn-sm">Save Menu Item</button>
+          </div>
+          <div class="col-12 text-right hidden-md-up">
+            <button class="btn btn-primary">Cancel</button>
+            <button data-submit type="submit" class="btn btn-success btn-block">Save Menu Item</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-7 lp_req">
+          <%= lp_text_field(f, :name, "Item Name") %>
+        </div>
+        <div class="col-4 lp_req">
+          <%= lp_select_field(f, :category, "Category", selectable_enum(MenuItem.categories, "cat_")) %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-11">
+          <%= lp_sm_text_area(f, :description, "Item Description") %>
+        </div>
+      </div>
+
+      <h4 class="pt-3">Pricing & Availability</h4>
+      <div class="form-group row form-group-tight col-12">
+        <div class="col-xl-3 col-6 col-lg-5 lp_req p-0 mr-1">
+          <%= lp_currency_field(f, :retail_price_cents, "Retail Price", f.object.retail_price_cents) %>
+        </div>
+        <div class="col-xl-3 col-6 col-lg-5 lp_req p-0 ml-1">
+          <%= lp_numeric_field(f, :people_served, "# Served", {in: 1..100}) %>
+        </div>
+      </div>
+
+      <div class="form-group row form-group-tight col-12">
+        <div class="col-12">
+          <label>Available on Menu</label>
+          <div class="row col-12">
+            <% if @restaurant.menus.count > 0 %>
+              <% @restaurant.menus.each do |menu| %>
+                <%= lp_check_field_inline(nil, "menus[#{menu.id}]", menu.name, @menu_item.menus.pluck(:id).include?(menu.id), {add_space: true, class: 'mr-2'}) %>
+              <% end %>
+            <% else %>
+              There are no menus available yet
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row form-group-tight pt-3">
+        <div class="col-12">
+          <h4>Dietary Restrictions Met?</h4>
+          <div class="row col-12 pl-4">
+            <% DietRestriction.active.each do |diet_restriction| %>
+              <%= lp_check_field_inline(nil, "diet_restrictions[#{diet_restriction.id}]", diet_restriction.name, @menu_item.diet_restrictions.include?(diet_restriction), {add_space: true, class: 'mr-2'}) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <h4 class="pt-1">Additional Items Options</h4>
+      <div class="form-group row form-group-tight mb-0">
+        <div class="col-sm-4 lp_req">
+          <label>Menu Option Type</label>
+        </div>
+        <div class="col-sm-2 p-0">
+          <label>Qty. Permitted</label>
+        </div>
+        <div class="col-sm-2 p-0">
+          <label>Qty. Required</label>
+        </div>
+      </div>
+
+      <%
+          menu_sub_items = @menu_item.menu_sub_items
+          if menu_sub_items.count == 0
+            @menu_item.menu_sub_items << MenuSubItem.new
+          end
+      %>
+
+      <%= f.fields_for :menu_sub_items, f.object.menu_sub_items do |msi| %>
+        <%= render '/admin/restaurants/menu_items/menu_sub_item_fields', f: msi %>
+      <% end %>
+
+      <div class="link_to_add_fields" style="display: none">
+        <%= link_to_add_fields "ADD ADDITIONAL ITEM", f, :menu_sub_items, '/admin/restaurants/menu_items/' %>
+      </div>
+      <div class="form-group row form-group-tight mb-3">
+        <div class="col-sm-12">
+          <a href="#" class="lp__form_add_option no_label" data-add-menu-item="true">Add Additional Item</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>

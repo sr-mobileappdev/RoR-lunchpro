@@ -1,0 +1,6 @@
+#lunchpad {
+ &.skyline-bg {
+    background: asset-url('skyline.svg') no-repeat 90% bottom;
+    background-size: contain;
+  }
+}

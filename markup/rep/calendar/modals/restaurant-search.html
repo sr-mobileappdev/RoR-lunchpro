@@ -1,0 +1,107 @@
+<div id="restaurant-search-modal" class="modal" style="display: block; opacity: 1;">
+    <div class="modal-dialog" role="document">
+        <h1 class="sr-only">Restaurant Search Modal</h1>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-2 text-center">
+                        <a href="#"><i class="fa fa-left-arrow"></i> Back</a>
+                        <i class="fa fa-responsive fa-bell"></i>
+                    </div>
+                    <div class="col-4">
+                        <h1>Restaurants</h1>
+                        <p>Please select a restaurant for delivery</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Your last order on 12/25/2016</p>
+                        <span>Your overall rating: [starbox]</span>
+                        <a href="#" class="btn btn-text">View Your Last order</a>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary">Repeat Order</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-2">
+                        <span class="h4">Filters</span>
+                        <hr>
+                        <fieldset>
+                            <legend>Cuisine</legend>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="type-American">
+                                <label class="custom-control-label" for="type-American">American</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="type-Asian">
+                                <label class="custom-control-label" for="type-Asian">Asian</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="type-Mexican">
+                                <label class="custom-control-label" for="type-Mexican">Mexican</label>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Price Per Person</legend>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="under-null">
+                                <label class="custom-control-label" for="under-null">All</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="under-10">
+                                <label class="custom-control-label" for="under-10">9.99 or less</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="under-20">
+                                <label class="custom-control-label" for="under-20">19.99 or less</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="under-30">
+                                <label class="custom-control-label" for="under-30">29.99 or less</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-9">
+                                20 restaurants and caterers available
+                            </div>
+                            <div class="col-3">
+                                <select class="custom-select">
+                                    <option selected disabled>Relevance</option>
+                                    <option>Distance</option>
+                                    <option>Price</option>
+                                    <option>Health</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- search results loop -->
+                        <div class="row">
+                            <div class="col-2">
+                                <img class="img-fluid" src="http://placehold.it/300x200?text=Restaurant+Thumbnail">
+                            </div>
+                            <div class="col-4">
+                                <div><strong>Restaurant Name</strong></div>
+                                <div>Cuisine Type</div>
+                                <div>100% On-Time</div>
+                                <div>[star box] (33) <a href="#" target="_blank">See Reviews</a></div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <div>Minimum Order $150</div>
+                                <div>Delivery Fee $15</div>
+                                <div class="text-primary">POPULAR</div>
+                            </div>
+                            <div class="col-2">
+                                <span>$13-$15</span>
+                                <span>per<br>person</span>
+                                <button class="btn btn-success">select</button>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

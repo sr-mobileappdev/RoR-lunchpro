@@ -1,0 +1,49 @@
+<div class="profile-nav">
+    <ul class="list-unstyled">
+      <li class="profile-summary" data-comp-detail-tab="account__summary">
+          <!-- user profile -->
+          <div class="user-info">
+            <div class="row pl-1">
+                <div class="col-md-3 col-xl-2 restaurant-image-container-sm hidden-md-down p-0">
+                  <% if @restaurant.brand_image && @restaurant.brand_image.url %>
+                    <img class="restaurant-image" src="<%= @restaurant.brand_image.url %>" alt="Restaurant Logo" />
+                  <% else %>
+                    <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+                  <% end %>
+                </div>
+                <div class="col-md-12 col-lg-8 col-xl-9 profile-info">
+                    <h2><%= @restaurant.name %></h2>
+                    <p><%= @restaurant.address_line1%>, <%= @restaurant.address_line2 if @restaurant.address_line2.present? %></br>
+                    <%= @restaurant.display_city_state_postal %></p>
+                </div>
+                <div class="col-1 pr-0 pt-3 hidden-md-down">
+                  <div class="pull-right"><%= angle_right_icon %></div>
+                </div>
+            </div>
+            <div class="row nav-mobile-summary pb-3">
+              <div class="col-12 pr-0">
+                <a>Account Information</a>
+               <div class="pull-right"><%= angle_right_icon %></div>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-12 row">
+                <div class="pl-3 pr-2">
+                  <%= phone_icon %>
+                </div>
+                <div class="col-8 pl-0 pr-0">
+                  <%= format_phone_number_string(@restaurant.phone) || "No Phone Set"%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__contact_information"><a class="mr-auto">Contact Information</a> <div class="pull-right"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__payment_information"><a class="mr-auto">Payment Information</a> <div class="pull-right"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__payments"><a class="mr-auto">Payments</a> <div class="pull-right"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__notifications"><a class="mr-auto">Notification Preferences</a> <div class="pull-right"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__reviews"><a class="mr-auto">Customer Reviews</a><div class="pull-right"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__faq"><a class="mr-auto">FAQ</a> <div class="pull-right"><%= angle_right_icon %></div></li>
+        <li class="d-flex pr-0" data-comp-detail-tab="account__terms"><a class="mr-auto">General Information</a> <div class="pull-right"><%= angle_right_icon %></div></li>
+    </ul>
+</div>

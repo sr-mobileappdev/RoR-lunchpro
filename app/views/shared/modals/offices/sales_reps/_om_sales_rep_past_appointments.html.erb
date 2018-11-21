@@ -1,0 +1,25 @@
+<div class="modal-dialog m-0" role="document">
+  <div class="modal-body text-center rep-past-appointments">
+    <span class="modal-back"><a class="text-uc" data-modal-size="med-lg" data-modal="true" href="<%=show_rep_office_preferences_path(sales_rep_id: @sales_rep.id)%>"" data-modal-title="" data-dismiss="modal">Back</a></span>
+    <span>Past Appointments</span>
+  </div>
+  <div class="modal-body p-0 rep-appointments-card">
+   <ul class="list-group list-group-flush" style="max-height: 500px; overflow: auto;">
+      <% @past_appointments.sort_by{|appt| appt.starts_at(true)}.each do |appt|%>
+        <li class="list-group-item pl-3 pr-2 pt-1 pb-1">
+          <div class="col-9 col-md-10 p-0">
+            <p class="m-0 ft-bold"><%= short_date(appt.appointment_on) %></p>
+            <p class="m-0"><%= (appt.appointment_slot.name if appt.appointment_slot) || "Non LP Appointment"%></p>
+          </div>
+          <div>
+            <% if appt.appointment_slot %>
+              <%= slot_food_icon(appt.appointment_slot.slot_type, 50, 50) %>
+            <% else %>
+              <%= slot_food_icon("lunch", 50, 50) %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

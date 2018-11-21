@@ -1,0 +1,63 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 m-3 p-3">
+  <div class="mb-3 mt-4 ml-4">
+    <div class="h4 mb-3">Location Information</div>
+    <div class="row pt-3 pl-3 pb-4">
+      <div class="restaurant-image-container-sm hidden-sm-down col-2">
+        <% if @restaurant.brand_image && @restaurant.brand_image.url %>
+          <img class="restaurant-image" src="<%= @restaurant.brand_image.url %>" alt="Restaurant Logo" />
+        <% else %>
+          <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+        <% end %>
+      </div>
+      <div class="col-sm-9 col-lg-5 col-xl-6">
+        <div class="pb-1">Please contact LunchPro if you need your restaurant's logo or information changed</div>
+      </div>
+      <div class="col-lg-5 col-xl-4 text-right">
+        <a href="#" class="btn btn-link" data-comp-detail-tab="account__change_password">Change Password</a>
+        <a class="btn btn-link" data-confirm-method="post" href="<%= delete_account_restaurant_account_index_path(@restaurant)%>" data-confirm-check="Are you sure you want to delete your account? You will no longer receive notifications associated with this restaurant.">Delete My Account</a>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="comp__restaurant_form">
+        <%= form_for @restaurant, url: { controller: 'account', action: "update"}, method: :post,  html: { class: "", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+        <%= lp_hidden_field(nil, :for, 'summary') %>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= lp_text_field(f, :name, 'Restaurant Name', nil, {disabled: true, class: 'form-control'}) %>
+              </div>
+              <div class="form-group">
+                <%= lp_text_field(f, :phone, 'Phone', format_phone_number_string(@restaurant.phone), {disabled: true, class: 'form-control'}) %>
+              </div>
+              <div class="form-group">
+                <%= lp_timezone_select_field(f, :timezone, "Local Timezone", {disabled: true, class: "form-control"}) %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= lp_text_field(f, :address_line1, 'Address', nil, {disabled: true, class: 'form-control'}) %>
+              </div>
+               <div class="form-group">
+                <%= lp_text_field(f, :address_line2, 'Building / Suite', nil, {disabled: true, class: 'form-control'}) %>
+              </div>
+              <div class="form-group col-12 p-0">
+                <div class="form-row row">
+                  <div class="col-12 col-sm-6 col-md-8 col-lg-5 pb-3">
+                     <%= lp_text_field(f, :city, 'City', nil, {disabled: true, class: 'form-control'}) %>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-4 pb-3">
+                     <%= lp_text_field(f, :state, 'State', nil, {disabled: true, class: 'form-control'}) %>
+                  </div>
+                  <div class="col-12 col-sm-6 col-lg-3">
+                     <%= lp_text_field(f, :postal_code, 'Zip', nil, {disabled: true, class: 'form-control'}) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

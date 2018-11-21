@@ -1,0 +1,142 @@
+/*
+.modal-open      - body class for killing the scroll
+.modal           - container to scroll within
+.modal-dialog    - positioning shell for the actual modal
+.modal-content   - actual modal w/ bg and corners and stuff
+*/
+.modal {
+  z-index: 3001;
+  &.new-appointments{
+    opacity: 1;
+    display: block;
+    position: relative;
+  }
+  .rep-detail-modal-row{
+    padding-right: 1em;
+    padding-left: 1em;
+    .card .list-group .list-group-item span{
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+	.modal-dialog {
+		transition: transform 0.3s ease-out;
+    max-width: 900px;
+		//transform: translate(0, 50%);
+	}
+  .modal-large.modal-dialog{
+    max-width: 1000px;
+  }
+	.modal-content {
+		max-height: 92vh;
+		overflow-y: auto;
+	}
+  .new-office-modal-content{
+    overflow-y: unset !important;
+    max-height: 80vh !important;
+    .tab-content{
+      overflow-y:auto !important;
+    }
+  }
+  .restaurant-reviews-modal-content{
+    overflow-y: unset !important;
+    max-height: 80vh !important;
+    .tab-content{
+      overflow-y:auto !important;
+    }
+  }
+  @media(max-width: 750px){
+    .restaurant-reviews-modal-content{
+      overflow-y: unset !important;
+      max-height: 150vh !important;
+    }
+  }
+
+/* styles for new office detail */
+  .select-office-detail{
+    max-width: 65%;
+  }
+  .office-detail-back{
+    padding: 0px 0px 15px 5px;
+  }
+  #btn-add-office{
+    float:right; 
+    width: 215px; 
+    margin-bottom: 10px; 
+  }
+  #btn-view-policies{
+    float:right; 
+    width: 215px;
+  }
+}
+.comp__rep_office_new, .new-office-detail, .comp__rep_order_new{
+  opacity: 1; 
+  display: block; 
+  position:relative;
+}
+/* end styles for new office detail */
+.modal-search-results, .appt-search-results{
+  list-style:none;
+  .office-list{
+    cursor: pointer;
+  }
+  li{
+     &:hover{
+      cursor: pointer;
+      background: #1CACDB;
+      color: white;
+      fill: white;
+    }
+  }
+
+  .list-active{
+    background: #1CACDB;
+    color: #fff;
+  }
+}
+.modal-md{
+  max-width: 40%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.modal-sm{
+  max-width: 30%;
+  margin-right: auto;
+  margin-left: auto;
+}
+.appointment-modal-body{
+  background-color:#fcfdfd;
+  padding: 1.5rem;
+}
+.faux-modal-header{
+  padding: 1.5rem;
+  border-bottom: 2px solid #d6d6d6;
+
+  h3 a{
+    color: inherit;
+  }
+}
+@media(max-width: 1200px){
+  .modal-md{
+    max-width: 60%;
+  }
+  .modal-sm{
+    max-width: 60%
+  }
+}
+@media(max-width: 1025px){
+  .modal .select-office-detail{
+    max-width: 100%;
+  }
+}
+@media(max-width: 767px){
+  .modal-md{
+    max-width: 100%;
+  }
+  .modal-sm{
+    max-width: 100%;
+  }
+}

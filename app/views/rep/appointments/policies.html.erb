@@ -1,0 +1,73 @@
+<% tab 'offices' %>
+<% title 'Offices' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal">
+        <div class="row">
+          <div class="col-md-12 mt-3">
+              <a class="ml-3" href="<%= (@back && @back == "current") ? current_rep_calendars_path : new_rep_appointment_path %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+
+            <p class="text-center pl-4 pr-4 h5"><strong><%= @office.name %></strong></p>
+            <p class="text-center pl-4 pr-4"><%= @office.display_location_single %><br/><%= format_phone_number_string(@office.primary_phone) %></p>
+            <hr />
+
+            <p class="text-center mt-3 pl-4 pr-4">
+              <strong>Office Policies</strong>
+              <br/>
+              <span class="small">Last Updated: <%= simple_date(@office.policies_last_updated_at) %></span>
+            </p>
+
+            <p class="pt-3 pl-4 pr-4">
+              <strong>General Policies</strong>
+              <br/>
+              <%= @office.office_policy %>
+            </p>
+
+            <div class="pt-3 pl-4 pr-4">
+              <strong>Office Dietary Restrictions</strong>
+              <br/>
+              <% @office.diet_restrictions_offices.each do |restrict| %>
+                <div>
+                 - <%= restrict.diet_restriction.name %>: <%= restrict.staff_count%> staff members
+                </div>
+              <%end%>
+              <% if @office.diet_restrictions_offices.count == 0 %>
+                N/A
+              <% end %>
+            </div>
+
+            <p class="pt-3 pl-4 pr-4">
+              <strong>Food Preferences & Policies</strong>
+              <br/>
+              <%= @office.food_preferences %>
+            </p>
+
+            <div class="row mb-5 justify-content-center pt-3 mr-3 ml-3 hidden-xs-down">
+              <% if @appointment %>
+                <div class="col-12 col-sm-3"><a href="<%= (@back && @back == "current") ? current_rep_calendars_path : new_rep_appointment_path %>" class="btn btn-sm btn-secondary btn-block">Decline</a></div>
+                <div class="col-12 col-sm-3"><a href="<%= select_restaurant_rep_appointment_path(@appointment, start: @start_date) %>" class="btn btn-sm btn-primary btn-block">Accept</a></div>
+              <% else %>
+                <div class="col-12 col-sm-3 mb-2"><a href="<%= (@back && @back == "current") ? current_rep_calendars_path : new_rep_appointment_path %>" class="btn btn-sm btn-secondary btn-block">Decline</a></div>
+                <div class="col-12 col-sm-3"><a href="<%= calendar_rep_office_path(@office, start: @start_date) %>" class="btn btn-sm btn-primary btn-block">Accept</a></div>
+              <% end %>
+            </div>
+            <div class="row mb-5 justify-content-center pt-3 mr-3 ml-3 hidden-sm-up">
+              <% if @appointment %>
+                <div class="col-12 col-sm-3 mb-2"><a href="<%= select_restaurant_rep_appointment_path(@appointment, start: @start_date) %>" class="btn btn-sm btn-primary btn-block">Accept</a></div>
+                <div class="col-12 col-sm-3"><a href="<%= (@back && @back == "current") ? current_rep_calendars_path : new_rep_appointment_path %>" class="btn btn-sm btn-secondary btn-block">Decline</a></div>
+              <% else %>
+                <div class="col-12 col-sm-3"><a href="<%= calendar_rep_office_path(@office, start: @start_date) %>" class="btn btn-sm btn-primary btn-block">Accept</a></div>
+                <div class="col-12 col-sm-3"><a href="<%= (@back && @back == "current") ? current_rep_calendars_path : new_rep_appointment_path %>" class="btn btn-sm btn-secondary btn-block">Decline</a></div>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

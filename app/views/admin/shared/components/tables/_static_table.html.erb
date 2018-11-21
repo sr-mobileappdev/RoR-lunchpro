@@ -1,0 +1,115 @@
+<h5 class="lp__table_header"><%= (local_assigns[:title]) ? title : '' %></h5>
+
+<% if local_assigns[:table_actions] && local_assigns[:table_actions].count > 0 %>
+<div class="lp__table_actions btn-toolbar justify-content-end mt-1 mr-2" role="toolbar" aria-label="Toolbar with button groups">
+  <% local_assigns[:table_actions].each do |a| %>
+    <% if (a[:context] && a[:context] == :popup) %>
+      <a data-popup=true data-popup-title="<%= a[:title] %>" href="<%= a[:url] %>" class="btn btn-sm btn-xsm ml-2 <%= (a[:btn_class]) ? a[:btn_class] : 'btn-primary' %>"><%= a[:name] %></a>
+    <% elsif a[:modal] %>
+      <a href="<%= a[:url] %>" data-modal="true" data-modal-size="md" class="btn btn-sm btn-xsm ml-2 <%= (a[:btn_class]) ? a[:btn_class] : 'btn-primary' %>"><%= a[:name] %></a>
+    <% else %>
+      <a href="<%= a[:url] %>" class="btn btn-sm btn-xsm ml-2 <%= (a[:btn_class]) ? a[:btn_class] : 'btn-primary' %>"><%= a[:name] %></a>
+    <% end %>
+  <% end %>
+</div>
+<% end %>
+
+<table class="lp__table table">
+  <thead class="thead-inverse">
+    <tr>
+      <% columns.each do |column| %>
+        <% column_name = column %>
+        <% column_title = nil %>
+        <% if column.kind_of?(Hash) && column[:column] %>
+          <% column_name = column[:column] %>
+          <% column_title = column[:title] %>
+        <% end %>
+        <th><%= format_column_name_by_model(column_name, model_class, column_title) %></th>
+      <% end %>
+      <% if local_assigns[:actions] && actions.kind_of?(Array) && actions.count > 0 %>
+        <th class="col-actions"></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% if objects.count == 0 %>
+      <tr><td colspan="<%= columns.count + 1 %>"><span class="empty">No Results</span></td></tr>
+    <% end %>
+
+    <% objects.each_with_index do |record, idx| %>
+      <tr>
+        <% columns.each do |column| %>
+          <% column_name = column %>
+          <% helper = nil %>
+          <% default_value = nil %>
+          <% if column.kind_of?(Hash) %>
+            <% helper = column[:helper] %>
+            <% column_name = column[:column] %>
+            <% default_value = column[:default] %>
+          <% end %>
+
+          <td class="<%= class_for_table_column(column_name) %>">
+            <% if local_assigns[:link_columns] && link_columns.keys.include?(column_name.to_sym) %>
+
+              <% url = url_for_object_key(record, link_columns[column_name.to_sym]) %>
+              <% if url.present? %>
+                <a class="jump" href="<%= url %>"><%= value_for_table_column(record, column_name, helper, default_value) %></a>
+              <% else %>
+                <%= value_for_table_column(record, column_name, helper, default_value) %>
+              <% end %>
+
+            <% elsif local_assigns[:link_columns] && link_columns.keys.include?(column_name.to_s) %>
+
+              <% url = url_for_object_key(record, link_columns[column_name.to_s]) %>
+              <% if url.present? %>
+                <a class="jump" href="<%= url %>"><%= value_for_table_column(record, column_name, helper, default_value) %></a>
+              <% else %>
+                <%= value_for_table_column(record, column_name, helper, default_value) %>
+              <% end %>
+
+            <% else %>
+
+              <%= value_for_table_column(record, column_name, helper, default_value) %>
+
+            <% end %>
+          </td>
+        <% end %>
+        <% if local_assigns[:actions] && actions.kind_of?(Array) && actions.count > 0 %>
+          <td class="col-actions">
+            <% actions.reverse.each do |a| %>
+              <!-- Exclusion / inclusion options for the record's actions -->
+              <% if (a[:only_if] && record.respond_to?(a[:only_if]) && record.send(a[:only_if]) == false) %>
+                <% next %>
+              <% elsif (a[:exclude_if] && record.respond_to?(a[:exclude_if]) && record.send(a[:exclude_if]) == true) %>
+                <% next %>
+              <% end %>
+
+              <% if (a[:context] && a[:context] == :popup) %>
+                <a data-popup=true data-popup-title="<%= a[:title] %>" href="<%= url_for_action(a[:path], record) %>" class="<%= (a[:button_class]) ? a[:button_class] : 'btn btn-secondary btn-sm' %>"><%= a[:title] %></a>
+              <% elsif (a[:context] && a[:context] == :confirm) %>
+                <% if record.kind_of?(Order) %>
+                  <% unless record.active? && record.confirmed? && a[:title] == 'Confirm' %>
+                    <a class="<%= (a[:button_class]) ? a[:button_class] : 'btn btn-danger btn-sm' %>" data-confirm-method="post" href="<%= url_for_action(a[:path], record) %>" data-confirm-check="<%= a[:confirm_message] %>"><%= a[:title] %></a>
+                  <% end %>
+                <% else %>
+                  <a class="<%= (a[:button_class]) ? a[:button_class] : 'btn btn-danger btn-sm' %>" data-confirm-method="post" href="<%= url_for_action(a[:path], record) %>" data-confirm-check="<%= a[:confirm_message] %>"><%= a[:title] %></a>
+                <% end %>
+              <% else %>
+
+                <% if a[:ajax_path] && !a[:ajax_non_responsive]%>
+                  <%= link_to a[:title], url_for_action(a[:ajax_path], record), method: (a[:ajax_method] || 'get').to_sym, class: (a[:button_class]) ? "#{a[:button_class]} __ajax_link" : 'btn btn-secondary btn-sm __ajax_link' , "data-remote" => true, "data-done-text" => (a[:ajax_done_text].present?) ? a[:ajax_done_text] : nil %>
+
+                <% elsif a[:ajax_path] && a[:ajax_non_responsive]%>
+                  <%= link_to a[:title], url_for_action(a[:ajax_path], record), method: (a[:ajax_method] || 'get').to_sym, class: (a[:button_class])%>
+                <% else %>
+                  <a href="<%= url_for_action(a[:path], record) %>" class="<%= (a[:button_class]) ? a[:button_class] : 'btn btn-secondary btn-sm' %>"><%= a[:title] %></a>
+                <% end %>
+              <% end %>
+
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,61 @@
+
+<nav class="col-sm-3 col-md-2 hidden-xs-down sidebar" style="overflow: visible;">
+  <div id="menuwrapper">
+    <h1>LunchPro</h1>
+    <div class="h5" style="color: #fff"><%=current_user.display_name%></div>
+    <ul class="nav-menu">
+
+        <li class="<%= is_active_area?('dashboard') %>"><a href="#" class="nav-first-level">Dashboard <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+            <ul>
+                <li><a href="#" class="nav-second-level">Current Activity <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+                    <ul>
+                        <li><a href="<%= activity_admin_dashboard_index_path(location: 'All Locations') %>" class="nav-third-level">All Locations</a></li>
+                    </ul>
+                </li>
+                <li><a href="/admin/dashboard" class="nav-second-level">Snap Shot</a></li>
+            </ul>
+        </li>
+
+        <li>
+
+        </li>
+        <li class="<%= is_active_area?('users') %>"><a href="<%= admin_users_path(scope: 'active') %>" class="nav-first-level">Users</a></li>
+        <li class="<%= is_active_area?(['admin-sales_reps', 'admin-rewards']) %>"><a href="#" class="nav-first-level">Sales Reps <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+            <ul>
+                <li><a href="<%= admin_sales_reps_path(scope: 'active') %>" class="nav-second-level">Reps</a></li>
+                <li><a href="<%= admin_rewards_path(scope: 'active') %>" class="nav-second-level">Rewards</a></li>
+            </ul>
+        </li>
+        <li class="<%= is_active_area?(['admin-offices', 'office-admin-users']) %>"><a href="#" class="nav-first-level">Offices <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+          <ul>
+              <li><a href="<%= admin_offices_path(scope: 'active') %>" class="nav-second-level">Office</a></li>
+              <li><a href="<%= office_admin_users_path(scope: 'active') %>" class="nav-second-level">Office Users</a></li>
+          </ul>
+        </li>
+        <li class="<%= is_active_area?(['admin-restaurants', 'restaurant-admin-users']) %>"><a href="#" class="nav-first-level">Restaurants <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+          <ul>
+              <li><a href="<%= admin_restaurants_path(scope: 'active') %>" class="nav-second-level">Restaurant</a></li>
+              <li><a href="<%= restaurant_admin_users_path(scope: 'active') %>" class="nav-second-level">Restaurant Users</a></li>
+              <li><a href="<%= admin_tools_path %>" class="nav-second-level">Restaurant Payout Report</a></li>
+          </ul>
+        </li>
+        <li class="<%= is_active_area?('appointments') %>"><a href="<%= admin_appointments_path(scope: 'active') %>" class="nav-first-level">Appointments</a></li>
+        <li class="<%= is_active_area?(['admin-orders', 'admin-order_reviews']) %>"><a href="#" class="nav-first-level">Orders <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+          <ul>
+              <li><a href="<%= admin_orders_path(scope: 'unconfirmed', title: 'Unconfirmed') %>" class="nav-second-level">Upcoming Orders</a></li>
+              <li><a href="<%= admin_order_reviews_path%>"class="nav-second-level">Order Reviews</a></li>
+          </ul>
+        </li>
+        <li class="<%= is_active_area?(['admin-companies', 'admin-drugs', 'admin-office_device_logs', 'admin-notification_events', 'admin-tools']) %>"><a href="#" class="nav-first-level">Tools & Settings <span class="pull-right"><i class="fa fa-caret-right" aria-hidden="true"></i></span></a>
+          <ul>
+              <li><a href="<%= admin_companies_path %>" class="nav-second-level">Companies</a></li>
+              <li><a href="<%= admin_drugs_path %>" class="nav-second-level">Drugs</a></li>
+              <li><a href="<%= admin_office_device_logs_path %>" class="nav-second-level">LunchPads</a></li>
+              <li><a href="<%= admin_notification_events_path %>" class="nav-second-level">Notifications Templates</a></li>
+              <li><a href="<%= admin_tools_path %>"" class="nav-second-level">Tools & Setup</a></li>
+          </ul>
+        </li>
+        <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>
+    </ul>
+  </div>
+</nav>

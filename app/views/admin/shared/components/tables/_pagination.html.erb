@@ -1,0 +1,37 @@
+<% return if @records.kind_of?(Array) %>
+
+<p class="lp__results"><%= page_entries_info @records, entry_name: '' %></p>
+
+<% if @records.total_pages > 1 %>
+
+  <nav class="lp__paginate_nav">
+    <ul class="pagination pagination-sm">
+      <li class="page-item">
+        <%= link_to_prev_page @records, 'Prev', class: 'page-link targ-paginate-link' unless @records.first_page?  %>
+      </li>
+      <% unless @records.first_page? %>
+        <li class="page-item">
+          <%= link_to_prev_page @records, @records.prev_page, class: 'page-link targ-paginate-link'  %>
+        </li>
+      <% end %>
+
+      <li class="page-item active">
+        <span class="page-link">
+          <%= @records.current_page %>
+          <span class="sr-only"></span>
+        </span>
+      </li>
+
+      <% unless @records.last_page? %>
+        <li class="page-item">
+          <%= link_to_next_page @records, @records.next_page, class: 'page-link targ-paginate-link'  %>
+        </li>
+      <% end %>
+
+      <li class="page-item">
+        <%= link_to_next_page @records, 'Next', class: 'page-link targ-paginate-link' unless @records.last_page?  %>
+      </li>
+    </ul>
+  </nav>
+
+<% end %>

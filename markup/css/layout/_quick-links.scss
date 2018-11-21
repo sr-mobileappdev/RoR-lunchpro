@@ -1,0 +1,35 @@
+#quick-links.dropdown {
+	position: absolute;
+	right: 0;
+	top: 100px;
+	z-index: 1;
+	.dropdown-toggle {
+		color: $brand-success;
+	}
+	i.fa {
+		font-size: 48px;
+		height: 40px;
+		width: 40px;
+		line-height: 40px;
+		background-color: $white;
+		border-radius: 50%;
+		transition: all 0.3s ease-in-out;
+	}
+	.dropdown-toggle:after{
+		display:none;
+	}
+
+	// cute animation
+	&.show {
+		i.fa {
+			@include rotate(45);
+		}
+	}
+
+	.dropdown-menu {
+		top: 25px;
+	}
+	.dropdown-item {
+		padding: 0 60px;
+	}
+}

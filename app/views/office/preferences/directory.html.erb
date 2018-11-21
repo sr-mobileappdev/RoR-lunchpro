@@ -1,0 +1,27 @@
+<% tab 'reps' %>
+<% title 'Rep Directory' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers rep-table comp__om_appointments">
+  <div class="lp__fixed f12 no-gutters">
+    <% if @sales_reps.any? %>
+      <div class="justify-content-center pt-3 row">
+        <div class="col-11 col-sm-8 ml-auto mr-auto">
+          <%= form_tag '', class: 'lp__find_reps' do %>
+            <div class="input-group lp__om_input_group p-1">
+              <span class="input-group-addon"><i class="fa fa-search"></i></span>
+              <input type="text" id="searchTerm" name="searchTerm" placeholder="Search by name, company, drug, or notes">
+            </div>
+          <% end %>
+        </div>    
+        <div class="col-12 mt-4 targ__rep_results">        
+          <%= render partial: 'office/preferences/components/rep_results', locals: {sales_reps: @sales_reps} %>
+        </div>
+      </div>  
+    <% else %>
+      <div class="col-12 text-center">
+        <h3 class="mt-5 pt-5">There are currently no Sales Reps associated with your office.</h3>      
+        <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+      </div>
+    <% end %>
+  </div>
+</div>

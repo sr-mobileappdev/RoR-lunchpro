@@ -1,0 +1,74 @@
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_notification_events_path() } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light">Notification Event Details</h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <button type="button" class="btn btn-primary btn-sm mr-2">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <!-- Record Notices (if any) -->
+  <% if @record.notices.count > 0 %>
+    <div class="row">
+      <div class="col-12 px-3 mb-2">
+        <% @record.notices.each do |notice| %>
+          <div class="alert alert-warning">
+            <p class="text-warning small"><span class="oi oi-target"></span> <%= notice[:message] %> <%= (notice[:relatable]) ? "<a class='text-primary pl-3 small' href='#{relatable_notice_path(notice[:relatable])}'>View Details</a>".html_safe : '' %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <!-- End Record notices -->
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'category_cid' => {title: 'Category CID', w: 3}},
+                      {'internal_summary' => {title: 'Summary', w: 9}},
+                    ]
+                  } %>
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Notification Recipients',
+                    table_actions: [{name: 'Add Recipient Type', url: new_admin_notification_event_notification_event_recipient_path(@record)}],
+                    columns: ['id', 'status__light', 'display_recipient_type', 'title', 'display_priority', 'is_default__flag'],
+                    model_class: 'NotificationEventRecipient',
+                    actions: [{title: 'Send Test', path: test_admin_notification_event_notification_event_recipient_path(@record, "<id>"), context: :popup},
+                              {title: 'View', path: admin_notification_event_notification_event_recipient_path(@record, "<id>"), button_class: 'btn btn-primary btn-sm'}],
+                    objects: @record.notification_event_recipients.where.not(status: 'deleted')
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+        <% if @record.active? %>
+          <li><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_notification_event_path(@record) %>" data-confirm-check="Are you sure you want to deactivate this notification event?">Deactivate Notification Event</a></li>
+        <% elsif @record.inactive? %>
+          <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_notification_event_path(@record) %>" data-confirm-check="Are you sure you want to re-activate this notification event?">Re-activate Notification Event</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>

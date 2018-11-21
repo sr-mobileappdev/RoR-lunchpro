@@ -1,0 +1,44 @@
+<div class="col-md-12 mt-3">
+  <a class="ml-3" href="<%=calendar_rep_office_path(@office, start: @start_date)%>""><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+</div>
+<div class="col-md-12 pl-5 pr-5 comp__rep_appointments">
+
+  <div class="col-12 text-center mt-5">
+    <div class="text-info">
+      <%= review_calendar_icon %>
+    </div>
+    <h5 class="mt-3 mb-1 ft-bold"><%= @office.name%> - <%=@office.city %></h5>
+    <h5>Appointments</h5>
+    <hr>
+  </div>
+  <div class="row ml-0">    
+    <% if defined?(duplicates) && duplicates && @appointments.count > 1 %>
+      <p class="ft-bold text-center">You already have appointments booked on the same dates and times as the appointments you are attempting to book below.</p> 
+    <% elsif defined?(duplicates) && duplicates && @appointments.count == 1 %>
+      <p class="ft-bold text-center">You already have an appointment booked on the same date and time as the appointment you are attempting to book below.</p> 
+    <% end %>
+    <% @appointments.each do |appt| %>
+      <div class="col-8">
+        <p class="mb-0"><%= short_date(appt.appointment_date) %></p>
+        <p class="mb-0"><%= appt.appointment_slot.name %> - <%= slot_time(appt.starts_at(true)) %></p>
+        <p>Sugg. Order Count: <%=appt.appointment_slot.total_staff_count || '---' %></p>
+      </div>
+      <% if !defined?(duplicates) || !duplicates %>
+        <div class="col-2">
+          <a href="#" class="btn btn-link mt-3 trig__undo_appointment_review" data-appointment-id="<%=appt.id%>" data-office-id="<%= appt.office_id %>" data-view="review">Remove</a>
+        </div>
+      <% end %>
+    <% end %>
+    <% if defined?(duplicates) && duplicates %>
+      <div class="col-12 text-center mt-5 finish">
+        <a href="<%= finish_rep_office_path(id: @office.id, type: 'book_duplicates') %>"><button class="btn btn-success btn-block lp__finish_button mb-2">Continue</button></a>
+        <a href="<%= finish_rep_office_path(id: @office.id, type: 'cancel') %>"><button class="btn btn-outline-info btn-block">Cancel</button></a>
+      </div>
+    <% else %>
+      <div class="col-12 text-center mt-5 finish">
+        <a href="<%= finish_rep_office_path(id: @office.id, type: 'appt') %>"><button class="btn btn-success btn-block lp__finish_button mb-2">Reserve Appointment(s)</button></a>
+      </div>
+    <% end %>
+  </div>
+</div>
+

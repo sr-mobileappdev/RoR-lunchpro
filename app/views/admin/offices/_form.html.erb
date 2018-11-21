@@ -1,0 +1,133 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :created_by_id) %>
+
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-7 lp_req">
+          <%= lp_text_field(f, :name) %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+          <div class="col-sm-7 lp_req">
+            <%= lp_text_field(f, :address_line1, "Street Address") %>
+          </div>
+
+          <div class="col-sm-2">
+            <%= lp_text_field(f, :address_line2, "Suite / Apt #") %>
+          </div>
+      </div>
+      <div class="form-group row form-group-tight">
+          <div class="col-sm-3 lp_req">
+            <%= lp_text_field(f, :city) %>
+          </div>
+
+          <div class="col-sm-2 lp_req">
+            <%= lp_text_field(f, :state, "State", f.object.state, {maxlength: 2}) %>
+          </div>
+
+          <div class="col-sm-2 lp_req">
+            <%= lp_text_field(f, :postal_code, "Zip Code") %>
+          </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-6 lp_req">
+          <%= lp_text_field(f, :phone, "Phone", nil, {class: 'form-control form-control-sm phone_number_input'}) %>
+        </div>
+      </div>
+      <h4 class="pt-3">Preferences</h4>
+      <div class="form-group row form-group-tight">
+       <div class="col-2">
+          <%= lp_text_field(f, :total_staff_count, "Total Staff") %>
+        </div>
+        <div class="col-4">
+          <%= lp_calendar_field(f, :appointments_until, "Calendar Open Until") %>
+        </div>
+      </div>
+
+      <div class="form-group row form-group-tight">
+        <div class="col-8">
+          <%= lp_timezone_select_field(f, :timezone, "Local Timezone") %>
+        </div>
+      </div>
+
+      <h4 class="pt-3">Policies & Preferences</h4>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <%= lp_text_area(f, :office_policy, "General Policies") %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <%= lp_text_area(f, :food_preferences, "Food Preferences") %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-12">
+          <%= lp_text_area(f, :delivery_instructions, "General Delivery Instructions") %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-12">
+          <label>Diet Restrictions</label>
+          <table class="table table-borderless">
+            <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Staff Count</th>
+                </tr>
+              </th>
+            </thead>
+            <% DietRestriction.active.each.with_index do |restrict, i| %>
+              <tr>
+                <!-- if updating, and have current diet restrictions set -->
+                <% if @record.id? && @record.diet_restrictions_offices.count > 0 %>
+                  <%= f.fields_for :diet_restrictions_offices, f.object.diet_restrictions_offices.last do |builder| %>
+                    <% if builder.object.diet_restriction_id = restrict.id && builder.object.persisted? %>
+                      <!-- we only want to use the empty diet_restrictions_office object we built in /edit -->
+                    <% else %>
+                      <!-- set temp field that is set to current iteration of DietRestriction.id-->
+                      <%= builder.hidden_field(:temp_restriction_id, :value => restrict.id) %>
+                      <!-- if office already has a diet restriction set with this id, check box and display staff count !-->
+                      <% if @record.diet_restrictions_offices.where(:diet_restriction_id => restrict.id).count > 0 %>
+                        <td width="25%">
+                          <%= lp_check_field_inline(builder, :diet_restriction_id, restrict.name, true) %>
+                        </td>
+                        <td>
+                          <%= lp_text_field(builder, :staff_count, nil, @record.diet_restrictions_offices.where(:diet_restriction_id => restrict.id).first.staff_count,
+                                            {class: 'form-control form-control-sm col-2', hide_label: true}) %>
+                        </td>
+                      <!-- else empty -->
+                      <% else %>
+                        <td width="25%">
+                          <%= lp_check_field_inline(builder, :diet_restriction_id, restrict.name) %>
+                        </td>
+                        <td>
+                          <%= lp_text_field(builder, :staff_count, nil, nil, {class: 'form-control form-control-sm col-2', hide_label: true}) %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <!-- else if new or updating with no current restrictions -->
+
+                <% else %>
+                  <%= f.fields_for :diet_restrictions_offices do |builder| %>
+                    <%= builder.hidden_field(:temp_restriction_id, :value => restrict.id) %>
+                    <td width="25%">
+                      <%= lp_check_field_inline(builder, :diet_restriction_id, restrict.name) %>
+                    </td>
+                    <td>
+                      <%= lp_text_field(builder, :staff_count, nil, nil, {class: 'form-control form-control-sm col-2', hide_label: true}) %>
+                    </td>
+                  <% end %>
+                <% end %>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<% end %>

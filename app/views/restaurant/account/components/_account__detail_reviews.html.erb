@@ -1,0 +1,75 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 m-3 p-3 comp__restaurant_account" data-initialize-stars=true>
+  <div class="mb-3 mt-4 ml-4">
+    <div class="h4">Customer Reviews</div>
+    <% if @restaurant.order_reviews.any? %>
+      <div class="row pt-3 pl-3 pb-3">
+        Here is your overall rating based on rep and office reviews.
+      </div>
+      <div class="row pl-4 pb-4">
+        <div class="col-12 pl-0 pr-0">
+          <div class="row col-12 align-items-center m-auto pb-3 pt-2">
+            <div class="col-12 col-md-6 mr-1 align-items-center">
+              <label class="ft-bold col-12 col-md-6 p-0 font-lg">Overall Rating:</label><%= restaurant_average_reviews(@restaurant, :overall, true) %>
+            </div>
+            <div class="col-6 col-md-5 text-right align-items-center">
+              <%= restaurant_average_on_time(@restaurant) %>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-10 row m-auto">
+            <div class="col-12 col-sm-6 pr-0">
+              <div class="col-12 row m-0 p-0">
+                <label class="ft-bold col-12 col-md-6 p-0">Food Quality:</label><%= restaurant_average_reviews(@restaurant, :food_quality, true) %>
+              </div>
+              <div class="col-12 row m-0 p-0">
+                <label class="ft-bold col-12 col-md-6 p-0">Presentation:</label><%= restaurant_average_reviews(@restaurant, :presentation, true) %>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="col-12 row m-0 p-0">
+                <label class="ft-bold col-12 col-md-6 p-0">Completeness:</label><%= restaurant_average_reviews(@restaurant, :completion, true) %>
+              </div>
+              <div class="col-12 row m-0 p-0">
+                <label class="ft-bold col-12 col-md-6 p-0">Office Feedback:</label><%= restaurant_average_reviews(@restaurant, :office_overall, true) %>
+              </div>
+            </div>
+          </div>
+            <div class="row align-items-center mt-3 justify-content-center">
+              <div class="col-12 justify-content-center m-auto">
+                <div class="row col-3 ft-bold mb-3 ml-3">
+                  Comments:
+                </div>
+                <div class="row col-md-12 col-lg-10 m-auto justify-content-center">
+                  <% if @order_reviews_with_comments.any? %>
+                    <% @order_reviews_with_comments.each do |review| %>
+                    <div class="row col-12 bl-1 pb-3 mb-4 ml-0 pt-4">
+                      <div class="col-12 row align-items-center ml-2">
+                        <div class="col-1 mr-0 pr-2">
+                          <%= reviewer_icon(review) %>
+                        </div>
+                        <div class="col-11 col-xl-11 row justify-content-end align-items-center">
+                          <span class="ml-auto hidden-xs-down row"><%= order_review_overall(review, true) %></span>
+                          <span class="hidden-sm-up row m-0"><%= order_review_overall(review, true) %></span>
+                        </div>
+                      </div>
+                      <div class="col-12 row align-items-center mt-2 ml-4">
+                        <%= review.comment %>
+                      </div>
+                    </div>
+                    <% end %>
+                  <% else %>
+                    There currently are no comments to view
+                  <% end %>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <% else %>
+      <div class="pt-3 pl-3 pb-3 text-center justify-content-center">
+        <p class="ft-bold">There currently are no reviews for this restaurant</p>
+        <img src="<%= image_path('headshot_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+      </div>
+    <% end %>
+  </div>
+</div>

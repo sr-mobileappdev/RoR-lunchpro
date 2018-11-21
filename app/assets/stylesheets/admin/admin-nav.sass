@@ -1,0 +1,58 @@
+nav.sidebar
+  position: fixed
+  top: 0px
+  bottom: 0px
+  left: 0px
+  overflow-x: hidden
+  overflow-y: auto
+  z-index: 10
+  background: $clr--dark-grey
+
+  h1
+    font-size: 1.2em
+    font-weight: 600
+    padding-top: 20px
+    color: #fff
+
+  ul.nav-menu
+    padding: 0px
+    margin: 0px -15px 0px -15px
+
+    li
+      list-style: none
+
+      a
+        display: block
+        padding: 8px 16px
+
+
+    li.section
+      padding: 8px 16px
+      font-size: 0.7em
+      text-transform: uppercase
+      letter-spacing: 0.1em
+      color: lighten($clr--grey, 10%)
+      margin-top: 10px
+
+    li.active
+      a
+        //background: darken($clr--dark-grey, 10%)
+
+
+  a
+    color: lighten($clr-link, 10%)
+    font-size: 0.85em
+
+    span.badge
+      padding: 0.2em 0.4em 0.25em 0.4em
+      position: relative
+      top: -1px
+      left: 6px
+      color: $clr--dark-grey
+      border-radius: 10rem
+
+  a:hover
+    text-decoration: none
+    color: lighten($clr-link-dim, 15%)
+    //background: darken($clr--dark-grey, 5%)
+

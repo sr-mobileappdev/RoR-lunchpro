@@ -1,0 +1,91 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body comp__rep_form">
+    <div class="row m-0 lp__refer_form">
+      <div class="col-12 text-center">
+        <h3 class="ft-bold">Refer An Office</h3>
+      </div>
+      <div class="col-12 mt-4">
+        <%= form_for @office_referral, url: {controller: 'offices', action: "refer"}, method: :post,  html: { class: "", autocomplete: "off" } do |f| %>
+
+          <%= lp_hidden_field(f, :created_by_id) %>
+          <div class="col-10 offset-1">
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :name, "Office Name") %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :phone, "Phone", nil, {class: "form-control form-control-sm phone_number_input"}) %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :email, "Email Address") %>
+            </div>
+            <div class="form-group h5">
+                <%= lp_check_field_inline(nil, :save_office, "Save this office to My Offices") %>
+            </div>
+            
+          </div>
+          <div class="text-center mt-4 col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+            <button data-submit type="submit" class="btn btn-primary btn-block">Refer This Office</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row lp__office_form" style="display: none;">
+      <div class="col-12">
+        <h3 class="ft-bold">Thanks for the Referral!</h3>
+        <p>To add this office to your list in order for faster reference when ordering food, please fill out the rest of this office's information below.</p>
+      </div>
+      <div class="col-12 mt-4">
+        <%= form_for @office, url: {controller: 'offices', action: "create"}, method: :post,  html: { class: "", autocomplete: "off" } do |f| %>
+          <%= lp_hidden_field(nil, :creating_sales_rep_id, current_user.sales_rep.id) %>
+          <%= lp_hidden_field(nil, :refer, true) %>
+          <%= lp_hidden_field(nil, :referral_id) %>
+          <%= lp_hidden_field(f, :internal) %>
+          <div class="col-10 offset-1">
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :name, "Office Name") %>
+            </div>
+            <div class="form-group">
+              <%= lp_timezone_select_field(f, :timezone, "Office Timezone") %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :address_line1, "Address") %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :address_line2, "Suite or Building") %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :city, "City") %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :state, "State", nil, {maxlength: 2}) %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :postal_code, "Zip Code") %>
+            </div>
+            <div class="form-group ft-bold">
+                <%= lp_text_field(f, :phone, "Phone", f.object.phone, {class: "form-control form-control-sm phone_number_input"}) %>
+            </div>
+          </div>
+          <div class="text-center mt-4 col-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+            <button data-submit type="submit" class="btn btn-primary btn-block">Refer This Office</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row lp__refer_done" style="display: none;">
+      <div class="col-12 text-center mb-4">
+        <div class="text-info mt-2 mb-4">
+          <%= finish_calendar_icon %>
+        </div>
+        <h3 class="ft-bold">Thanks for the Referral!</h3>
+      </div>
+      <div class="col-6 m-auto">
+        <a class="btn btn-primary btn-block" href="<%= new_rep_appointment_path%>">Done</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  LPRepForm_Initializer();
+</script>

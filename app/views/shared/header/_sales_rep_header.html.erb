@@ -1,0 +1,41 @@
+<header class="bg-primary box-shadow">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-3 ">
+                <h1 class="sr-only">LunchPro</h1>
+                <a href="/" title="Home">
+                  <%= image_tag "lunchpro.svg", class: 'lp__logo_image', alt: "Go to home page" %>
+                </a>
+            </div>
+            <div class="col-md-3 hidden-sm-down">
+                <!-- this space could be used in the future --> &nbsp;
+            </div>
+            <div class="col-12 col-md-6">
+                <%= render partial: 'shared/header/account_details', locals: local_assigns %>
+            </div>
+        </div>
+    </div>
+    <div class="lp__navbar">
+        <nav class="navbar navbar-inverse navbar-toggleable-sm flex-md-column align-items-md-start text-center">
+            <button class="navbar-toggler collapsed m-auto" type="button" data-toggle="collapse" data-target="#header-links" aria-controls="header-links" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-angle-down"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="header-links">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item <%= tab_active?('appointments') %>">
+                        <a class="nav-link" href="<%= current_rep_calendars_path %>">My Appointments</span></a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('offices') %>">
+                        <a class="nav-link" href="<%= rep_offices_path %>">Offices</a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('orders') %>">
+                        <a class="nav-link" href="<%= rep_orders_path %>">Order History</a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('account') %>">
+                        <a class="nav-link" href="<%= rep_profile_index_path %>">Account</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

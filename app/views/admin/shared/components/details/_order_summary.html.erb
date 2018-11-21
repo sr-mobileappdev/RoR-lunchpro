@@ -1,0 +1,29 @@
+<div class="col-12 px-4">
+  <table class="lp__min_table">
+    <tr>
+      <td>Subtotal</td>
+      <td><%= precise_currency_value(object.subtotal_cents) %></td>
+    </tr>
+
+    <tr>
+      <td>Estimated Tip</td>
+      <td><%= precise_currency_value(object.estimated_tip_cents) %></td>
+    </tr>
+
+    <tr>
+      <td>Price Per Person</td>
+      <td><strong><%= precise_currency_value(object.per_person_cost_cents) %></strong></td>
+    </tr>
+
+    <tr>
+      <td>People Served</td>
+      <td><strong><%= object.people_served %></strong></td>
+    </tr>
+
+    <tr>
+      <td>Estimated Total</td>
+      <td><strong><span class="large"><%= precise_currency_value(object.estimated_total_cents) %></span></strong></td>
+    </tr>
+
+  </table>
+</div>

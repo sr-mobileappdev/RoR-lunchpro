@@ -1,0 +1,55 @@
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {restaurant: @restaurant} %>
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="justify-content-center pt-3">
+      <div class="lp__faux_modal med-large p-3 col-12">
+        <div class="row ml-0 mr-0 mb-4">
+          <h3 class="ft-bold font-lg col-12 text-center mt-3 p-0">Change Associated Restaurant</h3>
+          <div class="col-12">
+            <p class="mt-2 text-center"><i>As a Restaurant Manager, you can select from a list of associated restaurants and manage their information.</i></p>
+            <h3 class="ft-bold mt-5 text-center">Currently Selected Restaurant</h3>
+            <div class="col-12 row justify-content-center mt-3 p-0">
+              <div class="hidden-xs-down mt-1">
+                <div class="restaurant-image-container-sm hidden-sm-down">
+                  <% if @restaurant.brand_image && @restaurant.brand_image.url %>
+                      <img class="restaurant-image" src="<%= @restaurant.brand_image.url %>" alt="Restaurant Logo" />
+                  <% else %>
+                    <%= image_tag "missing_image.png", class: "restaurant-image mt-3", alt: "Missing Image" %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="mt-4 ml-3 hidden-sm-down">
+                <h3><%= @restaurant.name %> <%="(HQ)" if @restaurant.is_headquarters?%></h3>
+                <span><%= @restaurant.display_location_single %></span>
+                <br/>
+              </div>
+            </div>
+            <div class="col-12 p-0 hidden-md-up text-center">
+              <h3><%= @restaurant.name %> <%="(HQ)" if @restaurant.is_headquarters?%></h3>
+              <span><%= @restaurant.display_location_single %></span>
+              <br/>
+            </div>
+            <div class="col-12 p-0 text-center">
+              <a class="btn btn-link h4" href="<%= restaurant_orders_path %>">Continue to Orders</a>
+            </div>
+            <div class="col-12 p-0 text-center">
+              <h3>OR</h3>
+            </div>
+            <div class="col-12 justify-content-center mt-3 comp__restaurant_form p-0">
+              <%= form_for @restaurant_user, url: set_current_restaurant_restaurant_account_path(@restaurant_user), html: { class: "", autocomplete: "off", onsubmit: "return false;", id: ""} do |f| %>
+                <div class="form-group col-12 col-sm-8 col-md-6 col-lg-4 ml-auto mr-auto p-0">
+                  <h3 class="ft-bold text-center">Select Different Restaurant</h3>
+                  <%= f.select(:current_restaurant_id, Restaurant.child_restaurants_list_for_select(@restaurant, @restaurant_user), {prompt: "Select Restaurant"}, {class: 'form-control order-select mt-3'}) %>
+                </div>
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4 ml-auto mr-auto p-0 mt-3">
+                  <button type="submit" class="btn btn-primary btn-block" data-submit>Set Restaurant</button>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

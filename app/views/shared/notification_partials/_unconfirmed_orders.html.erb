@@ -1,0 +1,34 @@
+<% orders.select{|order| order.appointment_id.present? }.each do |order| %>
+<div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6 h4">
+    <strong><%=ah.short_date(order.appointment.appointment_on) %> - <%= ah.slot_time(order.appointment.starts_at(true))%></strong>
+    </span>
+    <span class="col-5 text-right">
+      Order # <%=order.order_number%>
+    </span>
+  </div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6">
+      <%= order.office.display_location %>
+    </span>
+    <span class="col-5 text-right">
+      <%= order.office.manager.present? ? order.office.manager.display_name : 'No Office Contact Set' %>
+    </span>
+  </div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6">
+      <%= ah.format_phone_number_string(order.office.phone) %>
+    </span>
+    <span class="col-5 text-right">
+      <%=ah.precise_currency_value(order.subtotal_cents_for_restaurant_manager)%>
+    </span>
+  </div>
+  <div style="margin-top: 10px; margin-bottom: 10px;">
+    <a href="<%= UrlHelpers.detail_restaurant_order_url(order) %>">View Order Details</a>
+  </div>
+  <div>
+    <hr style="width: 100%; padding: 0; margin-left: 0 !important; margin-right: 0 !important;">
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,17 @@
+<%= form_for @restaurant, url: admin_restaurant_path(@restaurant), action: :update, method: :post, html: { class: "", autocomplete: "off" } do |f| %>
+  <%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!-- session[:my_previous_url] } %> --> <!--admin_restaurant_path(@restaurant) } %>-->
+  <div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2 comp__new">
+    <div class="row">
+      <div class="col-8 px-4"><h2 class="lp__light lp__new"><span class="pr-3">Edit '<%= @restaurant.name %><%= ' (HQ)' if @restaurant.is_headquarters?%>'</span></h2></div>
+      <div class="col-4 px-4 text-right">
+        <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with buttons">
+          <input type="submit" class="btn btn-success btn-sm mr-2" value="Save Changes" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp__content comp__form">
+    <%= render partial: 'edit_form', locals: {f: f} %>
+  </div>
+<% end %>

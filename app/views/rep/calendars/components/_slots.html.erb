@@ -1,0 +1,22 @@
+<div class="vertical-nav">
+  <ul id="appointments-list">
+    <!-- loop -->
+    <% slot_groups = slot_manager.upcoming_by_date(false) %>
+    <% slot_groups.each do |day, group| %>
+    
+      <li class="appointment-list-slot">
+        <div class="vertical-nav-li-header appointments-header" data-date="<%= day.squish %>">
+          <%= short_date(day) %>
+        </div>
+        <% if group && group.office_slots %>        
+          <% group.office_slots.select{|slot| !(slot.appointment && slot.appointment.excluded)}.sort_by{|slot| slot.appointment_slot.starts_at(true)}.each do |office_slot| %>
+            <div class="targ__slot">
+              <%= render partial: 'rep/calendars/components/sales_rep_office_slot', locals: {user: slot_manager.user, office_slot: office_slot, office: slot_manager.office} %>
+            </div>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+    <!--end loop-->
+  </ul>
+</div>

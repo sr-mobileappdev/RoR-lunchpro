@@ -1,0 +1,90 @@
+<div id="add-office" class="modal" style="opacity: 1; display: block;">
+    <div class="modal-dialog" role="document">
+        <h1 class="sr-only">Add Office</h1>
+        <div class="modal-content">
+            <div class="modal-header">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#lunchpro-offices">LunchPro Offices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#non-lunchpro-offices">Non-LunchPro Office</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="lunchpro-offices" role="tabpanel">
+                    <div class="modal-body">
+                        <div class="modal-search-form">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Enter Office Name, Address or Provider">
+                            </div>
+                        </div>
+                        <hr>
+                        <ul class="modal-search-results">
+                            <!-- results loop -->
+                            <li class="row">
+                                <div class="col-2">
+                                    <h1><i class="fa fa-building-o"></i></h1>
+                                </div>
+                                <div class="col-8">
+                                    <h2>Name</h2>
+                                    <p>Title</p>
+                                </div>
+                                <div class="col-2">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- if no results -->
+                        <div class="alert alert-danger">
+                            <p>Sorry, we aren't showing {{ search term }} in our database.</p>
+                            <!-- if can add -->
+                            <a href="#non-lunchpro-offices" class="btn btn-primary" type="button">Add This Office</a>
+                            <!-- end if -->
+                        </div>
+                        <!-- end if -->
+                    </div>
+                </div>
+                <div class="tab-pane" id="non-lunchpro-offices" role="tabpanel">
+                    <div class="modal-body">
+                        <p>For faster reference when ordering food, you can add an office to your list that LuncPro does not currently manage.</p>
+                        <form>
+                            <div class="form-group">
+                                <label for="office-name" class="form-control-label">Office Name</label>
+                                <input id="office-name" name="office-name" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="form-control-label">Address</label>
+                                <input id="address" name="address" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Suite or Building" class="form-control-label">Suite or Building</label>
+                                <input id="Suite or Building" name="Suite or Building" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Zip Code" class="form-control-label">Zip Code</label>
+                                <input id="Zip Code" name="Zip Code" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone Number" class="form-control-label">Phone Number</label>
+                                <input id="Phone Number" name="Phone Number" type="text" class="form-control">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary center-block">Add to My Offices</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- in case we need to add a footer dynamically later
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

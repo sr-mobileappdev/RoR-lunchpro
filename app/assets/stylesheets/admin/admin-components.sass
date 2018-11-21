@@ -1,0 +1,1259 @@
+
+$lp-transition-slide-in: transform 0.25s ease
+$lp-transition-wk-slide-in: -webkit-transform 0.25s ease
+
+$table-date-width: 14.28%
+$table-radius: 6px
+$clr-table-border-color: darken($clr--light-grey, 12%)
+
+$trans-timing: 300ms
+$trans-timing-fast: 200ms
+
+.trigger-sales-rep-form
+  -webkit-box-shadow: none
+  box-shadow: none
+  font-weight: 600
+  text-decoration: underline
+  color: #617D8A
+  text-transform: uppercase
+  font-size: .9em
+
+.comp__slot_table
+  width: 100%
+  border-collapse: separate
+  border-radius: 6px
+  border-spacing: 0
+
+  a.lp__add_slot
+    display: block
+    position: absolute
+    bottom: 6px
+    left: 6px
+    right: 6px
+
+  p.lp__slot
+    font-size: 0.85em
+    text-align: center
+    background: $clr--dark-grey
+    border-radius: 3px
+    padding: 6px 2px
+    color: $clr--black
+    margin-bottom: 10px
+
+    span.title
+      font-weight: 400
+      color: lighten($clr--grey, 25%)
+      display: block
+      font-size: 1.1em
+
+    span.time
+      color: #fff
+      font-weight: 600
+      display: block
+      font-size: 1.15em
+
+      em
+        font-size: 0.85em
+        font-style: normal
+        font-weight: 400
+        padding-left: 1px
+
+    span.actions
+      display: block
+      margin: 7px 0px
+
+      a
+        color: lighten($clr--blue, 5%)
+        text-decoration: none
+
+      a:hover
+        color: lighten($clr--blue, 25%)
+
+      a:first-child
+        margin-right: 5px
+
+  th
+    background: lighten($clr--light-grey, 6%)
+    border: 1px solid $clr-table-border-color
+    border-left: 0px
+    color: lighten($clr--grey, 10%)
+    font-size: 0.7em
+    padding: .5rem .8rem
+    font-weight: 400
+
+    a
+      float: right
+      color: $brand-primary
+
+      span
+        font-size: 1.1em
+
+    a:hover
+      color: lighten($brand-primary, 15%)
+
+
+  th:first-child
+    border-left: 1px solid $clr-table-border-color
+
+  th:first-child
+    border-radius: $table-radius 0px 0px 0px
+
+  th:last-child
+    border-radius: 0px $table-radius 0px 0px
+
+  th:last-child:first-child
+    border-radius: $table-radius $table-radius 0px 0px
+
+  tbody td, tbody th
+    border-right: 1px solid $clr-table-border-color
+    border-top: 1px solid lighten($clr-table-border-color, 15%)
+    padding: .7rem .8rem
+    font-size: 0.8em
+    padding-bottom: 34px
+    vertical-align: top
+
+  tbody td:first-child, tbody th:first-child
+    border-right: 1px solid $clr-table-border-color
+    border-left: 1px solid $clr-table-border-color
+
+  tbody tr:last-child td, tbody tr:last-child th
+    border-bottom: 1px solid $clr-table-border-color
+
+  tbody tr:last-child td:first-child, tbody tr:last-child th:first-child
+    border-radius: 0px 0px 0px $table-radius
+
+  tbody tr:last-child td:last-child, tbody tr:last-child th:last-child
+    border-radius: 0px 0px $table-radius 0px
+
+  tbody tr:last-child td:last-child:first-child, tbody tr:last-child th:last-child:first-child
+    border-radius: 0px 0px $table-radius $table-radius
+
+  thead tr
+    border-radius: $table-radius $table-radius 0px 0px
+
+  td
+    background: #fff
+    position: relative
+
+  th
+    color: $clr--grey
+    font-size: 0.7em
+    font-weight: 400
+    text-align: center
+
+  td, th
+    width: $table-date-width
+
+
+.comp__slide_in
+  position: fixed
+  top: 0px
+  bottom: 0px
+  left: 16.666667%
+  width: 33%
+  background: lighten($clr--dark-grey, 10%)
+  z-index: 9
+  box-shadow: 1px 0px 1px rgba(100, 100, 100, 0.2), 1px 0px 14px rgba(0, 0, 0, 0.1)
+  transform: translate3d(-100%,0,0)
+  -webkit-transform: translate3d(-100%, 0, 0)
+  @include transition($lp-transition-slide-in, $lp-transition-wk-slide-in)
+
+  &.open
+    transform: translate3d(0,0,0)
+    -webkit-transform: translate3d(0, 0, 0)
+
+  .lp__slide_in_loader
+    margin: 5px 0px 0px 20px
+    width: 16px
+
+
+
+.comp__section-header-show
+  border-bottom: 1px solid #ddd
+  background: #fff
+  padding-top: 15px
+  padding-bottom: 5px
+
+.comp__section-header
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  border-bottom: 1px solid #ddd
+  background: #fff
+  z-index: 8
+
+  h2
+    padding: 15px 0px
+    margin-bottom: 0px
+
+  .lp__notice-badges
+    margin-top: -10px
+    margin-bottom: 10px
+
+.comp__new
+  background: $clr--v-light-grey
+
+.comp__content_show
+  padding-top: 20px
+.comp__content
+  margin-top: 65px
+  padding-top: 20px
+
+.comp__content.extended
+  margin-top: 100px
+
+
+
+// Form Stuff
+
+.comp__form, .comp__stripe_form
+  padding: 10px 10px 15px 10px
+
+  h2
+    color: $clr--grey
+
+  h5
+    font-size: 0.9em
+    color: $clr--grey
+
+  h4
+    font-size: 1.1em
+    color: $clr--grey
+
+  p.field_note
+    margin-top: 5px
+    font-size: 0.7em
+    color: lighten($clr--grey, 10%)
+    clear: both
+
+  label
+    color: $clr--grey
+    font-size: 0.9em
+
+  .lp_req
+    label
+      &:after
+        content: ""
+        width: 4px
+        height: 4px
+        margin-left: 4px
+        position: relative
+        top: -1px
+        display: inline-block
+        border-radius: 2px
+        background: $clr--red
+
+.lp__currency_field input
+  padding-left: 20px
+
+.lp__currency_field
+  position: relative
+  &:after
+    position: absolute
+    content: "$"
+    font-size: 0.8em
+    top: 5px
+    left: 8px
+    color: lighten($clr--grey, 15%)
+
+.lp__percentage_field input
+  padding-right: 20px
+
+.lp__percentage_field
+  position: relative
+  width: 50%
+
+  &:after
+    position: absolute
+    content: "%"
+    font-size: 0.8em
+    top: 5px
+    right: 6px
+    color: lighten($clr--grey, 15%)
+
+
+// Pagination Stuff
+
+.lp__pagination
+  float: right
+
+  .is-loading-stickies
+    background: #000
+    height: 10px
+    width: 180px
+    background: rgba(100, 100, 100, 0.1)
+    border-radius: 5px
+    margin-top: 16px
+    margin-right: 2px
+    margin-bottom: 16px
+
+  nav
+    float: right
+
+  nav.lp__paginate_nav
+    margin-left: 30px
+    margin-right: 10px
+
+  p.lp__results
+    float: left
+    margin-right: 10px
+    font-size: 0.75rem
+    color: $clr--grey
+    margin-top: 8px
+
+// Action lists on a show view for detail record
+ul.lp__actions
+  margin-left: 0px
+  padding-left: 20px
+
+  li
+    margin-left: 0px
+    padding-left: 0px
+
+    a
+      font-size: 0.85em
+
+.lp__section_header
+  font-size: 0.9em
+  color: darken($clr--grey, 10%)
+  padding-left: 0em
+  line-height: 1.4em
+  margin-top: 10px
+
+
+.lp__table_actions
+  width: 30%
+  float: right
+  position: relative
+  top: -2px
+
+.lp__table_header
+  font-size: 0.9em
+  color: darken($clr--grey, 10%)
+  padding-left: 0.7em
+  line-height: 1.4em
+  margin-top: 7px
+  float: left
+  width: 50%
+
+  a.menu_selector
+    padding: 0px 12px
+    color: $clr--blue
+    font-weight: 400
+
+  a.menu_selector.active
+    color: $clr--black
+    font-weight: 600
+
+  a.menu_selector:first-child
+    padding-left: 0px
+
+  .lp__week_selector
+    display: inline-block
+    margin-left: 15px
+    font-size: 0.85em
+    color: $clr--blue
+    position: relative
+
+    a
+      position: absolute
+      top: 6px
+      left: 3px
+      pointer-events: none
+
+    input
+      font-size: 0.8em
+      color: $clr--blue
+      border: 0px
+      background: none
+      width: 240px
+      outline: 0
+      box-shadow: none
+      opacity: 0
+      position: relative
+      top: -2px
+      padding-bottom: 0px
+
+    input:focus
+      outline: 0
+
+  a.lp__search
+    margin-left: 10px
+    font-size: 0.8em
+    font-weight: 400
+    color: $clr--blue
+
+  a.lp__search:hover
+    text-decoration: none
+    color: lighten($clr--blue, 15%)
+
+
+  span.oi
+    font-size: 0.95em
+    position: relative
+
+.lp__min_table
+  width: 100%
+
+  tr
+    td
+      border-bottom: 1px solid darken($clr--light-grey, 10%)
+      width: 40%
+      text-align: right
+      padding: 4px 12px
+      color: $clr--black
+      font-weight: 400
+
+    td:first-child
+      width: 60%
+      font-weight: 400
+      text-align: left
+      color: darken($clr--grey, 5%)
+      font-size: 0.7em
+      text-transform: uppercase
+      letter-spacing: 0.05em
+
+.lp__table
+  border-radius: $table-radius
+  border-collapse: separate
+  border-spacing: 0
+  background: #fff
+
+  .lp__actions
+    padding: 0.5rem 0.8rem
+
+  tbody tr.lp__cell_open td
+    background: lighten($brand-success, 37%)
+    border-top: 1px solid lighten($clr-table-border-color, 0%)
+
+  tbody tr.lp__cell_booked td
+    background: #fff
+
+  tbody td, tbody th
+    border-right: 1px solid $clr-table-border-color
+    border-top: 1px solid lighten($clr-table-border-color, 15%)
+    padding: .7rem .8rem
+    font-size: 0.8em
+
+  tbody td.col-actions, tbody th.col-actions
+    width: 20%
+    padding: .6rem .8rem
+    a
+      float: right
+      margin-left: 5px
+
+  tbody td.col-qty, tbody th.col-qty
+    width: 40px
+
+  tbody td.col-id, tbody th.col-id
+    width: 60px
+
+  tbody td.col-cid, tbody th.col-cid
+    width: 100px
+
+  tbody td.col-notes, tbody th.col-notes
+    width: 50%
+    font-size: 0.75em
+
+  tbody td.col-flag, tbody th.col-flag
+    width: 80px
+
+  tbody td.col-type, tbody th.col-type
+    width: 140px
+
+  tbody td.col-light, tbody th.col-light
+    width: 60px
+
+    .lp__status_dot
+      float: none
+      margin: 5px auto 3px auto
+
+  tbody tr:first-child td, tbody tr:first-child th
+    border-top: 0px
+
+  tbody td:first-child, tbody th:first-child
+    border-right: 1px solid $clr-table-border-color
+    border-left: 1px solid $clr-table-border-color
+
+  tbody tr:last-child td, tbody tr:last-child th
+    border-bottom: 1px solid $clr-table-border-color
+
+  tbody tr:last-child td:first-child, tbody tr:last-child th:first-child
+    border-radius: 0px 0px 0px $table-radius
+
+  tbody tr:last-child td:last-child, tbody tr:last-child th:last-child
+    border-radius: 0px 0px $table-radius 0px
+
+  tbody tr:last-child td:last-child:first-child, tbody tr:last-child th:last-child:first-child
+    border-radius: 0px 0px $table-radius $table-radius
+
+  tbody.calendar tr:last-child td:first-child, tbody tr:last-child th:first-child
+    border-radius: 0px 0px 0px 0px
+
+  tbody.calendar tr:last-child td:last-child, tbody tr:last-child th:last-child
+    border-radius: 0px 0px 0px 0px
+
+  tbody.calendar tr:last-child td:last-child:first-child, tbody tr:last-child th:last-child:first-child
+    border-radius: 0px 0px 0px 0px
+
+  thead tr
+    border-radius: $table-radius $table-radius 0px 0px
+
+  thead.calendar tr
+    border-radius: 0px 0px 0px 0px
+
+  .thead-inverse th
+    background: lighten($clr--light-grey, 6%)
+    border: 1px solid $clr-table-border-color
+    border-left: 0px
+    color: lighten($clr--grey, 10%)
+    font-size: 0.7em
+    padding: .5rem .8rem
+    font-weight: 400
+
+  .thead-inverse.calendar th
+    border-top: 0px
+
+  .thead-inverse th:first-child
+    border-left: 1px solid $clr-table-border-color
+
+  .thead-inverse th:first-child
+    border-radius: $table-radius 0px 0px 0px
+
+  .thead-inverse th:last-child
+    border-radius: 0px $table-radius 0px 0px
+
+  .thead-inverse th:last-child:first-child
+    border-radius: $table-radius $table-radius 0px 0px
+
+  .thead-inverse.calendar th:first-child
+    border-radius: 0px 0px 0px 0px
+
+  .thead-inverse.calendar th:last-child
+    border-radius: 0px 0px 0px 0px
+
+  .thead-inverse.calendar th:last-child:first-child
+    border-radius: 0px 0px 0px 0px
+
+.comp__object_field
+  max-height: 29px
+
+  .form-control
+    border-radius: 3px
+
+  div.__loading
+    position: absolute
+    top: 32px
+    right: 22px
+    opacity: 0
+    transform: scale(0.9)
+    -webkit-transform: scale(0.9)
+    @include transition(opacity $trans-timing-fast ease, transform $trans-timing-fast ease, -webkit-transform $trans-timing-fast ease)
+
+  div.__loading.on
+    opacity: 1
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+  div.__select_list
+    opacity: 0
+    overflow: hidden
+    overflow-y: scroll
+    position: relative
+    top: -1px
+    min-height: 0px
+    background: #fff
+    width: 100%
+    border: 1px solid lighten($clr--grey, 20%)
+    border-radius: 0px 0px 3px 3px
+    box-shadow: 0px 2px 1px rgba(100, 100, 100, 0.1), 0px 2px 20px rgba(0, 0, 0, 0.1)
+    z-index: 8
+    max-height: 0px
+    @include transition(opacity $trans-timing-fast ease, max-height $trans-timing ease, min-height $trans-timing)
+
+    ul
+      padding: 0px
+      margin: 0px
+
+      li
+        cursor: pointer
+        list-style: none
+        padding: 10px 12px
+        border-bottom: 1px solid lighten($clr--grey, 40%)
+        font-size: 0.7em
+        color: $clr--grey
+
+        strong
+          font-size: 1.1em
+          color: $clr--black
+
+
+      li:last-child
+        border-bottom: 0px
+
+      li:hover
+        background: lighten($clr--grey, 40%)
+
+.comp__object_field.__open
+  .form-control
+    border-radius: 3px 3px 0px 0px
+
+  div.__select_list
+    opacity: 1
+    max-height: 220px
+    min-height: 1px
+    @include transition(opacity $trans-timing-fast ease, max-height $trans-timing ease, min-height $trans-timing)
+
+h3.lp__notifications
+  font-size: 1.1em
+  font-weight: 300
+  margin-left: 15px
+  color: #fff
+  margin-top: 3px
+  margin-bottom: 20px
+  color: $clr--light-grey
+  float: left
+  width: 70%
+
+a.lp__close_slidein
+  float: right
+  color: rgba(230, 230, 230, 0.5)
+  padding: 0px 15px 0px 0px
+
+a.lp__close_slidein:hover
+  color: rgba(255, 255, 255, 0.2)
+
+.targ_slide_in_content
+  clear: both
+
+ul.lp__notifications
+  margin: 0px
+  padding: 0px
+
+  li.none
+    cursor: default
+    opacity: 0.5
+    background: none
+
+  li.none:hover
+    background: none
+
+  li
+    background: lighten($clr--dark-grey, 5%)
+    margin-top: 1px
+    list-style: none
+    cursor: pointer
+    position: relative
+    //border-top: 1px solid $clr--grey
+
+    font-size: 0.8em
+    padding: 16px 35px 16px 16px
+    color: #fff
+    display: block
+    text-decoration: none
+    @include clearfix
+
+    a, a:link, a:hover, a:active, a:visited
+      color: inherit
+
+    em.title
+      font-weight: normal
+      display: block
+      font-style: normal
+      float: left
+      width: 60%
+      margin-top: -1px
+      margin-bottom: 1px
+
+    span.time
+      font-weight: normal
+      display: block
+      color: darken($clr--light-grey, 15%)
+      font-size: 0.8em
+      width: 35%
+      float: right
+      padding-top: 1px
+      text-align: right
+
+    p
+      clear: both
+      font-size: 0.9em
+      margin: 0px
+      padding: 10px 0px 0px 0px
+      opacity: 0.7
+
+    a.__remove-notification
+      position: absolute
+      top: 16px
+      right: 12px
+      opacity: 0.6
+      cursor: pointer
+
+      span.oi-x
+        cursor: pointer
+
+    a.__remove-notification:hover
+      opacity: 1
+      color: #fff
+
+
+  li.high
+    background: $clr--orange
+    em.title
+      font-weight: bold
+
+    span.time
+      color: #fff
+
+
+  li:hover
+    color: #fff
+    background: lighten($clr--dark-grey, 15%)
+
+  li.high:hover
+    background: lighten($clr--orange, 5%)
+
+
+
+.comp__multi_time_select
+  width: 100%
+  @include clearfix
+
+  .__ms_divider
+    float: left
+    width: 10px
+
+    &::after
+      content: "-"
+
+  .__first
+    float: left
+    width: 40%
+    margin-right: 5px
+
+  .__second
+    float: left
+    width: 40%
+
+
+.comp__menu
+  margin-top: -20px
+  background: darken($clr--v-light-grey, 4%)
+  margin-bottom: 18px
+  width: 100%
+
+  ul
+    margin: 0px
+    padding: 0px 10px
+
+    li
+      float: left
+      list-style: none
+
+      a
+        display: block
+        padding: 6px 13px 8px 13px
+        margin-top: 5px
+        font-size: 0.75em
+        color: $clr--blue
+        text-decoration: none
+        font-weight: 400
+
+      a:hover
+        color: lighten($clr--blue, 15%)
+
+    li.active
+      a
+        background: $clr--v-light-grey
+        border-radius: 4px 4px 0px 0px
+        color: $clr--grey
+        box-shadow: 1px 0px 0px rgba(100, 100, 100, 0.1)
+
+
+.comp__popup.show, .comp__confirm.show
+  opacity: 1
+  visibility: visible
+
+.comp__popup, .comp__confirm
+  opacity: 0
+  visibility: hidden
+  display: flex
+  flex-direction: row
+  position: fixed
+  padding-left: 16.66666%
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  width: 100%
+  height: 100%
+  z-index: 25
+  background: rgba(100, 100, 100, 0.2)
+  @include transition(opacity $trans-timing ease)
+
+  .__popup.show
+    opacity: 1
+    top: -160px
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+  .__popup
+    position: relative
+    opacity: 0
+    top: -120px
+    margin: auto
+    border-radius: 6px
+    background: #fff
+    min-width: 400px
+    min-height: 200px
+    box-shadow: 0px 1px 4px rgba(100, 100, 100, 0.3), 0px 10px 45px rgba(100, 100, 100, 0.3)
+    transform: scale(0.9)
+    -webkit-transform: scale(0.9)
+    @include transition(opacity $trans-timing ease $trans-timing-fast, top $trans-timing ease $trans-timing-fast, transform $trans-timing ease $trans-timing-fast, -webkit-transform $trans-timing ease $trans-timing-fast)
+
+    .__header
+      @include clearfix
+      h2
+        font-size: 0.9em
+        font-weight: 600
+        padding: 10px 14px
+        color: darken($clr--grey, 10%)
+        width: 80%
+        float: left
+
+      a
+        position: relative
+        top: -6px
+        float: right
+        margin-right: 2px
+        color: lighten($clr--grey, 15%)
+        cursor: pointer
+        font-size: 0.8em
+        padding: 12px 10px 12px 12px
+
+      a:hover
+        color: darken($clr--grey, 5%)
+
+    .__popup_content
+      clear: both
+      max-height: 550px
+      overflow: hidden
+      overflow-y: scroll
+      padding: 8px 14px
+
+.comp__confirm
+
+  .__popup
+    min-height: 100px
+    max-width: 320px
+
+.comp__popup.sz-large, .comp__confirm.sz-large
+  .__popup
+    max-width: 900px
+    width: 900px
+
+.lp__editor
+  background: #fff
+  padding: 5px
+  min-height: 640px
+  width: 100%
+  position: relative
+  border-radius: 0.2rem
+  border: 1px solid rgba(0,0,0,0.2)
+
+  .lp__ace
+    position: absolute
+    top: 5px
+    left: 5px
+    right: 5px
+    bottom: 5px
+
+    .ace_gutter-cell
+      color: darken($clr--light-grey, 10%)
+
+    .ace_gutter-layer
+      background: $clr--v-light-grey
+
+    .ace_active-line
+      background: $clr--light-grey !important
+
+    .ace_indent-guide
+      opacity: 0.5 !important
+
+
+.lp__internal_notice.show
+  bottom: 20px
+
+.lp__internal_notice
+  left: 20px
+  position: fixed
+  bottom: -90px
+  background: #383838
+  border-radius: 6px
+  width: 400px
+  min-height: 30px
+  z-index: 21
+  border: 1px solid #383838
+  box-shadow: 0px 1px 4px rgba(100, 100, 100, 0.3), 0px 10px 45px rgba(100, 100, 100, 0.3), inset 0px 1px 0px rgba(255, 255, 255, 0.2)
+  @include transition(bottom 0.5s ease)
+
+  p
+    color: #ddd
+    font-size: 0.75em
+    padding: 14px 16px
+    margin: 0px
+
+
+.show-badge
+  opacity: 1
+  @include transition(opacity 0.2s ease 0.4s)
+
+.hide-badge
+  opacity: 0
+  @include transition(opacity 0.2s ease 0.4s)
+
+.lp__table_filters
+  clear: left
+  width: 50%
+  float: left
+  position: relative
+  top: 10px
+
+  ul
+    padding: 0px
+    margin: 0px
+
+    li:first-child
+      a
+        border-radius: 12px 0px 0px 12px
+
+    li:last-child
+      a
+        border-radius: 0px 12px 12px 0px
+
+    li:first-child:last-child
+      a
+        border-radius: 12px
+
+
+    li
+      list-style: none
+      font-size: 0.75em
+      float: left
+
+      a
+        background: rgba(128, 128, 128, 0.1)
+        padding: 0.25rem 0.7rem
+        border-radius: 0px
+        text-decoration: none
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+        color: $clr--grey
+
+      a.active
+        background: #fff
+        color: $clr--blue
+
+.lp__search_fields.show
+  display: block
+  opacity: 1
+  max-height: 400px
+
+.lp__search_fields
+  display: none
+  clear: both
+  background: $clr--light-grey
+  border-radius: 6px
+  padding: 8px
+  box-shadow: inset 0px 1px 2px rgba(100, 100, 100, 0.2)
+  margin-bottom: 10px
+  max-height: 0px
+  opacity: 0
+  @include transition(opacity 0.3s ease)
+
+  h6
+    color: lighten($clr--grey, 10%)
+    font-size: 0.9em
+    font-weight: 400
+    margin-top: 5px
+    margin-bottom: 3px
+
+  label.lp__show
+    font-size: 0.65em
+
+.lp__field_template
+  display: none
+
+.lp__subitem_holder:before
+  position: absolute
+  content: ""
+  top: 0px
+  bottom: -8px
+  left: 15px
+  background: none
+  border-left: 1px solid $clr--grey
+  border-radius: 0px 0px 0px 8px
+  border-bottom: 1px solid $clr--grey
+  width: 8px
+  z-index: -1
+
+.lp__subitem
+  position: relative
+
+
+.comp__select_availability
+  .availability-time-select
+    border-bottom: 1px solid gray
+    border-top: none
+    -webkit-appearance: none
+    -moz-appearance: none
+    background: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='18' height='18' viewBox='0 0 24 24'><path fill='grey' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>") #fff
+    background-position: 98% 65%
+    background-repeat: no-repeat
+    border-right: none
+    border-left: none
+    border-radius: 0px !important
+    padding-bottom: 0px
+    padding-left: 5px
+    padding-right: 17px
+
+  .availability-time-unselected
+    select
+      color: #c7c7c7 !important
+      border-color: #c7c7c7 !important
+
+  .form-check-label
+    background: none
+    font-size: 0.75em
+    text-transform: uppercase
+    color: #242424 !important
+    padding: 0.4em 1em
+    border-radius: 14px
+    font-weight: 400
+    letter-spacing: 0.1em
+    background: $clr--v-light-grey !important
+
+  .form-check-label:hover
+    background: $clr--light-grey !important
+
+  .form-check-label.checked
+    font-size: 0.75em
+    text-transform: uppercase
+    padding: 0.4em 1em
+    border-radius: 14px
+    font-weight: 400
+    letter-spacing: 0.1em
+    background: $brand-primary !important
+    color: #fff !important
+
+  input[type=checkbox]
+    opacity: 0
+    position: absolute
+    left: -10px
+    top: 0px
+
+
+div.dashboard-activity-table
+
+  div table
+    width: 100%
+    overflow-y: scroll
+
+  .lp__table_header
+    font-size: 1.2em
+    color: darken($clr--grey, 10%)
+    padding-left: 0.7em
+    line-height: 1.4em
+    margin-top: 7px
+    float: left
+    width: 50%
+    position: static
+
+    a.menu_selector
+      padding: 0px 12px
+      color: $clr--blue
+      font-weight: 400
+
+    a.menu_selector.active
+      color: $clr--black
+      font-weight: 600
+
+    a.menu_selector:first-child
+      padding-left: 0px
+
+    a.lp__search
+      margin-left: 10px
+      font-size: 0.8em
+      font-weight: 400
+      color: $clr--blue
+
+    a.lp__search:hover
+      text-decoration: none
+      color: lighten($clr--blue, 15%)
+
+
+    span.oi
+      font-size: 0.95em
+      position: relative
+
+
+  .lp__table
+    border-radius: $table-radius
+    border-collapse: separate
+    border-spacing: 0
+    background: rgba(#afaaaa, 0.36)
+    width: 100%
+
+    .lp__actions
+      padding: 0.5rem 0.5rem
+
+    tbody td, tbody th
+      border-right: 1px solid $clr-table-border-color
+      border-top: 1px solid lighten($clr-table-border-color, 15%)
+      padding: .7rem .8rem
+      font-size: 0.8em
+
+    tbody td.col-actions, tbody th.col-actions
+      width: 20%
+      padding: .5rem .5rem
+      a:first-child
+        float: right
+        margin-left: 5px
+      a:last-child
+        float: left
+
+    tbody td.col-qty, tbody th.col-qty
+      width: 40px
+
+    tbody td.col-id, tbody th.col-id
+      width: 60px
+
+    tbody td.col-cid, tbody th.col-cid
+      width: 100px
+
+    tbody td.col-notes, tbody th.col-notes
+      width: 50%
+      font-size: 0.75em
+
+    tbody td.col-flag, tbody th.col-flag
+      width: 80px
+
+    tbody td.col-type, tbody th.col-type
+      width: 160px
+
+    tbody td.col-light, tbody th.col-light
+      width: 60px
+
+      .lp__status_dot
+        float: none
+        margin: 5px auto 3px auto
+
+    tbody tr:first-child td, tbody tr:first-child th
+      border-top: 0px
+
+    tbody td:first-child, tbody th:first-child
+      border-right: 1px solid $clr-table-border-color
+      border-left: 1px solid $clr-table-border-color
+
+    tbody tr:last-child td, tbody tr:last-child th
+      border-bottom: 1px solid $clr-table-border-color
+
+    tbody tr:last-child td:first-child, tbody tr:last-child th:first-child
+      border-radius: 0px 0px 0px $table-radius
+
+    tbody tr:last-child td:last-child, tbody tr:last-child th:last-child
+      border-radius: 0px 0px $table-radius 0px
+
+    tbody tr:last-child td:last-child:first-child, tbody tr:last-child th:last-child:first-child
+      border-radius: 0px 0px $table-radius $table-radius
+
+    thead tr
+      border-radius: $table-radius $table-radius 0px 0px
+
+    tbody tr:nth-child(even)
+      background: rgba(#afa9a9, 0.14)
+
+    .thead-inverse th
+      background: #635e5e
+      border: 1px solid $clr-table-border-color
+      border-left: 0px
+      color: #fff
+      font-size: 0.8em
+      padding: .5rem .8rem
+      font-weight: 400
+
+    .thead-inverse th:first-child
+      border-left: 1px solid $clr-table-border-color
+
+    .thead-inverse th:first-child
+      border-radius: $table-radius 0px 0px 0px
+
+    .thead-inverse th:last-child
+      border-radius: 0px $table-radius 0px 0px
+
+    .thead-inverse th:last-child:first-child
+      border-radius: $table-radius $table-radius 0px 0px
+
+
+  .blue
+    .lp__table
+      background: rgba(7, 102, 138, 0.24)
+
+      .thead-inverse th
+        background: #07668a
+
+      .blank_row
+        background: rgba(50, 112, 135, 0.3)
+
+  .gray
+    .lp__table
+      background: rgba(115, 115, 115, 0.24)
+
+      .thead-inverse th
+        background: rgba(89, 89, 89, 0.76)
+
+      .blank_row
+        background: rgba(115, 115, 115, 0.3)
+
+  .purple
+    .lp__table
+      background: rgba(64, 7, 138, 0.37)
+
+      .thead-inverse th
+        background: rgba(64, 7, 138, 0.76)
+
+      .blank_row
+        background: rgba(64, 7, 138, 0.21)
+
+
+  .red
+    .lp__table
+      background: rgba(138, 7, 19, 0.37)
+
+      tbody tr td span.empty
+        color: #000
+
+      .thead-inverse th
+        background: rgba(138, 7, 19, 0.76)
+
+      .blank_row
+        background: rgba(138, 7, 19, 0.21)
+
+
+  .green
+    .lp__table
+      background: rgba(0, 128, 43, 0.37)
+
+      tbody tr td span.empty
+        color: #000
+
+      .thead-inverse th
+        background: rgba(0, 128, 43, 0.76)
+
+      .blank_row
+        background: rgba(0, 128, 43, 0.21)
+
+
+div.dashboard-section
+  border: 2px !important
+  border-style: solid !important

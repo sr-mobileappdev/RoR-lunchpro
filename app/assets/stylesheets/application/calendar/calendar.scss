@@ -1,0 +1,282 @@
+.fc-unthemed td.fc-today{
+    background: white;
+    &.fc-day-top {
+        background: transparent;
+    }
+    &.fc-disabled-day {
+        background: #d7d7d7;
+        opacity: .3;
+    }
+}
+.fc-today {
+    .fc-day-number {
+        font-weight: bold;
+    }
+}
+.fc-highlight {
+    background: #ddd;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+// header
+.calendar-header {
+    border-bottom: 1px solid $gray-lighter;
+
+    .fc-today-button {
+        font-size: .85em;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: underline;
+    }
+    .fc-next-button, .fc-prev-button {
+        font-weight: bold;
+        font-size: $font-size-h5;
+        &:hover, &:focus {
+            text-decoration: none;
+        }
+    }
+    .fc-calendar-title {
+        color: $brand-info;
+        font-weight: bold;
+    }
+}
+
+// week day names
+.fc-row.fc-widget-header {
+    border-bottom: 1px dashed #a1e0bc;
+    padding: 0 0 5px 0;
+    margin: 0 0 5px 0;
+}
+.fc-day-header {
+    color: $gray;
+    font-size: $font-size-h5;
+    font-weight: normal;
+}
+
+// days
+.fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+    float: none;
+}
+.fc-basic-view .fc-body .fc-row {
+    min-height: 3em;
+}
+
+.fc {
+    td {
+        text-align: center;
+        border: none;
+        &.fc-today, &.fc-head-container, &.fc-day-header {
+            border: none;
+        }
+    }
+    th {
+        border: 0;
+    }
+    .fc-event .fc-time {
+        display: none;
+    }
+    .open {
+        .fc-title{
+            color: $green !important;
+        }
+        background: $white;
+        border: none;
+    }
+    .booked {
+        .fc-title {
+            color: $black !important;
+        }
+        background: transparent;
+        border: none;
+    }
+    .confirmed {
+        .fc-title {
+            color: $blue !important;
+        }
+        background: $white;
+        border: none;
+    }
+    .current-booked{
+      .fc-title {
+            color: $blue !important;
+        }
+        background: $white !important;
+        border: none;
+    }
+    .current-pending{
+      .fc-title{
+        color: #607D8B;
+      }
+      background: $white;
+      border: none;
+    }
+    .past-order{
+      .fc-title{
+        color: #607D8B;
+      }
+      background: none;
+      border: none;
+    }
+    .past {
+        .fc-title {
+            color: $black;
+        }
+        background: none;
+        border: none;
+    }
+    .hidden-booked{
+      background: transparent;
+      border: none;
+      .fc-title{
+        color: transparent;
+      }
+    }
+    .fc-agendaWeek-view {
+      .past-order{
+        .fc-title{
+          color: #607D8B;
+        }
+        background: $white;
+      }
+      .open {
+          background: $green !important;
+          .fc-title {
+              color: $white;
+          }
+      }
+      .booked {
+          background: $black !important;
+          .fc-title {
+              color: $white;
+          }
+      }
+      .confirmed {
+          background: $blue !important;
+          .fc-title {
+              color: $white;
+          }
+      }
+      .current-booked{
+        background: $blue !important;
+          .fc-title {
+              color: $white;
+        }
+      }
+      .current-pending{
+        .fc-title{
+          color: #607D8B !important;
+        }
+        background: $white;
+      }
+      .hidden-booked{
+        background: transparent;
+        .fc-title{
+          color: transparent;
+        }
+      }
+    }
+
+    .event-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+    .open .event-dot{
+      background: $green !important;
+    }
+    .booked .event-dot {
+        background: #EE2B29 !important;
+    }
+    .current-booked .event-dot{
+      background: $blue !important;
+    }
+    .hidden-booked .event-dot{
+      background: transparent;
+    }
+    .confirmed .event-dot {
+        background: #4E6A78 !important;
+    }
+    .past .event-dot {
+        background: #C9C9C9 !important;
+    }
+    .current-pending .event-dot{
+      background: #607D8B !important;
+    }
+    .past-order .event-dot{
+      background: #607D8B !important;
+    }
+}
+.calendar-key {
+    i{
+      border-radius: 50% !important; 
+    }
+    h3 {
+        color: $gray;
+        font-size: 1em;
+        font-weight: normal;
+        border-bottom: 1px solid $gray-lighter;
+        padding: 5px 0;
+        margin: 0 0 5px;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    li {
+        float: left;
+        margin-right: 20px;
+        font-size: .75rem;
+        font-weight: bold;
+    }
+    .key-color {
+        float: left;
+        width: 12px;
+        height: 12px;
+        margin: 2px 10px 0 0;
+    }
+    .current-booked{
+      color: $blue;
+        .key-color {
+            background: $blue;
+        }
+    }
+    .booked {
+        color: #EE2B29;
+        .key-color {
+            background: #EE2B29;
+        }
+    }
+    .open{
+      color: $green;
+      .key-color {
+          background: $green;
+      }
+    }
+    .confirmed {
+        color: #4E6A78;
+        .key-color {
+            background: #4E6A78;
+        }
+    }
+    .past {
+        color: #C9C9C9;
+        .key-color {
+            background: #C9C9C9;
+        }
+    }
+    .current-pending{
+      color: #607D8B;
+      .key-color{
+        background: #607D8B;
+      }
+    }
+}
+
+.trig__reserve_appointment{
+    padding-right: 29px;
+    padding-left: 29px;
+}
+

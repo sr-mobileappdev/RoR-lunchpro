@@ -1,0 +1,25 @@
+<div id="office-profile">
+  <div class="row mb-5 mt-3">
+      <div class="col-2 mt-5 pl-5">
+          <h1 class="text-center"><i class="fa fa-building-o"></i></h1>
+      </div>
+      <div class="col-6 mt-4">
+          <h4><%= @office.name %></h4>
+          <span><%= single_line_address(@office) %></span><br>
+          <span><%= @office.primary_phone %></span>
+      </div>
+
+      <div class="col-4 mt-4 pr-5">
+        <a href="<%= add_rep_office_path(@office) %>" class="btn btn-primary btn-block btn-sm">Add to My Offices</a>
+        <a href="" class="btn btn-secondary btn-block btn-sm">View Office Policies</a>
+      </div>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link __select_tab" href="#about">About</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link __select_tab" href="#about">Office Policies</a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,24 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body pt-0 mt-0 comp__restaurant_availability">
+    <div class="row comp__restaurant_form pl-4 pr-4 pt-4" id="exclude_date_form">
+      <div class="col-12">
+        <h3 class="ft-bold">Exclude Dates</h3>
+        <p class="mt-2">Below are the submitted date ranges for when this restaurant will be closed and/or not accepting orders.</p>
+      </div>
+      <%= form_for @restaurant, url: update_exclusions_restaurant_preference_path(@restaurant), method: :put,  html: { class: "col-12 p-0", autocomplete: "off", onsubmit: "return false;"  } do |f|%>
+
+        <%= f.fields_for :restaurant_exclude_dates do |o| %>
+          <%= render '/restaurant/components/restaurant_exclude_date_fields', f: o %>
+        <% end %>
+        <!-- <%= link_to_add_fields "Add Exclusion Date(s)", f, :restaurant_exclude_dates , '/restaurant/components/'%> -->
+
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  LPRestaurantAvailability_Initializer();
+  LPRestaurantForm_Initializer();
+</script>

@@ -1,0 +1,39 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :created_by_id) %>
+  <%= lp_hidden_field(f, :office_id) %>
+
+  <div class="row">
+    <div class="col-8">
+      <%= fields_for @record.user do |web_login| %>
+        <div class="form-group row form-group-tight">
+          <div class="col-3 lp_req">
+            <%= lp_text_field(web_login, :first_name, "User First Name") %>
+          </div>
+          <div class="col-5 lp_req">
+            <%= lp_text_field(web_login, :last_name, "User Last Name") %>
+          </div>
+          <div class="col-3">
+            <%= lp_text_field(web_login, :job_title, "Job Title") %>
+          </div>
+        </div>
+
+        <div class="form-group row form-group-tight">
+          <div class="col-4">
+            <%= lp_text_field(web_login, :primary_phone, "User Phone Number", nil, {class: 'form-control form-control-sm phone_number_input'}) %>
+            <p class="field_note">Number will be used for SMS messages where applicable.</p>
+          </div>
+        </div>
+
+        <div class="form-group row form-group-tight">
+          <div class="col-8 lp_req">
+            <%= lp_email_field(web_login, :email, "Login Email") %>
+            <p class="field_note hide-on-edit">After this user is created, a welcome invitation email will be automatically sent to the above address. Upon acceptance of the invite, the user will be prompted to create a password for their login.</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
+<% end %>

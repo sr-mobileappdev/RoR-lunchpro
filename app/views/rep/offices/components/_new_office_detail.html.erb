@@ -1,0 +1,39 @@
+<div id="office-profile">
+  <div class="row align-items-center mb-3 pt-4 pl-3 pr-3 ml-0 mr-0">
+    <div class="col-12 office-detail-back pt-0">
+      <a class="lp__new_office_back ml-2" href="<%= new_rep_office_path %>"><i class="fa fa-arrow-left"></i> BACK</a>
+    </div>
+    <div class="pl-3 pr-2 hidden-xs-down">
+      <%= office_detail_icon %>
+    </div>
+    <div class="col-10 col-md-8 col-lg-8">
+      <h4>
+      <%= @office.name %>
+      </h4>
+      <div>
+        <%= single_line_address(@office) %>
+      </div>
+      <div>
+        <%= @office.primary_phone %>
+      </div>
+    </div>
+    <div class="col-md-2 hidden-sm-down">
+      <a href="#" class="btn btn-success" id="btn-add-office" data-comp-add-office-id="<%= @office.id %>" >Add To My Offices</a>
+      <a href="#" class="btn btn-outline-info" id="btn-view-policies" data-comp-detail-policies-id="<%= @office.id %>"  data-comp-show-in="new" data-url="<%= policies_rep_appointments_path(office_id: @office.id) %>">View Office Policies</a>
+    </div>
+    <div class="hidden-md-up col-12 text-center pt-3">
+      <a href="#" class="btn btn-outline-info btn-block" data-comp-detail-policies-id="<%= @office.id %>"  data-comp-show-in="new" data-url="<%= policies_rep_appointments_path(office_id: @office.id) %>">View Office Policies</a>
+      <a href="#" class="btn btn-success btn-block" data-comp-add-office-id="<%= @office.id %>" >Add To My Offices</a>
+    </div>
+  </div>
+  <hr class="m-0">
+  <div class="text-center h5 mt-3 pb-3">
+    About
+  </div>
+  <hr class="m-0">
+  <div class="tab-content p-1">
+    <div class="tab-pane with-cards active" id="about" role="tabpanel">
+      <%= render partial: 'rep/offices/components/office_detail__about' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2" id='dashboard-index'>
+  <div class="row">
+    <div class="col-12 px-4"><h2 class="lp__light">Activity - <%= @location %></h2></div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <% if @w_cancelled_order.any? %>
+    <div class="row justify-content-center dashboard-activity-table">
+      <div class="col-11 mt-2 red">
+        <%= render partial: 'admin/shared/components/tables/static_activity_table',
+                    locals: {
+                      title: 'Appointments w/ Declined Order',
+                      #actions: [{title: 'Order Food', path: order_food_admin_dashboard_path(id: "<id>"), context: :popup, button_class: 'btn btn-primary btn-sm'},{title: 'BYO', context: :popup, path: byo_admin_dashboard_path(id: "<id>"), button_class: 'btn btn-secondary btn-sm'}],
+                      columns: [{title: 'Date', column: 'appointment_time_in_zone', helper: 'short_date'}, {title: 'Time', column: 'slot_time_type'}, {title: 'Sales Rep', column: 'sales_rep_name_phone'}, {title: 'Office', column: 'office_name_phone'}, {title: 'Declined By', column: 'cancelled_by'}, {title: 'Location', column: 'appointment_location'}],
+                      model_class: 'Appointment',
+                      objects: @w_cancelled_order
+                    } %>
+      </div>
+    </div>
+  <% end %>
+
+    <div class="row justify-content-center dashboard-activity-table">
+      <div class="col-11 mt-2 gray">
+        <%= render partial: 'admin/shared/components/tables/static_activity_table',
+                    locals: {
+                      title: 'Unconfirmed Orders',
+                      actions: [{title: 'Confirm',context: :confirm, confirm_message: "Are you sure you want to confirm this order?", path: confirm_order_admin_dashboard_path("<id>"), button_class: 'btn btn-success btn-sm'},{title: 'Cancel', context: :confirm, confirm_message: 'Are you sure you want to cancel this order?', path: cancel_order_admin_dashboard_path("<id>"), button_class: 'btn btn-danger btn-sm'}],
+                      columns: [{title: 'Date', column: 'delivery_date'}, 'delivery_time', {title: 'Restaurant', column: 'restaurant_name'}, {title: 'Primary Contact', column: 'restaurant.primary_contacts', helper: 'primary_contact_phone'}, {title: 'Secondary Contact', column: 'restaurant.secondary_contact', helper: 'secondary_contact_phone'}, 'order_number', {title: 'Office', column: 'office_name'}, {title: 'Sales Rep', column: 'sales_rep_name_phone'}, {title: 'Location', column: 'order_location'}],
+                      model_class: 'Order',
+                      objects: @unconfirmed_orders
+                    } %>
+      </div>
+    </div>
+
+    <div class="row justify-content-center dashboard-activity-table">
+      <div class="col-11 mt-2 blue">
+        <%= render partial: 'admin/shared/components/tables/static_activity_table',
+                    locals: {
+                      title: 'Unconfirmed Appointments',
+                      actions: [{title: 'Confirm',context: :confirm, confirm_message: "Do you want to confirm this appoointment for its respective Sales Rep?", path: confirm_app_admin_dashboard_path("<id>"), button_class: 'btn btn-success btn-sm'},{title: 'Cancel', context: :popup, path: cancel_popup_admin_dashboard_path("<id>"), button_class: 'btn btn-danger btn-sm'}],
+                      columns: [{title: 'Date', column: 'appointment_time_in_zone', helper: 'short_date'}, {title: 'Time', column: 'slot_time_type'}, {title: 'Sales Rep', column: 'sales_rep_name_phone'}, {title: 'Office', column: 'office_name_phone'}, {title: 'Location', column: 'appointment_location'}],
+                      model_class: 'Order',
+                      objects: @appointments
+                    } %>
+      </div>
+    </div>
+
+  <div class="row justify-content-center dashboard-activity-table">
+    <div class="col-11 mt-2 purple">
+      <%= render partial: 'admin/shared/components/tables/static_activity_table',
+                  locals: {
+                    title: 'Confirmed Appointments w/o Food',
+                    actions: [{title: 'Order Food', path: order_food_admin_dashboard_path(id: "<id>"), context: :popup, button_class: 'btn btn-primary btn-sm'},{title: 'BYO', context: :popup, path: byo_admin_dashboard_path(id: "<id>"), button_class: 'btn btn-secondary btn-sm'}],
+                    columns: [{title: 'Date', column: 'appointment_time_in_zone', helper: 'short_date'}, {title: 'Time', column: 'slot_time_type'}, {title: 'Sales Rep', column: 'sales_rep_name_phone'}, {title: 'Office', column: 'office_name_phone'}, {title: 'Location', column: 'appointment_location'}],
+                    model_class: 'Order',
+                    objects: @confirmed_apps_wo_food
+                  } %>
+    </div>
+  </div>
+
+  <div class="row justify-content-center dashboard-activity-table">
+    <div class="col-11 mt-2 green">
+      <%= render partial: 'admin/shared/components/tables/static_activity_table',
+                  locals: {
+                    title: "Upcoming Appointments",
+                      #actions: [{title: 'Confirm',context: :confirm, confirm_message: "Do you want to confirm this appoointment for its respective Sales Rep?", path: confirm_app_admin_dashboard_path("<id>"), button_class: 'btn btn-success btn-sm'},{title: 'Cancel', context: :popup, path: cancel_popup_admin_dashboard_path("<id>"), button_class: 'btn btn-danger btn-sm'}],
+                      columns: [{title: 'Date', column: 'appointment_time_in_zone', helper: 'short_date'}, {title: 'Time', column: 'slot_time_type'}, {title: 'Sales Rep', column: 'sales_rep_name_phone'}, {title: 'Office', column: 'office_name_phone'}, {title: 'Order', column: 'food_restaurant_column'}, {title: 'Location', column: 'appointment_location'}],
+                      model_class: 'Appointment',
+                      objects: @todays_events
+                    } %>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+<div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3" data-comp-detail-id="<%=order.id%>">
+    <div class="pr-4 pt-1 hidden-md-down">
+      <%= order_history_hourglass_icon %>
+    </div>
+    <div class="col-12 col-lg-8">
+        <div class="h5">
+            <%= order.location %>
+        </div>
+        <% if order.appointment.appointment_slot %>
+          <div>
+              <%= "#{order.appointment.appointment_slot.name} - #{slot_time(order.appointment.starts_at(true))}" %>
+          </div>
+        <% else %>
+          <div>
+            <%= "#{slot_time(order.appointment.starts_at(true))}" %>
+          </div>
+        <% end %>
+    </div>
+</div>

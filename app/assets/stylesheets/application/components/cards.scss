@@ -1,0 +1,95 @@
+// extra space bug fix
+.card-columns {
+	margin-bottom: $card-spacer-y;
+	.card {
+		display: flex;
+		page-break-inside: avoid;
+		break-inside: avoid;
+	}
+}
+
+// custom style
+.card {
+  border-radius: 0px;
+
+	.card-header {
+		background-color: $brand-info;
+		color: $white;
+		text-align: center;
+		font-weight: 500;
+    border-radius: 0px;
+    font-size: 0.9rem;
+    padding: 10px;
+    line-height: 1rem;
+	}
+
+  .card-block {
+    padding: 1rem 1.25rem;
+  }
+
+	&.transparent {
+		background-color: transparent !important;
+		border-color: transparent !important;
+	}
+}
+
+.rep-appointments-card{
+  .list-group{
+    min-height:67.4px;
+    max-height:133px; 
+    overflow:auto;
+    display: block;
+
+    .list-group-item{
+      height: 67.4px; 
+      max-height: 67.4px
+    }
+  }
+}
+.slot-cards{
+  .card{
+    min-height: 300px;
+    max-height: 300px;
+    background-color: #20aa50;
+    color: white;   
+    .card-footer{
+      border: none;
+      background-color: inherit;
+    }
+    p{
+      margin: 0;
+    }
+  }
+}
+.provider-cards{
+  .card{
+    min-height: 250px;
+    max-height: 250px;
+    background-color: #20aa50;
+    color: white;   
+    .card-footer{
+      border: none;
+      background-color: inherit;
+    }
+  }
+  .empty-card .card{
+    min-height: 250px;
+    max-height: 250px;
+    background-color: white !important;
+    color: #808080; 
+    fill: #808080;
+    border: 3px dashed #808080; 
+
+  }
+}
+.slot-cards{
+  .empty-card .card{
+    min-height: 300px;
+    max-height: 300px;
+    background-color: white !important;
+    color: #808080; 
+    fill: #808080;
+    border: 3px dashed #808080; 
+
+  }
+}

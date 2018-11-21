@@ -1,0 +1,30 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid" id="least_favorite_restaurants">
+    <div class="row appointment-modal-body comp__om_form">
+      <div class="col-12 p-0">
+        <%= form_for @office, :url => office_preference_path(@office.id), method: :patch,  html: { class: "row", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+          <%= lp_hidden_field(nil, :redirect_to, "policies") %>
+          <div class="col-12 text-center mt-3">
+            <h4 class="ft-bold">Select Least Favorite Restaurants</h4>
+          </div>
+          <div class="col-11 col-sm-8 ml-auto mr-auto mt-4 mb-5 ">        
+            <input type="text" id="office_least_favorite_restaurants" value="<%=@office.least_favorite_restaurants_ids%>" name="office[office_restaurant_exclusions]" data-attributes="<%=@restaurants%>" data-multi-selectize="true">
+          </div>
+          <div class="col-12 text-center hidden-xs-down mb-4">
+            <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success" data-submit>Save</button>
+          </div>
+          <div class="col-10 ml-auto mr-auto text-center hidden-sm-up mb-4">          
+            <button type="submit" class="btn btn-success btn-block" data-submit>Save</button>
+            <button class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  LPOmOffice_Initializer();
+  LPOmForm_Initializer();
+</script>

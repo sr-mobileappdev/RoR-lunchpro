@@ -1,0 +1,30 @@
+<% restaurant.menu_sorted_categories(menu, @order.appointment.starts_at).each do |category, items| %>
+  <% next unless items && items.count > 0 %>
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="pl-4 pb-2 mt-2"><strong><%= category.gsub("cat_", "").humanize %></strong></h3>
+    </div>
+  </div>
+
+  <% items.each do |item| %>
+    <div class="lp__menu_item_row pb-3" data-modal=true data-modal-title="" href="<%= select_item_office_order_path(@order, menu_item_id: item.id) %>">
+      <div class="col-12 col-md-9 row">
+        <div class="col-12">
+          <span class="h5 ft-bold"><%= item.name %></span>     
+          <span class="lp__popular_price pull-right hidden-md-up"><%= precise_currency_value(item.retail_price_cents) %></span>    
+        </div>
+        <div class="col-12"><%= item.description %></div>
+        <div class="col-12"><span class="mr-2">Serves <%= pluralize(item.people_served, "Person") %></span>
+          <% item.diet_restrictions.each do |r| %>
+            <span class="lp__diet_restriction ft-bold"><%= r.name %></span>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-3 ml-auto mr-auto">
+        <p class="lp__popular_price text-right m-0 hidden-sm-down"><%= precise_currency_value(item.retail_price_cents) %></p>  
+        <a data-modal=true data-modal-title="" href="<%= select_item_office_order_path(@order, menu_item_id: item.id) %>" class="btn btn-info pull-right hidden-sm-down">Select</a>   
+        <a data-modal=true data-modal-title="" href="<%= select_item_office_order_path(@order, menu_item_id: item.id) %>" class="btn btn-info pull-right mt-2 btn-block hidden-md-up">Select</a>
+      </div>
+    </div>
+  <% end %>
+<% end %>

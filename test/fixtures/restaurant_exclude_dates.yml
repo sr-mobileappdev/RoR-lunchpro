@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  restaurant: one
+  starts_at: 2017-07-10 10:20:00
+  ends_at: 2017-07-10 10:20:00
+
+two:
+  restaurant: two
+  starts_at: 2017-07-10 10:20:00
+  ends_at: 2017-07-10 10:20:00

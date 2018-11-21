@@ -1,0 +1,26 @@
+<% tab 'calendar' %>
+<% title 'Finish Appointment Reserved' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal narrow">
+        <div class="row">
+          <% if @standby_filled %>
+            <div class="col-md-12 pl-5 pr-5">
+              <div class="text-info pt-5 text-center">
+                <%= calendar_exclamation_icon_lg %>
+              </div>
+              <p class="text-center pt-3 pl-4 pr-4"><strong>We're sorry, but this appointment is no longer available.</strong></p>
+              <a href="<%= current_rep_calendars_path %>" class="btn btn-sm btn-primary btn-block mt-4">Exit</a>
+            </div>
+          <% else %>
+            <%= render partial: 'rep/appointments/components/finish__appointment_reserved', locals: {appointment: @appointment, show_in_modal: true} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div id="add-credit-card" class="p-3">
+    <h1>Add Credit Card</h1>
+    <form>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name" class="form-control-label">Name on Card</label>
+                    <input id="name" name="name" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="card-number" class="form-control-label">Card Number</label>
+                    <div class="input-group">
+                        <input id="card-number" name="card-number" class="form-control" type="text">
+                        <div class="input-group-addon"> &nbsp; <i class="fa fa-visa"></i> &nbsp; </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-9">
+                        <label for="exp-date" class="form-control-label">Exp Date</label>
+                        <input id="exp-date" name="exp-date" class="form-control" type="text">
+                    </div>
+                    <div class="col-3">
+                        <label for="security-code" class="form-control-label">Security Code</label>
+                        <input id="security-code" name="security-code" class="form-control" type="text">
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group row">
+                    <div class="col-10">
+                        <label for="address" class="form-control-label">Billing Address</label>
+                        <input id="address" address="address" class="form-control" type="text">
+                    </div>
+                    <div class="col-2">
+                        <label for="unit-number" class="form-control-label">Ste/Unit</label>
+                        <input id="unit-number" name="unit-number" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-7">
+                        <label for="city" class="form-control-label">City</label>
+                        <input id="city" name="city" class="form-control" type="text">
+                    </div>
+                    <div class="col-2">
+                        <label for="state" class="form-control-label">State</label>
+                        <input id="state" name="state" class="form-control" type="text">
+                    </div>
+                    <div class="col-3">
+                        <label for="zip" class="form-control-label">Zip</label>
+                        <input id="zip" name="zip" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-secondary">Cancel</button>
+            <button class="btn btn-primary">Save</button>
+            <!-- if success -->
+            <div class="alert alert-success">Your Changes Have Been Saved</div>
+            <!-- end if -->
+        </div>
+    </form>
+</div>

@@ -1,0 +1,6 @@
+<p>
+    Subtotal: <%= ah.precise_currency_value(order.subtotal_cents_for_restaurant_manager)%><br>
+    Delivery Fee: <%= ah.precise_currency_value(order.delivery_cost_cents)%><br>
+	<%= order.status == 'completed' ? '' : 'Estimated ' %>Driver Tip: <%= ah.precise_currency_value((order.status == 'completed' ? order.tip_cents : order.estimated_tip_cents))%><br>
+	Total: <%= ah.precise_currency_value(order.total_cents_for_restaurant_manager)%>
+</p>

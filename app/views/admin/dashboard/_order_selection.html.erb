@@ -1,0 +1,9 @@
+<p class="small">To order food for this appointment, you will be impersonating<br/> it's associated Sales Rep and taken to their profile</p>
+<h5 class="text-center"><%= @appointment.sales_rep.display_name %></h5>
+<div class="row">
+  <div class="col-12">
+    <div class="btn-toolbar mt-3 mb-2 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+      <a data-method="post" href="<%= order_admin_impersonation_index_path(user_id: @appointment.sales_rep.user, appointment_id: @appointment.id) %>" class="btn btn-primary btn-sm mr-2">Impersonate</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+
+@import "admin-utilities";
+@import "admin-colors";
+@import "admin-bootstrap-overrides";
+@import "admin-core";
+@import "admin-nav";
+@import "admin-components";
+@import "admin-icons";
+@import "admin-spinners";
+
+
+#menuwrapper .fa-caret-right{
+  font-size: 1em;
+  align-items: center;
+  color: white;
+}
+/* We remove the margin, padding, and list style of UL and LI components */
+#menuwrapper ul, #menuwrapper ul li{
+  list-style:none;
+  background: #4f5557;
+}
+
+/* We apply background color and border bottom white and width to 150px */
+#menuwrapper ul li{
+    width:100%;
+    cursor:pointer;
+    padding: 0;
+}
+#menuwrapper li.active .nav-first-level{
+  background: #373b3c;
+  
+}
+/* We apply the background hover color when user hover the mouse over of the li component */
+#menuwrapper ul li:hover{
+    position:relative;
+    background: #43484a;
+    .nav-first-level{
+    	color: #c1e7fa;
+    }
+}
+
+#menuwrapper ul li a.nav-first-level{
+ 
+}
+#menuwrapper ul li a.nav-second-level, #menuwrapper ul li a.nav-third-level{
+  padding-right: 15px;
+}
+/* We apply the link style */
+#menuwrapper ul li a{    
+    display:inline-block;
+    text-decoration:none;
+    width: 100%;
+}
+
+/**** SECOND LEVEL MENU ****/
+/* We make the position to absolute for flyout menu and hidden the ul until the user hover the parent li item */
+#menuwrapper ul li ul{
+    position:absolute;
+    display:none;
+    padding: 0;
+    border: 1px solid white;
+}
+
+/* When user has hovered the li item, we show the ul list by applying display:block, note: 150px is the individual menu width.  */
+#menuwrapper ul li:hover ul{
+    left:100%;
+    top:0px;
+
+    display:block;
+}
+
+/* we apply different background color to 2nd level menu items*/
+#menuwrapper ul li ul li{
+  background: #4f55578a;
+  border-bottom: .5px solid white;
+}
+
+/* We change the background color for the level 2 submenu when hovering the menu */
+#menuwrapper ul li:hover ul li:hover{
+    background: #373b3cd4;
+    .nav-second-level{
+    	color: #c1e7fa !important;
+  	}
+}
+
+/* We style the color of level 2 links */
+#menuwrapper ul li ul li a{
+    display:inline-block;
+    width:150px;
+}
+
+/**** THIRD LEVEL MENU ****/
+/* We need to hide the 3rd menu, when hovering the first level menu */
+#menuwrapper ul li:hover ul li ul{
+    position:absolute;
+    display:none;
+
+}
+
+/* We show the third level menu only when they hover the second level menu parent */
+#menuwrapper ul li:hover ul li:hover ul{
+    display:block;
+    left:150px;    
+    
+}
+
+/* We change the background color for the level 3 submenu*/
+#menuwrapper ul li:hover ul li:hover ul li{
+
+}
+
+/* We change the background color for the level 3 submenu when hovering the menu */
+
+#menuwrapper ul li:hover ul li:hover ul li:hover{
+ 
+}
+
+/* We change the level 3 link color */
+#menuwrapper ul li:hover ul li:hover ul li a{
+    
+}
+
+/* Clear float */
+.clear{
+    clear:both;
+}

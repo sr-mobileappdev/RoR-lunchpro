@@ -1,0 +1,56 @@
+<% tab 'past_orders' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_sales_rep_path(@rep) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @rep.display_name %> <span class="lp__subheader">Past Orders</span></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <% if @rep.user && !@rep.user.new_record? %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@rep), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@rep), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@rep), active_tab: 'appointments'},
+                    {title: 'Past Orders', path: admin_sales_rep_orders_path(@rep), active_tab: 'past_orders'},
+                    {title: 'Payments', path: admin_sales_rep_payments_path(@rep), active_tab: 'payments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@rep), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@rep), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% else %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@rep), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@rep), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@rep), active_tab: 'appointments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@rep), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@rep), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% end %>
+<%= render partial: 'admin/shared/components/flash' %>
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Past Orders',
+                    link_columns: {order_number: 'id'},
+                    actions: [{title: 'Send Receipt', context: :confirm, confirm_message: "Are you sure you want to send the order receipt to the Sales Rep?", path: send_receipt_admin_order_path("<id>"), button_class: 'btn btn-info btn-sm'}],
+                    columns: [{title: 'Order Number', column: 'order_number'}, {title: 'Summary', column: 'appointment', helper: 'appointment_summary'}, {title: 'Sales Rep', column: 'sales_rep', helper: 'appointment_rep_summary'}, {title: 'Office', column: 'office', helper: 'appointment_office'}, {title: 'Restaurant', column: 'restaurant', helper: 'appointment_restaurant'}],
+                    model_class: 'Order',
+                    objects: @rep.orders.past_without_cancelled.sort_by{|order| order.appointment.appointment_time}.reverse!
+                  } %>
+    </div>
+  </div>
+
+</div>

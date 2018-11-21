@@ -1,0 +1,82 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 m-3 p-3">
+  <div class="h4 mb-3"> Edit Your Information</div>
+  <div class="row pt-3 pl-3 pb-4">
+    <div class="profile-image-container ml-2 hidden-sm-down">
+      <% if @sales_rep.profile_image && @sales_rep.profile_image.url %>
+          <img class="profile-picture" alt="Profile Picture" src="<%= @sales_rep.profile_image.url %>" />
+      <% else %>
+        <%= image_tag "missing_image.png", class: "profile-picture", alt: "Profile Picture" %>
+      <% end %>
+    </div>
+    <div class="col-sm-9 col-lg-6">
+      <div class="pb-1">Please include a picture of yourself so that both office managers and your partners can identify you.</div>
+      <div><a data-popup="true" data-popup-title="Upload Profile Picture" href="<%= upload_asset_rep_profile_index_path %>" class="btn btn-link p-0">Edit Profile Picture</a></div>
+    </div>
+    <div class="col-lg-4 text-right mt-2 hidden-xs-down">
+      <a href="#" class="btn btn-link" data-comp-detail-tab="profile__change_password">Change Password</a>
+      <a class="btn btn-link btn-sm" data-modal="true" href="<%= show_delete_account_rep_profile_index_path(is_modal: true) %>" data-modal-title="">Deactivate My Account</a>
+    </div>
+    <div class="col-lg-4 p-0 mt-2 hidden-sm-up">
+      <a href="#" class="btn btn-link" data-comp-detail-tab="profile__change_password">Change Password</a>
+      <a class="btn btn-link btn-sm" data-modal="true" href="<%= show_delete_account_rep_profile_index_path(is_modal: true) %>" data-modal-title="">Deactivate My Account</a>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="comp__rep_form">
+      <%= form_for @sales_rep, url: { controller: 'profile', action: "update"}, method: :post,  html: { class: "", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+      <%= lp_hidden_field(nil, :for, 'summary') %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= lp_text_field(f, :first_name, 'First Name', nil, {class: 'form-control'}) %>
+          </div>
+          <div class="form-group">
+            <%= lp_text_field(f, :last_name, 'Last Name', nil, {class: 'form-control'}) %>
+          </div>
+          <%= f.fields_for :sales_rep_emails, f.object.sales_rep_emails.select{|email| email.email_type == 'business'} do |o| %>
+            <%= lp_hidden_field(o, :email_type) %>
+            <%= lp_hidden_field(o, :created_by_id) %>
+            <%= lp_hidden_field(o, :status) %>
+            <div class="form-group">
+              <%= lp_text_field(o, :email_address, o.object.email_type.humanize + ' Email', o.object.email_address, {class: 'form-control'}) %>
+            </div>
+          <% end %>
+          <div class="form-group">
+            <label for="drugs" class="form-control-label">Company</label>
+            <input type="text" id="sales_rep_company_name" value="<%=@sales_rep.company_id%>" name="sales_rep[company_id]" data-companies="<%=@companies%>">
+          </div>          
+        </div>
+        <div class="col-md-6">          
+          <div class="form-group">
+            <label for="specialties" class="form-control-label ft-bold">Specialties</label>
+            <input type="text" id="sales_rep_specialties" name="sales_rep[specialties]" value="<%= f.object.specialties.join(",") %>">
+          </div>
+          <div class="form-group">
+            <%= f.fields_for :sales_rep_phones, f.object.sales_rep_phones.select { |phone| phone.phone_type == 'business'  } do |o| %>
+              <%= lp_hidden_field(o, :phone_type) %>
+              <%= lp_hidden_field(o, :created_by_id) %>
+              <%= lp_hidden_field(o, :status) %>
+              <div class="form-group">
+                <label for="mobile_phone" class="form-control-label">
+                  <span>Mobile Phone</span>
+                  <span class="font-sm d-block">(Used for Text Notifications)</label>
+                <%= lp_text_field(o, :phone_number, nil, o.object.phone_number, {class: 'form-control phone_number_input', hide_label: true}) %>
+              </div>
+            <% end %>          
+          </div>
+          <div class="form-group">
+            <label for="drugs" class="form-control-label">Drugs</label>
+            <input type="text" id="sales_rep_drugs" name="sales_rep_drugs" value="<%=@sales_rep_drugs%>" data-drugs="<%=@drugs%>">
+            <p>Please select which drugs you represent so that medical offices can easily request samples.</p>
+          </div>
+        </div>
+        <div class="col-12 pt-3 text-center">
+          <button class="btn btn-secondary mr-2">Cancel</button>
+          <button data-submit type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+
+<div>
+  <img class="image-logo" src="https://s3.amazonaws.com/lunchpro/Email/images/LP.png" alt="LunchPro Logo"/>
+</div>
+<p class="order_title">Order Summary</p>
+<p class="title m-0">Appointment Date:</p>
+<p class="m-0"><%= ah.long_date(@order.appointment.appointment_time_in_zone)%></p>
+<p class="title">Delivered to:</p>
+<p>
+  <% if @order.sales_rep %>
+    Attn: <%=@order.appointment.sales_rep.display_name%><br>
+  <%else %>
+    Attn: <%=@order.customer_name%><br>
+  <% end %>
+  <%= @order.appointment.office.name%><br>
+  <%= @order.appointment.office.display_location%><br>
+  <%= @order.appointment.office.phone%><br>
+</p>
+<p class="title">Order Details:</p>
+<p>Food provided by: <%=order.restaurant.name%><br>
+  Order #: <%=@order.order_number%><br>
+  Office Staff Count: <%=@order.appointment.office.total_staff_count%><br>
+  Items:
+</p>
+<div style="margin-left: 30px;">
+  <% @order.line_items.each do |li| %>
+    <% next if li.parent_line_item %>
+    <p style="margin-top: 5px;margin-bottom: 5px;padding-top: 0;padding-bottom: 0;"><strong><%= li.orderable_name %> x <%= li.quantity %></strong>  -  <%= precise_currency_value(li.cost_with_sub_items) %>
+      <% if li.sub_line_items.any? %>
+      <br />
+        <% li.sub_line_items.each do |sli| %>
+          <div style="margin-left: 30px;">
+            <%= sli.orderable_name %>
+            <% if sli.cost_cents.to_i > 0 %>
+              <%= "(#{precise_currency_value(sli.cost_cents)})" %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
+<p>
+  Sub Total Price (pre- tax & tip): <strong><%=ah.precise_currency_value(@order.subtotal_cents)%></strong><br>
+  Delivery Fee: <strong><%= ah.precise_currency_value(@order.delivery_cost_cents) %></strong><br />
+  Tip: <strong><%= ah.precise_currency_value(@order.tip_cents) %></strong><br />
+  Tax: <strong><%= ah.precise_currency_value(@order.sales_tax_cents) %></strong><br />
+  Total Amount: <strong><%= ah.precise_currency_value(@order.total_cents) %></strong><br />
+  Payment Method: <strong><%=@order.restaurant.bank_accounts.active.first.display_account_number %></strong>
+</p>
+
+<% if @order.completed? %>
+  <p class="title">Order Feedback:</p>
+  <p>
+    <% if @order.appointment.sales_rep %>
+      Sales Rep Feedback: <Br />
+      <% if @rep_order_review %>
+        Food Quality: <strong><%= @rep_order_review.food_quality %>/5</strong><br />
+        Presentation: <strong><%=@rep_order_review.presentation%>/5</strong><br />
+        Completeness: <strong><%=@rep_order_review.completion%>/5</strong><br />
+        On-Time: <strong><%=@rep_order_review.on_time_display%></strong><br />
+        Comments: <Br />
+        <%=@rep_order_review.comment %><br/>
+      <% else %>
+        <strong>The sales rep has not left feedback.</strong>
+      <% end %>
+        <br />
+    <% end %>
+
+    Office Feedback:<br />
+    <% if @office_order_review %>
+      Overall Rating: <strong><%=@office_order_review.overall%>/5</strong><br />
+      Comments: <Br />
+       <%=@office_order_review.comment %><br/>
+    <% else %>
+      <strong>The office has not left feedback.</strong>
+    <% end %>
+
+  </p>
+<% end %>

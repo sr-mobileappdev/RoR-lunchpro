@@ -1,0 +1,22 @@
+<% tab 'appointments' %>
+<% title 'Appointment Detail' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers comp__rep_office">
+  <div class="lp__fixed f12 no-gutters comp__rep_form">
+    <div class="justify-content-center mt-3">
+      <div class="lp__faux_modal med-large py-4 col-12 row">
+        <a class="lp__faux_model_back" href="<%= current_rep_calendars_path %>"><i class="fa fa-arrow-left pr-1"></i> GO TO CALENDAR</a>
+        <% if @record.inactive? %>
+          <div class="col-12 p-0 mt-5">
+            <h1 class="ft-bold text-center pt-5">Appointment is no longer available!</h1>
+            <h5 class="text-center mt-3">Please contact us if you have any questions or concerns!</h5>
+          </div>
+        <% else %>
+          <div class="col-12 p-0">
+            <%= render partial: @appointment_partial, locals: {office_view: false, @redirect_to => 'calendar'}%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

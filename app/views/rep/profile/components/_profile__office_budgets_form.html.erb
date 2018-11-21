@@ -1,0 +1,24 @@
+<div id="office-budgets" class="b-1 m-3 p-3 comp__rep_form">
+  <div class="h4 mb-3">Office Specific Budgets</div>
+  <div class="col-12 pt-3">
+    <%= form_for @sales_rep, url: {controller: 'profile', action: "update_budgets"}, method: :post,  html: { class: "ml-2", autocomplete: "off", onsubmit: "return false;"  } do |f|%>
+      <%= f.fields_for :offices_sales_reps, f.object.offices_sales_reps.where(:status => 'active').to_a do |o| %>
+        <div class="col-10">
+          <h3><%= o.object.office.name %></h3>
+        </div>
+        <div class="col-10">
+          <%= o.object.office.display_location_single %>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-12 col-lg-10 mb-4">
+          <label class="form-control-label col-12 pl-0 mt-2">Max Price Per Person</label>
+          <h5 class="d-inline-block">$</h5>
+          <%= lp_number_currency_field(o, :per_person_budget_cents, "none", o.object.per_person_budget_cents, {class: 'form-control col-10 col-sm-9 col-md-8', inline_div: true}) %>
+        </div>
+      <% end %>
+      <div class="col-12 text-center">
+        <a class="btn btn-secondary mr-2" data-comp-detail-tab="profile__financial_info">Cancel</a>
+        <button data-submit type="submit" class="btn btn-primary">Save</button>
+      </div>
+    <% end %>
+  </div>
+</div>

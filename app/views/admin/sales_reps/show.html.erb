@@ -1,0 +1,200 @@
+<% tab 'overview' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!-- url: admin_sales_reps_path() -->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @record.display_name %></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <% if @record.user && !@record.user.new_record? %>
+          <a class="btn btn-success btn-sm mr-3" data-confirm-method="post" href="<%= user_password_path(user: {email: @record.user.email}, admin_reset: true) %>" data-confirm-check="Are you sure you want to reset this User's password?">Reset Password</a>
+        <% end %>
+        <a href="<%= edit_admin_sales_rep_path(@record) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+        <% if @record.user && @record.user.entity && @record.user.active? && (@record.user.confirmed_at || @record.user.invitation_accepted_at) %>
+          <a data-method="post" href="<%= impersonate_admin_impersonation_index_path(user_id: @record.user) %>" class="btn btn-primary btn-sm mr-2">Impersonate</a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <% if @record.user && !@record.user.new_record? %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@record), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@record), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@record), active_tab: 'appointments'},
+                    {title: 'Past Orders', path: admin_sales_rep_orders_path(@record), active_tab: 'past_orders'},
+                    {title: 'Payments', path: admin_sales_rep_payments_path(@record), active_tab: 'payments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@record), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@record), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% else %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@record), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@record), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@record), active_tab: 'appointments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@record), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@record), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% end %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <!-- Record Notices (if any) -->
+  <% if @record.notices.count > 0 %>
+    <div class="row">
+      <div class="col-12 px-3 mb-2">
+        <% @record.notices.each do |notice| %>
+          <div class="alert alert-warning">
+            <p class="text-warning small"><span class="oi oi-target"></span> <%= notice[:message] %> <%= (notice[:relatable]) ? "<a class='text-primary pl-3 small' href='#{relatable_notice_path(notice[:relatable])}'>View Details</a>".html_safe : '' %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <!-- End Record notices -->
+
+<!--   <div class="row mb-4 mt-2"> -->
+    <!-- Key Action Buttons -->
+<!--     <div class="col-12 px-4">
+      <div class="row">
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Add Payment Method</a>
+      </div>
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Add Appointment</a>
+      </div>
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Re-process Order(s)</a>
+      </div>
+      <div class="col-3 px-2">
+        <a href="" class="btn btn-primary btn-block">Contact</a>
+      </div>
+      </div>
+    </div> -->
+    <!-- End Key Action Buttons -->
+<!--   </div> -->
+
+  <div class="row">
+    <div class="col-3 mt-2">
+      <div class="lp__profile_image ml-2"><img  /></div>
+    </div>
+
+    <div class="col-9 mt-2">
+      <div class="row">
+        <%= render partial: 'admin/shared/components/details/show_row',
+                    locals: {
+                      object: @record,
+                      fields: [
+                        {'display_location' => {title: 'Address', w: 4}},
+                        {'company_name' => {title: 'Company', w: 3}},
+                        {'login_email' => {title: 'Login Email', w: 3, default: 'Not Set'}}
+                      ]
+                    } %>
+      </div>
+
+      <div class="row">
+        <%= render partial: 'admin/shared/components/details/show_row',
+                    locals: {
+                      object: @record,
+                      fields: [
+                        {'per_person_budget_cents' => {title: 'Per Person Budget', w: 4, helper: 'precise_currency_value', default: 'Not Set'}},
+                        {'default_tip_percent' => {title: 'Tip Percent', w: 3, helper: 'percentage_value', default: 'Not Set'}},
+                        {'max_tip_amount_cents' => {title: 'Max Tip Amount', w: 3, helper: 'precise_currency_value', default: 'Not Set'}}
+                      ]
+                    } %>
+
+      </div>
+
+      <div class="row">
+        <%= render partial: 'admin/shared/components/details/show_row',
+                    locals: {
+                      object: @record,
+                      fields: [
+                        {'formatted_specialties' => {title: 'Specialties', w: 12, default: 'Not Set'}}
+                      ]
+                    } %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-4">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Pending Appointments',
+                    link_columns: {appointment_time_in_zone: 'id', id: 'id'},
+                    columns: ['id', 'office.name', 'office.display_location', {title: 'Appointment', column: 'appointment_time_in_zone', helper: 'long_date'}, {title: 'Food', column: 'food_column'}],
+                    model_class: 'Appointment',
+                    objects: @record.appointments.future.where.not(status: ['deleted','inactive']).order(appointment_on: :asc)
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-7 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'Add Office', url: new_admin_sales_rep_office_path(@record)}],
+                    title: 'Related Offices',
+                    columns: ['office.id', 'office.name', 'notes', {title: "Non-LP", column: 'office.private__flag'}],
+                    link_columns: {"office.name" => 'id'},
+                    model_class: 'OfficesSalesRep',
+                    objects: @record.offices_sales_reps.where.not(status: 'deleted')
+                  } %>
+
+    </div>
+    <div class="col-5 mt-2">
+
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'Add Partner', url: new_admin_sales_rep_partner_path(@record)}],
+                    title: 'Partners',
+                    columns: ['id', 'display_name', 'company_name'],
+                    link_columns: {display_name: 'id', company_name: 'company'},
+                    model_class: 'SalesRep',
+                    actions: [{title: 'Remove', path: delete_admin_sales_rep_partner_path(@record, "<id>"), context: :confirm, confirm_message: 'Are you sure you want to remove this partner?'}],
+                    objects: @record.partners.where.not(status: 'deleted')
+                  } %>
+
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    table_actions: [{name: 'Add Drug', url: new_admin_sales_rep_drug_path(@record)}],
+                    title: 'Drugs',
+                    columns: ['brand'],
+                    model_class: 'Drug',
+                    actions: [{title: 'Remove', path: delete_admin_sales_rep_drug_path(@record, "<id>"), context: :confirm, confirm_message: 'Are you sure you want to remove this drug?'}],
+                    objects: @record.drugs.where.not(status: 'deleted')
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+        <% if @record.user_id %>
+          <li><a class="text-primary" href="<%= reinvite_admin_sales_rep_path(@record) %>">Resend Invite Email</a></li>
+        <% end %>
+        <% if @record.deactivated_at %>
+          <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_sales_rep_path(@record) %>" data-confirm-check="Are you sure you want to re-activate this sales rep?">Re-activate Sales Rep</a></li>
+        <% else %>
+          <li><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_sales_rep_path(@record) %>" data-confirm-check="Are you sure you want to deactivate this sales rep?">Deactivate Sales Rep</a></li>
+        <% end %>
+<!--        <li></q><a class="text-danger" data-confirm-method="post" href="<%= delete_admin_sales_rep_path(@record) %>" data-confirm-check="Are you sure you want to delete this sales rep? They will be removed from the system and only available in historical reporting where applicable.">Delete Sales Rep</a></li> -->
+      </ul>
+    </div>
+  </div>
+
+</div>

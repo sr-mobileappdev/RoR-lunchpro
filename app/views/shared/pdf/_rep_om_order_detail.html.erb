@@ -1,0 +1,80 @@
+<div>
+  <img class="image-logo" src="https://s3.amazonaws.com/lunchpro/Email/images/LP.png" alt="LunchPro Logo"/>
+</div>
+<div class="order_title mt-4">Lunch Order Receipt</div>
+<div class="h5">Delivery date: <%=@order.delivery_date_and_time %> </div>
+<hr class="lp-hr">
+<div class="ft-small">
+	<span class="h5"><%=@order.sales_rep.display_name%></span><br/>
+	<%=@order.sales_rep.company_name %>
+</div>
+<div class="ft-bold mt-2 ft-small">Customer Information:</div>
+<div>
+	<div class="ft-small mt-1" style="width: 100% !important; display: inline;">
+		<%= @order.office.name %> <span class="pull-right"><span class="ft-bold">Phone: </span><%= @order.office.manager_phone%></span><br />
+		<%= @order.office.address_line1%> <%= @order.office.address_line2 %> 	<span class="pull-right"><span class="ft-bold">Order #: </span><%= @order.order_number%></span><br/>
+		<%= @order.office.city%>, <%= @order.office.state %> <%= @order.office.postal_code%>
+    <span class="pull-right"><span class="ft-bold">Payment Method: </span>
+    <%= @order.payment_method ? @order.payment_method.short_display_name : '--'%></span>
+	</div>
+</div>
+<div class="ft-bold mt-2 ft-small">Order Information:</div>
+<div class="card mt-4">
+  <div class="col-7"></div>
+  <div class="card-header">Receipt #<%=@order.order_number %></div>
+  <div class="card-block">
+    <!-- receipt header -->
+    <div class="row">
+      <span class="col-10 text-uppercase mb-2">
+        <strong><%= @order.restaurant.name %></strong>
+      </span>
+    </div>
+    <p class="mb-0 mt-0" style="padding-top: 8px;">Order Served: <%=@order.people_served%> people</p>
+    <!-- receipt item loop -->
+    <% @order.line_items.each do |li| %>
+      <% next if li.parent_line_item %>
+      <div class="mb-0 mt-0">
+        <div class="col-12 mb-0 mt-0">
+          <p class="mb-0 mt-0" style="padding-bottom: 5px; padding-top: 0;"><strong><%= li.orderable_name %></strong><span class="pull-right"><%= ah.precise_currency_value(li.cost_with_sub_items)%></span></p>
+          <p class="mb-0 mt-0" style="padding-top: 0; padding-bottom: 5px;">Quantity: <%= li.quantity %></p>
+          <% li.sub_line_items.each do |sli| %>
+            <p class="mb-0 mt-0" style="padding: 5px 0 0 30px;">
+              <%= sli.orderable_name %>
+              <% if sli.cost_cents.to_i > 0 %>
+                <%= "(#{ah.precise_currency_value(sli.cost_cents)})" %>
+              <% end %>
+            </p>
+          <% end %>
+          <% if li.notes.present? %>
+            <p class="pl-3 mb-0 mt-1"><span class="lp__order_item_notes"><%= li.notes %></span></p>
+          <% end %>
+        </div>
+      </div>
+      <hr style="width: 96%; margin: 15px 0 15px 15px;">
+    <% end %>
+    <!-- total -->
+    <div class="text-uppercase ft-bold total">
+    	<p class="p-total">
+    		<span>Subtotal:</span>
+    		<span class="pull-right"><%= ah.precise_currency_value(@order.subtotal_cents)%></span>
+    	</p>
+    	<p class="p-total">
+    		<span>Delivery Fee:</span>
+    		<span class="pull-right"><%= ah.precise_currency_value(@order.delivery_cost_cents)%></span>
+    	</p>
+    	<p class="p-total">
+    		<span>Tax:</span>
+    		<span class="pull-right"><%= ah.precise_currency_value(@order.sales_tax_cents)%></span>
+    	</p>
+    	<p class="p-total">
+    		<span>Driver Tip:</span>
+    		<span class="pull-right"><%= ah.precise_currency_value(@order.tip_cents)%></span>
+    	</p>
+    	<p class="p-total">
+    		<span>Total Charge:</span>
+    		<span class="pull-right"><%= ah.precise_currency_value(@order.total_cents)%></span>
+    	</p>
+    </div>
+  </div>
+</div>
+

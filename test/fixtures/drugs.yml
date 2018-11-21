@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  brand: MyString
+  generic_name: MyString
+
+two:
+  brand: MyString
+  generic_name: MyString

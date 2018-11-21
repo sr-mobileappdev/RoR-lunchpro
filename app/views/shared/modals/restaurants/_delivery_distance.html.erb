@@ -1,0 +1,22 @@
+<!-- modal for delivery distance -->
+<div class="modal-dialog" role="document">
+   <div class="modal-body comp__restaurant_form pt-0 mt-0 justify-content-center">
+     <div class="row comp__restaurant_delivery_distance pl-4 pr-4 pt-4 justify-content-center" id="delivery_distance_form" data-nested-attributes="restaurant_delivery_distance_attributes_">
+       <div class="col-12 justify-content-center align-middle">
+         <h3 class="ft-bold">Delivery Distance</h3>
+         <p class="mt-2">If this restaurant is set to use a complex delivery radius, each value is displayed below</p>
+       </div>
+       <%= form_for @restaurant, url: update_delivery_distance_restaurant_preference_path(@restaurant), method: :put, html: { class: "col-12 p-0", autocomplete: "off", onsubmit: "return false;" } do |f| %>
+
+        <%= f.fields_for :delivery_distance do |o| %>
+          <%= render '/restaurant/components/delivery_distance_fields', f: o %>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+</div>
+
+<script>
+  LPRestaurantForm_Initializer();
+  LPRestaurantDeliveryDistance_Initializer();
+</script>

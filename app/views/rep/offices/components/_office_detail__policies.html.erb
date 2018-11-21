@@ -1,0 +1,33 @@
+<div class="col-md-12 mb-5 mt-3 p-0">
+  <a class="ml-3 lp__back" href="#"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+  <p class="text-center pt-3 pl-4 pr-4 h5"><strong><%= @office.name %></strong></p>
+  <p class="text-center pl-4 pr-4"><%= @office.display_location_single %><br/><%= format_phone_number_string(@office.primary_phone) %></p>
+  <hr />
+  <p class="text-center pt-3 pl-4 pr-4">
+    <strong>Office Policies</strong>
+    <br/>
+    <span class="small">Last Updated: <%= simple_date(@office.policies_last_updated_at) %></span>
+  </p>
+  <p class="pt-3 pl-4 pr-4">
+    <strong>General Policies</strong>
+    <br/>
+    <%= @office.office_policy %>
+  </p>
+  <div class="pt-3 pl-4 pr-4">
+    <strong>Office Dietary Restrictions</strong>
+    <br/>
+    <% @office.diet_restrictions_offices.each do |restrict| %>
+    <div>
+      - <%= restrict.diet_restriction.name %>: <%= restrict.staff_count%> staff members
+    </div>
+    <%end%>
+    <% if @office.diet_restrictions_offices.count == 0 %>
+    N/A
+    <% end %>
+  </div>
+  <p class="pt-3 pl-4 pr-4">
+    <strong>Food Preferences & Policies</strong>
+    <br/>
+    <%= @office.food_preferences %>
+  </p>
+</div>

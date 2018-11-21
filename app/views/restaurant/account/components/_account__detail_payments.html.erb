@@ -1,0 +1,56 @@
+<div id="account-profile" class="b-1 m-3 p-3">
+  <div class="mb-3 mt-4 ml-4">
+    <div class="h4 mb-3">Payments</div>
+    <div class="row pt-3">
+      <div class="col-lg-12 mb-5">
+        <% if @restaurant.past_orders.count > 0 %>
+          <label class="form-control-label mb-4">Here is a list of orders and their corresponding fees and totals.</label>
+          <hr class="m-0">
+          <div class="table-responsive">
+            <table class="text-right col-12 text-uppercase mt-3 rest-payments-table">
+              <tr class="row ft-bold mb-2">
+                <td class="col text-center">Date</td>
+                <td class="col text-center">Order Number</td>
+                <td class="col text-center">Subtotal</td>
+                <td class="col text-center">Delivery Fee</td>
+                <td class="col text-center">Sales Tax</td>
+                <td class="col text-center">Driver Tip</td>
+                <td class="col text-center">Total</td>
+                <td class="col text-center">Revenue Share</td>
+                <td class="col text-center">Processing Fee</td>
+                <td class="col text-center">Payout</td>
+              </tr>
+              <% @restaurant.past_orders.each do |order| %>
+                <tr class="row pt-1 pb-1 mt-2 mb-2 b-1">
+                  <td class="col text-center"><%= order.appointment.appointment_on.strftime("%m/%d/%y") %></td>
+                  <% number = order.order_number.gsub(/[A-Z]{2}0+/, '') %>
+                  <td class="col text-center"># <%= number %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.subtotal_cents) %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.delivery_cost_cents) %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.sales_tax_cents) %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.tip_cents) %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.total_cents) %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.lunchpro_commission_cents) %></td>
+                  <td class="col text-center"><%= precise_currency_value(order.processing_fee_cents) %></td>
+                  <% if order.restaurant_transaction_id %>
+                    <% transaction = RestaurantTransaction.find(order.restaurant_transaction_id) %>
+                    <td class="col text-center"><%= precise_currency_value(transaction.paid_amount_cents) %></td>
+                  <% else %>
+                    <td class="col text-center">--</td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        <%else%>
+          <div class="row pt-3 justify-content-center">
+            <div class="col-lg-12 mb-5 justify-content-center text-center">
+              <p class="form-control-label ft-bold">There currently are no pending or past payments</p>
+              <img src="<%= image_path('default_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

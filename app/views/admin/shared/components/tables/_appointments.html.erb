@@ -1,0 +1,64 @@
+<h5 class="lp__table_header"><%= (local_assigns[:title]) ? title : '' %>
+  <div class="lp__week_selector" href=""><input type="text" name="appointment_week" /> <a href="">Week of <%= short_date(slot_manager.start_date) %> - <%= short_date(slot_manager.end_date) %></a></div>
+</h5>
+
+<% slot_groups = slot_manager.upcoming_by_date %>
+<table class="lp__table table">
+  <% slot_groups.each_with_index do |(day, group), index| %>
+    <thead class="thead-inverse <%= (index != 0) ? 'calendar' : '' %>">
+      <tr>
+        <th colspan="3"><%= short_date(day) %></th>
+      </tr>
+    </thead>
+    <tbody class="calendar">
+      <% if group && group.office_slots.count == 0 %>
+        <tr>
+          <td colspan="3">No Slots Available</td>
+        </tr>
+      <% elsif group && group.office_slots.count > 0%>
+        <% group.office_slots.sort_by{|slot| slot.appointment_slot.starts_at(true)}.each do |office_slot| %>
+          <tr class="<%= (office_slot.is_booked?) ? 'lp__cell_booked' : 'lp__cell_open' %>">
+            <td style="width: 30%;">
+              <%= office_slot.appointment_slot.name %>
+
+              <% if office_slot.is_booked? %>
+                <br/><span class="small"><strong><%= office_slot.status_notice %></strong></span>
+              <% end %>
+
+              <br/>
+              <% if office_slot.available_providers.count == 0 %>
+                <span class="small empty">No Providers Available</span>
+              <% else %>
+                <span class="small"><strong><%= office_slot.available_providers.map { |p| p.display_name }.flatten.compact.join(", ") %></strong></span>
+              <% end %>
+
+            </td>
+            <td style="width: 25%;">
+              <% if office_slot.is_booked? %>
+                <% if office_slot.booked_by_rep %>
+                  <a class="jump" href="<%= admin_sales_rep_path(office_slot.booked_by_rep) %>"><%= office_slot.booked_by_rep.display_name %></a>
+                  <br/>
+                  <span class="small"><%= office_slot.booked_by_rep.company_name %></span>
+                <% else %>
+
+                <% end %>
+              <% else %>
+                <span class="badge badge-success p-1">Open</span>
+              <% end %>
+            </td>
+            <td class="col-actions">
+              <% if office_slot.is_booked? %>
+                <% if office_slot.appointment.belongs_to %>
+                  <a href="<%= order_admin_impersonation_index_path(user_id: office_slot.appointment.belongs_to, appointment_id: office_slot.appointment.id) %>" data-method="post"class="btn btn-success btn-sm">Order Food</a>
+                <% end %>
+                <a href="<%= admin_office_appointment_path(parent_object, office_slot.appointment) %>" class="btn btn-secondary btn-sm">View</a>
+              <% else %>
+                <a href="<%= new_admin_office_appointment_path(parent_object, slot_id: office_slot.appointment_slot.id, date: system_date(group.date)) %>" class="btn btn-secondary btn-sm">Reserve</a>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

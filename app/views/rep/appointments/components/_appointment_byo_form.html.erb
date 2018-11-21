@@ -1,0 +1,20 @@
+<div class="row appointment-modal-body">
+  <div class="col-12">
+    <h3 class="ft-bold">Let the office know what you are bringing</h3>
+    <% if @record.food_ordered? %>
+      <p class="mt-2">Your current order will be cancelled if you bring your own food!</p> 
+    <% end %>
+    <%= form_for @record, url: { controller: "appointments", action: "update" }, method: "put",  html: { class: "col-12 mt-4", autocomplete: "off" } do |f| %>
+      <%= lp_hidden_field(nil, :redirect_to, @redirect_to) %>
+      <div class="form-group">
+        <label class="ft-bold">Restaurant Name</label>
+        <input type="hidden" value="true" name="appointment[will_supply_food]" d="appointment_will_supply_food">
+        <%= lp_text_field(f, :bring_food_notes, "none", nil, {class: "form-control col-12 col-sm-7"}) %>
+      </div>
+      <div class="col-12 text-center mt-4">
+        <button class="btn btn-outline-info" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-success" data-submit type="submit">Save</button>
+      </div>
+    <% end %>
+  </div>
+</div>

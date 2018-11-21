@@ -1,0 +1,71 @@
+<% tab 'payments' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_sales_reps_path() } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @rep.display_name %></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <% if @rep.user && !@rep.user.new_record? %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@rep), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@rep), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@rep), active_tab: 'appointments'},
+                    {title: 'Past Orders', path: admin_sales_rep_orders_path(@rep), active_tab: 'past_orders'},
+                    {title: 'Payments', path: admin_sales_rep_payments_path(@rep), active_tab: 'payments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@rep), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@rep), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% else %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@rep), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@rep), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@rep), active_tab: 'appointments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@rep), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@rep), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% end %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+  <div class="row">
+    <div class="col-9 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Payment Methods',
+                    table_actions: [{name: 'Add Payment Method', url: new_admin_sales_rep_payment_path(@rep)}],
+                    actions: [
+                              {title: 'Edit', path: edit_admin_sales_rep_payment_path(@rep, "<id>"), button_class: 'btn btn-primary btn-sm'},
+                              {title: 'Delete', context: :confirm, confirm_message: "Are you sure you want to delete this Payment Method?", path: delete_admin_sales_rep_payment_path(@rep, "<id>"), button_class: 'btn btn-danger btn-sm'}],                             
+                    columns: [{title: 'Summary', column:'display_summary'}, 'default'],
+                    model_class: 'PaymentMethod',
+                    objects: @rep.user.payment_methods.where.not(status: ['deleted','inactive'])
+                  } %>
+    </div>
+
+    <div class="col-9 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Recent Transactions',
+                    columns: ['id', 'name', 'display_location'],
+                    model_class: 'Appointment',
+                    objects: @rep.payment_methods.where.not(status: ['deleted','inactive'])
+                  } %>
+    </div>
+
+  </div>
+
+</div>

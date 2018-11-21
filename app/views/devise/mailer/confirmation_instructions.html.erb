@@ -1,0 +1,63 @@
+<div class="lp-email-container" style="background-color:#ffffff;">
+  <!--[if mso | IE]>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" align="center" style="width:600px;">
+    <tr>
+      <td style="line-height: 0px; font-size: 0px; mso-line-height-rule: exactly;">
+  <![endif]-->
+
+  <div style="margin: 0px auto; max-width: 600px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" style="font-size: 0px; width: 100%;" align="center" border="0">
+      <tbody>
+        <tr>
+          <td style="text-align: center; vertical-align: top; direction: ltr; font-size: 0px; padding:20px 0px;">
+
+            <div style="margin: 0px auto; max-width: 600px;">
+
+            <!--[if mso | IE]>
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="vertical-align: top; width: 600px;">
+            <![endif]-->
+
+                <div class="mj-column-per-100 outlook-group-fix" style="vertical-align: top; display: inline-block; direction: ltr; font-size: 13px; text-align: left; width:100%;">
+                  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0"><tbody><tr>
+
+                    <td style="word-wrap: break-word; font-size: 0px; padding: 10px 20px;" align="left">
+
+                      <!-- CONTENT BELOW HERE -->
+                      <div style="cursor: auto; color: #2B2C2E; font-family: 'Helvetica Neue', Helvetica, Arial; font-size: 14px; line-height: 22px; text-align: left;">
+
+                        <p><strong>Welcome <%= @resource.display_name %></strong></p>
+                        <p style='font-size: 18px; line-height: 26px;'>You can confirm your account email through the link below:</p>
+
+                        <p>We're confident you'll find our premier tools for managing catering, appointments and sample orders will meet all your hopes and dreams. Simply follow the link below to access the system and get started.</p>
+
+                        <p style='text-align: center;'>
+                          <a href="<%= confirmation_url(@resource, confirmation_token: @token) %>" style='text-align: center; max-width: 280px; border-radius:3px; background: #1BA6D7; color: #FFFFFF; padding: 8px 14px; display: block; margin: 0px auto; font-weight: 600;'>Confirm My Account</a>
+                        </p>
+                      </div>
+                      <!-- CONTENT ABOVE HERE -->
+
+                    </td>
+
+                  </table>
+                </div>
+
+            <!--[if mso | IE]>
+                </td></tr>
+              </table>
+            <![endif]-->
+
+            </div>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!--[if mso | IE]>
+    </td></tr></table>
+  <![endif]-->
+
+</div>

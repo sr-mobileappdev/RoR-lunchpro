@@ -1,0 +1,83 @@
+<div class="row faux-modal-header bb-1">
+  <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+    <%= appt_icon(@record) %>
+  </div>
+  <div class="col-12 col-sm-10 mt-1">
+    <h3 class="ft-bold"><a href="<%=appointment_office_link(@record)%>"><%= @record.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+    <span><%= short_date(@record.appointment_on) %></span>
+    <br/>
+    <% if @record.appointment_slot %>
+      <span><%= "#{@record.appointment_slot.name}: #{slot_time(@record.starts_at(true))}" %></span>
+    <% else %>
+      <span><%= "#{slot_time(@record.starts_at(true))}" %></span>
+    <% end %>
+  </div>
+</div>
+<div class="row appointment-modal-body">
+  <% if @record.appointment_slot %>
+    <div class="col-12 mb-4">
+      <h4 class="ft-bold d-inline mr-3">Suggested Order Count:</h4><h4 class="d-inline"><%=@record.appointment_slot.total_staff_count%></h4>
+    </div>
+    <div class="col-12 mb-1">
+      <h4 class="ft-bold">Providers Available for this Appointment:</h4>
+    </div>
+    <div class="col-12 row">
+      <% @record.office.providers_available_at(@record.appointment_slot).each do |provider| %>
+      <div class="col-12 col-sm-6 col-md-4 mt-3">
+        <h6><%= provider.display_name %></h6>
+      </div>
+      <% end %>
+    </div>
+    <hr class="col-12 p-0">
+  <% end %>
+  <% if @record.food_ordered? && !@office_order_review.present? %>
+    <div class="restaurant-image-container-sm hidden-sm-down mr-2">
+      <% if @record.restaurant.brand_image && @record.restaurant.brand_image.url %>
+      <img class="restaurant-image" src="<%= @record.restaurant.brand_image.url %>" alt="Restaurant Logo" />
+      <% else %>
+      <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+      <% end %>
+    </div>
+    <div class="col-12 col-sm-7">
+      <h4 class="ft-bold"><%= @record.restaurant.display_name %></h4>
+      <p class="mb-0 mt-1"><%= @record.restaurant.primary_cuisine %></p>
+      <p>Total Price: <%=precise_currency_value(@record.active_order.total_cents)%></p>
+    </div>
+    <div class="col-12 col-sm-4 col-md-3 mt-3">
+      <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@record.active_order.id, redirect_to: @record.active_order.editable? ? 'calendar' : @redirect_to)%>" class="btn btn-block btn-outline-info">View Order</a>
+    </div>
+  <% end %>
+  <% if @record.will_supply_food %>
+    <div class="col-12 col-md-5 col-lg-4 mb-2">
+      <h4 class="ft-bold">You brought your own food:</h4>
+    </div>
+    <div class="col-12 col-md-6 col-lg-7">
+      <h4><%=@record.bring_food_notes%></h4>
+    </div>
+  <% end %>
+  <% if @office_order_review.present? #if office left feedback %>
+    <div class="restaurant-image-container-sm hidden-sm-down mr-2">
+      <% if @record.restaurant.brand_image && @record.restaurant.brand_image.url %>
+      <img class="restaurant-image" src="<%= @record.restaurant.brand_image.url %>" alt="Restaurant Logo" />
+      <% else %>
+      <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+      <% end %>
+    </div>
+    <div class="col-12 col-sm-7">
+      <h4 class="ft-bold"><%= @record.restaurant.display_name %></h4>
+      <p class="mb-0 mt-1"><%= @record.restaurant.primary_cuisine %></p>
+      <p>Total Price: <%=precise_currency_value(@record.active_order.total_cents)%></p>
+    </div>
+    <div class="col-12 col-sm-4 col-md-3 mt-3">
+      <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@record.active_order.id, redirect_to: @record.active_order.editable? ? 'calendar' : @redirect_to)%>" class="btn btn-block btn-outline-info">View Order</a>
+    </div>
+    <div class="col-12 mt-3 text-center">
+      <h4 class="ft-bold">This Office Left Feedback!</h4>
+    </div>
+  <% end %>
+  <% if !@record.food_ordered? && !@record.will_supply_food%>
+    <div class="col-12 text-center">
+      <p class="h5"><i>There was no food ordered for this appointment</i></p>
+    </div>
+  <% end %>
+</div>

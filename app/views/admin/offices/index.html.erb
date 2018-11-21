@@ -1,0 +1,69 @@
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light">Offices</h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <%= link_to "New Office", new_admin_office_path(), class: 'btn btn-primary btn-sm mr-2' %>
+<!--         <button type="button" class="btn btn-secondary btn-sm pull-right">Export</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+  <div class="row">
+    <div class="col-12 mt-2">
+      <div class="comp__table">
+        <h5 class="lp__table_header">Offices
+          <% if @search && @search.id %>
+            <a href="<%= admin_offices_path %>" class="lp__search"><span class="oi oi-magnifying-glass"></span> Clear Search</a>
+          <% else %>
+            <a class="lp__search trig-show-search" href=""><span class="oi oi-magnifying-glass"></span> Search</a>
+          <% end %>
+        </h5>
+        <a data-method="post" href="<%= report_admin_offices_path(scope: @scope) %>" class="btn btn-primary btn-sm pull-right">Export To CSV</a>
+
+
+        <div class="lp__search_fields <%= (@search && @search.id) ? 'show' : '' %>">
+          <%= form_for @search, url: @search_path, method: "POST" do |f| %>
+
+            <%= render partial: 'admin/shared/components/search/fields',
+                    locals: {
+                      search: @search,
+                      rows: [
+                        {fields: [{'name' => { w:5, title: "Office Name" }}]},
+                        {fields: ['city', {'state' => { w:1 }}, {'address_line1' => {w:3, title: "Address"}}, {'postal_code' => { title: 'Zip Code', w:2 }}]},
+                      ]
+                    } %>
+
+            <hr />
+            <div class="ml-2 mb-2 mt-3">
+              <input type="submit" class="btn btn-secondary btn-sm" value="Search" />
+            </div>
+
+          <% end %>
+        </div>
+        <!-- Table Filters -->
+        <% if @available_scopes && @available_scopes.count > 0 %>
+          <div class="lp__table_filters pb-4">
+            <ul>
+              <% @available_scopes.each do |this_scope| %>
+                <li><a class="<%= (@scope && @scope == this_scope[:scope]) ? 'active' : '' %>" href="<%= admin_offices_path(scope: this_scope[:scope], search_id: @search) %>"><%= this_scope[:title] %></a></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <!-- END -->
+
+        <div class="lp__pagination targ-table-pagination">
+          <div class="is-loading-stickies"></div>
+        </div>
+        <table class="lp__table table autoload" data-table-url="<%= table_admin_offices_path(scope: (@scope) ? @scope : nil, search_id: (@search && @search.id) ? @search.id : nil, page: @page, sort: @sort, per_page: @per_page) %>">
+          <%= render partial: 'admin/shared/components/tables/loading_content', locals: {message: ''} %>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

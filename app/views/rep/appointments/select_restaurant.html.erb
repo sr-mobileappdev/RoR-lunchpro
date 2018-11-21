@@ -1,0 +1,115 @@
+<% tab 'calendar' %>
+<% title 'Select Restaurant' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+<div class="lp__scroll_containers comp__restaurants" data-appointment-id="<%= @appointment.id %>" data-initialize-stars="true" data-recommended-cuisines="<%= @appointment.recommended_cuisines.to_a%>">
+  <div class="lp__fixed f12 no-gutters comp__om_form">
+    <div class="justify-content-center pt-2">
+      <div class="lp__faux_modal x-large pt-2">
+        <div class="col-12 bb-1 pb-3">
+          <div class="row">
+            <div class="col-12 col-md-8 col-lg-5 col-xl-8 mt-2 pr-0">
+              <a class="ml-1" href="<%= policies_rep_appointments_path(office_id: @office.id, appointment_id: @appointment.id) %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+              <div class="row col-12 pt-3 pr-0">
+                <div class="hidden-xs-down pl-1 pr-4 pt-1">
+                  <%= orders_dinner_tray_icon %>
+                </div>
+                <div class="col-9 pr-0 pl-0">
+                  <h3 class="ft-bold font-lg">Restaurants</h3>
+                  <p class="mb-0">Please select a restaurant for delivery</p>
+                </div>
+              </div>
+            </div>
+            <% if @recent_order %>            
+              <div class="col-12 col-md-4 col-lg-7 col-xl-4 row m-0 pr-0">              
+                <div class="col-12 col-lg-5 p-0">
+                  <p class="m-0 pt-3 mt-2 hidden-sm-down pr-2">Your last order on <%=simple_date(@recent_order.appointment.appointment_on, nil, true)%></p>
+                  <p class="m-0 hidden-md-up">Your last order on <%=simple_date(@recent_order.appointment.appointment_on, nil, true)%></p>
+                  <% if @recent_order_review %>
+                    <div class="col-12 row pr-0 mr-0">                
+                      <label><strong>Your overall rating:</strong></label>                    
+                      <div class="col-12 pr-0 pl-0">
+                        <fieldset class="order-rating rating-disabled d-inline" id="overall-rating" data-comp-checked-value="<%= @recent_order_review.overall %>">
+                          <input type="radio" id="rep_overall5" name="recent_order_review[overall]" value="5"/><label for="quality5">5 stars</label>
+                          <input type="radio" id="rep_overall4" name="recent_order_review[overall]" value="4"/><label for="quality4">4 stars</label>
+                          <input type="radio" id="rep_overall3" name="recent_order_review[overall]" value="3"/><label for="quality3">3 stars</label>
+                          <input type="radio" id="rep_overall2" name="recent_order_review[overall]" value="2"/><label for="quality2">2 stars</label>
+                          <input type="radio" id="rep_overall1" name="recent_order_review[overall]" value="1"/><label for="quality1">1 star</label>
+                        </fieldset>   
+                      </div>                       
+                    </div>             
+                  <% end %>
+                </div>
+                <div class="col-12 col-lg-7 hidden-md-down pt-3">
+                  <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@recent_order.id, most_recent_order: true, current_appointment_id: @appointment.id)%>" class="btn btn-info btn-block">View Order</a>
+                  <% if @restaurants.any? %>
+                    <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>" class="btn btn-outline-info btn-block"><%= byo_button_text(@appointment) %></a>   
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-12 hidden-lg-up text-center mt-2">
+                <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@recent_order.id, most_recent_order: true, current_appointment_id: @appointment.id)%>" class="btn btn-info hidden-xs-down">View Order</a>
+                <% if @restaurants.any? %>
+                  <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>"  class="btn btn-outline-info hidden-xs-down"><%= byo_button_text(@appointment) %></a>
+                <% end %>
+                <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@recent_order.id, most_recent_order: true, current_appointment_id: @appointment.id)%>" class="btn btn-info btn-block btn-block hidden-sm-up">View Order</a>
+                <% if @restaurants.any? %>
+                  <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>"  class="btn btn-outline-info btn-block hidden-sm-up"><%= byo_button_text(@appointment) %></a>
+                <% end %>
+              </div>
+            <% elsif @past_order %>
+              <div class="col-12 col-md-4 col-lg-7 col-xl-4 row m-0 p-0">              
+                <div class="col-12">
+                  <p class="mb-0 mt-2 text-center">Most Recent LunchPro Order - <%=@past_order.restaurant.name %>: <%=@past_order.appointment_slot.name%> - <%=short_date(@past_order.appointment_time(true))%></p>
+                  <% if @restaurants.any? %>
+                    <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>" class="btn btn-outline-info btn-block col-12 col-sm-6 col-md-12 col-lg-6 ml-auto mr-auto mt-3"><%= byo_button_text(@appointment) %></a>  
+                  <% end %>
+                </div>
+
+              </div>
+            <% else %>
+              <% if @restaurants.any? %>
+                <div class="col-3 col-xl-2 offset-lg-3 offset-xl-1 hidden-md-down pt-5 pr-0 pl-0">
+                  <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>" class="btn btn-outline-info btn-block"><%= byo_button_text(@appointment) %></a>   
+                </div>
+                <div class="col-12 col-sm-10 ml-auto mr-auto col-md-4 hidden-lg-up text-center mt-2">
+                  <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>"  class="btn btn-outline-info btn-block hidden-md-up"><%= byo_button_text(@appointment) %></a>
+                  <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>"  class="btn btn-outline-info btn-block mt-5 hidden-sm-down"><%= byo_button_text(@appointment) %></a>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row m-0 bt-1">
+          <div class="col-12 col-md-3 col-xl-2 comp__filters bbr-1 pl-0 order-row">
+            <h3 class="ml-3 mr-3 mt-4 filter-h3">Filters</h3>
+            <h3 class="ml-3 mr-3 mt-1 mb-3">Cuisine:</h3>
+            <ul class="pl-2 pb-3">
+              <% Cuisine.active.order("name ASC").each do |cuisine| %>
+              <li>
+                <a class="lp__filters_cuisine" href="#" id="cuisine_<%=cuisine.id%>" data-toggleable-cuisine=true data-value="<%= cuisine.id %>"><%= cuisine.name %></a>
+              </li>
+              <% end %>
+            </ul> 
+            <h3 class="ml-3 mr-3 mt-4 pb-1">Price Per Person:</h3>
+            <ul class="pl-2 pb-3">
+              <li>
+                <a class="lp__filters_price" href="#" data-toggleable-price=true data-value="10">$10 or less</a>
+              </li>
+              <li>
+                <a class="lp__filters_price" href="#" data-toggleable-price=true data-value="13">$13 or less</a>
+              </li>
+              <li>
+                <a class="lp__filters_price" href="#" data-toggleable-price=true data-value="15">$15 or less</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-9 col-lg-9 col-xl-10">
+            <div class="targ-restaurants">
+              <%= render partial: 'rep/appointments/components/filtered_restaurants', locals: {restaurants: @restaurants} %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<% tab 'appointments' %>
+<% title 'Order Recommendation' %>
+<%= render partial: "shared/header/#{@ui_space}_header"%>
+<div class="lp__scroll_containers comp__om_appointments">
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal comp__om_form">
+        <div class="row">
+          <div class="col-md-12 mt-3">
+            <a class="ml-3" href="<%=current_office_calendars_path%>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+          </div>
+        </div>
+        <div class="row m-0">
+          <div class="col-12 mt-4 text-center">
+            <h3 class="ft-bold font-lg">Make a Recommendation for This Appointment</h3>
+            <p>Your suggestion will be sent to the sales rep!</p>
+          </div>
+          <div class="col-12 row justify-content-center pt-3">
+            <div class="hidden-xs-down mt-1">
+              <%= appt_icon(@appointment) %>
+            </div>
+            <div class="mt-1 ml-3">
+              <h3><%= @appointment.company_name %> </h3>
+              <span><%= short_date(@appointment.appointment_on) %></span>
+              <br/>
+              <span><%= "#{@appointment.appointment_slot.name}: #{slot_time(@appointment.starts_at(true))}" %></span>
+            </div>
+          </div>
+          <div class="col-12 mt-4 lp__recommendation_buttons text-center">
+            <button class="btn btn-success m-2 lp__recommend_cuisine">Recommend Cuisine Type</button>
+            <a class="btn btn-success m-2" href="<%=select_restaurant_office_appointment_path(@appointment)%>">Recommend Exact Order</a>
+          </div>
+          <div class="col-12 mt-5 mb-5 lp__select_recommendation" style="display: none;">
+            <%= form_for @appointment, url: { controller: 'appointments', action: "update"}, method: :patch,  html: { class: "", autocomplete: "off", onsubmit: "return false;"  } do |f| %> 
+              <%= lp_hidden_field(nil, :cuisine_recommendation, true) %>
+              <h4 class="ft-bold col-12 mb-3 text-center">Cuisine Recommendation</h4>
+              <div class="form-group col-12 col-sm-6 ml-auto mr-auto">
+                <label class="form-control-label">Select Cuisines</label>
+                <input type="text" id="appointment_recommended_cuisines" name="appointment[recommended_cuisines]" data-cuisines="<%=@cuisines%>">
+              </div>
+              <div class="col-12 hidden-xs-down text-center">
+                <button class="btn btn-secondary mr-3 lp__hide_recommend_cuisine">Cancel</button>
+                <button type="submit" data-submit class="btn btn-success">Make Recommendation</button>
+              </div>
+              <div class="col-12 hidden-sm-up p-0 mt-2 text-center">
+                <button class="btn btn-success btn-block" type="submit" data-submit>Make Recommendation</button>
+                <button class="btn btn-secondary btn-block lp__hide_recommend_cuisine">Cancel</button>
+              </div>
+            <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

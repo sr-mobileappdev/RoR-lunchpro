@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+active:
+  status: 1
+  first_name: Johnny
+  last_name: Smith
+  address_line1: 123 Main St
+  address_line2: Suite 400
+  city: Dallas
+  state: TX
+  postal_code: 75001
+  country: US
+  company_id: 1
+  default_tip_percent: 10
+  max_tip_amount_cents: 20
+  per_person_budget_cents: 13
+  timezone: Eastern Time (US & Canada)
+
+deleted:
+  status: 10
+  first_name: Johnny
+  last_name: Deleted
+  address_line1: 123 South St
+  address_line2: Suite 100
+  city: Dallas
+  state: TX
+  postal_code: 75001
+  country: US
+  company_id: 1
+  default_tip_percent: 10
+  max_tip_amount_cents: 20
+  per_person_budget_cents: 10
+  timezone: Eastern Time (US & Canada)

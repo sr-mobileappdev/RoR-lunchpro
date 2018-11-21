@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lunch_pack: one
+  menu_item: one
+  sort_order: 1
+
+two:
+  lunch_pack: two
+  menu_item: two
+  sort_order: 1

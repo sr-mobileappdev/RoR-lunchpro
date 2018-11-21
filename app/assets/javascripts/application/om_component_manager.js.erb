@@ -1,0 +1,70 @@
+
+// Turbolinks fix to avoid JS reload on pure anchor changes only
+document.addEventListener("turbolinks:click", function(event) {
+  if (is_link_anchor_only(event.target)) {
+    return event.preventDefault();
+  }
+
+});
+
+document.addEventListener("turbolinks:load", function() {
+  window.debug_mode = true;
+  //debug("Debug mode is ON. This can be changed in application/component_manager.js")
+  LPOmCalendar_Initializer();
+  LPOmOffice_Initializer();
+  LPOmForm_Initializer();
+  LPOmConfirm_Initializer();
+  LPModal_Initializer();
+  LPOmAppointments_Initializer();
+  LPOmRestaurants_Initializer();
+  LPOmProviders_Initializer();
+  LPOrderItem_Initializer();
+  LPOmStripeForm_Initializer();
+  LPOmOrderNew_Initializer();
+  LPNotification_Initializer();
+  LPOmNotifications_Initializer();
+  LPPopup_Initializer();
+});
+
+// Base Component New change observation
+
+var is_link_anchor_only = function(link) {
+  href = link.getAttribute('href');
+  if (href.charAt(0) == '#') {
+    return true;
+  } else {
+    return false;
+  }
+
+};
+
+var new_node_observer = new MutationObserver(function (mutations) {
+  mutations.forEach(function(mutation) {
+    for(var i = 0; i < mutation.addedNodes.length; i++) {
+      node = mutation.addedNodes[i];
+      if ($(node).attr("class") && $(node).attr("class").indexOf("comp__") !== -1 ) {
+        $( document ).trigger( "lp-component.added", [$(node)] );
+      }
+    }
+  });
+});
+
+
+// Observe DOM changes for components
+
+document.addEventListener("turbolinks:load", function() {
+  // Observe a specific DOM node / subtree
+  if ($(".__base").length <= 0) {
+    return;
+  }
+  new_node_observer.observe($('.__base')[0], {
+    childList: true,
+    subtree: true
+  });
+});
+
+var stripe = Stripe("<%=ENV['STRIPE_PKEY']%>");
+var elements = stripe.elements();
+var card = elements.create('cardNumber', {'classes': {'base':"form-control form-control-sm"}, 'placeholder':''});
+var cardCVV = elements.create('cardCvc', {'classes': {'base':"form-control form-control-sm"}, 'placeholder':''});
+var cardExpiry = elements.create('cardExpiry', {'classes': {'base':"form-control form-control-sm"}, 'placeholder':''});

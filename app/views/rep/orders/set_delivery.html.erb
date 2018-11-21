@@ -1,0 +1,60 @@
+<% tab 'calendar' %>
+<% title 'Set Delivery' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+<div class="lp__scroll_containers">
+  <div class="lp__fixed f12 no-gutters comp__rep_form">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal pb-5">
+        <a class="lp__faux_model_back" href="<%= new_rep_order_path %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+        <p class="h5 title"><strong>Appointment Date and Time</strong></p>
+        <hr />
+        <%= form_for @record, url: { controller: "appointments", action: "create" }, html: { class: "pt-3 col-12 pl-4 pr-4", autocomplete: "off" } do |f| %>
+          <div class="col-sm-12 col-md-9 m-auto p-0">
+            <%= lp_hidden_field(f, :office_id, @office.id) %>
+            <%= lp_hidden_field(f, :appointment_on, nil) %>
+            <%= lp_hidden_field(nil, :set_delivery, true) %>
+            <%= lp_hidden_field(nil, :force_duplicate) %>
+            <!-- calendar widget -->
+            <section id="rep-calendar" class="container mb-4">
+              <div class="calendar-header row mb-2 pt-3 pb-3">
+                <div class="col-12 col-md-3">
+                  <a class="fc-today-button" href="#today">Today</a>
+                </div>
+                <div class="col-12 col-md-6">
+                  <ul class="list-inline text-center mb-0">
+                    <li class="list-inline-item pr-3"><a class="fc-prev-button" href="#prev-month"><i class="fa fa-arrow-left"></i></a></li>
+                    <li class="list-inline-item"><h5 class="fc-calendar-title"></h5></li>
+                    <li class="list-inline-item pl-3"><a class="fc-next-button" href="#next-month"><i class="fa fa-arrow-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div id="set_delivery_calendar"></div>
+            </section>
+            <div class="row ml-auto">
+              <div class="col-6">
+                <h5 class="d-inline">Start Time</h5>
+                <%= lp_end_timeframe_field(f, :starts_at, "none", 15, nil, {class: 'col-8 form-control d-inline order-select'}) %>
+              </div>
+              <div class="col-6">
+                <h5 class="d-inline">End Time</h5>
+                <%= lp_end_timeframe_field(f, :ends_at, "none", 15, nil, {class: 'col-8 form-control d-inline order-select'}) %>
+              </div>
+            </div>
+            <div class="row ml-auto mt-3">
+              <div class="col-6">
+                <div class="form-group">
+                  <h5 class="d-inline">Title</h5>
+                  <%= lp_text_field(f, :title, 'none', nil, {class: 'form-control'}) %>
+                </div>
+              </div>
+            </div>
+            <p class="text-center mt-4 ft-bold duplicate_message" style="display: none;">You already have an appointment booked on this date and time. By continuing, you will be booking a duplicate appointment.</p>
+            <div class="col-12 text-center mt-5 finish p-0">
+              <button class="btn btn-success lp__finish_button" data-submit type="submit" disabled>Create Appointment</button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

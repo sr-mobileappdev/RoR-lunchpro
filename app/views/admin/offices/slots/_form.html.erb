@@ -1,0 +1,36 @@
+<%= form_for [@office, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :office_id) %>
+
+  <div class="form-group row form-group-tight">
+    <% if @record.new_record? %>
+      <div class="col-sm-2 lp_req">
+        <label class="form-control-label">Day(s) of week</label>
+        <input type="text" id="appointment_slot_days" name="appointment_slot[days]" value="<%= AppointmentSlot.day_of_weeks[@record.day_of_week] %>">        
+      </div>
+    <% else %>
+      <%= lp_hidden_field(f, :day_of_week) %>
+    <% end %>
+
+    <div class="col-sm-3 lp_req">
+      <%= lp_select_field(f, :slot_type, "Type", selectable_day_enum(AppointmentSlot.slot_types)) %>
+    </div>
+
+    <% if @record.new_record? %>
+      <div class="col-sm-3 lp_req">
+        <%= lp_timeframe_field(f, [:starts_at, :ends_at], "Slot Time", [@record.starts_at, @record.ends_at]) %>
+      </div>
+    <% else %>
+      <div class="col-sm-3 lp_req">
+        <%= lp_timeframe_field(f, [:starts_at, :ends_at], "Slot Time", [@record.starts_at(true), @record.ends_at(true)]) %>
+      </div>
+    <% end %>
+
+    <div class="col-sm-2">
+      <%= lp_text_field(f, :staff_count, "# of Staff") %>
+      <p class="field_note">This count should exclude providers at the office, which we factor in seperately.</p>
+    </div>
+
+  </div>
+
+<% end %>

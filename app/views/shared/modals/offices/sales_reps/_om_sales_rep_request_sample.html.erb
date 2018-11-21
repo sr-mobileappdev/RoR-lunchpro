@@ -1,0 +1,67 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body pt-0 mt-0 comp__om_office">
+    <div class="row comp__om_form pl-2 pr-2 pt-4">
+      <%= form_for appointment, :url => office_appointments_path, method: :post,  html: { class: "col-12 row m-0 p-0", autocomplete: "off" } do |f| %>
+        <%= lp_hidden_field(nil, :samples_request ,true) %>
+        <%= lp_hidden_field(f, :office_id) %>
+        <%= lp_hidden_field(f, :status) %>
+        <%= lp_hidden_field(f, :sales_rep_id) %>
+        <%= lp_hidden_field(f, :created_by_user_id) %>
+        <div class="col-12 row">
+          <div class="pl-4">
+            <%= drug_circle_icon %>
+          </div>
+          <div class="col-8">
+            <p class="font-lg ft-bold m-0">Sample Request</p>
+            <p class="m-0">Please select which drug(s) you are requesting</p>
+          </div>
+        </div>
+        <div class="col-12 row mt-4 mb-4">
+          <div class="col-5">
+            <div class="form-group pl-3">
+              <label for="drugs" class="form-control-label">Drugs</label>
+              <input type="text" id="appointment_samples_requested" name="appointment[samples_requested]" data-drugs="<%=sales_rep_drugs%>">
+            </div>
+          </div>
+          <div class="col-11 ml-3">
+            <label class="ft-bold">Message <span class="font-sm">(400 character limit)</span></label>
+            <%= lp_text_area(f, :office_notes, nil, nil, {class: "form-control", hide_label: true, placeholder: "Please enter a message for the Sales Rep", rows: 15, style: "resize: none;",
+              maxlength: 400}) %>
+          </div>
+          <div class="col-11 mt-3 ml-3">
+            <span class="pull-left">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="require_appointment" class="mr-1" value="true" checked /> <span class="ft-bold">Require Appointment</span>
+              </label> 
+            </span>
+            <span class="pull-right">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="send_as_text" class="mr-1" value="true" /> <span class="ft-bold">Send as Text Message</span>
+              </label> 
+            </span>
+          </div>
+        </div>
+        <div class="col-12 row hidden-sm-down">
+          <div class="col-sm-6 col-lg-4 ml-auto">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-info btn-block">Cancel</button>
+          </div>
+          <div class="col-sm-6 col-lg-4 mr-auto">
+            <button class="btn btn-success btn-block" type="submit" data-submit>Request Sample</button>
+          </div>
+        </div>
+        <div class="col-12 row hidden-md-up m-0 p-0">
+          <div class="col-12 mt-3">
+            <button class="btn btn-success btn-block" type="submit" data-submit>Request Sample</button>
+          </div>
+          <div class="col-12 mt-3">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-info btn-block">Cancel</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  LPOmForm_Initializer();
+  LPOmOffice_Initializer();
+</script>

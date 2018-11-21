@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  day_of_week: 1
+  starts_at: 2017-07-02 21:18:19
+  ends_at: 2017-07-02 21:18:19
+  staff_count: 1
+
+two:
+  name: MyString
+  day_of_week: 1
+  starts_at: 2017-07-02 21:18:19
+  ends_at: 2017-07-02 21:18:19
+  staff_count: 1

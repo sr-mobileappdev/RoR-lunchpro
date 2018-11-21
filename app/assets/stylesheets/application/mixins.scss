@@ -1,0 +1,23 @@
+/**************************
+		PERSONAL MIXINS
+	***************************/
+@mixin box-shadow($x:1px, $y:1px, $blur:1px, $color:#aaa) {
+	-webkit-box-shadow: $x $y $blur $color;
+	box-shadow: $x $y $blur $color;
+}
+@mixin rotate($n) {
+	transform: rotate(#{$n}deg);
+	transition: all 0.3s ease;
+}
+@mixin min-height($subtractValue:0) {
+	min-height: 100vh; // if calc is not supported with vh (safari)
+	min-height: calc(100vh - #{$subtractValue});
+	min-height: -webkit-calc(100vh - #{$subtractValue});
+}
+@mixin fixed-height($subtractValue:0) {
+	height: 100vh; // if calc is not supported with vh (safari)
+	height: calc(100vh - #{$subtractValue});
+	height: -webkit-calc(100vh - #{$subtractValue});
+	overflow-x: hidden;
+	overflow-y: auto;
+}

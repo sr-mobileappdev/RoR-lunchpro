@@ -1,0 +1,32 @@
+<% orders.select{|order| order.appointment }.each do |order| %>
+  <div style="margin-bottom: 3px">
+    <span class="col-6">
+      Delivery Time: <%= ah.slot_time(order.appointment.starts_at(true))%>
+    </span>
+    <span class="col-5 text-right">
+      Order # <%=order.order_number%>
+    </span>
+  </div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6 h4">
+      <strong><%= order.appointment.office.name %></strong>
+    </span>
+    <span class="col-5 text-right">
+      <%= order.appointment.restaurant.name %>
+    </span>
+  </div>
+  <div style="margin-bottom: 3px;">
+    <span class="col-6">
+      <%= order.office.display_location %>
+    </span>
+    <span class="col-5 text-right">
+      <a href=<%= UrlHelpers.admin_order_url(order.id) %>>View Details</a>
+    </span>
+  </div>
+  <div style="margin-bottom: 8px;">
+    <%= order.customer_name %>
+  </div>
+  <div>
+    <hr style="width: 100%; padding: 0; margin-left: 0 !important; margin-right: 0 !important;">
+  </div>
+<% end %>

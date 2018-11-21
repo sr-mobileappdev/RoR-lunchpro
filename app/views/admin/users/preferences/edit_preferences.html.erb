@@ -1,0 +1,28 @@
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_user_preferences_path(@record) } %>-->
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2 comp__new">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light lp__new"><span class="pr-3">Edit Preferences</span></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with buttons">
+        <button type="button" class="btn btn-success btn-sm" data-submit aria-label="Update Notification">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content comp__form">
+  <!-- floating container with shadow -->
+  <div id="account-profile" class="b-1 m-3 px-4 py-3 comp__rep_notifications">
+    <div class="h4 mt-3 mb-1 ft-bold">Notification Preferences</div>
+    <p>Choose between email and/or text notifications or opt-out entirely</p>
+    <%= form_for @user_notification_prefs, url: update_preferences_admin_user_preferences_path(sales_rep_id: @record), action: "update_notification_prefs", method: :post,  html: { class: ""} do |f| %>
+      <%= lp_hidden_field(f, :user_id) %>
+      <%= lp_hidden_field(f, :status) %>
+      <%= lp_hidden_field(f, :last_updated_by_id)%>
+
+      <div class="tab-content">         
+        <%= render partial: "admin/users/preferences/components/#{@record.space.split("_", 2).last}_notification_preferences", locals: {f: f} %>
+      </div>
+    <% end %>
+  </div>
+</div>

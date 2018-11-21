@@ -1,0 +1,10 @@
+.btn {
+	text-transform: uppercase;
+	font-family: $font-family-sans-serif;
+	letter-spacing: 0.025rem;
+	font-size: 0.925rem;
+	&.disabled, &:disabled {
+		opacity: 1;
+		color: $btn-link-disabled-color;
+	}
+}

@@ -1,0 +1,36 @@
+<div class="col-12 text-center mb-3">
+  <p class="mb-0 h5">Internal Appointment</p>
+</div>
+<%= form_for @appointment, url: { controller: "appointments", action: "update" }, method: "put",  html: { class: "col-12 col-sm-10 col-md-11 col-lg-9 col-xl-11 ml-auto mr-auto pl-2 pr-2 " } do |f| %>
+  <%= lp_hidden_field(f, :appointment_slot_id) %>
+  <%= lp_hidden_field(f, :appointment_on) %>
+  <div class="col-12 row mt-3 pr-0 mr-0">
+    <div class="pr-4 pt-1 hidden-xs-down">
+      <%= slot_food_icon(@appointment.appointment_slot.slot_type) %>
+    </div>
+    <div class="col-12 col-sm-7 p-0">
+      <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+      <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+    </div>
+  </div>
+  <div class="col-12 mt-3 row internal-appointment">
+    <div class="col-12 col-xl-11 pl-0">
+      <div class="form-group col-12 p-0">
+        <label class="form-control-label ft-bold">Appointment Title</label>
+        <%= lp_text_field(f, :title, "none", nil, {class: 'form-control disabled'}) %>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-10 ml-auto mr-auto mt-4 p-0">
+    <% if @appointment.food_ordered? %>
+      <a data-modal="true" data-modal-title="" class="btn btn-outline-info btn-block" href="<%=office_order_path(@appointment.current_order.id)%>" data-dismiss="modal">View Order</a>
+    <% elsif !@appointment.is_sample? %>
+      <a class="btn btn-success btn-block" href="<%=select_restaurant_office_appointment_path(@appointment)%>">Order Food</a>
+    <% end %>
+    <% if !@order || @order.cancellable? %>
+      <a href="<%= cancel_office_appointment_path(@appointment)%>" data-method="post" class="btn btn-outline-info btn-block cancel_button" style="">Cancel Appointment</a>
+    <% else %>  
+      <a href="<%= cancel_office_appointment_path(@appointment)%>" class="btn btn-outline-info btn-block" data-confirm-method="post" data-confirm-check="WARNING! A cancelation charge of <%=precise_currency_value(@order.restaurant.late_cancel_fee_cents)%> will be applied to the card: <%=@order.payment_method.display_summary%>. Are you sure you want to cancel?">Cancel Appointment</a>
+    <% end %>  
+  </div>
+<% end %>

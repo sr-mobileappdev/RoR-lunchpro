@@ -1,0 +1,55 @@
+<table class="lp__table table">
+  <thead class="thead-inverse">
+    <tr>
+      <% @manager.column_names.each_with_index do |column, idx| %>
+        <th><%= format_column_name(column) %></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @records.length == 0 %>
+      <tr><td colspan="<%= @manager.column_names.count + 1 %>"><span class="empty">No Results</span></td></tr>
+    <% end %>
+    <% @records.each do |record| %>
+      <tr data-record-id="<%=record.id%>">
+        <% @manager.columns.each_with_index do |column, idx| %>
+          <% if idx == 0 %>
+            <th scope="row" class="<%= class_for_table_column(column) %>"><%= value_for_table_column(record, column) %></th>
+          <% else %>
+            <td class='<%= class_for_table_column(column) %>'><%= value_for_table_column(record, column) %></td>
+          <% end %>
+        <% end %>
+        <td class="lp__actions">
+
+          <div class="btn-toolbar justify-content-end" role="toolbar">
+            <% if local_assigns[:custom_row_actions] && custom_row_actions.count > 0 %>
+              <%= links_to_custom_actions(record, custom_row_actions) %>
+            <% elsif @section == 'rewards' %>
+              <a class="btn btn-sm btn-success" data-popup-size="md" data-popup="true" href="<%=edit_points_admin_rewards_path(id: record.id, is_modal: true)%>" data-popup-title="Edit Rewards Points" data-comp-rep-id="<%=record.id%>">Edit</a>
+            <% elsif local_assigns[:merge_reps] && local_assigns[:merge_reps] == true %>
+              <span class="source-checkbox mr-auto">
+                <%= lp_check_field_inline(nil, :source, "Source", false, {class: 'form-control form-control-sm source_checkbox'}) %>
+                <input type="hidden" class="source">                
+              </span>
+              <span class="destination-checkbox mr-auto" style="display: none;">
+                <%= lp_check_field_inline(nil, :destination, "Destination", false, {class: 'form-control form-control-sm destination_checkbox'}) %>
+                <input type="hidden" class="destination">
+              </span>
+              <span><%= link_to "View", show_admin_path_for_row(record, {}), class: 'btn btn-secondary btn-sm' %></span>
+            <% else %>
+              <% if @scope == 'unconfirmed' %>
+                <a class="btn btn-success btn-sm mr-2" data-confirm-method="post" href="<%= confirm_admin_order_path(restaurant_id: record.restaurant.id, id: record.id, scope: @scope) %>" data-confirm-check="Do you want to confirm this order?">Confirm</a>
+                <a class="btn btn-danger btn-sm mr-2" data-confirm-method="post" href="<%= decline_admin_order_path(restaurant_id: record.restaurant.id, id: record.id, scope: @scope) %>" data-confirm-check="Are you sure you want to decline this order?">Decline</a>
+              <% elsif @scope == 'confirmed' %>
+                <a class="btn btn-danger btn-sm mr-2" data-confirm-method="post" href="<%= decline_admin_order_path(restaurant_id: record.restaurant.id, id: record.id, scope: @scope) %>" data-confirm-check="Are you sure you want to decline this order?">Decline</a>
+              <% end %>
+              <%= link_to "View", show_admin_path_for_row(record, {}), class: 'btn btn-secondary btn-sm' %>
+            <% end %>
+  <!--           <a href="" class="btn btn-danger btn-sm">Delete</a> -->
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

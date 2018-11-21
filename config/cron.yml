@@ -1,0 +1,104 @@
+# cron schedule through sidekiq-cron
+#
+# example
+# my_first_job:
+#   cron: "*/5 * * * *"
+#   class: "HardWorker"
+#   queue: hard_worker
+#
+# second_job:
+#   cron: "*/30 * * * *" # execute at every 30 minutes
+#   class: "HardWorker"
+#   queue: hard_worker_long
+#   args:
+#     hard: "stuff"
+#
+# end example
+# 0 11 * * *
+# 0 20 * * *
+# */30 0-23 * * *
+
+default: &default
+
+  rep_appointment_reminders:
+    cron: "3 15 * * *"
+    class: "SendRepAppointmentRemindersWorker"
+    queue: critical
+
+  #every 15 mins
+  batch_process_authorizations:
+    cron: "*/15 0-23 * * *"
+    class: "BatchProcessAuthorizationsWorker"
+    queue: critical
+
+  #every 15 mins
+  batch_process_captures:
+    cron: "*/15 0-23 * * *"
+    class: "BatchProcessCapturesWorker"
+    queue: critical
+
+  #every 15 minutes
+  appointments_and_orders_worker:
+    cron: "*/15 0-23 * * *"
+    class: "AppointmentsAndOrdersWorker"
+    queue: default
+
+  #every day at 6 am
+  notify_todays_orders:
+    cron: "3 11 * * *"
+    class: "NotifyTodaysOrdersWorker"
+    queue: default
+
+  #every day at 10am
+  notify_calendar_open_until:
+    cron: "35 14 * * *"
+    class: "NotifyOfficeCalendarClosingWorker"
+    queue: default
+
+  #every day at 3 pm
+  notify_daily_unconfirmed_and_non_lp_order:
+    cron: "3 20 * * *"
+    class: "NotifyNonLpAndUnconfirmedOrdersWorker"
+    queue: default
+
+  #every Friday at 11:59 PM
+  send_weekly_payout_report:
+    cron: "59 4 * * 6"
+    class: "SendWeeklyPayoutReportWorker"
+    queue: default    
+
+  #every minute
+  delete_stale_appointments:
+    cron: "*/1 * * * *"
+    class: "DeleteStaleAppointmentsWorker"
+    queue: default
+
+  #every minute
+  process_notifications:
+    cron: "*/1 * * * *"
+    class: "NotificationWorker"
+    queue: default
+    
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
+
+
+# CRON
+# * * * * * *
+# | | | | | |
+# | | | | | +-- Year              (range: 1900-3000)
+# | | | | +---- Day of the Week   (range: 1-7, 1 standing for Monday)
+# | | | +------ Month of the Year (range: 1-12)
+# | | +-------- Day of the Month  (range: 1-31)
+# | +---------- Hour              (range: 0-23)
+# +------------ Minute            (range: 0-59)
+#

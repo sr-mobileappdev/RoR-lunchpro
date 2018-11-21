@@ -1,0 +1,28 @@
+<div class="modal-dialog comp__om_calendar" role="document">
+  <div class="modal-body comp__om_form">
+    <div class="col-12" id="appointment-until-calendar">
+      <%= form_for @office, :url => office_preference_path(@office.id), method: :patch,  html: { class: "", autocomplete: "off" } do |f| %>
+        <%= lp_hidden_field(f, :appointments_until) %>
+        <%= lp_hidden_field(nil, :redirect_to, "calendar") %>
+        <div class="col-12 p-0 m-0 row">
+          <h3 class="ft-bold">Select Open Until Date</h3>
+          <p class="mt-2">Please select the date through which sales reps can book appointments on your calendar.</p>
+          <hr />
+          <div class="col-12 p-0">
+            <div id="appointments-until-calendar"></div>
+          </div>
+          <div class="col-12 text-center display_appointments_until">
+            
+          </div>
+        </div>
+        <div class="col-12 mt-3 text-center">
+          <button class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+          <button data-submit type="submit" class="btn btn-success lp__finish_button text-white" disabled>Save</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  LPOmForm_Initializer();
+</script>

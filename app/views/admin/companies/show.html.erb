@@ -1,0 +1,63 @@
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_companies_path() } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @record.name %></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <!-- <a href="<%= edit_admin_company_path(@record) %>" class="btn btn-primary btn-sm mr-2">Edit</a> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <!-- <div class="col-3 mt-2">
+      <div class="lp__profile_image ml-2"><img  /></div>
+    </div> -->
+
+    <div class="col-9 mt-2">
+      <div class="row">
+        <%= render partial: 'admin/shared/components/details/show_row',
+                    locals: {
+                      object: @record,
+                      fields: [
+                        {'name' => {title: 'Name', w: 4}},
+                        {'status' => {title: 'Status', w: 3}}
+                      ]
+                    } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-4">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Related Sales Reps',
+                    columns: ['id', 'display_name'],
+                    link_columns: {display_name: 'id'},
+                    model_class: 'SalesRep',
+                    objects: @record.sales_reps.where(:status => 'active')
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-4">
+      <h5 class="lp__section_header">Other Actions</h5>
+      <ul class="lp__actions">
+        <% if @record.deactivated_at %>
+          <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_company_path(@record) %>" data-confirm-check="Are you sure you want to re-activate this company?">Activate Company</a></li>
+        <% else %>
+          <li><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_company_path(@record) %>" data-confirm-check="Are you sure you want to deactivate this company?">Deactivate Company</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>

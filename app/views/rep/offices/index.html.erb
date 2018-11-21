@@ -1,0 +1,32 @@
+<% tab 'offices' %>
+<% title 'Offices' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_action_menu: true} %>
+<div id="global-content-wrapper">
+
+    <div id="office-layout" class="row no-gutters">
+      <!-- left column navigation --->
+      <!-- Office & Provider Search Component -->
+      <div class="col-md-4 br-1">
+        <%= render  partial: "rep/offices/components/office_provider_list",
+        locals: {offices: @offices} %>
+      </div>
+      <!-- horizontal divider for small screens -->
+      <div class="hidden-md-up col-12 sm-screen-horizontal-divider"></div>
+      <!-- right column -->
+      <% if @offices.any? %>
+      <div class="col-md-8 comp__rep_office_detail">
+        <div class="targ__office_detail">
+        </div>
+        <div class="targ__office_policies"></div>
+      </div>
+      <% else %>
+      <div class="col-md-8 fixed-height">
+        <div class="col-12 text-center mt-5 pt-5">
+          <h3 class="mt-2">You currently have no offices! Click <a href="<%= new_rep_office_path%>" class="text-underline">here</a> to add one!</h3>        
+          <img src="<%= image_path('default_skip.png') %>" alt="404 Not Found" class="default-skip" />
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

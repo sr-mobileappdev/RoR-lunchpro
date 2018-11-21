@@ -1,0 +1,15 @@
+development:
+  adapter: redis
+
+test:
+  adapter: redis
+
+staging:
+  adapter: redis
+  url: <%= "redis://#{ENV['REDIS_URL']}/1" %>
+  channel_prefix: lunchpro_production
+
+production:
+  adapter: redis
+  url: <%= "redis://#{ENV['REDIS_URL']}/1" %>
+  channel_prefix: lunchpro_production

@@ -1,0 +1,68 @@
+<% tab '' %>  
+<% title 'Sign Up' %>
+<div class="container-fluid comp__rep_profile" id="sales_rep_registration">
+  <div class="comp__rep_form col-12 mt-5 mb-3">
+    <div id="logo-badge"></div>
+    <%= form_for @user, url: registration_path(@user), method: :post,  html: { class: "col-12 col-sm-10 col-lg-8 col-xl-6 mx-auto registration_form", autocomplete: "off", onsubmit: "return false;"} do |f| %>
+      <div class="col-12 col-sm-10 col-md-10 col-xl-9 mx-auto">
+        <%= lp_hidden_field(f, :space) %>
+        <%= f.fields_for :sales_rep, @user.build_sales_rep do |o| %>
+          <input type="hidden" name="user[sales_rep_attributes][first_name]" value="<%=f.object.first_name%>">
+          <div class="form-group">
+            <label for="drugs" class="form-control-label">Company Name</label>
+            <input type="text" id="user_sales_reps_company_name" name="user[sales_rep_attributes][company_id]" data-companies="<%=@companies%>">
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label class="form-control-label">First Name</label>
+              <%= f.text_field :first_name, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label class="form-control-label">Last Name</label>
+              <%= f.text_field :last_name, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :email, class: 'form-control-label' %>
+          <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+        </div>
+        <%= f.fields_for :sales_rep, @user.build_sales_rep do |o| %>
+          <div class="form-group">
+            <label class="form-control-label">Mobile Phone (Used For Text Notifications)</label>
+            <%= lp_text_field(o, :phone_number, 'Mobile Phone (Used For Text Notifications)', nil, {class: 'form-control phone_number_input', hide_label: true}) %>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <%= f.label :password, class: 'form-control-label' %>
+              <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="form-control-label">Password Confirmation</label>
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <button  type="submit" data-submit class="btn btn-primary btn-block mt-4">Sign Up</button>
+      </div>
+    <% end %>
+    <div class="justify-content-center registration_success" style="display: none;">  
+      <h1 class="text-center ft-bold">Thank You For Registering With LunchPro!</h1>
+      <div class="text-center mt-5"><%= check_icon_xl %></div>
+      <h5 class="text-center mt-5">Please check your email for further instructions on how to complete your account setup!</h5>
+      <hr class="mt-5">
+      <h5 class='text-center mt-5'>Having trouble? <a href="#">Contact us</a></h5>
+      <div class="col-3 mx-auto mt-4">
+        <a class="btn btn-info btn-block" href="/">Continue to homepage</a>
+      </div>
+    </div>
+  </div>
+</div>

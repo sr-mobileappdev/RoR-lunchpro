@@ -1,0 +1,92 @@
+<% tab 'orders' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_restaurant_path(@restaurant) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4"><h2 class="lp__light"><span class="pr-3"><%= @restaurant.name %> <%= '(HQ)' if @restaurant.is_headquarters?%></span> <span class="lp__subheader">Orders</span></h2></div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_restaurant_path(@restaurant), active_tab: 'overview'},
+                  {title: 'Orders', path: admin_restaurant_orders_path(@restaurant), active_tab: 'orders'},
+                  {title: 'Menu', path: admin_restaurant_menus_path(@restaurant), active_tab: 'menu'},
+                  {title: 'Payments', path: admin_restaurant_payments_path(@restaurant), active_tab: 'payments'},
+                  {title: 'Bank Accounts', path: admin_restaurant_pay_methods_path(@restaurant), active_tab: 'pay_methods'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Orders In Progress (Draft)',
+                    columns: ['id', 'created_on','order_number', 'delivery_date', 'delivery_time', {title: 'Contact at Location', column: 'office', helper: 'order_office_manager'}, {title: 'Total', column: 'total_cents', helper: 'precise_currency_or_nil'}],
+                    model_class: 'Order',
+                    objects: @restaurant.orders.drafted.where(:recommended_by_id => nil).order(id: :desc)
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Pending Delivery',
+                    actions: [{title: 'Confirm',context: :confirm, confirm_message: "Are you sure you want to confirm this order?", path: confirm_admin_restaurant_order_path(@restaurant, "<id>"), button_class: 'btn btn-success btn-sm'},{title: 'Decline', context: :confirm, confirm_message: "Are you sure you want to cancel this order?", path: cancel_admin_restaurant_order_path(@restaurant, "<id>"), button_class: 'btn btn-danger btn-sm'}],
+                    columns: ['id', 'created_on','order_number', 'delivery_date', 'delivery_time', {title: 'Contact at Location', column: 'office', helper: 'order_office_manager'}, {title: 'Total', column: 'total_cents', helper: 'precise_currency_value'}],
+                    model_class: 'Order',
+                    objects: @restaurant.orders.submitted.where(:recommended_by_id => nil)
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Recently Delivered',
+                    columns: ['id', 'created_on','order_number', 'delivery_date', {title: 'Delivered At', column: 'delivered_at', helper: 'slot_time'},  {title: 'Contact at Location', column: 'office', helper: 'order_office_manager'}, {title: 'Total', column: 'total_cents', helper: 'precise_currency_value'}],
+                    model_class: 'Order',
+                    objects: @restaurant.orders.delivered.where(delivered_at: ((Time.zone.now - 60.days)..Time.zone.now), :recommended_by_id => nil)
+                  } %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Completed Orders',
+                    columns: ['id', 'created_on','order_number', 'delivery_date', {title: 'Delivered At', column: 'delivered_at', helper: 'slot_time'},  {title: 'Contact at Location', column: 'office', helper: 'order_office_manager'}, {title: 'Total', column: 'total_cents', helper: 'precise_currency_value'}],
+                    model_class: 'Order',
+                    objects: @restaurant.orders.completed.where(:recommended_by_id => nil)
+                  } %>
+    </div>
+  </div>
+
+  <% if @restaurant.is_headquarters? %>
+    <div class="row">
+      <div class="col-12 mt-2">
+        <%= render partial: 'admin/shared/components/tables/static_table',
+                    locals: {
+                      title: 'Consolidated Orders',
+                      columns: ['id', 'restaurant_id', {title: 'Restaurant Name', column: 'restaurant_name_with_address'}, 'created_on','order_number', 'delivery_date', {title: 'Delivered At', column: 'delivered_at', helper: 'slot_time'},  {title: 'Contact at Location', column: 'office', helper: 'order_office_manager'}, {title: 'Total', column: 'total_cents', helper: 'precise_currency_value'}],
+                      model_class: 'Order',
+                      objects: @restaurant.consolidated_orders(['active', 'completed']).where(:recommended_by_id => nil).order("appointments.appointment_on, appointments.starts_at")
+                    } %>
+      </div>
+    </div>
+  <% end %>
+
+</div>

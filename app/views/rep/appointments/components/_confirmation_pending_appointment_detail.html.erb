@@ -1,0 +1,144 @@
+<div class="row faux-modal-header bb-1">
+  <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+    <%= appt_icon(@record) %>
+  </div>
+  <div class="col-12 col-sm-10 mt-1">
+    <h3 class="ft-bold"><a href="<%=appointment_office_link(@record)%>"><%= @record.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+    <span><%= short_date(@record.appointment_on) %></span>
+    <br/>
+    <% if @record.appointment_slot %>
+      <span><%= "#{@record.appointment_slot.name}: #{slot_time(@record.starts_at(true))}" %></span>
+    <% else %>
+      <span><%= "#{@record.title}: #{slot_time(@record.starts_at(true))}" %></span>
+    <% end %>
+  </div>
+  <div class="col-12 mt-3 hidden-xs-down">
+    <a class="btn btn-success mr-2" href="<%=confirm_rep_appointment_path(@record, office_view: office_view)%>" data-method="post">Confirm Appointment</a>
+    <a href="#" class="btn btn-outline-info lp__cancel_appointment">Cancel Appointment</a>
+  </div>
+  <div class="col-12 mt-3 p-0 hidden-sm-up">
+    <a href="<%=confirm_rep_appointment_path(@record, office_view: office_view)%>" class="btn btn-success btn-block" data-method="post">Confirm Appointment</a>
+    <a href="#" class="btn btn-outline-info btn-block lp__cancel_appointment"">Cancel Appointment</a>
+  </div>
+</div>
+<div class="row appointment-modal-body lp__appointment_body">
+  <% if @record.appointment_slot %>
+    <div class="col-12 mb-4">
+      <h4 class="ft-bold d-inline mr-3">Suggested Order Count:</h4><h4 class="d-inline"><%=@record.appointment_slot.total_staff_count%></h4>
+    </div>
+    <div class="col-12 mb-1">
+      <h4 class="ft-bold">Providers Available for this Appointment:</h4>
+    </div>
+    <div class="col-12 row">
+      <% @record.office.providers_available_at(@record.appointment_slot).each do |provider| %>
+        <div class="col-12 col-sm-6 col-md-4 mt-3">
+          <h6><%= provider.display_name %></h6>
+        </div>
+      <% end %>
+      <% if !@record.office.providers_available_at(@record.appointment_slot).any? %>
+        <div class="col-12 mt-3">
+          <p>There are no providers available for this appointment.</p>
+        </div>
+      <% end %>
+    </div>
+    <hr class="col-12 p-0">
+  <% end %>
+  <% if @record.show_select_food? && !@record.show_order_recommendation? && !@record.is_sample?%>
+  <div class="col-12">
+    <h4 class="ft-bold">Select Food:</h4>
+  </div>
+  <div class="col-12 col-md-9 pt-2">
+    <p>Place an order with LunchPro or simply let the office know what you are bringing!
+    </div>
+    <div class="col-12 col-sm-4 col-md-3">
+      <a href="<%= policies_rep_appointments_path(back: 'current', office_id: @record.office.id, appointment_id: @record.id) %>" class="btn btn-success">Select Food</a>
+    </div>
+    <% end %>
+    <% if @record.food_ordered? %>
+    <div class="restaurant-image-container-sm hidden-sm-down mr-2">
+      <% if @record.restaurant.brand_image && @record.restaurant.brand_image.url %>
+      <img class="restaurant-image" src="<%= @record.restaurant.brand_image.url %>" alt="Restaurant Logo" />
+      <% else %>
+      <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+      <% end %>
+    </div>
+    <div class="col-12 col-sm-7">
+      <h4 class="ft-bold"><%= @record.restaurant.display_name %></h4>
+      <p class="mb-0 mt-1"><%= @record.restaurant.primary_cuisine %></p>
+      <p>Total Price: <%=precise_currency_value(@record.active_order.total_cents)%></p>
+    </div>
+    <div class="col-12 col-sm-4 col-md-3 mt-3">
+      <a data-modal="true" data-modal-title="" href="<%=rep_order_path(@record.current_order.id, redirect_to: @redirect_to)%>"  class="btn btn-block btn-outline-info">View Order</a>
+    </div>
+    <% end %>
+    <% if @record.will_supply_food %>
+    <div class="col-sm-12 col-md-7">
+      <h4 class="ft-bold">You are bringing:</h4>
+      <p class="mt-1 mb-2"> <%=@record.bring_food_notes%> </p>
+      <a href="#" class="btn btn-outline-info pr-4 pl-4 hidden-xs-down lp__edit_byo">Edit BYO</a>
+      <a href="#" class="btn btn-outline-info btn-block hidden-sm-up lp__edit_byo">Edit BYO</a>
+    </div>
+    <div class="col-12 col-md-5 text-right hidden-sm-down">
+      <p class="mb-2">Change your mind? You can still order through LunchPro!</p>
+      <a href="<%= policies_rep_appointments_path(back: 'current', office_id: @record.office.id, appointment_id: @record.id) %>" class="btn btn-success">Order Food</a>
+    </div>
+    <div class="col-12 col-md-5 hidden-md-up mt-3">
+      <p class="mb-2">Change your mind? You can still order through LunchPro!</p>
+      <a href="<%= policies_rep_appointments_path(back: 'current', office_id: @record.office.id, appointment_id: @record.id) %>" class="btn btn-success hidden-xs-down">Order Food</a>
+      <a href="<%= policies_rep_appointments_path(back: 'current', office_id: @record.office.id, appointment_id: @record.id) %>" class="btn btn-success btn-block hidden-sm-up">Order Food</a>
+    </div>
+    <% end %>
+    <% if @record.show_cuisine_recommendation?  #if office recommended cuisine %>
+    <div class="col-12">
+      <h4 class="ft-bold">Office Cuisine Recommendation:</h4>
+    </div>
+    <div class="col-12 col-md-8 pt-2">
+      <p><%=@record.office.name%> has recommended the following cuisines:</p>
+    </div>
+    <div class="col-12 col-sm-5 col-md-4 hidden-sm-down">
+      <a href="<%= policies_rep_appointments_path(back: 'current', office_id: @record.office.id, appointment_id: @record.id) %>" class="btn btn-block btn-info"  class="btn btn-info btn-block">View Restaurants</a>
+    </div>
+    <div class="col-1">
+      <i class="fa fa-image col-1 hidden-sm-down" style="font-size: 2vmax"></i>
+    </div>
+    <div class="col-12 col-md-11">
+      <p class="ft-bold mt-2 hidden-sm-down"><%= appointment_cuisines(@record.cuisines) %></p>
+      <p class="ft-bold hidden-md-up"><%= appointment_cuisines(@record.cuisines) %></p>
+    </div>
+    <div class="col-12 col-sm-5 col-md-4 hidden-md-up">
+      <a href="<%= policies_rep_appointments_path(back: 'current', office_id: @record.office.id, appointment_id: @record.id) %>" class="btn btn-block btn-info"  class="btn btn-info btn-block">View Restaurants</a>
+    </div>
+    <% end %>
+    <% if @record.show_order_recommendation? && !@record.food_ordered?%>
+    <div class="col-12">
+      <h4 class="ft-bold">Office Order Recommendation:</h4>
+    </div>
+    <div class="col-12 col-md-7 col-lg-8 pt-2">
+      <p><%=@record.office.name%> has recommended that you place this order (you may edit it as you wish to).</p>
+    </div>
+    <div class="col-12 col-sm-6 col-md-5 col-lg-4 hidden-sm-down">
+      <a href="<%=order_recommendation_rep_appointment_path(@record)%>" class="btn btn-info btn-block">View Recommendation</a>
+    </div>
+    <div class="restaurant-image-container-sm hidden-sm-down ml-3">
+      <% if @record.recommended_order.restaurant.brand_image && @record.recommended_order.restaurant.brand_image.url %>
+      <img class="restaurant-image" src="<%= @record.recommended_order.restaurant.brand_image.url %>" alt="Restaurant Logo" />
+      <% else %>
+      <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+      <% end %>
+    </div>
+    <div class="col-12 col-sm-7">
+      <h4 class="ft-bold"><%=@record.recommended_order.restaurant.name%></h4>
+      <p class="mb-0 mt-1"><%= @record.recommended_order.restaurant.primary_cuisine %></p>
+      <p>Total Price: <%=precise_currency_value(@record.recommended_order.subtotal_cents)%></p>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 hidden-md-up">
+      <a href="<%=order_recommendation_rep_appointment_path(@record)%>" class="btn btn-info btn-block">View Recommendation</a>
+    </div>
+    <% end %>
+  </div>
+  <div class="lp__cancel_appointment_form" style="display: none;">
+    <%= render partial: "rep/appointments/components/appointment_cancel_form.html.erb", locals: {office_view: office_view}%>
+  </div>
+  <div class="lp__edit_byo_form" style="display: none;">
+    <%= render partial: "rep/appointments/components/appointment_byo_form.html.erb"%>
+  </div>

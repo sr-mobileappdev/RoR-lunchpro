@@ -1,0 +1,81 @@
+.fc-unthemed td.fc-today{
+  background: $white;
+  &.fc-day-top {
+    background: transparent;
+  }
+  &.fc-disabled-day {
+    background: #d7d7d7;
+    opacity: .3;
+  }
+}
+.fc-day.fc-today {
+  box-shadow: inset 0 0 0 2px $blue;
+}
+.fc {
+  td.fc-head-container {
+    border: 0
+  }
+  th.fc-day-header {
+    border: 0;
+  }
+  .fc-event .fc-time {
+    display: none;
+  }
+  .open {
+    .fc-title{
+      color: $green;
+    }
+    background: $white;
+    border: none;
+  }
+  .booked {
+    .fc-title {
+      color: $black;
+    }
+    background: $white;
+    border: none;
+  }
+  .confirmed {
+    .fc-title {
+      color: $blue;
+    }
+    background: $white;
+    border: none;
+  }
+  .fc-agendaWeek-view {
+    .open {
+      background: $green;
+      .fc-title {
+        color: $white;
+      }
+    }
+    .booked {
+      background: $black;
+      .fc-title {
+        color: $white;
+      }
+    }
+    .confirmed {
+      background: $blue;
+      .fc-title {
+        color: $white;
+      }
+    }
+  }
+
+  // Header
+  .fc-header-toolbar {
+    h2 {
+      float: none;
+      text-align: center;
+    }
+    .until {
+      float: none;
+      text-align: center;
+      font-weight: 400;
+      > span.text-green {
+        color: $green;
+      }
+    }
+  }
+}

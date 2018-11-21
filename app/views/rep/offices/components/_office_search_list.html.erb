@@ -1,0 +1,17 @@
+<!-- Office / Providers dynamic search form -->
+<%= form_tag '', class: 'lp__find_new_offices' do %>
+  <%= lp_hidden_field(nil, :for_orders, @for_orders) %>
+  <div class="input-group pl-2">
+      <span class="input-group-addon"><button class="fa fa-search search-icon" type="submit"></button></span>
+      <input name="searchTerm" id="repOfficeSearchTerm" type="text" class="form-control" placeholder="Enter Office Name, Address or Provider">
+  </div>
+<% end %>
+<hr class="mb-0">
+<!-- results -->
+<div class="targ__tab_results">
+    <% if local_assigns[:offices] %>
+        <%= render partial: 'rep/offices/components/new_office_results', locals: {offices: offices, show_in_modal: true} %>
+    <% elsif local_assigns[:new] %>
+        <%= render partial: 'rep/offices/components/new_office'  %>
+    <% end %>
+</div>

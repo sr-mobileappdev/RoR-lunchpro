@@ -1,0 +1,193 @@
+<% tab 'overview' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_restaurants_path() } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4">
+      <h2 class="lp__light"><%= @restaurant.name %> <%= '(HQ)' if @restaurant.is_headquarters?%> <span class="lp__subheader text-danger"><%= "Inactive" unless @restaurant.activated_at %></span></h2>
+    </div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <% unless @restaurant.activated_at %>
+          <a data-confirm-method="post" href="<%= activate_admin_restaurant_path(@restaurant) %>" data-confirm-check="Are you sure you want to activate this restaurant?" class="btn btn-success btn-sm mr-2">Activate</a>
+        <% end %>
+        <a href="<%= edit_admin_restaurant_path(@restaurant) %>" class="btn btn-primary btn-sm mr-2">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_restaurant_path(@restaurant), active_tab: 'overview'},
+                  {title: 'Orders', path: admin_restaurant_orders_path(@restaurant), active_tab: 'orders'},
+                  {title: 'Menu', path: admin_restaurant_menus_path(@restaurant), active_tab: 'menu'},
+                  {title: 'Payments', path: admin_restaurant_payments_path(@restaurant), active_tab: 'payments'},
+                  {title: 'Bank Accounts', path: admin_restaurant_pay_methods_path(@restaurant), active_tab: 'pay_methods'},
+                ]
+              } %>
+
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <!-- Record Notices (if any) -->
+
+  <% if @restaurant.activation_notices.count > 0 %>
+    <div class="row">
+      <div class="col-12 px-3 mb-0">
+        <div class="alert alert-danger">
+          <p class="small"><strong>In order to activate this restaurant you must fix the following issues:</strong></p>
+          <ul style='margin-bottom: 0px;'>
+          <% @restaurant.activation_notices.each do |notice| %>
+
+              <li><span class="small"><%= notice[:message] %> <%= (notice[:relatable]) ? "<a class='text-primary pl-3 small' href='#{relatable_notice_path(notice[:relatable])}'>View Details</a>".html_safe : '' %></span></li>
+
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @restaurant.notices.count > 0 %>
+    <div class="row">
+      <div class="col-12 px-3 mb-2">
+        <% @restaurant.notices.each do |notice| %>
+          <div class="alert alert-warning">
+            <p class="text-warning small"><span class="oi oi-target"></span> <%= notice[:message] %> <%= (notice[:relatable]) ? "<a class='text-primary pl-3 small' href='#{relatable_notice_path(notice[:relatable])}'>View Details</a>".html_safe : '' %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <!-- End Record notices -->
+
+  <div class="row mb-3">
+    <div class="col-2 mt-2">
+        <div class="lp__profile_image ml-2">
+          <% if @restaurant.brand_image && @restaurant.brand_image.url %>
+            <img src="<%= @restaurant.brand_image.url %>" alt="Restaurant Logo"/>
+            <a data-popup=true data-popup-title="Upload Brand Image" href="<%= upload_asset_admin_restaurant_path(@restaurant) %>">Replace Image</a>
+          <% else %>
+            <%= image_tag "missing_image.png", alt: "Missing Image" %>
+            <a data-popup=true data-popup-title="Upload Brand Image" href="<%= upload_asset_admin_restaurant_path(@restaurant) %>">Upload Image</a>
+          <% end %>
+        </div>
+    </div>
+    <div class="col-10 mt-2">
+      <div class="row">
+          <%= render partial: 'admin/shared/components/details/show_row',
+                      locals: {
+                        object: @restaurant,
+                        fields: [
+                          {'display_location' => {title: 'Address', w: 4}},
+                          {'description' => {title: 'Description', w: 8}},
+                        ]
+                      } %>
+      </div>
+      <div class="row col-8">
+        <%= render partial: 'admin/shared/components/tables/static_table',
+                    locals: {
+                      title: 'Restaurant Hours',
+                      columns: ['day', 'starts_at_hour', 'ends_at_hour'],
+                      model_class: 'RestaurantAvailability',
+                      objects: @restaurant.restaurant_availabilities.where(:status => 'active')
+                    } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @restaurant,
+                    fields: [
+                      {'min_order_amount_cents' => {title: 'Min. Order Amount', w: 2, helper: 'precise_currency_value', default: 'Not Set'}},
+                      {'max_order_people' => {title: 'Max People', w: 2, default: 'Not Set'}},
+                      {'default_delivery_fee_cents' => {title: 'Default Delivery Charge', w: 4, helper: 'precise_currency_value', default: 'Not Set'}},
+                      {'orders_until' => {title: 'Orders Until', w: 2, helper: 'order_until_value', default: 'Not Set'}},
+                      {'orders_until_hour_display' => {title: 'Cutoff Time', w: 2, default: 'Not Set'}},
+                    ]
+                  } %>
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @restaurant,
+                    fields: [
+                      {'delivery_distance.display_radius' => {title: 'Delivery Radius (miles)', w: 4, helper: 'radius_value'}},
+                      {'processing_fee_type' => {title: 'Fee Type', w: 2, helper: 'processing_fee_value'}},
+                      {'processing_fee_percent' => {title: 'Fee %', w: 2, helper: 'percentage_value'}},
+                      {'edit_until_hours' => {title: 'Edit Until (Hours)', w: 2, helper: ''}},
+                      {'cancel_until_hours' => {title: 'Cancel Until (Hours)', w: 2, default: ''}},
+                    ]
+                  } %>
+  </div>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @restaurant,
+                    fields: [
+                      {'person_price_range' => {title: 'Price Range', helper: 'person_price_range', w: 4, default: 'Not Set'}},
+                      {'wholesale_percentage' => {title: 'Wholesale Percentage', w: 4, helper: 'percentage_value'}},
+                      {'late_cancel_fee_cents' => {title: 'Late Cancel Fee', w: 2, helper: 'precise_currency_value'}},
+                      {'withholdings' => {title: 'Witholdings', w: 2, default: '--'}},
+                    ]
+                  } %>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <div class="row">
+        <div class="col-12">
+          <%= render partial: 'admin/shared/components/tables/static_table',
+                      locals: {
+                        title: 'Restaurant Users',
+                        table_actions: [{name: 'Add User', url: new_admin_restaurant_user_path(@restaurant)}],
+                        columns: ['id', 'display_name', 'email', {title: 'Phone', column: 'primary_phone', helper: 'format_phone_number_string'}, {title: 'Title', column: 'job_title'}
+                        ],
+                        link_columns: {display_name: 'id'},
+                        model_class: 'User',
+                        objects: @restaurant.managers
+                      } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <div class="row">
+        <div class="col-12 mt-2">
+          <%= render partial: 'admin/shared/components/tables/static_table',
+                      locals: {
+                        title: 'Recent Orders',
+                        columns: ['id', 'created_on','order_number', 'delivery_date', {title: 'Delivered At', column: 'delivered_at', helper: 'slot_time'},  {title: 'Contact at Location', column: 'office', helper: 'order_office_manager'}, {title: 'Total', column: 'total_cents', helper: 'precise_currency_value'}],
+                        model_class: 'Order',
+                        objects: @restaurant.orders.completed.where(delivered_at: ((Time.zone.now - 60.days)..Time.zone.now)).sort_by{|o| [o.delivery_date, o.delivered_at]}
+                      } %>
+        </div>
+      </div>
+    </div>
+	</div>
+  <% if @restaurant.orders.where(:status => 'active').count == 0 %>
+    <div class="row">
+      <div class="col-12 px-4">
+        <h5 class="lp__section_header">Other Actions</h5>
+          <ul class="lp__actions">
+            <% if @restaurant.deactivated_at %>
+              <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_restaurant_path(@restaurant) %>" data-confirm-check="Are you sure you want to re-activate this restaurant?">Re-activate Restaurant</a></li>
+            <% elsif @restaurant.activated_at %>
+              <li><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_restaurant_path(@restaurant) %>" data-confirm-check="Are you sure you want to deactivate this restaurant?">Deactivate Restaurant</a></li>
+            <% end %>
+            <li></q><a class="text-danger" data-confirm-method="post" href="<%= delete_admin_restaurant_path(@restaurant) %>" data-confirm-check="Are you sure you want to delete this restaurant? They will be removed from the system and only available in historical reporting where applicable.">Delete Restaurant</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

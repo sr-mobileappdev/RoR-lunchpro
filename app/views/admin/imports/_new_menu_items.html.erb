@@ -1,0 +1,15 @@
+<p class="small">Upload CSV file containing menu items for this restaurant. If the CSV does not match the required format, the import will fail.</p>
+
+<%= form_tag admin_imports_path(restaurant_id: @restaurant.id), multipart: true, method: :post do %>
+	<div class="row">
+		<div class="col-12">
+			<%= file_field_tag :file %>
+		</div>
+		<div class="col-12 mt-3">
+			<input type="submit" class="btn btn-primary btn-sm mr-2" value="Upload & Import" />
+		</div>
+	</div>
+
+<% end %>
+
+

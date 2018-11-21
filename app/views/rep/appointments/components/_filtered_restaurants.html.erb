@@ -1,0 +1,37 @@
+<div class="row bb-1 order-row">
+  <form class="col-12 form-inline">
+    <div class="col-12 col-lg-7 mt-3">
+      <p class="hidden-md-down"><%= restaurants.count %> Restaurants and Caterers Available</p>
+      <p class="text-center hidden-lg-up"><%= restaurants.count %> Restaurants and Caterers Available</p>
+    </div>
+    <div class="col-12 col-lg-5 sort-control">
+      <label class="mb-2 mt-1 hidden-xs-down">Sort by:
+        <select class="form-control ml-3 lp__sort_by" data-appointment-id="<%=@appointment.id%>" data-restaurant-ids="<%=@restaurants.pluck(:id)%>">
+          <% Restaurant.sort_by_values.each do |sort| %>
+            <option value="<%=sort[:value]%>"><%=sort[:name]%></option>
+          <% end %>
+        </select>
+      </label>
+    </div>
+    <div class="col-12 pb-3 sort-control">
+      <label class="hidden-sm-up ft-bold">Sort by:</label>
+      <select class="form-control lp__sort_by hidden-sm-up" data-appointment-id="<%=@appointment.id%>" data-restaurant-ids="<%=@restaurants.pluck(:id)%>">
+        <% Restaurant.sort_by_values.each do |sort| %>
+          <option value="<%=sort[:value]%>"><%=sort[:name]%></option>
+        <% end %>
+      </select>
+    </div>
+  </form>
+</div>
+<div class="targ__restaurant_list">
+  <%= render partial: 'rep/appointments/components/filtered_restaurants_list', locals: {restaurants: restaurants, appointment: @appointment} %>
+  <% if !restaurants.any? %>
+    <div class="col-12 text-center mt-5">
+        <span class="opacity-7"><%= om_food_icon %></span>
+        <h3>There are no available restaurants in your delivery area.</h3>
+    </div>
+    <div class="col-5 mx-auto mt-5">
+      <a data-modal="true" data-modal-size="sm" data-modal-title="" href="<%=byo_rep_appointment_path(id: @appointment.id, redirect_to: 'calendar')%>" class="btn btn-success btn-block"><%= byo_button_text(@appointment) %></a>
+    </div>
+  <% end %>
+</div>

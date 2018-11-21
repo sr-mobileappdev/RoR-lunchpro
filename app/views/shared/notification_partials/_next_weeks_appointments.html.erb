@@ -1,0 +1,35 @@
+<% appointments.each do |appt| %>
+<div>
+  <div style="margin-bottom: 3px;" class="col-6">
+    <div style="margin-bottom: 3px;"><%=ah.short_date(appt.appointment_on) %></div>
+    <div class="h4"><strong><%=appt.office.name%></strong></div>
+  </div>
+  <div style="margin-bottom: 3px;" class="col-5 text-right">
+    <% if !appt.food_ordered? && !appt.will_supply_food %>
+      <a href="<%= UrlHelpers.policies_rep_appointments_url(back: 'current', office_id: appt.office.id, appointment_id: appt.id)%>" style="margin-right: 10px;">Order</a>
+      <% if appt.cuisine_recommended? %>
+        <a href="<%= UrlHelpers.rep_appointment_url(appt)%>">View Office Recommendation</a>
+      <% else %>
+        <a href="<%= UrlHelpers.rep_appointment_url(appt)%>">View Appointment</a>
+      <% end %>
+    <% elsif appt.will_supply_food %>
+      <div style="margin-bottom: 3px;"> You are bringing: </div>
+      <div class="h5"><%= appt.bring_food_notes %></div>
+    <% else %>
+      <div style="margin-bottom: 3px;"> You are bringing: </div>
+      <div class="h5"><%= appt.restaurant.display_name %></div>
+    <% end %>
+  </div>
+  <div style="margin-bottom: 3px;" class="col-6">
+    <% if appt.appointment_slot %>
+      <div><%= appt.appointment_slot.name %> - <%= ah.slot_time(appt.starts_at(true)) %></div>
+    <% else %>
+      <div><%= ah.slot_time(appt.starts_at(true)) %></div>
+    <% end %>
+  </div>
+  <div>
+    <hr style="width: 100%; padding: 0; margin-left: 0 !important; margin-right: 0 !important;">
+  </div>
+</div>
+<% end %>
+

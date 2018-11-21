@@ -1,0 +1,358 @@
+        <div class="tab-pane active" id="appointments" role="tabpanel">
+          <div class="row">
+            <div class="col-9 ml-auto mt-2 h5">
+              Appointments
+            </div>
+            <div class="col-3 ml-auto mt-2">
+              (select all that apply)
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-9">
+              <label class="m-0">Appointments Booked</label>
+              <p class="small">Email includes calendar invite for a quick addition to your primary calendar</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['416'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][112]" value="<%=f.object.via_email['112'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][201]" value="<%=f.object.via_email['201'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][202]" value="<%=f.object.via_email['202'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][416]" value="<%=f.object.via_email['416'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['416'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['416'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][112]" value="<%=f.object.via_sms['112'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][201]" value="<%=f.object.via_sms['201'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][202]" value="<%=f.object.via_sms['202'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][416]" value="<%=f.object.via_sms['416'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['416'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Appointment Details Changed</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['113'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][113]" value="<%=f.object.via_email['113'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][113]" data-hidden-notifs='true'
+                  value="<%=f.object.via_email['113'].to_i%>" <%= 'checked' if f.object.via_email['113'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['113'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][113]" value="<%=f.object.via_sms['113'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_sms][113]" data-hidden-notifs='true'
+                  value="<%=f.object.via_sms['113'].to_i%>" <%= 'checked' if f.object.via_sms['113'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Cancellation - By You</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['205'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][204]" value="<%=f.object.via_email['204'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][205]" value="<%=f.object.via_email['205'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['205'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['205'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][204]" value="<%=f.object.via_sms['204'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][205]" value="<%=f.object.via_sms['205'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['205'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Cancellation - By Medical Office</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['104'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][103]" value="<%=f.object.via_email['103'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][118]" value="<%=f.object.via_email['118'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][104]" value="<%=f.object.via_email['104'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['104'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['104'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][103]" value="<%=f.object.via_sms['103'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][118]" value="<%=f.object.via_sms['118'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][104]" value="<%=f.object.via_sms['104'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['104'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label class="m-0">Pending Appointment Confirmation</label>
+              <p class="small">Sent 72 hours prior to the appointment so the office has confirmation you will be there</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['411'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][411]" value="<%=f.object.via_email['411'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][411]" data-hidden-notifs='true'
+                  value="<%=f.object.via_email['411'].to_i%>" <%= 'checked' if f.object.via_email['411'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['411'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][411]" value="<%=f.object.via_sms['411'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_sms][411]" data-hidden-notifs='true'
+                  value="<%=f.object.via_sms['411'].to_i%>" <%= 'checked' if f.object.via_sms['411'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label class="m-0">Last-Minute Appointment Availability</label>
+              <p class="small">When an office is looking for a rep to fill a cancellation</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['109'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][109]" value="<%=f.object.via_email['109'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][109]" data-hidden-notifs='true'
+                  value="<%=f.object.via_email['109'].to_i%>" <%= 'checked' if f.object.via_email['109'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['109'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][109]" value="<%=f.object.via_sms['109'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_sms][109]" data-hidden-notifs='true'
+                  value="<%=f.object.via_sms['109'].to_i%>" <%= 'checked' if f.object.via_sms['109'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label class="m-0">Week Ahead Appointment Summary</label>
+              <p class="small">Get notified of your next appointments for the next week</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['404'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][403]" value="<%=f.object.via_email['403'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][404]" value="<%=f.object.via_email['404'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['404'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['404'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][403]" value="<%=f.object.via_sms['403'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][404]" value="<%=f.object.via_sms['404'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['404'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane active pt-2" id="food-orders" role="tabpanel">
+          <div class="row">
+            <div class="col-12 mt-2 ml-auto h5">
+              Food Orders
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-9">
+              <label class="m-0">Order Reminders</label>
+              <p class="small">Sent 48 hour prior to the appointment if you have not placed an order or indicated what you intend to bring</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['415'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][415]" value="<%=f.object.via_email['415'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][415]" data-hidden-notifs='true'
+                  value="<%=f.object.via_email['415'].to_i%>" <%= 'checked' if f.object.via_email['415'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['415'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][415]" value="<%=f.object.via_sms['415'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_sms][415]" data-hidden-notifs='true'
+                  value="<%=f.object.via_sms['415'].to_i%>" <%= 'checked' if f.object.via_sms['415'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Food Order Summary; Receipts &amp; Updates</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['207'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][203]" value="<%=f.object.via_email['203'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][206]" value="<%=f.object.via_email['206'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][402]" value="<%=f.object.via_email['402'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][207]" value="<%=f.object.via_email['207'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['207'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['207'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][203]" value="<%=f.object.via_sms['203'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][206]" value="<%=f.object.via_sms['206'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][402]" value="<%=f.object.via_sms['402'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][207]" value="<%=f.object.via_sms['207'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['207'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Office Left Feedback on Order</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['116'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][116]" value="<%=f.object.via_email['116'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][116]" data-hidden-notifs='true'
+                  value="<%=f.object.via_email['116'].to_i%>" <%= 'checked' if f.object.via_email['116'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['116'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][116]" value="<%=f.object.via_sms['116'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_sms][116]" data-hidden-notifs='true'
+                  value="<%=f.object.via_sms['116'].to_i%>" <%= 'checked' if f.object.via_sms['116'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Office Order Recommendation</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['107'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][105]" value="<%=f.object.via_email['105'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][106]" value="<%=f.object.via_email['106'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][107]" value="<%=f.object.via_email['107'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['107'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['107'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][105]" value="<%=f.object.via_sms['105'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][106]" value="<%=f.object.via_sms['106'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][107]" value="<%=f.object.via_sms['107'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['107'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane active pt-2" id="other-alerts" role="tabpanel">
+          <div class="row">
+            <div class="col-12 mt-2 ml-auto h5">
+              Other Alerts
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-9">
+              <label>Rx Sample Request</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['111'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][110]" value="<%=f.object.via_email['110'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][111]" value="<%=f.object.via_email['111'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['111'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['111'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][110]" value="<%=f.object.via_sms['110'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][111]" value="<%=f.object.via_sms['111'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['111'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label>Partner Requests</label>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['214'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][213]" value="<%=f.object.via_email['213'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][214]" value="<%=f.object.via_email['214'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['214'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['214'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][213]" value="<%=f.object.via_sms['213'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][214]" value="<%=f.object.via_sms['214'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['214'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label class="m-0">New Office Calendar Dates Open</label>
+              <p class="small">Be notified when an office opens its calendar for new appointemnts</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['102'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][102]" value="<%=f.object.via_email['102'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][102]" data-hidden-notifs='true'
+                  value="<%=f.object.via_email['102'].to_i%>" <%= 'checked' if f.object.via_email['102'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['102'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][102]" value="<%=f.object.via_sms['102'].to_i%>">
+                  <input class="form-check-input" type="checkbox" name="user_notification_pref[via_sms][102]" data-hidden-notifs='true'
+                  value="<%=f.object.via_sms['102'].to_i%>" <%= 'checked' if f.object.via_sms['102'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <label class="m-0">New Appointment Slots at an Office</label>
+              <p class="small">Be notified when one of your offices makes a new meal type slot available</p>
+            </div>
+            <div class="col-3">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_email['114'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_email][115]" value="<%=f.object.via_email['115'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_email][114]" value="<%=f.object.via_email['114'].to_i%>">
+                  <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['114'].to_i == 1%>> Email
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label <%= 'checked' if f.object.via_sms['114'].to_i == 1%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][115]" value="<%=f.object.via_sms['115'].to_i%>">
+                  <input type="hidden" name="user_notification_pref[via_sms][114]" value="<%=f.object.via_sms['114'].to_i%>">
+                  <input class="form-check-input" type="checkbox" data-hidden-notifs='true' <%= 'checked' if f.object.via_sms['114'].to_i == 1%>> Text
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,15 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :created_by_id) %>
+
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-6 lp_req">
+          <%= lp_text_field(f, :brand, "Brand Name") %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

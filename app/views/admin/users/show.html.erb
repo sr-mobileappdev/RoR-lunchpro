@@ -1,0 +1,102 @@
+<% tab 'overview' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: admin_users_path } %> <!--session[:my_previous_url] } %>--> <!--admin_users_path } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4">
+      <h2 class="lp__light"><%= @record.display_name %> <span class="lp__subheader text-danger"><%= "Inactive" unless !@record.deactivated_at %></span></h2>
+    </div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+        <% if @record.deactivated_at && @record.space == 'space_admin' %>
+          <a data-confirm-method="post" href="<%= activate_admin_user_path(@record) %>" data-confirm-check="Are you sure you want to activate this user?" class="btn btn-success btn-sm mr-2">Activate</a>
+        <% end %>        
+        <a class="btn btn-success btn-sm mr-3" data-confirm-method="post" href="<%= user_password_path(user: {email: @record.email}, admin_reset: true) %>" data-confirm-check="Are you sure you want to reset this User's password?">Reset Password</a>
+        <a class="btn btn-success btn-sm mr-3" href="<%=password_admin_users_path(id: @record.id)%>">Set Password</a>
+        <a class="btn btn-secondary btn-sm mr-2" href="<%= reinvite_admin_user_path(@record) %>">Resend Invite</a></li>
+        <a class="btn btn-primary btn-sm mr-2" href="<%= edit_admin_user_path(@record) %>">Edit</a>
+        <% if @record && @record.entity && @record.active? && (@record.confirmed_at || @record.invitation_accepted_at) %>
+          <a data-method="post" href="<%= impersonate_admin_impersonation_index_path(user_id: @record.id) %>" class="btn btn-primary btn-sm mr-2">Impersonate</a>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <% if !@record.space_admin? %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_user_path(@record), active_tab: 'overview'},
+                    {title: 'Notification Preferences', path: admin_user_preferences_path(@record), active_tab: 'preferences'}
+                  ]
+                } %>
+  <% end %>
+  <%= render partial: 'admin/shared/components/flash' %>
+
+  <div class="row">
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'display_name' => {title: 'Name', w: 3}},
+                      {'job_title' => {title: 'Title', w: 2}},
+                      {'email' => {title: 'Login Email', w: 4}},
+                      {'invite_status' => {title: 'Invite Status', w: 3, helper: 'user_invite_status_flag'}}
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+      <% related_object = {} %>
+      <% if @record.user_office %>
+        <% related_object = {'user.user_office' => {title: 'Office', w: 3, helper: 'user_office_link'}} %>
+      <% elsif @record.sales_rep %>
+        <% related_object = {'user.sales_rep' => {title: 'Sales Rep', w: 3, helper: 'sales_rep_link'}} %>
+      <% elsif @record.user_restaurants && @record.user_restaurants.count == 1 %>
+        <% related_object = {'user.user_restaurant' => {title: 'Restaurant', w: 3, helper: 'user_restaurant_link'}} %>
+      <% end %>
+      <%= render partial: 'admin/shared/components/details/show_row',
+                  locals: {
+                    object: @record,
+                    fields: [
+                      {'confirmation_status' => {title: 'Confirmation Status', w: 3, helper: 'user_confirmation_status_flag'}},
+                      {'display_space' => {title: 'Space', w: 3}},
+                      related_object,
+                      {'primary_phone' => {title: 'Phone', w: 3, helper: 'format_phone_number_string'}},
+                    ]
+                  } %>
+
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-4">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Notification History',
+                    link_columns: {appointment_time: 'id', id: 'id'},
+                    columns: ['id', 'title', 'priority', {title: 'Notify Time', column: 'notified_at', helper: 'long_date'}, 'delivery_summary'],
+                    model_class: 'Notification',
+                    objects: @record.notifications.where.not(status: ['deleted']).order(created_at: :desc)
+                  } %>
+    </div>
+  </div>
+  <!--If record is an admin and isn't the current user -->
+  <% if current_user.id != @record.id %>
+    <div class="row">
+      <div class="col-12 px-4">
+        <h5 class="lp__section_header">Other Actions</h5>
+        <ul class="lp__actions">
+          <% if @record.inactive? %>
+            <li><a class="text-primary" data-confirm-method="post" href="<%= activate_admin_user_path(@record) %>" data-confirm-check="Are you sure you want to re-activate this user?">Re-activate User</a></li>
+          <% elsif @record.active? %>
+            <li></q><a class="text-danger" data-confirm-method="post" href="<%= deactivate_admin_user_path(@record) %>" data-confirm-check="Are you sure you want to delete this user? They will be removed from the system and only available in historical reporting where applicable.">Deactivate User</a></li>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>

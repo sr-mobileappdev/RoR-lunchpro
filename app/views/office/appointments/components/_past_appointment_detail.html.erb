@@ -1,0 +1,140 @@
+<div class="row faux-modal-header bb-1">
+  <div class="col-12 text-center mb-3">
+    <p class="mb-0"><i>Past Appointment</i></p>
+  </div>
+  <div class="col-12 col-md-6 row">
+    <div class="col-2 col-md-3 hidden-xs-down">
+      <%= slot_food_icon(@appointment.appointment_slot.slot_type) %>
+    </div>
+    <div class="col-10 col-md-9 pl-0">
+      <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+      <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+    </div>
+    <div class="pl-3 pr-2 hidden-xs-down">
+      <%= dinner_tray_icon %>
+    </div>
+    <% if @order %>
+    <div class="col-8 col-md-10 pl-0">
+      <p><%= @appointment.restaurant.display_name %></p>
+    </div>
+    <% else %>
+    <div class="col-8 col-md-10 pl-0">
+      <% if @appointment.will_supply_food? %>
+      <p>BYO: <%= @appointment.bring_food_notes %></p>
+      <% else %>
+      <p>Restaurant - Unknown</p>
+      <% end %>
+    </div>
+    <% end %>
+    <div class="col-12 m-4 hidden-sm-down"></div>
+    <div class="col-12 m-4 hidden-sm-down"></div>
+  </div>
+  <div class="col-12 col-md-6 row">
+    <div class="col-2 col-md-3 hidden-xs-down">
+      <%= om_user_icon %>
+    </div>
+    <div class="col-10 col-md-9 pl-0">
+      <h5 class="mt-2"><%=@appointment.sales_rep.display_name%></h5>
+      <p><%=@appointment.sales_rep.company_name %></p>
+    </div>
+    <div class="col-12 row">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= envelope_icon %>
+      </div>
+      <div class="col-12 col-sm-9 pl-0 pr-0 mb-1 overflow-ellipsis">
+        <%= @appointment.sales_rep.email || "No Email Set"%>
+      </div>
+    </div>
+    <div class="col-12 row">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= phone_icon %>
+      </div>
+      <div class="col-12 col-sm-9 pl-0 pr-0 mb-1">
+        <%=@appointment.sales_rep.phone ? format_phone_number(@appointment.sales_rep.phone) : "No Phone Set"%>
+      </div>
+    </div>
+    <div class="col-12 row">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= notes_icon %>
+      </div>
+      <div class="col-12 col-sm-9 pl-0 pr-0 mb-1">
+        <%= @offices_sales_rep ? @offices_sales_rep.office_notes : "There are no notes regarding this rep." %>
+      </div>
+    </div>
+  </div>
+  <% if @order && @order_review.new_record? %>
+  <div class="col-12 text-center mt-4 comp__om_form" data-past-modal="true">
+    <%= form_for @order_review, url: review_office_order_path(@order), method: :post,  html: { class: "", autocomplete: "off", onsubmit: "return false;"  } do |f| %>
+    <input type="hidden" name="order_review[status]" value="active">
+    <input type="hidden" name="order_review[reviewer_type]" value="Office">
+    <input type="hidden" name="order_review[reviewer_id]" value="<%=current_user.user_office.office.id%>">
+    <input type="hidden" name="order_review[created_by_id]" value="<%=current_user.id%>">
+    <fieldset>
+      <div class="row">
+        <div class="col-12">
+          <h4 class="ft-bold">How was this meal?</h4>
+        </div>
+        <div class="col-12 col-md-6 mr-auto ml-auto mt-2">
+          <fieldset class="rating pr-3 d-inline">
+            <input type="radio" id="quality5" name="order_review[overall]" value="5" /><label for="quality5">5 stars</label>
+            <input type="radio" id="quality4" name="order_review[overall]" value="4" /><label for="quality4">4 stars</label>
+            <input type="radio" id="quality3" name="order_review[overall]" value="3" /><label for="quality3">3 stars</label>
+            <input type="radio" id="quality2" name="order_review[overall]" value="2" /><label for="quality2">2 stars</label>
+            <input type="radio" id="quality1" name="order_review[overall]" value="1" /><label for="quality1">1 star</label>
+          </fieldset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 mr-auto ml-auto">
+          <%= lp_text_area(f, :comment, "none", nil, {class: 'form-control', style: 'resize: none', rows: '5', placeholder: 'Add a comment'}) %>
+        </div>
+      </div>
+    </fieldset>
+    <div class="col-12 row text-center mt-4 justify-content-center pr-0">
+      <button data-submit type="submit" class="col-12 col-sm-8 col-md-5 btn btn-success">Leave Feedback</button>
+    </div>
+    <% end %>
+  </div>
+  <% elsif @order && !@order_review.new_record? %>
+  <div class="col-12 text-center mt-4">
+    <fieldset>
+      <div class="row align-items-center mt-2">
+        <div class="col-12">
+          <h4 class="ft-bold">Thanks for the feedback!</h4>
+        </div>
+        <div class="col-12 col-md-6 mr-auto ml-auto mt-2">
+          <fieldset class="rating-disabled pr-3 d-inline" id="overall" data-comp-checked-value="<%=@order_review.overall%>">
+            <input type="radio" id="quality5" name="order_review[overall]" value="5" /><label for="quality5">5 stars</label>
+            <input type="radio" id="quality4" name="order_review[overall]" value="4" /><label for="quality4">4 stars</label>
+            <input type="radio" id="quality3" name="order_review[overall]" value="3" /><label for="quality3">3 stars</label>
+            <input type="radio" id="quality2" name="order_review[overall]" value="2" /><label for="quality2">2 stars</label>
+            <input type="radio" id="quality1" name="order_review[overall]" value="1" /><label for="quality1">1 star</label>
+          </fieldset>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <% else %>
+  <div class="col-12 text-center mt-4 mb-2">
+    <h4><i>There was no food ordered through LunchPro for this appointment.</i></h4>
+  </div>
+  <% end %>
+  <div class="col-12 text-center mt-4 lp__feedback" style="display: none;">
+    <fieldset>
+      <div class="row align-items-center mt-2">
+        <div class="col-12">
+          <h4 class="ft-bold">Thanks for the feedback!</h4>
+        </div>
+        <div class="col-12 col-md-6 mr-auto ml-auto mt-2">
+          <fieldset class="rating-disabled pr-3 d-inline">
+            <input type="radio" id="review5" name="order_review[overall]" value="5" /><label for="quality5">5 stars</label>
+            <input type="radio" id="review4" name="order_review[overall]" value="4" /><label for="quality4">4 stars</label>
+            <input type="radio" id="review3" name="order_review[overall]" value="3" /><label for="quality3">3 stars</label>
+            <input type="radio" id="review2" name="order_review[overall]" value="2" /><label for="quality2">2 stars</label>
+            <input type="radio" id="review1" name="order_review[overall]" value="1" /><label for="quality1">1 star</label>
+          </fieldset>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

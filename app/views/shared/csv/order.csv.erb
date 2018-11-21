@@ -1,0 +1,8 @@
+<%- headers = ['Status', 'Order #', 'Delivery Date', 'Delivery Time', 'Restaurant', 'Delivery Address', 'Sales Rep', 'Order Count', 'Subtotal $',
+  'Tax $', 'Tip $', 'Delivery $', 'Total $', 'Payment Method'] -%>
+<%= CSV.generate_line headers %>
+<%= CSV.generate_line([@order.status, "Order #: #{@order.order_number}", @order.appointment.appointment_on, slot_time(@order.appointment.starts_at(true)), 
+  csv_restaurant_info(@order.restaurant), csv_order_delivery_info(@order), csv_order_customer_info(@order),
+   @order.total_items, precise_currency_value(@order.subtotal_cents), precise_currency_value(@order.sales_tax_cents), precise_currency_value(@order.tip_cents),
+   precise_currency_value(@order.delivery_cost_cents), precise_currency_value(@order.total_cents),
+   @order.payment_method.short_display_name]) -%>

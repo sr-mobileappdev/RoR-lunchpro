@@ -1,0 +1,59 @@
+<div id="office-profile" class="p-4">
+  <div class="row align-items-center mb-2 mt-2">
+    <div class="pl-3 pr-2 hidden-xs-down">
+      <%= office_detail_icon %>
+    </div>
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 pr-0">
+      <div>
+          <div class="h4">
+            <%= @office.name %>
+              <a class="btn btn-link hidden-md-down" data-confirm-method="post" href="<%= remove_rep_office_path(@office)%>" data-confirm-check="<font size='+2'>Are you sure you want to remove this office? Any upcoming appointments and orders will be canceled, and you will be charged <span class='text-danger'>order cancelation fees</span> where applicable.</font size>">Remove</a>
+          </div>
+      </div>
+      <div>
+          <%= single_line_address(@office) %>
+      </div>
+      <div>
+        <%= format_phone_number_string(@office.phone) %>
+      </div>
+    </div>
+    <div class="col-12 hidden-lg-up">
+      <a class="btn btn-link pl-0" data-confirm-method="post" href="<%= remove_rep_office_path(@office)%>" data-confirm-check="<font size='+2'>Are you sure you want to remove this office? Any upcoming appointments and orders will be canceled, and you will be charged <span class='text-danger'>order cancelation fees</span> where applicable.</font size>">Remove</a>
+    </div>
+  </div>  
+</div>
+<div class="col-12 text-center mb-3">
+    <a href="#policies" class="btn btn-outline-info mt-2" data-comp-detail-id="<%= @office.id %>" data-url="<%= policies_rep_appointments_path(office_id: @office.id) %>">View Office Policies</a>
+    <% if @office.appointments_until.to_date < Time.now.to_date %>
+      <p class="text-danger mt-3 ft-bold">This office is currently not accepting appointments.</p>
+    <% else %>
+      <a href="<%= policies_rep_appointments_path(office_id: @office.id) %>" class="btn btn-success mr-1 mt-2">Reserve Appointment(s)</a>  
+    <% end %>
+</div>
+<hr class="m-0">
+<div class="col-12">
+  <ul class="nav nav-pills justify-content-center text-center row pr-1 pl-1">
+      <li class="nav-item col-sm p-0">
+          <a class="nav-link __select_tab" href="#my-appointments" data-tab="appointments">My Appointments</a>
+      </li>
+      <li class="nav-item col-sm p-0">
+          <a class="nav-link __select_tab" href="#about" data-tab="about">About</a>
+      </li>
+      <li class="nav-item col-sm p-0">
+          <a class="nav-link __select_tab" href="#notes" data-tab="notes">My Notes</a>
+      </li>
+  </ul>
+</div>
+<div class="col-12 p-0">
+  <div class="tab-content">
+      <div class="tab-pane" id="my-appointments" role="tabpanel">
+        <%= render partial: 'rep/offices/components/office_detail__my_appointments' %>
+      </div>
+      <div class="tab-pane with-cards" id="about" role="tabpanel">
+          <%= render partial: 'rep/offices/components/office_detail__about' %>
+      </div>
+      <div class="tab-pane with-cards" id="notes" role="tabpanel">
+          <%= render partial: 'rep/offices/components/office_detail__my_notes' %>
+      </div>
+  </div>
+</div>

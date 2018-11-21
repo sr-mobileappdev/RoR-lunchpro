@@ -1,0 +1,36 @@
+<div class="table-responsive">  
+  <table class="table">
+    <thead>
+      <tr class="pl-4">
+        <th class="hidden-sm-down"></th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sales_reps.each do |rep| %>
+        <tr data-modal-size="med-lg" data-modal="true" href="<%=show_rep_office_preferences_path(sales_rep_id: rep.id)%>" data-modal-title="" class="rep-table-row">
+          <td width="100px" class="pt-3 hidden-sm-down">
+            <div class="row m-0">
+              <div class="profile-image-container-sm ml-2">
+                <% if rep.profile_image && rep.profile_image.url %>
+                    <img class="profile-picture" src="<%= rep.profile_image.url %>", alt="Rep Profile Image"/>
+                <% else %>
+                  <%= image_tag "missing_image.png", class: "profile-picture", alt: "Missing Image" %>
+                <% end %>
+              </div>       
+            </div>
+          </td>
+          <td><%= rep.full_name %></td>
+          <td><%= rep.company_name %></td>
+          <td><%= rep.email %></td>
+          <td><%= format_phone_number_string(rep.phone_single) %></td>
+          <td width="85px"><%= list_type_icon(rep.listed_type(@office)) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

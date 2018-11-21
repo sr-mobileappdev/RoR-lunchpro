@@ -1,0 +1,22 @@
+.DS_Store
+
+# ide
+/.idea
+.idea
+dump.rdb
+# Ignore app/env configuration
+/config/application.yml
+#/config/database.yml
+*.swp
+*.swo
+package-lock.json
+node_modules/
+
+package.json
+
+.ruby-gemset
+tmp/
+log/
+.byebug_history
+
+yarn.lock

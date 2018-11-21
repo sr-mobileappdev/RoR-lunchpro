@@ -1,0 +1,24 @@
+// extra space bug fix
+.card-columns {
+	margin-bottom: $card-spacer-y;
+	.card {
+		display: flex;
+		page-break-inside: avoid;
+		break-inside: avoid;
+	}
+}
+
+// custom style
+.card {
+	.card-header {
+		background-color: $gray-dark;
+		color: $white;
+		text-align: center;
+		font-weight: 500d;
+	}
+
+	&.transparent {
+		background-color: transparent !important;
+		border-color: transparent !important;
+	}
+}

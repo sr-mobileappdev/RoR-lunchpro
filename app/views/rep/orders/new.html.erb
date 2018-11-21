@@ -1,0 +1,31 @@
+<% tab 'offices' %>
+<% title 'Offices' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+
+<div class="modal comp__rep_order_new z-0" id="add-office" data-selected-office="<%=@selected_office%>">
+  <div class="modal-dialog select-office" role="document">
+    <h1 class="sr-only">New Order</h1>
+    <div class="modal-content new-office-modal-content">
+      <div class="row bb-1 m-0 list-header">
+        <div class="col-12">
+          <ul class="nav nav-pills justify-content-center text-center row">
+            <li class="nav-item col-sm">
+              <a class="nav-link active __select_tab" href="#" data-comp-detail-tab="office_search">My Offices</a>
+            </li>
+            <li class="nav-item col-sm">
+              <a class="nav-link __select_tab" data-comp-detail-tab="appointment_list" href="#">Appointments</a>
+            </li>
+            <li class="nav-item col-sm">
+              <a class="nav-link __select_tab" data-comp-detail-tab="new_office" href="#">New Office</a>
+            </li>
+          </ul> 
+        </div>
+      </div>
+      <div class="targ__new_order comp__rep_office_new tab-content">
+        <%= render partial: 'rep/orders/components/new_order_office_search_form', locals: {offices: @offices} %>
+      </div>
+    </div>
+  </div>
+</div>
+

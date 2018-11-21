@@ -1,0 +1,56 @@
+<div class="row faux-modal-header bb-1">
+  <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+    <%= calendar_exclamation_icon_lg %>
+  </div>
+  <div class="col-12 col-sm-10 mt-1">
+    <h3 class="ft-bold"><a href="<%=appointment_office_link(@record)%>"><%= @record.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+    <span><%= short_date(@record.appointment_on) %></span>
+    <br/>
+    <% if @record.appointment_slot %>
+      <span><%= "#{@record.appointment_slot.name}: #{slot_time(@record.starts_at(true))}" %></span>
+    <% else %>
+      <span><%= "#{@record.title}: #{slot_time(@record.starts_at(true))}" %></span>
+    <% end %>
+  </div>
+</div>
+<div class="row appointment-modal-body">
+  <% if @order.present? %>
+  <div class="restaurant-image-container-sm hidden-sm-down mr-2">
+    <% if @order.restaurant.brand_image && @order.restaurant.brand_image.url %>
+    <img class="restaurant-image" src="<%= @order.restaurant.brand_image.url %>" alt="Restaurant Logo" />
+    <% else %>
+    <%= image_tag "missing_image.png", class: "restaurant-image", alt: "Missing Image" %>
+    <% end %>
+  </div>
+  <div class="col-12 col-sm-4">
+    <h4 class="ft-bold"><%= @order.restaurant.display_name %></h4>
+    <p class="mb-0 mt-1"><%= @order.restaurant.primary_cuisine %></p>
+    <p>Total Price: <%=precise_currency_value(@order.total_cents)%></p>
+  </div>
+  <div class="col-5 ml-auto hidden-sm-down mb-4">
+    <p>We have automatically canceled this order with the restaurant. You can reorder the same meal from your Order History.</p>
+  </div>
+  <div class="col-12 hidden-md-up hidden-xs-down mb-4">
+    <p>We have automatically canceled this order with the restaurant. You can reorder the same meal from your Order History.</p>
+  </div>
+  <% end %>
+  <div class="col-11 ml-auto pl-0">
+    <div class="col-12 mb-3">
+      <h3 class="ft-bold text-uc">This appointment has been canceled by the office</h3>
+    </div>
+    <div class="col-12">
+      <p class="ft-bold mb-1 mt-4">Message from the office</p>
+    </div>
+    <div class="col-12">
+      <p class="m-0"><%=@record.cancel_reason.present? ? @record.cancel_reason : 'The office did not leave a message.'%></p>
+    </div>
+    <% if @record.will_supply_food %>
+    <div class="col-12 mt-4">
+      <p class="ft-bold">Please make sure to notify the caterer about canceling the order you are bringing</p>
+    </div>
+    <% end %>
+  </div>
+  <div class="col-12 text-center mt-4">
+    <a href="<%= Notification.dismiss_path(current_user, @notif) %>" data-method="post" class="btn btn-outline-info col-12 col-sm-8 col-md-4" data-dismiss="modal">Dismiss</a>
+  </div>
+</div>

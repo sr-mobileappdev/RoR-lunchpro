@@ -1,0 +1,95 @@
+<%= form_for @record, url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :created_by_id) %>
+
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group row form-group-tight">
+          <div class="col-sm-4">
+            <%= lp_text_field(f, :first_name) %>
+          </div>
+
+          <div class="col-sm-6">
+            <%= lp_text_field(f, :last_name) %>
+          </div>
+      </div>
+      <div class="form-group row form-group-tight">
+          <div class="col-sm-7">
+            <%= lp_text_field(f, :address_line1, "Street Address") %>
+          </div>
+
+          <div class="col-sm-2">
+            <%= lp_text_field(f, :address_line2, "Suite / Apt #") %>
+          </div>
+      </div>
+      <div class="form-group row form-group-tight">
+          <div class="col-sm-3">
+            <%= lp_text_field(f, :city) %>
+          </div>
+
+          <div class="col-sm-2">
+            <%= lp_text_field(f, :state, "State", f.object.state, {maxlength: 2}) %>
+          </div>
+
+          <div class="col-sm-2">
+            <%= lp_text_field(f, :postal_code, "Zip Code") %>
+          </div>
+      </div>
+      <%= f.fields_for :user do |u| %>
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-6 lp_req">  
+            <%= lp_text_field(u, :primary_phone, 'Phone Number', u.object.primary_phone, {class: 'form-control form-control-sm phone_number_input'}) %>
+          </div>
+        </div>
+      <% end %>   
+      <div class="form-group row form-group-tight">
+          <div class="col-sm-6">
+            <%= lp_multi_object_field(f, :company_id, "Company", {url: quick_admin_searches_path(search_type: 'company')}, @record.company_id, (@record.company) ? @record.company.name : '') %>
+          </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-6">
+          <label for="specialties" class="form-control-label ft-bold">Specialties</label>
+          <input type="text" id="sales_rep_specialties" name="sales_rep[specialties]" value="<%= f.object.specialties.join(",") %>">
+        </div>
+      </div>
+
+      <%= f.fields_for :user  do |web_login| %>
+        <h4 class="pt-3">Web Login</h4>
+        <div class="form-group row form-group-tight">
+          <div class="col-8 lp_req">
+            <%= lp_email_field(web_login, :email, "Login Email") %>
+            <p class="field_note hide-on-edit">After sales rep is created, a welcome invitation email will be automatically sent to the above address.</p>
+          </div>
+        </div>
+      <% end %>
+
+
+      <h4 class="pt-3">Preferences</h4>
+      <div class="form-group row form-group-tight">
+        <div class="col-8">
+          <%= lp_timezone_select_field(f, :timezone, "Local Timezone") %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <h4 class="pt-3">Budgeting & Tipping</h4>
+      <div class="form-group row form-group-tight">
+        <div class="col-12">
+          <%= lp_currency_field(f, :per_person_budget_cents, "", @record.per_person_budget_cents) %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-6">
+          <%= lp_currency_field(f, :max_tip_amount_cents, "Max Tip Amount", @record.max_tip_amount_cents) %>
+        </div>
+        <div class="col-6">
+          <%= lp_percentage_field(f, :default_tip_percent, "", @record.default_tip_percent) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

@@ -1,0 +1,119 @@
+var stripe = Stripe("<%=ENV['STRIPE_PKEY']%>");
+var elements = stripe.elements();
+
+// Turbolinks fix to avoid JS reload on pure anchor changes only
+document.addEventListener("turbolinks:click", function(event) {
+  if (is_link_anchor_only(event.target)) {
+    return event.preventDefault();
+  }
+
+});
+
+document.addEventListener("turbolinks:load", function() {
+  window.debug_mode = true
+  debug("Debug mode is ON. This can be changed in application/component_manager.js")
+
+  LPInterface_Initializer();
+  LPModal_Initializer();
+  LPForm_Initializer();
+  LPStripeForm_Initializer();
+  LPTable_Initializer();
+  LPPopup_Initializer();
+  LPConfirm_Initializer();
+  LPRepNotifications_Initializer();
+  LPOffice_Initializer();
+  // Appointment Lists
+  LPAppointmentList_Initializer();
+  LPReports_Initializer();
+
+  // Form Elements
+  LPForms_SelectTimeframeInit();
+  LPObjectField_Initializer();
+  LPForms_SelectAvailabilityInit();
+
+  //Smart Wizard 4
+  LPWizard_Initializer();
+
+
+// Observe addition of a calendar element to UI that may need initialized
+
+  $(document).on("calendar:build", function(e, element, options) {
+    optional_config = {altInput: true, altFormat: 'M j, Y'}
+    if (options != undefined) {
+      optional_config = options
+    }
+
+    flatpickr(element, optional_config);
+
+  });
+
+  $(document).on("calendar:week_selector_build", function(e, element, options) {
+    optional_config = {altInput: true, altFormat: 'M j, Y', plugins: [new weekSelectPlugin()]}
+    if (options != undefined) {
+      optional_config = options
+    }
+
+    flatpickr(element, optional_config);
+
+  });
+
+  $(".lp__calendar").each(function (idx) {
+    $( document ).trigger("calendar:build", [this, null])
+  });
+
+  $(".lp__week_selector input").each(function(idx) {
+    $( document ).trigger("calendar:week_selector_build", [this, null])
+  });
+
+});
+
+// Base Component New change observation
+
+var is_link_anchor_only = function(link) {
+  href = link.getAttribute('href')
+  if (href.charAt(0) == '#') {
+    return true;
+  } else {
+    return false;
+  }
+
+};
+
+var new_node_observer = new MutationObserver(function (mutations) {
+  mutations.forEach(function(mutation) {
+    for(var i = 0; i < mutation.addedNodes.length; i++) {
+      node = mutation.addedNodes[i]
+      if ($(node).attr("class") && $(node).attr("class").indexOf("comp__") !== -1 ) {
+        $( document ).trigger( "lp-component.added", [$(node)] );
+      }
+    }
+  });
+});
+
+// Observe DOM changes for components
+
+document.addEventListener("turbolinks:load", function() {
+  // Observe a specific DOM node / subtree
+  if ($("#__base").length <= 0) {
+    return;
+  }
+  new_node_observer.observe($('#__base')[0], {
+    childList: true,
+    subtree: true
+  });
+});
+
+
+
+
+// linkTargetsAnchorOnSamePage = (link) ->
+//   href = link.getAttribute('href')
+
+//   return true if href.charAt(0) == '#'
+
+//   if href.match(new RegExp('^' + window.location.toString().replace(/#.*/, '') + '#'))
+//     return true
+//   else if href.match(new RegExp('^' + window.location.pathname + '#'))
+//     return true
+
+//   return false

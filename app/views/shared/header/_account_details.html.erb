@@ -1,0 +1,63 @@
+<div id="profile-menu-wrapper" class="clearfix">
+    <ul class="nav float-right">
+        <li class="nav-item">
+            <a class="nav-link" href="/rep/profile?tab=faq" title="Frequently Asked Questions"><i class="fa fa-question-circle"></i></a>
+        </li>
+        <li class="nav-item dropdown comp__notification">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" title="Alerts"><i class="fa fa-bell"></i></a>
+            <div class="dropdown-menu dropdown-menu-right pb-0 notification-dropdown">
+              <div class="lp__notification_dropdown_header pr-2">
+                <p class="title"><span class="pl-3">Notifications</span>
+                  <a href="<%=rep_profile_index_path(tab: 'notifications')%>" class="pull-right"><%= gear_icon %></a>
+                </p>
+              </div>
+              <div class="lp__notification_dropdown">
+                <%= render partial: 'shared/notification_partials/notification_dropdown'%>              
+              </div>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= current_user.sales_rep.display_name if current_user.sales_rep%>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-item">
+                  <a href="/rep/profile?tab=summary" class="dropdown-link">
+                    <div class="clearfix">
+                        <h6 class="col-8 p-0 float-left"><%= current_user.sales_rep.display_name if current_user.sales_rep %></h6>
+                        <div class="float-right inverse">EDIT</div>
+                    </div>
+                    <p class="font-sm"><%= current_user.sales_rep.company_name %></p>
+                    <!-- Hiding title, not yet supported <p>Vice President of Operations</p> -->
+                  </a>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-uppercase" href="mailto:support@lunchpro.com?subject=Contact From Web (<%=current_user.entity.class.name%>)">Contact Us</a>
+                <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'dropdown-item text-uppercase') %>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<% if local_assigns[:show_action_menu] %>
+        <!-- the 'plus' icon menu -->
+    <div id="quick-links" class="dropdown">
+        <a class="dropdown-toggle lp__circle_button" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="oi oi-plus"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item text-uppercase" href="<%= new_rep_order_path %>">Place a Food Order</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-uppercase" href="<%= new_rep_appointment_path %>">Add an Appointment</a>
+        </div>
+    </div>
+
+<% end %>
+<% if local_assigns[:show_cancel] %>
+    <div id="quick-links" class="dropdown">
+      <a class="dropdown-cancel lp__circle_button" href="<%= current_rep_calendars_path %>">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+
+<% end %>

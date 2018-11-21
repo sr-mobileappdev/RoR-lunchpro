@@ -1,0 +1,35 @@
+<% if local_assigns[:fields] %>
+
+  <% fields.each do |f| %>
+    <% w = f.values[0][:w] || 6 %>
+
+    <% val = nil %>
+    <% selector = (f.keys[0].include?(".")) ? f.keys[0].split(".")[1] : f.keys[0] %>
+    <% this_object = (f.keys[0].include?(".") && object.respond_to?(f.keys[0].split(".")[0])) ? object.send(f.keys[0].split(".")[0]) : object %>
+
+    <% if f.values[0][:helper].present? %>
+      <% val = send(f.values[0][:helper], (this_object.respond_to?(selector)) ? this_object.send(selector) : "Missing Key: #{selector}") %>
+    <% else %>
+      <% val = (this_object.respond_to?(selector)) ? this_object.send(selector) : "Missing Key: #{selector}" %>
+    <% end %>
+    <% next if f.values[0][:hide_on_nil] && f.values[0][:hide_on_nil] == true && val == nil %>
+
+    <div class="col-<%= w %> px-4">
+      <% if f.values[0][:title] %>
+        <label class="lp__show"><%= f.values[0][:title] %></label>
+      <% end %>
+      <p class="lp__val">
+        <% if val.present? %>
+          <div class="lp__editor">
+            <div id="ace-editor-read-only" class="lp__ace"><%= val %></div>
+          </div>
+        <% elsif f.values[0][:default] %>
+          <span class='text-warning'><%= f.values[0][:default] %></span>
+        <% else %>
+        --
+        <% end %>
+      </p>
+    </div>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,35 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid comp__rep_form">
+    <div class="row faux-modal-header bb-1">
+      <div class="pl-3 pr-2 pt-1 hidden-xs-down">
+        <%= calendar_exclamation_icon_lg %>
+      </div>
+      <div class="col-xs-12 col-sm-9 mt-1">
+        <h3 class="ft-bold"><a href="<%=appointment_office_link(@record)%>"><%= @record.office.name %> <i class="fa fa-angle-right"></i></a></h3>
+        <span><%= short_date(@record.appointment_on) %></span>
+        <br/>
+        <% if @record.appointment_slot %>
+          <span><%= "#{@record.appointment_slot.name}: #{slot_time(@record.starts_at(true))}" %></span>
+        <% else %>
+          <span><%= "#{@record.title}: #{slot_time(@record.starts_at(true))}" %></span>
+        <% end %>
+      </div>
+    </div>
+    <div class="row appointment-modal-body lp__appointment_body pb-5">
+      <div class="col-12 mb-4">
+        <h3 class="ft-bold mb-3">Upcoming Appointment Available</h3>
+        <p>There was a recent cancellation at this office, and they are looking for a sales rep to fill the appointment.</p>
+        <p>This availabilty is on a first come, first serve basis. Please book now if you would like to claim it!</p>
+      </div>
+      <% if @standby_filled %>
+        <div class="col-12 row text-center mt-2 justify-content-center pr-0">
+          <p class="col-12 mt-2 ft-bold">This appointment has already been taken!</p>
+        </div>
+      <% else %>
+        <div class="col-12 row text-center mt-2 justify-content-center pr-0">
+          <a class="col-12 col-sm-8 col-md-5 btn btn-success" href="<%=book_standby_rep_appointment_path(@record)%>">Book Now</a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

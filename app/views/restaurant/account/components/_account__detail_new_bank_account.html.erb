@@ -1,0 +1,47 @@
+<!-- floating container with shadow -->
+<div id="account-profile" class="b-1 m-3 p-3">
+  <div class="col-12 mb-3 mt-4">
+    <div class="h4 mb-3">Add Bank Account</div>
+    <p class=""><%= 'Saving a new bank account will automatically replace the account currently being used for payment processing' if @restaurant.bank_accounts.active.any? %></p>
+    <div class="comp__restaurant_stripe_form pt-4">
+      <%= form_for(@record, :url => { :action => "create" }, html: {method: "post", autocomplete: "off", onsubmit: "return false;"} ) do |o| %>
+        <%= lp_hidden_field(o, :stripe_identifier) %>
+        <%= lp_hidden_field(o, :restaurant_id) %>
+        <div class="row pt-4">
+          <div class="col-sm-12 col-md-8 col-xl-8 m-auto">
+            <div class="form-group row">
+              <div class="row col-12">
+                <div class="h5 row pb-2">Account Information</div>
+                <div class="row col-12">
+                  <div class="col-5">
+                    <%= lp_text_field(nil, :account_holder_name, "Account Holder Name", @restaurant.name, {required_field: true, class: "form-control form-control-sm", data: {stripe: "account_holder_name"}}) %>
+                  </div>
+                  <div class="col-4">
+                    <%= lp_text_field(o, :bank_name, "Bank Name", nil, {required_field: true, class: "form-control form-control-sm", data: {stripe: "bank_name"}}) %>
+                  </div>
+                  <div class="col-3">
+                    <%= lp_select_field(o, :account_type, "Account Type", selectable_enum(BankAccount.account_types), {required_field: true}) %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div id="card-element">
+                  <%= lp_text_field(o, :account_number, "Account Number", nil, {required_field: true, class: "form-control form-control-sm", data: {stripe: "account_holder_account_number"}}) %>
+                </div>
+              </div>
+              <div class="col-6">
+                  <div id="bank-routing">
+                    <%= lp_text_field(o, :routing_number, "Routing Number", nil, {required_field: true, class: "form-control form-control-sm", data: {stripe: "account_holder_routing_number"}}) %>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 pt-3 text-center">
+            <button type="button" class="btn btn-secondary mr-2 lp__cancel_button" data-comp-detail-tab="account__payment_information">Cancel</button>
+            <button data-submit-stripe type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

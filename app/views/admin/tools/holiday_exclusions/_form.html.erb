@@ -1,0 +1,27 @@
+<%= form_for [:tools, @record], url: { action: (@record.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-4 lp_req">
+          <%= lp_text_field(f, :name) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-2 lp_req">
+          <%= lp_calendar_field(f, :starts_on, "Date") %>
+        </div>
+
+        <div class="col-sm-2">
+          <%= lp_calendar_field(f, :ends_on, "End Date (Optional)") %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

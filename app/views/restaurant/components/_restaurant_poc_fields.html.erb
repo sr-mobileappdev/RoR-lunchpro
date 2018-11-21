@@ -1,0 +1,39 @@
+<div class="child-form row bt-1 pt-4 pb-4">
+  <div class="col-12 row justify-content-end">
+    <input type="hidden" value="<%=f.object.status%>" name="restaurant[restaurant_pocs_attributes][<%=f.index%>][status]" id="_status_<%=f.object.id%>">
+      <a href="#" class="btn btn-link pull-right pt-0 pb-0 lp__remove_child" data-value="status" data-id="<%=f.object.id%>">Remove Contact</a>
+  </div>
+    <div class="col-12 row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <label class="form-control-label row col-12">Full Name</label>
+            <div class="row p-0 m-0">
+              <%= lp_text_field(f, :first_name, "none", f.object.first_name, {hide_label: true, class: 'form-control col-md-5 mr-1', inline_div: true}) %>
+              <%= lp_text_field(f, :last_name, "none", f.object.last_name, {hide_label: true, class: 'form-control col-md-6 mr-1', inline_div: true}) %>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <label class="form-control-label row col-12">Email</label>
+            <div class="row p-0 m-0">
+              <%= lp_text_field(f, :email, "none", f.object.email, {hide_label: true, class: 'form-control'}) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <div class="row">
+          <div class="col-md-4 col-xl-3">
+            <label class="form-control-label row col-12">Cell Phone</label>
+            <div class="row p-0 m-0">
+              <%= lp_text_field(f, :phone, "none", f.object.phone, {hide_label: true, class: 'form-control phone_number_input'}) %>
+            </div>
+          </div>
+           <div class="col text-right">
+             <label class="form-control-label">Primary Contact?</label>
+             <%= lp_check_field_inline(f, :primary, "none", f.object.primary, {hide_label: true}) %>
+           </div>
+        </div>
+      </div>
+    </div>
+</div>

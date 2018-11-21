@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The page you were looking for doesn't exist (404)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cleartype" content="on">
+
+  <!-- Disable turbolinks cache -->
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= csrf_meta_tags %>
+
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+  <script src="https://unpkg.com/flatpickr"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.min.css"></script>
+  <% if @layout == "office" %>
+    <%= stylesheet_link_tag 'office', media: 'all', 'data-turbolinks-track': 'true' %>
+  <%else%>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'true' %>
+  <% end %>
+  <%= javascript_include_tag @layout, 'data-turbolinks-track': 'trie' %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+</head>
+
+<body class="__base <%=params[:action]%>" data-turbolinks="false" style=<%= 'overflow: hidden;' if current_user.present?%>>
+  <% tab 'account' %>
+  <% title 'Your Profile' %>
+
+  <% if current_user %>
+    <%= render partial: "shared/header/#{@ui_space}_header", locals: {show_action_menu: true} %>
+  <% end %>
+
+
+
+  <div class="dialog background-404">
+
+    <img src="<%= image_path('404.png') %>" alt="404 Not Found" class="image-404" />
+    <div class="col-9 mx-auto text-center mb-4">
+      <h2 style="color: white;">We can't find this page! But don't worry. Skip will save us! In the mean time, click the button below to make it back to safety.</h2>      
+    </div>  
+    <div class="col-2 mx-auto pb-5">
+      <a class="btn btn-block btn-lg btn-success" href="/">Back Home</a>
+    </div>
+  </div>
+</body>
+</html>

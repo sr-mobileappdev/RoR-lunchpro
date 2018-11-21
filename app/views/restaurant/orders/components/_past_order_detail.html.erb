@@ -1,0 +1,267 @@
+<!-- right column -->
+
+  <div id="order-detail" class="fixed-height">
+    <hr class="m-0">
+    <div class="col-12 p-0">
+      <!-- if order has been completed / delivered then do not show these two buttons -->
+      <div class="tab-pane with-cards" id="about" role="tabpanel">
+        <div class="card-columns mb-3 row">
+        <% if session[:hq_consolidated_view] %>
+          <div class="col-12 mb-3 text-center">
+            <h3 class="ft-bold"><%= @order.restaurant_name_with_address %></h3>
+          </div>
+        <% end %>
+          <div class="col-12 col-lg-5">
+            <div class="card">
+              <div class="card-header">Order Summary #<%=@order.order_number %></div>
+              <div class="card-block">
+                <!-- receipt header -->
+                <p class="mb-1">Order Served: <%=@order.people_served%> people</p>
+                <!-- receipt item loop -->
+                <% @order.line_items.each do |item| %>
+                  <table width="100%">
+                    <thead>
+                      <tr>
+                        <th><%= item.orderable_name %></th>
+                        <th class="text-right"><%= precise_currency_value(item.cost_cents) %></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Quantity: <%= item.quantity %></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <% item.option_lines.each do |option| %>
+                            <p class="ml-3 mb-1"><%= option[:name] %></p>
+                          <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <hr>
+                <% end %>
+                <!-- total -->
+                <table class="text-right col-12 text-uppercase ft-bold hidden-lg-down">
+                  <tr class="row">
+                    <td class="col-12 col-xl-8">Subtotal:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.subtotal_cents_for_restaurant_manager)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-12 col-xl-8">Delivery Fee:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.delivery_cost_cents)%></td>
+                  </tr>
+                  <tr class="bt-1 row">
+                    <td class="col-12 col-xl-8">Driver Tip:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.tip_cents)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-12 col-xl-8">Total:</td>
+                    <td class="col-12 col-xl-4"><%= precise_currency_value(@order.total_cents_for_restaurant_manager)%></td>
+                  </tr>
+                </table>
+                <table class="text-right col-12 text-uppercase ft-bold hidden-xl-up">
+                  <tr class="row">
+                    <td class="col-8 col-lg-12">Subtotal:</td>
+                    <td class="col-4 col-lg-12"><%= precise_currency_value(@order.subtotal_cents_for_restaurant_manager)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-8 col-lg-12">Delivery Fee:</td>
+                    <td class="col-4 col-lg-12"><%= precise_currency_value(@order.delivery_cost_cents)%></td>
+                  </tr>
+                  <tr class="bt-1 row">
+                    <td class="col-8 col-lg-12">Driver Tip:</td>
+                    <td class="pb-3 col-4 col-lg-12"><%= precise_currency_value(@order.tip_cents)%></td>
+                  </tr>
+                  <tr class="row">
+                    <td class="col-8 col-lg-12">Total:</td>
+                    <td class="col-4 col-lg-12"><%= precise_currency_value(@order.total_cents_for_restaurant_manager)%></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-block">
+                <span>
+                  <%= @order.rep_notes || "The Representative did not leave any notes." %>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-7">
+            <div class="col-12 p-0">
+              <div class="card order-information">
+                <div class="card-header">Order Information</div>
+                <div class="card-block">
+                  <div class="vertical-nav-li-header appointments-header pb-1 row" data-date="<%= @order.order_date %>">
+                    <div class="col-6">
+                      <%= @order.delivery_date %>
+                    </div>
+                    <div class="col-6 justify-content-end text-right">
+                      <%= @order.order_time %>
+                    </div>
+                  </div>
+                  <div class="targ__slot">
+                    <div class="order-nav-li-content row no-gutters align-items-center pl-3 pr-3" data-comp-detail-id="<%= @order.id %>">
+                      <div class="pr-4 pt-1 hidden-md-down">
+                        <%= office_detail_icon %>
+                      </div>
+                      <div class="col-12 col-lg-8">
+                        <div class="h5">
+                          <%= @order.office.name %>
+                        </div>
+                        <div>
+                          <%= @order.office.display_location_single %>
+                        </div>
+                        <div>
+                          <%= format_phone_number_string(@order.office.phone) %>
+                        </div>
+                      </div>
+                      <div class="order-nav-li-content row no-gutters align-items-center pt-1 pl-2 pr-3 col-12">
+                        <div class="pr-4 pt-1 hidden-md-down lp__profile_image">
+                          <%= om_user_icon %>
+                        </div>
+                        <div class="col-12 col-lg-8">
+                          <div class="h5">
+                            <%= (@order.present? && @order.office.present? && @order.office.manager.present?) ? @order.office.manager.display_name : "(Manager name not found)" %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card order-reviews">
+                <div class="card-header">Order Reviews</div>
+                <% if @order.order_reviews.any? %>
+                  <div class="card-block">
+                    <% if @order.order_reviews.where(reviewer_type: "SalesRep").any? %>
+                      <% @rep_order_review = @order.order_reviews.where(reviewer_type: "SalesRep").first %>
+                      <h5 class="card-title ft-bold text-underline">Sales Rep Feedback:</h5>
+                      <div class="col-12 pl-0 pb-4">
+                        <div class="row align-items-center mt-2">
+                          <div class="col-12 col-xl-3 mr-4">
+                            <legend class="col-form-legend ft-bold">Overall:</legend>
+                          </div>
+                          <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@rep_order_review, :overall) %>
+                          </div>
+                        </div>
+                          <div class="row align-items-center mt-2">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">Food Quality:</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@rep_order_review, :food_quality) %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-2">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">Presentation</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@rep_order_review, :presentation) %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-2">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">Completion:</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@rep_order_review, :completion) %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-3">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">On-Time:</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 ft-bold text-uppercase">
+                              <%= @rep_order_review.on_time_display %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-3">
+                            <div class="col-12 ft-bold">
+                              Comments:
+                            </div>
+                            <div class="col-12 mt-2">
+                              <%=@rep_order_review.comment%>
+                            </div>
+                          </div>
+                      </div>
+                    <% end %>
+                    <% if @order.order_reviews.where(reviewer_type: "Office").any? %>
+                      <% @office_order_review = @order.order_reviews.where(reviewer_type: "Office").first %>
+                      <h5 class="card-title ft-bold text-underline">Office Feedback:</h5>
+                      <div class="col-12 pl-0 pb-4">
+                        <div class="row align-items-center mt-2">
+                          <div class="col-12 col-xl-3 mr-4">
+                            <legend class="col-form-legend ft-bold">Overall:</legend>
+                          </div>
+                          <div class="col-12 col-xl-8 pl-1">
+                            <%= order_review_field(@office_order_review, :overall) %>
+                          </div>
+                        </div>
+                          <div class="row align-items-center mt-2">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">Food Quality:</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@office_order_review, :food_quality) %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-2">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">Presentation</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@office_order_review, :presentation) %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-2">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">Completion:</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 pl-1">
+                              <%= order_review_field(@office_order_review, :completion) %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-3">
+                            <div class="col-12 col-xl-3 mr-4">
+                              <legend class="col-form-legend ft-bold">On-Time:</legend>
+                            </div>
+                            <div class="col-12 col-xl-8 ft-bold text-uppercase">
+                              <%= @office_order_review.on_time_display %>
+                            </div>
+                          </div>
+                          <div class="row align-items-center mt-3">
+                            <div class="col-12 ft-bold">
+                              Comments:
+                            </div>
+                            <div class="col-12 mt-2">
+                              <%=@office_order_review.comment%>
+                            </div>
+                          </div>
+                      </div>
+                    <% end %>
+                    </div>
+                  <% else %>
+                    <div class="card-block">
+                      There are no reviews for this order
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <!--  -->
+              <div class="card transparent">
+                <div class="btn-group m-auto d-inline">
+                  <a href="<%= download_restaurant_order_path(@order, :format => 'pdf') %>" data-method="post" class="btn btn-link" target="_blank"><i class="fa fa-lg fa-print"></i>&nbsp; PDF</a>
+                  <a href="<%= download_restaurant_order_path(@order, :format => 'csv') %>" data-method="post" class="btn btn-link"><i class="fa fa-lg fa-download"></i>&nbsp; CSV</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

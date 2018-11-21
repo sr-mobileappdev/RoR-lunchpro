@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% if Rails.env == 'development' %>
+    <title>Lunchpro (Dev) ~ <%= title %></title>
+  <% else %>
+    <title>Lunchpro ~ <%= title %></title>
+  <% end %>
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cleartype" content="on">
+
+  <!-- Disable turbolinks cache -->
+  <meta name="turbolinks-cache-control" content="no-cache">
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= csrf_meta_tags %>
+
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.min.css"></script>
+  <script src="https://unpkg.com/flatpickr"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'admin', 'data-turbolinks-track' => true %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+
+</head>
+<body id="<%= params[:controller].parameterize%>_<%=params[:action]%>" class="__base <%=params[:action]%>" data-turbolinks="false">
+
+  <script>
+    $('input.phone_number_input').mask('(000) 000-0000');
+  </script>
+  
+  <%= render partial: "shared/modal" %>
+  <%= render partial: 'admin/shared/components/slidein' %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <%= render partial: 'admin/shared/components/sidebar' %>
+      <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+        <%= yield %>
+      </main>
+    </div>
+  </div>
+
+  <div class="lp__internal_notice">
+    <div class="targ-internal-notice-message"></div>
+  </div>
+
+  <!-- Smoooooth scroll -->
+  <script>
+    var scroll = new SmoothScroll('a[href*="#"]');    
+    $('input.phone_number_input').mask('(000) 000-0000');
+  </script>
+
+  <% if requires_ace? %>
+
+    <script>
+      document.addEventListener("turbolinks:load", function() {
+
+        if ($(document).find("#ace-editor").length > 0) {
+          var editor = ace.edit("ace-editor");
+          editor.getSession().setTabSize(2);
+          editor.getSession().setMode("ace/mode/html");
+          editor.getSession().setUseSoftTabs(true);
+          editor.setShowPrintMargin(false);
+          editor.getSession().setFoldStyle('manual');
+
+          editor.getSession().on("change", function () {
+            var textarea = $('textarea[data-ace]').first();
+            if (textarea != undefined) {
+              textarea.val(editor.getSession().getValue());
+            }
+          });
+        }
+
+        if ($(document).find("#ace-editor-read-only").length > 0) {
+          var ro_editor = ace.edit("ace-editor-read-only");
+          ro_editor.getSession().setTabSize(2);
+          ro_editor.getSession().setUseSoftTabs(true);
+          ro_editor.setShowPrintMargin(false);
+          ro_editor.setReadOnly(true);
+          ro_editor.setHighlightActiveLine(false);
+          ro_editor.setHighlightGutterLine(false);
+          ro_editor.setDisplayIndentGuides(false);
+        }
+
+      });
+
+    </script>
+
+  <% end %>
+
+</body>
+</html>

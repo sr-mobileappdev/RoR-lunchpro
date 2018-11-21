@@ -1,0 +1,112 @@
+          <div class="row">
+            <div class="col-12 mt-3">
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Appointments Booked</label>
+                  <p class="small">Email includes calendar invite for a quick addition to your primary calendar</p>
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                    <label class="form-check-label <%= 'checked' if f.object.via_email['202'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][112]" value="<%=f.object.via_email['112'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][117]" value="<%=f.object.via_email['117'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][201]" value="<%=f.object.via_email['201'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][202]" value="<%=f.object.via_email['202'].to_i%>">
+                      <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['202'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Appointment Cancellation</label>                  
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                    <label class="form-check-label <%= 'checked' if f.object.via_email['205'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][103]" value="<%=f.object.via_email['103'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][104]" value="<%=f.object.via_email['104'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][204]" value="<%=f.object.via_email['204'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][205]" value="<%=f.object.via_email['205'].to_i%>">
+                      <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['205'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Appointment Confirmation Pending</label>
+                  <p class="small">We will notify you 24 hours prior if a sales rep has not yet confirmed an appointment</p>              
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                     <label class="form-check-label <%= 'checked' if f.object.via_email['414'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][414]" value="<%=f.object.via_email['414'].to_i%>">
+                      <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][414]" data-hidden-notifs='true' 
+                      value="<%=f.object.via_email['414'].to_i%>" <%= 'checked' if f.object.via_email['414'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Meal Update</label>  
+                  <p class="small">We will notify you when a rep has indicated what restaurant he or she is bringing</p>
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                    <label class="form-check-label <%= 'checked' if f.object.via_email['208'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][203]" value="<%=f.object.via_email['203'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][206]" value="<%=f.object.via_email['206'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][208]" value="<%=f.object.via_email['208'].to_i%>">
+                      <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['208'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Request for Meal Feedback</label>  
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                     <label class="form-check-label <%= 'checked' if f.object.via_email['409'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][409]" value="<%=f.object.via_email['409'].to_i%>">
+                      <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][409]" data-hidden-notifs='true' 
+                      value="<%=f.object.via_email['409'].to_i%>" <%= 'checked' if f.object.via_email['409'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Food Order Summary, Receipts, and Updates</label>
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                    <label class="form-check-label <%= 'checked' if f.object.via_email['121'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][119]" value="<%=f.object.via_email['119'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][120]" value="<%=f.object.via_email['120'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][402]" value="<%=f.object.via_email['402'].to_i%>">
+                      <input type="hidden" name="user_notification_pref[via_email][121]" value="<%=f.object.via_email['121'].to_i%>">
+                      <input class="form-check-input" type="checkbox"  data-hidden-notifs='true' <%= 'checked' if f.object.via_email['121'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-0">
+                <div class="col-9">
+                  <label class="m-0">Calendar Open Until</label>  
+                </div>
+                <div class="col-3">
+                  <div class="form-check form-check-inline pull-right">
+                     <label class="form-check-label <%= 'checked' if f.object.via_email['410'].to_i == 1%>">
+                      <input type="hidden" name="user_notification_pref[via_email][410]" value="<%=f.object.via_email['410'].to_i%>">
+                      <input class="form-check-input" type="checkbox" name="user_notification_pref[via_email][410]" data-hidden-notifs='true' 
+                      value="<%=f.object.via_email['410'].to_i%>" <%= 'checked' if f.object.via_email['410'].to_i == 1%>> Email
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

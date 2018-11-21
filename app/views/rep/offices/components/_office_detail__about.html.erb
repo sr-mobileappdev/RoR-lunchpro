@@ -1,0 +1,79 @@
+<h3 class="sr-only">About this Office</h3>
+<div class="comp__rep_form office-about">
+  <%= form_for @office_sales_rep, url: {controller: 'profile', action: "update_office"}, method: :put,  html: { class: "", autocomplete: "off" } do |f| %>
+    <div class="col-12 p-0">
+      <div class="card-columns mb-3 row mx-0">
+        <div class="col-12 col-sm-6 pl-0">
+          <div class="card">
+            <div class="card-block">
+              <h4><strong>Office Budget</strong></h4>
+              <label class="mt-2"><span id="per_person_budget"><%=precise_currency_value(@office_sales_rep.per_person_budget_cents)%></span><span> per person</span></label>
+              <% if @office_sales_rep.id %>
+              <a href="#" class="float-right lp__edit_button btn btn-link">Edit</a>
+              <% end %>
+              <div class="col-12 lp__edit_form" style="display: none;">   
+                <%= lp_hidden_field(f, :id) %>
+                <%= lp_hidden_field(nil, :budget, true) %>
+                <%= lp_currency_field(f, :per_person_budget_cents, "none", @office_sales_rep.per_person_budget_cents) %>
+                <button data-submit class="btn btn-success pull-right mt-3">Save</button>
+              </div>
+            </div>
+          </div>
+          <% if !@office.private__flag %>
+            <div class="col-12 pl-0 pr-0">
+              <div class="card">
+                  <div class="card-block">
+                      <span class="bold">Food Preferences</span>
+                      <p>
+                          <span><%= @office.food_preferences %></span>
+                      </p>
+                  </div>
+              </div>
+            </div>          
+          <% end %>
+        </div>
+        <% if !@office.private__flag %>
+          <div class="col-12 col-sm-6 pl-0">
+            <div class="card">
+                <div class="card-block">
+                    <span class="bold">Providers:</span>
+                    <!-- provider loop -->
+                    <% @office.providers.active.each do |provider| %>
+                      <p>
+                        <%= provider.title %> <%= provider.first_name %> <%= provider.last_name %>           
+                      </p>
+                    <% end %>
+                </div>
+            </div>
+          </div>          
+        <% end %>
+      </div>
+    </div>
+    <% if !@office.private__flag %>
+      <div class="card">
+          <div class="card-block">
+              <ul class="list-unstyled <%= icon_list_class(@office.diet_restrictions_offices.count) %>">
+                  <li>
+                      <div class="rounded-circle bg-primary">
+                        <span><%= @office.total_staff_count %></span>
+                      </div>
+                      <p>Total Staff</p>
+                  </li>
+                  <% @office.diet_restrictions_offices.each do |restrict| %>
+                    <li>
+                        <div class="rounded-circle bg-gray">
+                          <span><%= restrict.staff_count  || "N/A" %></span>
+                        </div>
+                        <p><%= restrict.diet_restriction.name %></p>
+                    </li>
+                <% end %>
+              </ul>
+          </div>
+      </div>
+    <% else %>
+      <div class="alert alert-danger my-3">
+          Since Lunchpro does not currently work with this office, we do not have access to extra information about them like dietary restrictions, food preferences, and provider availability.
+      </div>
+    <% end %>
+  <%end%>
+</div>

@@ -1,0 +1,98 @@
+<%= form_for [@office, @appointment], url: { action: (@appointment.new_record?) ? "create" : "update" }, html: { class: "", autocomplete: "off" } do |f| %>
+
+  <%= lp_hidden_field(f, :office_id) %>
+  <%= lp_hidden_field(f, :appointment_slot_id) %>
+  <%= lp_hidden_field(f, :appointment_on) %>
+  <%= lp_hidden_field(f, :starts_at) %>
+  <%= lp_hidden_field(f, :ends_at) %>
+
+  <%= lp_hidden_field(nil, :create_rep, false) %>
+
+  <p class="large mb-0 mt-2"><strong><%= long_date(@appointment.appointment_time(true)) %></strong> (<%= @appointment.appointment_slot.name %>)</p>
+  <p class="small">Select the sales rep you would like to assign to this appointment. Following the creation of the appointment you will be able to order food or provide additional details.</p>
+
+  <div class="row">
+    <div class="col-12">
+      <% if @appointment.sales_rep_id %>
+        <%= lp_hidden_field(f, :sales_rep_id) %>
+      <% else %>
+        <div id="find-sales-rep-form">
+          <div class="form-group row form-group-tight">
+            <div class="col-sm-7">
+              <%= lp_multi_object_field(f, :sales_rep_id, "Find Sales Rep", {url: quick_admin_searches_path(search_type: 'sales_rep', office_id: @appointment.office_id)}) %>
+              <p class="field_note">Sales rep search is limited to only those sales reps already associated with this office.</p>
+            </div>
+          </div>
+          <a href="#" class="btn btn-link pl-0 trigger-sales-rep-form">+ Add a new sales rep</a>
+        </div>
+
+        <div id="add-sales-rep-form" style="display: none;">
+          <%= f.fields_for @sales_rep do |o| %>
+            <div class="col-sm-6 row">
+              <div class="col-10 col-sm-7 p-0">
+                <div class="form-group form-group-tight col-12 p-0">
+                  <input type="hidden" id="appointment_sales_rep_created_by_id" value="<%=current_user.id%>" name="appointment[sales_rep][created_by_id]">
+                  <label class="form-control-label">Rep First Name</label>
+                  <input type="text" class="form-control form-control-sm" id="appointment_sales_rep_first_name" name="appointment[sales_rep][first_name]"> 
+                </div>
+                <div class="form-group form-group-tight col-12 p-0">
+                  <label class="form-control-label ">Rep Last Name</label>
+                  <input type="text" class="form-control form-control-sm" id="appointment_sales_rep_last_name" name="appointment[sales_rep][last_name]"> 
+                </div>
+                <div class="form-group form-group-tight col-12 p-0">
+                  <label class="form-control-label">Company</label>
+                  <input type="text" id="appointment_sales_rep_company_id" placeholder="Select a company" name="appointment[sales_rep][company_id]" data-companies="<%=@companies%>">
+                </div>
+                <%= o.fields_for :sales_rep_phones, o.object.sales_rep_phones.select{|phone| phone.phone_type == 'business'} do |phone| %>
+                  <%= lp_hidden_field(phone, :phone_type) %>
+                  <%= lp_hidden_field(phone, :created_by_id) %>
+                  <%= lp_hidden_field(phone, :status) %>
+                  <div class="form-group form-group-tight col-12 p-0">
+                      <%= lp_text_field(phone, :phone_number, 'Mobile Phone', phone.object.phone_number, {class: 'form-control form-control-sm phone_number_input'}) %>  
+                  </div>
+                <% end %> 
+               <%= o.fields_for :sales_rep_emails, o.object.sales_rep_emails.select{|email| email.email_type == 'business'} do |email| %>
+                  <%= lp_hidden_field(email, :email_type) %>
+                  <%= lp_hidden_field(email, :created_by_id) %>
+                  <%= lp_hidden_field(email, :status) %>
+                  <div class="form-group form-group-tight col-12 p-0">
+                      <%= lp_text_field(email, :email_address, nil, email.object.email_address, {class: 'form-control form-control-sm'}) %>  
+                  </div>
+                <% end %>
+              </div>
+            </div>     
+          <% end %>     
+          <a href="#" class="btn btn-link pl-0 trigger-sales-rep-form">+ Add an existing sales rep</a>
+        </div>
+      <% end %>
+      <div class="form-group row form-group-tight mt-4">
+        <div class="col-sm-7">
+          <%= lp_text_area(f, :rep_notes, "Sales Rep Notes (optional)") %>
+        </div>
+      </div>
+      <div class="form-group row form-group-tight">
+        <div class="col-sm-7">
+          <label>Dietary Restrictions</label>
+        </div>
+        <% if @appointment.diet_restrictions.count > 0 %>
+          <div class="col-sm-12">
+            <table>
+              <tbody style="font-size: 0.9em;">
+                <th>Name</th>
+                <th>Staff count</th>
+                <% @appointment.diet_restrictions.each do |restrict| %>
+                  <tr>
+                    <td><%= restrict.diet_restriction.name %></td>
+                    <td style="text-align: center;"><%= restrict.staff_count %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

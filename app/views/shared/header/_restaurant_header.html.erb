@@ -1,0 +1,54 @@
+<header class="bg-primary box-shadow">
+    <div class="container-fluid">
+        <div class="row justify-content-start">
+            <div class="col-md-3 col-sm-6">
+                <h1 class="sr-only">LunchPro</h1>
+                <a href="<%= restaurant_orders_path %>" title="Home">
+                  <%= image_tag "lunchpro.svg", class: 'lp__logo_image', alt: "Go to home page" %>
+                </a>
+            </div>
+            <div class="col-md-3 hidden-sm-down">
+                <!-- this space could be used in the future --> &nbsp;
+            </div>
+            <div class="col-md-6 hidden-sm-down" style="position: relative;">
+                <%= render partial: 'shared/header/restaurant_details', locals: local_assigns %>
+            </div>
+        </div>
+    </div>
+    <div class="lp__navbar">
+        <nav class="navbar navbar-inverse navbar-toggleable-sm flex-md-column align-items-md-start text-center">
+            <button class="navbar-toggler collapsed m-auto" type="button" data-toggle="collapse" data-target="#header-links" aria-controls="header-links" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-angle-down"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="header-links">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item <%= tab_active?('orders') %>">
+                        <a class="nav-link" href="<%= restaurant_orders_path %>">Orders<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item <%= tab_active?('order history') %>">
+                        <a class="nav-link" href="<%= history_restaurant_orders_path %>">Order History</a>
+                    </li>
+                    <% if !@consolidated %>
+                        <li class="nav-item <%= tab_active?('menu') %>">
+                            <a class="nav-link" href="<%= restaurant_menus_path %>">Menu</a>
+                        </li>
+                        <li class="nav-item <%= tab_active?('preferences') %>">
+                            <a class="nav-link" href="<%= restaurant_preferences_path %>">Preferences</a>
+                        </li>
+                        <li class="nav-item <%= tab_active?('account') %>">
+                            <a class="nav-link" href="<%= restaurant_account_index_path %>">Account</a>
+                        </li>
+                    <% end %>
+                    <span class="hidden-md-up">
+                        <li class="nav-item <%= tab_active?('contact') %>">
+                            <a class="nav-link" href="mailto:support@lunchpro.com?subject=Contact From Web (<%=current_user.entity.class.name%>)">Contact Us</a>
+                        </li>
+                        <li class="nav-item <%= tab_active?('logout') %>">
+                          <%= link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-link') %>
+                        </li>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

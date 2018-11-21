@@ -1,0 +1,23 @@
+<div class="modal-body p-0 appointment-modal">
+  <div class="container-fluid comp__om_appointments">
+    <div class="row appointment-modal-body comp__om_form">
+      <div class="col-12 text-center mb-1">
+        <p class="mb-0 h5">Excluded Appointment</p>
+        <p class="text-center">A sales rep cannot book an appointment for this slot</p>
+      </div>
+      <div class="col-12 row pr-0 mr-0">
+        <div class="pr-4 pl-3 pt-1 hidden-xs-down">
+          <%= om_food_icon%>
+        </div>
+        <div class="col-12 col-sm-7 p-0">
+          <h5 class="mt-2"><%=short_date(@appointment.appointment_on)%></h5>
+          <p><%=@appointment.appointment_slot.name%> - <%=slot_time(@appointment.starts_at(true))%></p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-10 ml-auto mr-auto mt-4 p-0">
+        <a href="<%= cancel_office_appointment_path(@appointment)%>" data-method="post" class="btn btn-outline-info btn-block" style="">Make Available</a>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

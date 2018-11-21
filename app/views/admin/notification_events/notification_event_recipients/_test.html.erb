@@ -1,0 +1,43 @@
+<p class="small">Enter details for the notification type(s) you would like to test:</p>
+
+<%= form_tag send_test_admin_notification_event_notification_event_recipient_path(@event, @record), method: :post do %>
+
+  <% if @event.can_send_tests? %>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-10">
+            <%= lp_text_field(nil, :sms_phone, "SMS Phone") %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group row form-group-tight">
+          <div class="col-sm-10">
+            <%= lp_text_field(nil, :email_address, "Email", current_user.email) %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="btn-toolbar mt-3 mb-2" role="toolbar" aria-label="Toolbar with button groups">
+          <input type="submit" class="btn btn-primary btn-sm mr-2" value="Send" />
+        </div>
+      </div>
+    </div>
+
+  <% else %>
+
+    <p><strong>This specific notification is system-managed and<br/>cannot be simulated or delivered as a test.</strong></p>
+
+  <% end %>
+
+<% end %>
+
+

@@ -1,0 +1,7 @@
+<% if !(@restaurant.brand_image && @restaurant.brand_image.url) %>
+  <%= image_tag "missing_image.png", alt: "Missing Image" %>
+  <a data-popup=true data-popup-title="Upload Brand Image" href="<%= upload_asset_admin_restaurant_path(@restaurant, wizard: true) %>">Upload Image</a>
+<% else %>
+  <img src="<%= @restaurant.brand_image.url %>" alt="Restaurant Logo"/>
+  <a data-popup=true data-popup-title="Upload Brand Image" href="<%= upload_asset_admin_restaurant_path(@restaurant, wizard: true) %>">Replace Image</a>
+<% end %>

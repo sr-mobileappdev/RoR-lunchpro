@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  appointment: one
+  drug: one
+  note: MyText
+  fulfilled: false
+
+two:
+  appointment: two
+  drug: two
+  note: MyText
+  fulfilled: false

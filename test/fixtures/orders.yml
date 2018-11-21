@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sales_rep: one
+  appointment: one
+  restaurant: one
+  order_number: MyString
+  rep_notes: MyText
+  restaurant_notes: MyText
+  subtotal_cents: 1
+  sales_tax_cents: 1
+  delivery_cost_cents: 1
+  lunchpro_commission_cents: 1
+  processing_fee_cents: 1
+  tip_cents: 1
+  total_cents: 1
+  funds_reserved: false
+  funds_funded: false
+  created_by_user: one
+  driver_name: MyString
+  driver_phone: MyString
+
+two:
+  sales_rep: two
+  appointment: two
+  restaurant: two
+  order_number: MyString
+  rep_notes: MyText
+  restaurant_notes: MyText
+  subtotal_cents: 1
+  sales_tax_cents: 1
+  delivery_cost_cents: 1
+  lunchpro_commission_cents: 1
+  processing_fee_cents: 1
+  tip_cents: 1
+  total_cents: 1
+  funds_reserved: false
+  funds_funded: false
+  created_by_user: two
+  driver_name: MyString
+  driver_phone: MyString

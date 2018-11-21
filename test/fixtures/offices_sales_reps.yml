@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  office: one
+  sales_rep: one
+  status: 1
+
+two:
+  office: two
+  sales_rep: two
+  status: 1

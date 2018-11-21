@@ -1,0 +1,31 @@
+<div id="smartwizard" class="restaurant-registration comp__wizard pt-1">
+    <ul>
+        <li><a href="#step-1">Basic Info<br /></a></li>
+        <li><a href="#step-2">Details<br /></a></li>
+        <li><a href="#step-3">Menus<br /></a></li>
+        <li><a href="#step-4">Menu Items<br /></a></li>
+        <li><a href="#step-5">Users<br /></a></li>
+        <li><a href="#step-6">Bank Account<br /></a></li>
+    </ul>
+
+    <div class="comp__form">
+        <div id="step-1" class="targ__restaurant_step1">
+          <%= render partial: "admin/restaurants/components/basic_info"%>
+        </div>
+        <div id="step-2" class="targ__restaurant_step2">
+          <%= render partial: "admin/restaurants/components/details"%>
+        </div>
+        <div id="step-3" class="nav_menus">
+          <%= render partial: "admin/restaurants/components/menus"%>
+        </div>
+        <div id="step-4" class="nav_menu_items">
+          <%= render partial: "admin/restaurants/components/menu_items"%>
+        </div>
+        <div id="step-5" class="nav_rest_users">
+          <%= render partial: "admin/restaurants/components/users"%>
+        </div>
+        <div id="step-6" class="nav_bank_accounts">
+          <%= render partial: "admin/restaurants/components/bank_accounts"%>
+        </div>
+    </div>
+</div>

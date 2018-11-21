@@ -1,0 +1,61 @@
+<% tab 'rewards' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_sales_rep_path(@rep) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-6 px-4"><h2 class="lp__light"><%= @rep.display_name %></h2></div>
+    <div class="col-6 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <% if @rep.user && !@rep.user.new_record? %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@rep), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@rep), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@rep), active_tab: 'appointments'},
+                    {title: 'Past Orders', path: admin_sales_rep_orders_path(@rep), active_tab: 'past_orders'},
+                    {title: 'Payments', path: admin_sales_rep_payments_path(@rep), active_tab: 'payments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@rep), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@rep), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% else %>
+    <%= render partial: 'admin/shared/components/details/menu',
+                locals: {
+                  menu_items: [
+                    {title: 'Overview', path: admin_sales_rep_path(@rep), active_tab: 'overview'},
+                    {title: 'Contact Preferences', path: admin_sales_rep_contacts_path(@rep), active_tab: 'contacts'},
+                    {title: 'Upcoming Appointments', path: admin_sales_rep_appointments_path(@rep), active_tab: 'appointments'},
+                    {title: 'Rewards', path: admin_sales_rep_rewards_path(@rep), active_tab: 'rewards'},
+                    {title: 'Notifications', path: admin_sales_rep_notifications_path(@rep), active_tab: 'notifications'}
+                  ]
+                } %>
+  <% end %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <div class="row">
+        <%= render partial: 'admin/shared/components/details/show_row',
+                    locals: {
+                      object: @rep,
+                      fields: [
+                        {'reward_points' => {title: 'Reward Points', w: 4, default: '0'}},
+                        {'last_reward_date' => {title: 'Last Reward Date', w: 4, helper: 'short_date', default: 'Not Set'}},
+                        {'personal_email' => {title: 'Rewards Email', w: 4, default: 'Not Set'}}
+                      ]
+                    } %>
+      </div>
+    </div>
+    <div class="col-12 mt-3">
+      <a data-popup-size="md" data-popup="true" href="<%=edit_points_admin_rewards_path(id: @rep.id, is_modal: true)%>" data-popup-title="Edit Rewards Points" data-comp-rep-id="<%=@rep.id%>" class="btn btn-sm ml-2 btn-primary">Edit Rewards</a>
+    </div>
+
+
+</div>

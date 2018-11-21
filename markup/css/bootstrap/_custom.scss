@@ -1,0 +1,163 @@
+// Bootstrap overrides
+//
+// Copy variables from `_variables.scss` to this file to override default values
+// without modifying source files.
+
+// Fonts
+$font-family-sans-serif: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+$font-family-base:       $font-family-sans-serif;
+
+$font-family-secondary:	'Arial', Arial, sans-serif;
+
+$font-weight-base: 300;
+$font-weight-normal: 300;
+$font-weight-bold: 400;
+
+$font-size-lg:	3rem;
+
+$font-size-h1: 2.0rem;
+$font-size-h2: 1.5rem;
+$font-size-h3: 1.3rem;
+$font-size-h4: 1.2rem;
+$font-size-h5: 1.1rem;
+$font-size-h6: 1rem;
+
+// Colors
+$blue:		#1CACDB;
+$green:		#18A854;
+$steel:		#617D8A;
+$orange:	#f0ad4e;
+$yellow:	#FFF637;
+$red:		#d9534f;
+$gray-dark:	#292b2c;
+
+$black:		#000;
+$white:		#fff;
+
+// Create grayscale
+$gray-dark:                 lighten($black, 48%);
+$gray:                      lighten($black, 60%);
+$gray-light:                lighten($black, 72%);
+$gray-lighter:              lighten($black, 84%);
+$gray-lightest:             lighten($black, 96%);
+
+// primary border color for things
+$hr-border-color: $gray-lighter;
+
+// Reassign color vars to semantic color scheme
+$brand-primary:             $blue;
+$brand-success:             $green;
+$brand-info:                $steel;
+$brand-warning:             $yellow;
+$brand-danger:              $red;
+$brand-inverse:             $white;
+
+// Remove global border radius
+$border-radius:          0;
+$border-radius-lg:       0;
+$border-radius-sm:       0;
+
+// Body
+$body-bg:       $white;
+$body-color:    $gray-dark;
+$inverse-bg:    $gray-dark;
+$inverse-color: $gray-lighter;
+
+// Options
+$enable-shadows: false;
+
+// Forms
+$input-border-color:			 $hr-border-color;
+$input-border-radius:	 	 	 $border-radius;
+$input-btn-border-width:    	 1px;
+$input-box-shadow:          	 inset 0 0 3px 0 rgba(155,155,155,0.20), inset 0 1px 1px 0 rgba(0,0,0,0.20);
+$input-group-addon-bg:           transparent;
+$input-group-addon-border-color: transparent;
+$input-line-height:              2;
+
+// Links
+$link-color:            	$brand-info;
+
+// Buttons
+$btn-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+$btn-font-weight: 100;
+$btn-padding-y: 0.625rem;
+$btn-padding-x: 2rem;
+$btn-focus-box-shadow:	transparent;
+
+$btn-primary-color:              $white;
+$btn-primary-bg:                 $brand-primary;
+$btn-primary-border:             $btn-primary-bg;
+
+$btn-secondary-color:            $gray-dark;
+$btn-secondary-bg:               $white;
+$btn-secondary-border:           #ccc;
+
+$btn-info-color:                 $white;
+$btn-info-bg:                    $brand-info;
+$btn-info-border:                $btn-info-bg;
+
+$btn-success-color:              $white;
+$btn-success-bg:                 $brand-success;
+$btn-success-border:             $btn-success-bg;
+
+$btn-warning-color:              $white;
+$btn-warning-bg:                 $brand-warning;
+$btn-warning-border:             $btn-warning-bg;
+
+$btn-danger-color:               $white;
+$btn-danger-bg:                  $brand-danger;
+$btn-danger-border:              $btn-danger-bg;
+
+$btn-link-disabled-color:        $black;
+
+// Popover
+$popover-box-shadow:                  1px 1px 1px rgba($black,.2);
+
+// Dropdown
+$dropdown-padding-y:             1rem;
+
+// Nav
+$navbar-border-radius:              0;
+$navbar-toggler-border-radius:      0;
+$navbar-inverse-toggler-border:		0;
+
+// tabs
+$nav-pills-border-radius:     25px;
+$nav-pills-active-link-color: $white;
+$nav-pills-active-link-bg:    $brand-primary;
+
+// Cards
+$card-border-radius:       $border-radius;
+$card-border-radius-inner: $border-radius;;
+$card-cap-bg:              $white;
+$card-columns-count:        2;
+$card-columns-gap:          $card-spacer-y;
+$card-border-color:        $hr-border-color;
+
+// Modals
+$modal-inner-padding:         15px;
+$modal-dialog-margin:         10px;
+$modal-dialog-sm-up-margin-y: 1%;
+
+$modal-title-line-height:     $line-height-base;
+
+$modal-content-bg:               $white;
+$modal-content-border-color:     rgba($black,.2);
+$modal-content-border-width:     $border-width;
+$modal-content-xs-box-shadow:    0 3px 9px rgba($black,.5);
+$modal-content-sm-up-box-shadow: 0 5px 15px rgba($black,.5);
+
+$modal-backdrop-bg:           $black;
+$modal-backdrop-opacity:      .5;
+$modal-header-border-color:   $gray-lighter;
+$modal-footer-border-color:   $modal-header-border-color;
+$modal-header-border-width:   $modal-content-border-width;
+$modal-footer-border-width:   $modal-header-border-width;
+$modal-header-padding:        15px;
+
+$modal-lg:                    98%;
+$modal-md:                    72%;
+$modal-sm:                    56%;
+
+$modal-transition:            transform .3s ease-out;

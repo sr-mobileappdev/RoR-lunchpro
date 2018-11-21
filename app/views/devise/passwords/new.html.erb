@@ -1,0 +1,28 @@
+<% tab '' %>
+<% title 'Forgot Password' %>
+<div class="container-fluid">
+  <div class="row justify-content-center mt-5">
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4">
+      <div id="logo-badge"></div>
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= devise_error_messages! %>
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Send me reset password instructions", class: 'btn btn-primary btn-block mb-2' %>
+      </div>
+      <% end %>
+
+
+      <div class="mt-5">
+        <%= link_to "Log In!", new_session_path(resource_name), class: 'btn btn-info btn-block' %>
+      </div>
+
+      <div class="mt-3">
+        <%= link_to "New to LunchPro? Sign Up!", new_registration_path(resource_name), class: 'btn btn-outline-info btn-block' %>
+      </div>
+    </div>
+  </div>
+</div>

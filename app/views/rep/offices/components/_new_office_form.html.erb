@@ -1,0 +1,51 @@
+<div class="modal-body">
+  <!-- new office form -->
+  <%= form_for @office, url: { controller: "offices", action: "create" }, html: { class: "", autocomplete: "off" } do |f| %>
+  <%= lp_hidden_field(nil, :creating_sales_rep_id, @sales_rep.id) %>
+  <%= lp_hidden_field(nil, :for_orders, @for_orders) %>
+  <%= lp_hidden_field(f, :internal) %>
+  <input type="hidden" name="office[created_by_id]" id="office_created_by_id" value="<%=current_user.id%>">
+  <div class="col-10 offset-1">
+    <% if !@for_orders %>
+    <p class="text-center">For faster reference when ordering food, you can add an office to your list that LunchPro does not currently manage.</p>
+    <% end %>
+    <div class="form-group">
+        <%= lp_text_field(f, :name, "Office Name") %>
+    </div>
+        <div class="form-group">
+        <%= lp_text_field(f, :office_poc, "Office Contact's First and Last Name") %>
+    </div>
+    <div class="form-group">
+      <%= lp_timezone_select_field(f, :timezone, "Office Timezone") %>
+    </div>
+    <div class="form-group">
+      <%= lp_numeric_field(f, :total_staff_count, "Staff Count", {}, true) %>
+    </div>
+    <div class="form-group">
+        <%= lp_text_field(f, :address_line1, "Address") %>
+    </div>
+    <div class="form-group">
+        <%= lp_text_field(f, :address_line2, "Suite or Building") %>
+    </div>
+    <div class="form-group">
+        <%= lp_text_field(f, :city, "City") %>
+    </div>
+    <div class="form-group">
+        <%= lp_text_field(f, :state, "State", nil, {maxlength: 2}) %>
+    </div>
+    <div class="form-group">
+        <%= lp_text_field(f, :postal_code, "Zip Code") %>
+    </div>
+    <div class="form-group">
+        <%= lp_text_field(f, :phone, "Phone Number", nil, {class: 'form-control form-control-sm phone_number_input'}) %>
+    </div>
+    <div class="text-center">
+      <% if @for_orders %>
+        <button data-submit type="submit" class="btn btn-primary center-block">Continue</button>
+      <%else%>
+        <button data-submit type="submit" class="btn btn-primary center-block">Add to My Offices</button>
+      <% end %>
+    </div>
+  </div>
+  <%end%>
+</div>

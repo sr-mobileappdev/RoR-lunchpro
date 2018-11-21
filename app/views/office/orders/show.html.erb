@@ -1,0 +1,31 @@
+<% tab 'calendar' %>
+<% title 'Order Food' %>
+
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {show_cancel: true} %>
+
+<div class="lp__scroll_containers comp__om_appointments" data-initialize-stars=true>
+  <div class="lp__fixed f12 no-gutters">
+    <div class="row justify-content-center pt-3">
+      <div class="lp__faux_modal large">
+        <% if @order && (@order.active? || @order.completed?)%>
+          <a class="lp__faux_model_back" href="<%= current_office_calendars_path %>"><i class="fa fa-arrow-left pr-1"></i> BACK</a>
+          <p class="h5 title"><strong>Order Detail</strong></p>
+          <hr/>
+          <div class="row pr-4 pl-4 mb-5">        
+            <% if @order.is_past_order %>
+              <%= render partial: "office/orders/components/past_order_detail.html.erb"%>
+            <% else %>
+              <%= render partial: "office/orders/components/active_order_detail.html.erb"%>
+            <% end %>
+          </div>
+        <% else %>
+          <a class="lp__faux_model_back" href="<%= current_office_calendars_path %>"><i class="fa fa-arrow-left pr-1"></i> GO TO CALENDAR</a>
+          <div class="col-12 p-0 mt-5">
+            <h1 class="ft-bold text-center pt-5">Order is no longer available!</h1>
+            <h5 class="text-center mt-3">Please contact us if you have any questions or concerns!</h5>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

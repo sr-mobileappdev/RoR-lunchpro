@@ -1,0 +1,41 @@
+<div class="col-12 p-0 mx-0 mb-2 row child-form __menu_option" data-template-id="menu_sub_item">
+  <div class="form-group row form-group-tight mb-0">
+    <input type="hidden" value="<%=f.object._destroy%>" name="menu_item[menu_sub_items_attributes][<%=f.index%>][_destroy]" id="_destroy_">
+    <%= lp_hidden_field(f, :id, f.object.id, {id: "menu_sub_item_#{f.object.id}"}) %>
+    <%= lp_hidden_field(f, :status, f.object.status, {id: "menu_sub_item_#{f.object.id}_status"}) %>
+    <div class="col-sm-4">
+      <%= lp_text_field(f, :name, "Menu Option Type", f.object.name, {placeholder: 'New', hide_label: true}) %>
+    </div>
+    <div class="col-sm-2">
+      <%= lp_text_field(f, :qty_allowed, "Qty. Permitted", nil, {hide_label: true}) %>
+    </div>
+    <div class="col-sm-2">
+      <%= lp_text_field(f, :qty_required, "Qty. Required", nil, {hide_label: true}) %>
+    </div>
+    <div class="col-sm-4">
+      <a href="" class="lp__form_remove_item no_label" data-remove-template="menu_sub_item"
+      data-index='<%= f.object.id %>'>Remove</a>
+      <div class="form-group row form-group-tight mb-3">
+        <div class="col-sm-12">
+          <%= link_to_add_fields "ADD option", f, :menu_sub_item_options, '/admin/restaurants/menu_items/', "lp__add_child lp__form_add_option no_label add_option" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-group row form-group-tight mb-0">
+      <div class="col-sm-5 lp_req pl-5">
+        <label>Menu Option</label>
+      </div>
+      <div class="col-sm-6">
+        <label>Addt. Price</label>
+      </div>
+    </div>
+  </div>
+  <div class="__template col-12">
+    <%= f.fields_for :menu_sub_item_options, f.object.menu_sub_item_options.active do |opt| %>
+      <%= render '/admin/restaurants/menu_items/menu_sub_item_option_fields', {f: opt} %>
+    <% end %>
+
+  </div>
+</div>

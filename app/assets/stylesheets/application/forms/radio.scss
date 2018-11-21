@@ -1,0 +1,125 @@
+.fake-nav-pills {
+	.form-check {
+		margin: 0;
+		.form-check-label {
+			padding-left: 0;
+			.form-check-input {
+				display: none;
+				&:only-child {
+					position: absolute;
+				}
+				&:checked + span {
+					background-color: $brand-primary;
+					color: $white;
+				}
+			}
+			span {
+				font-size: 0.9rem;
+				text-transform: uppercase;
+				padding: 7px 15px;
+				border-radius: 25px;
+			}
+		}
+	}
+}
+
+.ratings-group {
+	.custom-check {
+		font-family: 'FontAwesome';
+		font-size: 1.75rem;
+		padding: 1.25rem;
+		margin: 0;
+		.custom-control-indicator {
+			// hide bs4 custom radio
+			background-color: transparent;
+			border: none;
+			color: $gray-lighter;
+			&:before {
+				content: "\f005";
+			}
+		}
+		.custom-control-input:checked ~ .custom-control-indicator{
+			background-image: none;
+			box-shadow: none;
+			content: "\f005"; //fa-star
+			color: $brand-warning;
+			&:before {
+				content: "\f005";
+			}
+		}
+	}
+}
+
+.order-rating > label{
+  font-size: 1.1em !important;
+}
+
+
+.rating{
+font-family: 'FontAwesome';
+}
+
+.rating-disabled{
+  cursor: not-allowed; /* aesthetics */
+  pointer-events: none;
+  font-family: 'FontAwesome';
+}
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input , .rating-disabled:not(:checked) > input{
+display: none;
+}
+
+.rating:not(:checked) > label, .rating-disabled:not(:checked) > label {
+    float:right;
+    width:1.3em;
+    padding:0 .36em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:1.75rem;
+    line-height:1.2;
+    color:#ddd;
+}
+
+.rating:not(:checked) > label:before, .rating-disabled:not(:checked) > label:before {
+      content: "\f005"; //fa-star
+
+}
+
+.rating > input:checked ~ label, .rating-disabled > input:checked ~ label {
+  color: $brand-warning;
+}
+
+.rating-disabled:not(:checked) > input {
+    float:right;
+    width:1.3em;
+    padding:0 .36em;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:1.75rem;
+    line-height:1.2;
+    color:#ddd;
+    cursor: not-allowed; /* aesthetics */
+    pointer-events: none;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: $brand-warning;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+  color: $brand-warning;
+}
+
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}

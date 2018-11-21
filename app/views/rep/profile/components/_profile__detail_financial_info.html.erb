@@ -1,0 +1,118 @@
+<!-- floating container with shadow -->
+<div class="b-1 m-3 p-3">
+  <div class="col-12 p-0">
+    <div class="h4 mb-3">Budget Preferences</div>
+    <div class="comp__rep_form">
+      <%= form_for @sales_rep, url: {controller: 'profile', action: "update"}, method: :post,  html: { class: ""} do |f| %>
+        <%= lp_hidden_field(nil, :for, 'financial_info') %>
+        <div class="row pl-3 pt-3">
+          <div class="col-xs-12 col-sm-10 col-md-12 col-lg-10">
+            <label class="form-control-label col-12">Max Price Per Person</label>
+            <h5 class="pl-3 pr-2 d-inline-block">$</h5>
+            <%= lp_number_currency_field(f, :per_person_budget_cents, "none", @sales_rep.per_person_budget_cents, {class: 'form-control col-10 col-sm-9 col-md-8', inline_div: true}) %>
+            <div class="col-12 pt-3 pb-4">
+              <p class="mb-2">Can be overwritten by office specific budgets.</p>
+              <% if @sales_rep.offices_sales_reps.active.count > 0 %>
+                <a href="#" class="btn btn-link p-0" data-comp-detail-tab="profile__office_budgets_form">SEE OFFICE SPECIFIC BUDGETS</a>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-10 col-md-12">
+            <label class="form-control-label col-10">Default Tip</label>
+            <div class="col-12">
+              <%= lp_whole_percentage_field(f, :default_tip_percent, "none", @sales_rep.default_tip_percent, {class: 'form-control col-4 col-md-2 col-lg-2 col-xl-1 d-inline', no_div: true}) %>
+              <h5 class="col-1 d-inline-block pl-1">%</h5>
+            </div>
+            <div class="pl-3 pt-1 pb-4">
+              <p class="mb-2">To be applied to each order. Adjustable up to three hours after delivery.</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-10 col-md-12 col-lg-10">
+            <label class="form-control-label col-12">Tip Never To Exceed</label>
+            <h5 class="pl-3 pr-2 d-inline-block">$</h5>
+            <%= lp_number_currency_field(f, :max_tip_amount_cents, "none", @sales_rep.max_tip_amount_cents, {class: 'form-control col-10 col-sm-9 col-md-8', inline_div: true}) %>
+            <div class="pl-3 pt-1 pb-4">
+              <p class="mb-2">Set a cap on tips to ensure they do not become too large.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 pt-3 text-center">
+          <a class="btn btn-secondary mr-2" data-comp-detail-tab="profile__financial_info">Cancel</a>
+          <button data-submit type="submit" class="btn btn-primary">Save</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-12 p-0 mt-4">
+    <div class="h4 mb-3">Credit Cards</div>
+    <% if current_user.payment_methods.active.count > 0 %>
+      <div class="row pt-3">
+        <div class="col-lg-11 mb-5">
+          <label class="form-control-label">Default Card:</label> (automatically used unless otherwise noted)
+          <hr class="m-0">
+            <div class="card card-block mt-3">
+              <div class="card-text row">
+              <% if @default_payment_method %>
+                <div class="pl-3">
+                  <i class="fa <%=card_fa(@default_payment_method)%> fa-2x"></i>
+                </div>  
+                <div class="col-10 col-xl-8 p1-1 overflow-hidden">
+                  <p class="form-control-label pb-0 mb-0"><%= @default_payment_method.display_name %></p>
+                  <p class="p-0 m-0 small"><%= single_line_payment_address(@default_payment_method) %></p>
+                </div>
+                <div class="col-3 hidden-lg-down">
+                  <a class="btn btn-link" href="<%= rep_profile_index_path(tab: "edit_payment_method", id: @default_payment_method.id) %>" data-payment-id="<%=@default_payment_method.id%>">Edit</a>
+                  <a href="/rep/profile/payment_methods/<%=@default_payment_method.id%>/delete" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                </div>
+                <div class="hidden-xl-up col-12 pt-2">
+                  <a class="btn btn-link" href="<%= rep_profile_index_path(tab: "edit_payment_method", id: @default_payment_method.id) %>">Edit</a>
+                  <a href="/rep/profile/payment_methods/<%=@default_payment_method.id%>/delete" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                </div>
+              <%else%>
+                <div class="col-12">
+                  <label>You currently don't have a default payment method set! Click <a href="#">Here</a> to add a new payment method.</label>
+                </div>
+              <% end%>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-lg-11 mb-2">
+          <label class="form-control-label">Additional Cards:</label>
+          <hr class="m-0">
+          <% @payment_methods.each do |payment_method| %>
+            <div class="card card-block mt-3">
+              <div class="card-text row">
+                <div class="pl-3 pt-1">
+                  <i class="fa <%=card_fa(payment_method)%> fa-2x"></i>
+                </div>
+                <div class="col-10 col-xl-8 pt-1 overflow-hidden">
+                  <label class="form-control-label pb-0 mb-0"><%= payment_method.display_name %></label>
+                  <p class="p-0 m-0 small"><%= single_line_payment_address(payment_method)%></p>
+                </div>
+                <div class="col-3 hidden-lg-down">
+                  <a class="btn btn-link" href="<%= rep_profile_index_path(tab: "edit_payment_method", id: payment_method.id) %>">Edit</a>
+                  <a href="/rep/profile/payment_methods/<%=payment_method.id%>/delete" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                  <a href="/rep/profile/payment_methods/<%=payment_method.id%>/set_default" data-confirm-method="post" data-confirm-check="Are you sure you want make this the default payment method?" class="btn btn-link">Mark As Default</a>
+                </div>
+                <div class="hidden-xl-up col-12 pt-2">
+                  <a class="btn btn-link" href="<%= rep_profile_index_path(tab: "edit_payment_method", id: payment_method.id) %>">Edit</a>
+                  <a href="/rep/profile/payment_methods/<%=payment_method.id%>/delete" data-confirm-method="post" data-confirm-check="Are you sure you want do delete this payment method?" class="btn btn-link">Remove</a>
+                  <a href="/rep/profile/payment_methods/<%=payment_method.id%>/set_default" data-confirm-method="post" data-confirm-check="Are you sure you want make this the default payment method?" class="btn btn-link">Mark As Default</a>
+                </div>
+              </div>
+            </div>     
+          <% end %>
+        </div>
+        <a href="<%= rep_profile_index_path(tab: "new_payment_method") %>" class="btn btn-link">+ Add a new card</a>
+      </div>
+    <%else%>
+      <div class="row pt-3">
+        <div class="col-lg-11 mb-5">
+          <label class="form-control-label">You currently don't have any payment methods listed. Click <a href="<%= rep_profile_index_path(tab: "new_payment_method") %>" class="btn btn-link p-0">here</a> to add a payment method!</label> 
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sales_rep: one
+  drug: one
+  status: 1
+
+two:
+  sales_rep: two
+  drug: two
+  status: 1

@@ -1,0 +1,43 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-body">
+    <div class="col-12 row m-0">
+      <h3 class="ft-bold mb-3">Partner Request!</h3>
+      <p>Avoid overlapping with this partner by seeing when he or she has scheduled meal appointments at various medical offices</p>
+      <% if @record %>
+        <div class="col-12 row mt-2">
+          <div class="profile-image-container mr-3 hidden-xs-down">
+            <% if @record.sales_rep.profile_image && @record.sales_rep.profile_image.url %>
+            <img class="profile-picture" src="<%= @record.sales_rep.profile_image.url %>" alt="Partner Profile Picture" />
+            <% else %>
+            <%= image_tag "missing_image.png", class: "profile-picture", alt: "Missing Image" %>
+            <% end %>
+          </div>
+          <div class="col-12 col-sm-8 p-0 mt-1">
+            <p class="ft-bold h5 p-0 mt-2"><%=@record.sales_rep.display_name %></p>
+            <p class="m-0"><%=@record.sales_rep.company_name%></p>
+          </div>
+        </div>
+        <div class="col-12 row hidden-sm-down mt-5">
+          <div class="col-sm-6 ml-auto">
+            <a class="btn btn-outline-info btn-block" href="<%=reject_rep_profile_partner_path(@record.sales_rep_id)%>" data-method="post">Decline</a>
+          </div>
+          <div class="col-sm-6 mr-auto">
+            <a class="btn btn-success btn-block" href="<%=accept_rep_profile_partner_path(@record.sales_rep_id)%>" data-method="post">Accept</a>
+          </div>
+        </div>
+        <div class="col-12 row hidden-md-up mt-4 p-0">
+          <div class="col-12 mt-3">
+            <a class="btn btn-success btn-block" href="<%=accept_rep_profile_partner_path(@record.sales_rep_id)%>" data-method="post">Accept</a>
+          </div>
+          <div class="col-12 mt-3">
+            <a class="btn btn-outline-info btn-block" href="<%=reject_rep_profile_partner_path(@record.sales_rep_id)%>" data-method="post">Decline</a>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-12 text-center mt-3">
+          <p class="ft-bold">This Partner Request is no longer available!</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

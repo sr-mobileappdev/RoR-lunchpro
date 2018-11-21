@@ -1,0 +1,54 @@
+.nav-pills {
+	padding: $card-spacer-y;
+	//border-bottom: solid 1px $hr-border-color;
+
+	.nav-link {
+		font-size: 0.9rem;
+		text-transform: uppercase;
+		padding: 7px 30px;
+
+        // for some reason these are not picking up from bootstrap-custom
+        border-radius: $nav-pills-border-radius;
+        &:active, &.active {
+            background-color: $nav-pills-active-link-bg;
+        }
+	}
+}
+
+// if that tab pane has cards add this class
+.tab-pane {
+	@include min-height(400px);
+	&.with-cards {
+		padding: $card-spacer-y;
+		background-color: $blue-bg;
+	}
+}
+
+.comp__rep_notifications{
+  .tab-content{
+    overflow: unset !important;
+  }
+}
+.notification-nav.nav{
+
+  &.nav-tabs{
+    font-weight: bold;
+    .nav-item{
+      font-size: 1.1em;
+      .nav-link{
+        color: black;
+        &.active{
+          color: $blue;
+          border-color: #fff #fff $blue
+        }
+      }
+    }
+  }
+
+}
+
+.comp__restaurant_notifications{
+	.tab-content{
+		overflow: unset !important;
+	}
+}

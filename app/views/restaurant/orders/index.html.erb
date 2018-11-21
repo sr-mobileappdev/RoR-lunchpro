@@ -1,0 +1,38 @@
+<% tab 'orders' %>
+<% title 'Orders' %>
+<%= render partial: "shared/header/#{@ui_space}_header", locals: {restaurant: @restaurant} %>
+<div id="global-content-wrapper">
+    <!-- history -->
+  <div id="history-layout" class="row no-gutters comp__restaurant_order_detail" data-comp-order-load-id="<%= @order %>">
+    <div class="col-12 col-md-5 col-lg-4 restaurant-vertical-nav br-1">
+      <div class="unconfirmed_title vertical-nav-li-header h5 title text-uppercase mt-0 pt-3 pb-3 text-center">
+        Unconfirmed orders
+      </div>
+      <section class="position-fixed unconfirmed-section bb-1 order-section">
+        <div class="col-12 p-0"  id="scrollable-appointment-container">
+          <%= render partial: "restaurant/orders/components/unconfirmed_orders",
+                        locals: {slot_manager: Views::RestaurantOrders.new(@restaurant, nil, @consolidated)} %>
+        </div>
+      </section>
+      <div class="confirmed_title vertical-nav-li-header h5 title text-uppercase mt-0 pt-3 pb-3 text-center">
+        Confirmed orders
+      </div>
+      <section class="position-fixed order-section">
+        <div class="col-12 p-0" id="scrollable-appointment-container">
+          <%= render partial: "restaurant/orders/components/confirmed_orders",
+                        locals: {slot_manager: Views::RestaurantOrders.new(@restaurant, nil, @consolidated)} %>
+        </div>
+      </section>
+    </div>
+    <div class="col-12 col-md-7 col-lg-8 p-0 restaurant-vertical-nav">
+      <div class="targ__restaurant_order_detail">
+        <% if (!@unconfirmed_orders || !@unconfirmed_orders.any?) && (!@confirmed_orders || !@confirmed_orders.any?) %>
+          <div class="col-12 text-center mt-5">
+            <h3>This restaurant currently does not have any active orders to view</h3>
+            <img src="<%= image_path('headshot_skip.png') %>" alt="Skip The Bear" class="default-skip" />
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

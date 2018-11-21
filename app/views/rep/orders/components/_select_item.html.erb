@@ -1,0 +1,80 @@
+<div class="modal-header pr-0 pl-0 pb-0">
+  <div class="col-12 p-0 mt-3 lp__item_header">
+    <div class="pr-4 pl-4">
+      <h3 class="mt-3 font-lg font-bold"><%= item.name %></h3>
+      <p class="mt-2"><%= item.description %></p>
+    </div>
+  </div>
+</div>
+<div class="modal-body comp__order_item pl-4 pr-4 pb-4">
+  <%= form_for @line_item, :url => @url do |f| %>
+    <%= f.hidden_field :orderable_type %>
+    <%= f.hidden_field :orderable_id %>
+    <div class="row">
+      <div class="col-12 hidden-md-up row mb-3 ml-0">
+        <% if item.menu_item_images.any? %>
+          <div class="ml-auto mr-auto menu-item-images-container ">
+            <% item.menu_item_images.each do |img| %>
+              <% if img.active? && img.image.url %>
+                <img class="menu-item-image mb-2" src="<%= img.image.url %>" alt="<%=item.name%>" />
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-12 col-md-8 pr-0">
+        <div class="lp__menu_item_form">
+          <p class="lp__menu_item_form_field bb-1">Select Quantity</p>
+          <div class="lp__item_field pt-1">
+            <%= f.number_field :quantity, {class: 'form-control', placeholder: "Quantity"} %>
+          </div>
+          <div class="lp__item_summary">
+            <p><%= precise_currency_value(@line_item.orderable.retail_price_cents) %> per person<br /><span>This item serves <%= pluralize(@line_item.orderable.people_served, "person") %></span></p>
+          </div>
+        </div>
+        <% if @line_item.orderable && @line_item.orderable.has_options? %>
+          <div class="lp__menu_item_form">
+            <p class="lp__menu_item_form_field bb-1">Select From These Options</p>
+            <div class="row">
+              <% @line_item.orderable.menu_sub_items.joins(:menu_sub_item_options).includes(:menu_sub_item_options).
+              where("menu_sub_item_options.status = 1 and menu_sub_items.status = 1").each do |sub_item| %>
+                <div class="col-6 col-sm-5 mb-4 targ-items">
+                  <p data-max-options="<%= sub_item.qty_allowed %>"><strong><%= sub_item.name %>:</strong><br/><span>Select <%= pluralize(sub_item.qty_allowed, "option") %><% if sub_item.qty_required > 0 %> - <%=sub_item.qty_required%> required<% end %></span></p>
+                  <% if sub_item.menu_sub_item_options.active.count > 0 %>
+                    <% sub_item.menu_sub_item_options.active.each do |option| %>
+                      <label class="form-check-label menu-subitem-label">
+                        <input class="form-check-input" type="checkbox" name="menu_item_sub_options[]" value="<%= option.id %>" <%= @line_item.has_option?(option) ? 'checked' : '' %>>
+                        <%= option.option_name %>
+                      </label>
+                      <br/>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <div class="lp__menu_item_form pr-3">
+          <p class="lp__menu_item_form_field">Add Special Instructions</p>
+          <div>
+            <%= lp_text_area(f, :notes, "none", nil, {class: 'form-control', style: 'resize: none', rows: '3', hide_label: true}) %>
+          </div>
+        </div>
+      </div>
+      <% if item.menu_item_images.any? %>
+        <div class="ml-auto mr-auto menu-item-images-container hidden-sm-down">
+          <% item.menu_item_images.each do |img| %>
+            <% if img.active? && img.image.url %>
+              <img class="menu-item-image mb-2" src="<%= img.image.url %>" alt="<%=item.name%>" />
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-5 col-lg-4 ml-auto mr-auto mt-4">
+        <%= f.submit "Add To Cart", {class: 'btn btn-success btn-block' } %>
+      </div>
+    </div>
+  <% end %>
+</div>

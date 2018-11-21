@@ -1,0 +1,39 @@
+<% tab 'payments' %>
+
+<%= render partial: 'admin/shared/components/details/back', locals: { url: session[:my_previous_url] } %> <!--admin_restaurant_path(@restaurant) } %>-->
+
+<div class="comp__section-header col-sm-9 offset-sm-3 col-md-10 offset-md-2">
+  <div class="row">
+    <div class="col-8 px-4"><h2 class="lp__light"><span class="pr-3"><%= @restaurant.name %> <%= '(HQ)' if @restaurant.is_headquarters?%></span> <span class="lp__subheader">Payments</span></h2></div>
+    <div class="col-4 px-4 text-right">
+      <div class="btn-toolbar justify-content-end mt-3" role="toolbar" aria-label="Toolbar with button groups">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp__content">
+  <%= render partial: 'admin/shared/components/details/menu',
+              locals: {
+                menu_items: [
+                  {title: 'Overview', path: admin_restaurant_path(@restaurant), active_tab: 'overview'},
+                  {title: 'Orders', path: admin_restaurant_orders_path(@restaurant), active_tab: 'orders'},
+                  {title: 'Menu', path: admin_restaurant_menus_path(@restaurant), active_tab: 'menu'},
+                  {title: 'Payments', path: admin_restaurant_payments_path(@restaurant), active_tab: 'payments'},
+                  {title: 'Bank Accounts', path: admin_restaurant_pay_methods_path(@restaurant), active_tab: 'pay_methods'},
+                ]
+              } %>
+
+  <div class="row">
+    <div class="col-12 mt-2">
+      <%= render partial: 'admin/shared/components/tables/static_table',
+                  locals: {
+                    title: 'Payment Transactions',
+                    columns: ['id', {title: 'Deposited On', column: 'processed_at', helper: 'short_date'}, {title: 'Deposit Amount', column: 'paid_amount_cents', helper: 'precise_currency_or_nil'}],
+                    model_class: 'RestaurantTransaction',
+                    objects: @restaurant.restaurant_transactions.where.not(status: ['deleted','inactive'])
+                  } %>
+    </div>
+  </div>
+
+</div>

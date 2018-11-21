@@ -1,0 +1,17 @@
+<ul class="lp__notifications">
+  <% if @notifications.count == 0 %>
+    <li class="none">
+      No Unread Notifications
+    </li>
+  <% end %>
+
+  <% @notifications.each do |n| %>
+
+    <li data-href="<%= admin_notification_path(n) %>" class="<%= (n.priority == 1) ? 'high' : '' %>">
+      <em class="title"><%= n.parsed_title(n.title) %></em>
+      <span class="time"><%= time_ago(n.notified_at || n.created_at) %><a class="__remove-notification" href="<%= remove_admin_notification_path(n) %>"><span class="oi oi-x" title="Clear Notification" aria-hidden="true"></span></a></span>
+      <p><%= n.web_summary.html_safe %></p>
+    </li>
+
+  <% end %>
+</ul>
