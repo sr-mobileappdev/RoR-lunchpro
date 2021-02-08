@@ -63,7 +63,7 @@ gem 'sinatra', require: false #used for sidekiq web interface
 
 gem "twilio-ruby", "~> 5.1.0" # Telephony SMS
 
-gem "carrierwave", "~> 0.11.2" # Uploads
+gem "carrierwave", "~> 1.3.2" # Uploads
 gem 'fog', require: 'fog/aws' # Uploads, too
 
 gem "geocoder"
